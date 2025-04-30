@@ -184,6 +184,7 @@ parse_operation_object <- function(operation_object, openapi_spec) {
     tib_lgl("deprecated", required = FALSE, fill = FALSE),
     tib_variant("security", required = FALSE),
   )
+  operation_object$tags <- as.character(unlist(operation_object$tags))
   data <- tibblify(operation_object, spec)
 
   data$request_body <- list(parse_request_body(data$request_body, openapi_spec))
@@ -277,7 +278,9 @@ parse_response_object <- function(response_object, openapi_spec) {
   }
   # FIXME links
   if (!is_empty(parsed_response$links)) {
-    stop("Links")
+    cli_abort(
+      "We do not yet support {.field links} in OpenAPI response objects."
+    )
   }
   parsed_response$content <- parse_media_type_objects(parsed_response$content, openapi_spec)
 
@@ -397,9 +400,25 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
       return(c(yaml::read_yaml(ref, readLines.warn = FALSE), other_parts))
     }
     ref_parts <- strsplit(ref, "/")[[1]]
+    ref_parts <- gsub("~1", "/", ref_parts)
+    ref_parts <- utils::URLdecode(ref_parts)
     if (ref_parts[[1]] != "#") {
       cli_abort("{.field ref} does not start with {.value #}", .internal = TRUE)
     }
+    # If any parts of the path are pure numbers (other than status codes), we
+    # need to explicitly make them pure numbers.
+    ref_parts <- purrr::map(
+      ref_parts,
+      ~ {
+        x_int <- suppressWarnings(as.integer(.x))
+        if (!is.na(x_int) && x_int < 100 && x_int == .x) {
+          x_int + 1 # They're 0-indexed.
+        } else {
+          .x
+        }
+      }
+    )
+
     schema <- purrr::chuck(openapi_spec, !!!ref_parts[-1])
 
     if (is.null(schema)) {
