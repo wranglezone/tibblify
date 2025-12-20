@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   overview-supported-structures: overview-supported-structures.html
   tibblify: tibblify.html
-last_built: 2025-12-20T19:53Z
+last_built: 2025-12-20T20:29Z
 urls:
   reference: https://tibblify.wrangle.zone/reference
   article: https://tibblify.wrangle.zone/articles
