@@ -1,7 +1,14 @@
+// IWYU pragma: private; include "rlang.h"
+
 #ifndef RLANG_VECTOR_H
 #define RLANG_VECTOR_H
 
 #include <string.h>
+#include "rlang-types.h"
+#include "c-utils.h"
+#include "cnd.h"
+#include "globals.h"
+#include "obj.h"
 
 
 static inline
@@ -47,12 +54,12 @@ const void* r_raw_cbegin(r_obj* x) {
 }
 static inline
 r_obj* const * r_chr_cbegin(r_obj* x) {
-  return (r_obj* const *) STRING_PTR(x);
+  return STRING_PTR_RO(x);
 }
 static inline
 r_obj* const * r_list_cbegin(r_obj* x) {
-#if (R_VERSION < R_Version(3, 5, 0))
-  return ((r_obj* const *) STRING_PTR(x));
+#if (R_VERSION >= R_Version(4, 5, 0))
+  return VECTOR_PTR_RO(x);
 #else
   return ((r_obj* const *) DATAPTR_RO(x));
 #endif
@@ -177,35 +184,67 @@ void r_list_poke(r_obj* x, r_ssize i, r_obj* y) {
 
 static inline
 r_obj* r_alloc_vector(enum r_type type, r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(type, n);
+#else
   return Rf_allocVector(type, n);
+#endif
 }
 static inline
 r_obj* r_alloc_logical(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_logical, n);
+#else
   return Rf_allocVector(R_TYPE_logical, n);
+#endif
 }
 static inline
 r_obj* r_alloc_integer(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_integer, n);
+#else
   return Rf_allocVector(R_TYPE_integer, n);
+#endif
 }
 static inline
 r_obj* r_alloc_double(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_double, n);
+#else
   return Rf_allocVector(R_TYPE_double, n);
+#endif
 }
 static inline
 r_obj* r_alloc_complex(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_complex, n);
+#else
   return Rf_allocVector(R_TYPE_complex, n);
+#endif
 }
 static inline
 r_obj* r_alloc_raw(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_raw, n);
+#else
   return Rf_allocVector(R_TYPE_raw, n);
+#endif
 }
 static inline
 r_obj* r_alloc_character(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_character, n);
+#else
   return Rf_allocVector(R_TYPE_character, n);
+#endif
 }
 static inline
 r_obj* r_alloc_list(r_ssize n) {
+#if R_VERSION >= R_Version(4, 6, 0)
+  return R_allocResizableVector(R_TYPE_list, n);
+#else
   return Rf_allocVector(R_TYPE_list, n);
+#endif
 }
 
 static inline
@@ -213,7 +252,7 @@ r_obj* r_alloc_raw0(r_ssize n) {
   r_obj* out = r_alloc_raw(n);
 
   unsigned char* p_out = (unsigned char*) r_raw_begin(out);
-  memset(p_out, 0, n);
+  r_memset(p_out, 0, n);
 
   return out;
 }
@@ -397,30 +436,30 @@ char r_as_char(r_obj* x) {
   return r_arg_as_char(x, "x");
 }
 
-r_obj* r_lgl_resize(r_obj* x, r_ssize size);
-r_obj* r_int_resize(r_obj* x, r_ssize size);
-r_obj* r_dbl_resize(r_obj* x, r_ssize size);
-r_obj* r_cpl_resize(r_obj* x, r_ssize size);
-r_obj* r_raw_resize(r_obj* x, r_ssize size);
-r_obj* r_chr_resize(r_obj* x, r_ssize size);
-r_obj* r_list_resize(r_obj* x, r_ssize size);
+r_obj* r_lgl_resize(r_obj* x, r_ssize new_size);
+r_obj* r_int_resize(r_obj* x, r_ssize new_size);
+r_obj* r_dbl_resize(r_obj* x, r_ssize new_size);
+r_obj* r_cpl_resize(r_obj* x, r_ssize new_size);
+r_obj* r_raw_resize(r_obj* x, r_ssize new_size);
+r_obj* r_chr_resize(r_obj* x, r_ssize new_size);
+r_obj* r_list_resize(r_obj* x, r_ssize new_size);
 
 static inline
-r_obj* r_vec_resize0(enum r_type type, r_obj* x, r_ssize size) {
+r_obj* r_vec_resize0(enum r_type type, r_obj* x, r_ssize new_size) {
   switch (type) {
-  case R_TYPE_logical: return r_lgl_resize(x, size);
-  case R_TYPE_integer: return r_int_resize(x, size);
-  case R_TYPE_double: return r_dbl_resize(x, size);
-  case R_TYPE_complex: return r_cpl_resize(x, size);
-  case R_TYPE_raw: return r_raw_resize(x, size);
-  case R_TYPE_character: return r_chr_resize(x, size);
-  case R_TYPE_list: return r_list_resize(x, size);
+  case R_TYPE_logical: return r_lgl_resize(x, new_size);
+  case R_TYPE_integer: return r_int_resize(x, new_size);
+  case R_TYPE_double: return r_dbl_resize(x, new_size);
+  case R_TYPE_complex: return r_cpl_resize(x, new_size);
+  case R_TYPE_raw: return r_raw_resize(x, new_size);
+  case R_TYPE_character: return r_chr_resize(x, new_size);
+  case R_TYPE_list: return r_list_resize(x, new_size);
   default: r_stop_unimplemented_type(type);
   }
 }
 static inline
-r_obj* r_vec_resize(r_obj* x, r_ssize size) {
-  return r_vec_resize0(r_typeof(x), x, size);
+r_obj* r_vec_resize(r_obj* x, r_ssize new_size) {
+  return r_vec_resize0(r_typeof(x), x, new_size);
 }
 
 static inline
@@ -432,7 +471,7 @@ r_obj* r_vec_n(enum r_type type, void* v_src, r_ssize n) {
   case R_TYPE_complex:
   case R_TYPE_raw: {
     r_obj* out = r_alloc_vector(type, n);
-    memcpy(r_vec_begin(out), v_src, n * r_vec_elt_sizeof0(type));
+    r_memcpy(r_vec_begin(out), v_src, n * r_vec_elt_sizeof0(type));
     return out;
   }
   case R_TYPE_character:
@@ -468,7 +507,7 @@ r_obj* r_raw_n(int* v_src, r_ssize n) {
 static inline
 r_obj* r_copy_in_raw(const void* src, size_t size) {
   r_obj* out = r_alloc_raw(size);
-  memcpy(r_raw_begin(out), src, size);
+  r_memcpy(r_raw_begin(out), src, size);
   return out;
 }
 

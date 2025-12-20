@@ -1,8 +1,11 @@
+// IWYU pragma: private; include "rlang.h"
+
 #ifndef RLANG_ATTRIB_H
 #define RLANG_ATTRIB_H
 
+#include "rlang-types.h"
+#include "globals.h"
 #include "node.h"
-#include "sym.h"
 
 
 static inline
@@ -26,7 +29,6 @@ void r_attrib_poke(r_obj* x, r_obj* sym, r_obj* value) {
   Rf_setAttrib(x, sym, value);
 }
 
-r_obj* r_attrib_push(r_obj* x, r_obj* tag, r_obj* value);
 r_obj* r_attrib_set(r_obj* x, r_obj* tag, r_obj* value);
 
 static inline
@@ -37,9 +39,7 @@ static inline
 void r_attrib_poke_class(r_obj* x, r_obj* classes) {
   r_attrib_poke(x, r_syms.class_, classes);
 }
-
-void r_attrib_push_class(r_obj* x, const char* tag);
-void r_attrib_push_classes(r_obj* x, const char** tags, r_ssize n);
+void r_attrib_poke_classes(r_obj* x, const char** classes, r_ssize n);
 
 static inline
 r_obj* r_dim(r_obj* x) {
