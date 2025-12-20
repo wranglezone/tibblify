@@ -70,7 +70,9 @@ jobs:
             echo "Creating new issue..."
             NEW_URL=$(gh issue create \
               --title "$TITLE" \
-              --body "The automated workflow detected changes in \`r-lib/rlang\`. This issue tracks the validation and integration of those changes.<br><br>Current Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
+              --body "The automated workflow detected changes in \`r-lib/rlang\`. This issue tracks the validation and integration of those changes.
+              
+              Current Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
             
             # Extract number from the URL returned by gh issue create
             ISSUE_NUM=$(echo "$NEW_URL" | grep -o '[0-9]*$')
