@@ -18,8 +18,13 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Maximilian Girlich <maximilian.girlich@outlook.com>
-\[copyright holder\]
+**Maintainer**: Jon Harmon <jonthegeek@gmail.com>
+([ORCID](https://orcid.org/0000-0003-4781-4346))
+
+Authors:
+
+- Maximilian Girlich <maximilian.girlich@outlook.com> \[copyright
+  holder\]
 
 Other contributors:
 

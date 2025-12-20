@@ -61,8 +61,9 @@ guess_tspec_object(
 
   The execution environment of a currently running function, e.g.
   `caller_env()`. The function will be mentioned in error messages as
-  the source of the error. See the `call` argument of `abort()` for more
-  information.
+  the source of the error. See the `call` argument of
+  [`rlang::abort()`](https://rlang.r-lib.org/reference/abort.html) for
+  more information.
 
 - arg:
 
