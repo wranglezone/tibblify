@@ -11,7 +11,7 @@
     Output
       <error/vctrs_error_subscript_oob>
       Error in `eval_pull()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `not-there` doesn't exist.
     Code
       (expect_error(nest_tree(df, 1:2)))
@@ -24,7 +24,7 @@
     Output
       <error/vctrs_error_subscript_oob>
       Error in `eval_pull()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `not-there` doesn't exist.
     Code
       (expect_error(nest_tree(df, id, parent_col = 1:2)))

@@ -30,10 +30,6 @@ test_that("checks arguments", {
     (expect_error(unnest_tree(df, id, children, ancestors_to = "id")))
     (expect_error(unnest_tree(df, id, children, ancestors_to = c("a", "b"))))
   })
-
-  expect_snapshot({
-
-  })
 })
 
 test_that("child col type is checked", {
