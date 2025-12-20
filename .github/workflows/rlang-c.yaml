@@ -131,7 +131,6 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           path: tibblify
-          # CHANGE THIS: Use the PAT secret instead of GITHUB_TOKEN
           token: ${{ secrets.GH_PAT_WORKFLOWS }} 
           commit-message: "chore: update vendored rlang sources"
           branch: "vendor/rlang-update"
