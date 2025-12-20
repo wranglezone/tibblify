@@ -1,5 +1,9 @@
 # tibblify (development version)
 
+* `parse_openapi_spec()` supports many more fields and works for many more APIs (#190, @jonthegeek and @mgirlich).
+
+# tibblify 0.3.1
+
 * New `parse_openapi_spec()` and `parse_openapi_schema()` to convert an
   OpenAPI specification to a tibblify specification.
 
@@ -8,6 +12,10 @@
 * New `unpack_tspec()` to unpack the elements of `tib_row()` fields (#165).
 
 * Improved printing of lists parsed with `tspec_object()`.
+
+* Improved performance of the `tspec()` family.
+
+* Improved guessing.
 
 # tibblify 0.3.0
 

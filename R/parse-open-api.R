@@ -30,11 +30,11 @@
 #'   "properties": {
 #'     "name": {
 #'       "type": "string",
-#'       "description": "The name of this vehicle. The common name, such as Sand Crawler."
+#'       "description": "The name of this vehicle. The common name, e.g. Sand Crawler."
 #'     },
 #'     "model": {
 #'       "type": "string",
-#'       "description": "The model or official name of this vehicle. Such as All Terrain Attack Transport."
+#'       "description": "The model or official name of this vehicle."
 #'     },
 #'     "url": {
 #'       "type": "string",
@@ -44,7 +44,7 @@
 #'     "edited": {
 #'       "type": "string",
 #'       "format": "date-time",
-#'       "description": "the ISO 8601 date format of the time that this resource was edited."
+#'       "description": "the ISO 8601 date format of the time this resource was edited."
 #'     }
 #'   },
 #'   "required": [
@@ -138,14 +138,20 @@ parse_path_item_object <- function(path_item_object, openapi_spec) {
   # FIXME pass along `parameters`?
   parameters <- parse_parameters(path_item_object$parameters, openapi_spec)
 
-  # TODO `summary`: An optional, string summary, intended to apply to all operations in this path.
-  # TODO `description`: An optional, string description, intended to apply to all operations in this path. CommonMark syntax MAY be used for rich text representation.
+  # TODO `summary`: An optional, string summary, intended to apply to all
+  # operations in this path.
+  #
+  # TODO `description`: An optional, string description, intended to apply to
+  # all operations in this path. CommonMark syntax MAY be used for rich text
+  # representation.
+  #
   # TODO `parameters`: A list of parameters that are applicable for all the
   # operations described under this path. These parameters can be overridden at
   # the operation level, but cannot be removed there. The list MUST NOT include
   # duplicated parameters. A unique parameter is defined by a combination of a
   # name and location. The list can use the Reference Object to link to
   # parameters that are defined at the OpenAPI Object’s components/parameters.
+  #
   # if (has_name(path_item_object, "summary") ||
   #     has_name(path_item_object, "description")) {
   #   browser()
@@ -176,12 +182,16 @@ parse_operation_object <- function(operation_object, openapi_spec) {
     request_body = tib_variant("requestBody", required = FALSE),
     tib_variant("responses", required = FALSE),
     tib_lgl("deprecated", required = FALSE, fill = FALSE),
+    tib_variant("security", required = FALSE),
   )
+  operation_object$tags <- as.character(unlist(operation_object$tags))
   data <- tibblify(operation_object, spec)
 
   data$request_body <- list(parse_request_body(data$request_body, openapi_spec))
   data$parameters <- list(parse_parameters(data$parameters, openapi_spec))
   data$responses <- list(parse_responses_object(data$responses, openapi_spec))
+  data$tags <- list(data$tags)
+  data$security <- list(data$security)
 
   fast_tibble(unclass(data), n = 1L)
 }
@@ -201,7 +211,10 @@ parse_request_body <- function(request_body, openapi_spec) {
     tib_lgl("required", required = FALSE, fill = FALSE)
   )
   parsed_request_body <- tibblify(request_body, spec)
-  parsed_request_body$content[[1]] <- parse_media_type_objects(parsed_request_body$content[[1]], openapi_spec)
+  parsed_request_body$content[[1]] <- parse_media_type_objects(
+    parsed_request_body$content[[1]],
+    openapi_spec
+  )
 
   parsed_request_body
 }
@@ -213,6 +226,8 @@ parse_parameters <- function(parameters, openapi_spec) {
   }
 
   parameters <- purrr::map(parameters, ~ openapi_resolve_reference(.x, openapi_spec))
+
+
 
   spec <- tspec_df(
     tib_chr("in"),
@@ -227,7 +242,7 @@ parse_parameters <- function(parameters, openapi_spec) {
       tib_chr("type", required = FALSE),
       tib_chr("description", required = FALSE),
       # FIXME `enum` and `format` should go into a details column
-      tib_chr_vec("enum", required = FALSE),
+      tib_variant("enum", required = FALSE),
       tib_chr("format", required = FALSE),
       .required = FALSE
     ),
@@ -241,14 +256,17 @@ parse_parameters <- function(parameters, openapi_spec) {
 
 parse_responses_object <- function(responses_object, openapi_spec) {
   # https://spec.openapis.org/oas/v3.1.0#responsesObject
-  responses_object <- purrr::map(responses_object, ~ openapi_resolve_reference(.x, openapi_spec))
+  responses_object <- purrr::map(
+    responses_object,
+    ~ openapi_resolve_reference(.x, openapi_spec)
+  )
   out <- purrr::map(responses_object, ~ parse_response_object(.x, openapi_spec))
   vctrs::vec_rbind(!!!out, .names_to = "status_code")
 }
 
 parse_response_object <- function(response_object, openapi_spec) {
   spec <- tspec_object(
-    tib_chr("description"),
+    tib_chr("description", required = FALSE),
     tib_variant("headers", required = FALSE),
     tib_variant("content", required = FALSE),
     tib_variant("links", required = FALSE),
@@ -260,7 +278,9 @@ parse_response_object <- function(response_object, openapi_spec) {
   }
   # FIXME links
   if (!is_empty(parsed_response$links)) {
-    browser()
+    cli_abort(
+      "We do not yet support {.field links} in OpenAPI response objects."
+    )
   }
   parsed_response$content <- parse_media_type_objects(parsed_response$content, openapi_spec)
 
@@ -358,23 +378,58 @@ apply_required <- function(fields, required) {
 }
 
 openapi_resolve_reference <- function(schema, openapi_spec) {
+  if (!is.list(schema)) {
+    return(schema)
+  }
+  if (length(schema$allOf)) {
+    schema$allOf <- purrr::compact(schema$allOf)
+  }
+  if (length(schema$anyOf)) {
+    schema$anyOf <- purrr::compact(schema$anyOf)
+  }
+
   ref <- schema$`$ref`
-  # FIXME this is probably quite a hack...
-  ref <- ref %||% schema$allOf[[1]]$`$ref`
+  # FIXME: This may still be too hacky.
+  if (is.null(ref) && length(schema$allOf[[1]]$`$ref`)) {
+    ref <- schema$allOf[[1]]$`$ref`
+    schema$allOf[[1]]$`$ref` <- NULL
+  }
   if (!is.null(ref)) {
+    if (is_url_string(ref)) {
+      other_parts <- schema[setdiff(names(schema), "$ref")]
+      return(c(yaml::read_yaml(ref, readLines.warn = FALSE), other_parts))
+    }
     ref_parts <- strsplit(ref, "/")[[1]]
+    ref_parts <- gsub("~1", "/", ref_parts)
+    ref_parts <- utils::URLdecode(ref_parts)
     if (ref_parts[[1]] != "#") {
       cli_abort("{.field ref} does not start with {.value #}", .internal = TRUE)
     }
+    # If any parts of the path are pure numbers (other than status codes), we
+    # need to explicitly make them pure numbers.
+    ref_parts <- purrr::map(
+      ref_parts,
+      ~ {
+        x_int <- suppressWarnings(as.integer(.x))
+        if (!is.na(x_int) && x_int < 100 && x_int == .x) {
+          x_int + 1 # They're 0-indexed.
+        } else {
+          .x
+        }
+      }
+    )
+
     schema <- purrr::chuck(openapi_spec, !!!ref_parts[-1])
 
     if (is.null(schema)) {
       cli_abort("No schema found for reference {.value {ref}}")
     }
+    schema <- openapi_resolve_reference(schema, openapi_spec)
   }
 
-  if (has_name(schema, "$ref")) {
-    schema <- openapi_resolve_reference(schema, openapi_spec)
+  # If anything under here has a $ref, keep going.
+  if (any(grepl("\\$ref$", names(unlist(schema))))) {
+    schema <- purrr::map(schema, ~ openapi_resolve_reference(.x, openapi_spec))
   }
 
   schema
@@ -397,6 +452,13 @@ get_openapi_type <- function(schema) {
 parse_schema <- function(schema, name, openapi_spec) {
   schema <- openapi_resolve_reference(schema, openapi_spec)
   if (!is.null(schema$oneOf)) {
+    out <- handle_one_of(schema, name, openapi_spec)
+    return(out)
+  }
+  # Since we're just combining specs, this should be enough.
+  if (!is.null(schema$anyOf)) {
+    schema$oneOf <- schema$anyOf
+    schema$anyOf <- NULL
     out <- handle_one_of(schema, name, openapi_spec)
     return(out)
   }
@@ -474,6 +536,14 @@ handle_all_of <- function(schema, name, openapi_spec) {
 handle_all_of_tspec <- function(schema, openapi_spec) {
   # must satisfy all the schemas -> combine them
   out <- purrr::map(schema$allOf, ~ schema_to_tspec(.x, openapi_spec))
+  # We can have some hacky "dummy" variants in here right now. For now we'll
+  # remove them.
+  out <- purrr::discard(
+    out,
+    function(x) {
+      x$type == "variant" && x$key == "dummy"
+    }
+  )
   tspec_combine(!!!out)
 }
 
@@ -485,7 +555,12 @@ handle_one_of <- function(schema, name, openapi_spec) {
     # TODO fix `call`
     tib_combine(out, name, current_call())
   }, error = function(cnd) {
-    tib_variant(name, required = FALSE)
+    types <- purrr::map_chr(out, "type")
+    if ("row" %in% types) {
+      tib_combine(out[types == "row"], name, current_call())
+    } else {
+      tib_variant(name, required = FALSE)
+    }
   })
 }
 
@@ -496,8 +571,9 @@ handle_one_of_tspec <- function(schema, openapi_spec) {
   tryCatch({
     tspec_combine(!!!out)
   }, error = function(cnd) {
-    browser()
-    tib_variant()
+    # browser()
+    # stop("Can't combine")
+    tib_variant("dummy")
   })
 }
 
