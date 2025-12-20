@@ -108,7 +108,7 @@ jobs:
         id: r_check
         uses: r-lib/actions/check-r-package@v2
         with:
-          working-directory: tibblify
+          working-directory: "tibblify"
 
       - name: Report Failure
         if: failure() && steps.check_changes.outputs.changes_detected == 'true'
