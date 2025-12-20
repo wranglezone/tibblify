@@ -5,6 +5,7 @@
 - [`parse_openapi_spec()`](https://mgirlich.github.io/tibblify/reference/parse_openapi_spec.md)
   supports many more fields and works for many more APIs
   ([\#190](https://github.com/mgirlich/tibblify/issues/190),
+  [\#200](https://github.com/mgirlich/tibblify/issues/200),
   [@jonthegeek](https://github.com/jonthegeek) and
   [@mgirlich](https://github.com/mgirlich)).
 
