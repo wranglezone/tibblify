@@ -9,7 +9,6 @@ on:
 permissions:
   contents: write      # To push the branch
   issues: write        # To create/comment on issues
-  pull-requests: write # To create the PR
 
 jobs:
   update-rlang:
@@ -132,7 +131,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           path: tibblify
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT_WORKFLOWS }} 
           commit-message: "chore: update vendored rlang sources"
           branch: "vendor/rlang-update"
           delete-branch: true
@@ -143,3 +142,4 @@ jobs:
             This PR updates the contents of `src/rlang/` to match the latest upstream source.
             
             Closes #${{ env.TRACKING_ISSUE_NUM }}
+
