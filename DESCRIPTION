@@ -14,8 +14,8 @@ Description: A tool to rectangle a nested list, that is to convert it into
     by the 'vctrs' package and therefore offers a wide support of vector
     types.
 License: GPL-3
-URL: https://github.com/wranglezone/tibblify,
-    https://wranglezone.github.io/tibblify/
+URL: https://tibblify.wrangle.zone,
+    https://github.com/wranglezone/tibblify
 BugReports: https://github.com/wranglezone/tibblify/issues
 Depends:
     R (>= 4.1.0)

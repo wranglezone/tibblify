@@ -514,6 +514,5 @@ api_output_list$data
 ## Code of Conduct
 
 Please note that the tibblify project is released with a [Contributor
-Code of
-Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
-By contributing to this project, you agree to abide by its terms.
+Code of Conduct](https://tibblify.wrangle.zone/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.

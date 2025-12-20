@@ -17,3 +17,4 @@
 ^memory-tests$
 ^[.]?air[.]toml$
 ^\.vscode$
+^CODE_OF_CONDUCT\.md$
