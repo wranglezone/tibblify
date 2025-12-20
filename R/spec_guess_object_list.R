@@ -1,11 +1,13 @@
 # Guess the specification of an object list
 # The caller has to make sure that `x` is really a list of objects!
-guess_tspec_object_list <- function(x,
-                                   ...,
-                                   empty_list_unspecified = FALSE,
-                                   simplify_list = FALSE,
-                                   arg = caller_arg(x),
-                                   call = current_call()) {
+guess_tspec_object_list <- function(
+  x,
+  ...,
+  empty_list_unspecified = FALSE,
+  simplify_list = FALSE,
+  arg = caller_arg(x),
+  call = current_call()
+) {
   check_dots_empty()
   check_list(x)
 
@@ -20,13 +22,17 @@ guess_tspec_object_list <- function(x,
   tspec_df(
     !!!fields,
     .names_to = if (is_named(x)) ".names",
-    vector_allows_empty_list = is_true(getOption("tibblify.used_empty_list_arg"))
+    vector_allows_empty_list = is_true(getOption(
+      "tibblify.used_empty_list_arg"
+    ))
   )
 }
 
-guess_object_list_spec <- function(object_list,
-                                   empty_list_unspecified,
-                                   simplify_list) {
+guess_object_list_spec <- function(
+  object_list,
+  empty_list_unspecified,
+  simplify_list
+) {
   required <- get_required(object_list)
 
   # need to remove empty elements for `purrr::transpose()` to work...
@@ -61,10 +67,12 @@ update_required_fields <- function(fields, required) {
   fields
 }
 
-guess_object_list_field_spec <- function(value,
-                                         name,
-                                         empty_list_unspecified,
-                                         simplify_list) {
+guess_object_list_field_spec <- function(
+  value,
+  name,
+  empty_list_unspecified,
+  simplify_list
+) {
   ptype_result <- get_ptype_common(value, empty_list_unspecified)
 
   # no common ptype can be one of two reasons:
@@ -83,7 +91,12 @@ guess_object_list_field_spec <- function(value,
 
   ptype_type <- tib_type_of(ptype, name, other = FALSE)
   if (ptype_type == "vector") {
-    out <- guess_object_list_vector_spec(value, name, ptype, ptype_result$had_empty_lists)
+    out <- guess_object_list_vector_spec(
+      value,
+      name,
+      ptype,
+      ptype_result$had_empty_lists
+    )
     return(out)
   }
 
@@ -119,7 +132,11 @@ guess_object_list_field_spec <- function(value,
 
   value_flat <- vec_flatten(value, list(), name_spec = NULL)
   if (object_list) {
-    fields <- guess_object_list_spec(value_flat, empty_list_unspecified, simplify_list)
+    fields <- guess_object_list_spec(
+      value_flat,
+      empty_list_unspecified,
+      simplify_list
+    )
     names_to <- if (is_named(value_flat) && !is_empty(value_flat)) ".names"
 
     spec <- tib_df(name, !!!fields, .names_to = names_to)
@@ -140,7 +157,8 @@ guess_object_list_field_spec <- function(value,
   }
 
   ptype_result <- get_ptype_common(value_flat, empty_list_unspecified)
-  could_be_vector <- ptype_result$has_common_ptype && is_field_scalar(value_flat)
+  could_be_vector <- ptype_result$has_common_ptype &&
+    is_field_scalar(value_flat)
 
   if (could_be_vector) {
     if (is_named(value_flat)) {

@@ -46,7 +46,7 @@
 # can guess spec for discog
 
     Code
-      guess_tspec(discog) %>% print()
+      print(guess_tspec(discog))
     Output
       tspec_df(
         tib_int("instance_id"),
@@ -95,7 +95,7 @@
 # can guess spec for gh_users
 
     Code
-      guess_tspec(gh_users) %>% print()
+      print(guess_tspec(gh_users))
     Output
       tspec_df(
         tib_chr("login"),
@@ -133,7 +133,7 @@
 # can guess spec for gh_repos
 
     Code
-      guess_tspec(gh_repos) %>% print()
+      print(guess_tspec(gh_repos))
     Output
       tspec_df(
         tib_int("id"),

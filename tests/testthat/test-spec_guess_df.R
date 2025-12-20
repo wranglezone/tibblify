@@ -1,4 +1,3 @@
-
 # scalar columns ----------------------------------------------------------
 
 test_that("can guess scalar columns", {

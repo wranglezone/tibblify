@@ -9,7 +9,6 @@ test_that("can unpack spec", {
     tspec_df(tib_lgl("a"), b = tib_int(c("x", "b")), c = tib_chr(c("x", "c")))
   )
 
-
   spec <- tspec_df(
     tib_lgl("a"),
     tib_df("x", tib_row("y", tib_int("b"), tib_chr("c")))
@@ -36,7 +35,11 @@ test_that("can use names_sep", {
 
   expect_equal(
     unpack_tspec(spec, names_sep = "_"),
-    tspec_df(tib_lgl("a"), x_b = tib_int(c("x", "b")), x_c = tib_chr(c("x", "c")))
+    tspec_df(
+      tib_lgl("a"),
+      x_b = tib_int(c("x", "b")),
+      x_c = tib_chr(c("x", "c"))
+    )
   )
 })
 
@@ -99,7 +102,10 @@ test_that("only unpack field in `fields`", {
 
   expect_snapshot({
     (expect_error(unpack_tspec(spec, fields = "not-there")))
-    (expect_error(unpack_tspec(spec, fields = c("not-there", "also-not-there"))))
+    (expect_error(unpack_tspec(
+      spec,
+      fields = c("not-there", "also-not-there")
+    )))
   })
 
   # works together with `recurse`

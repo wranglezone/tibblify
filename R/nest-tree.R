@@ -180,7 +180,12 @@ check_parent_col <- function(data, parent_col, id_col, call = caller_env()) {
   data[[parent_col]]
 }
 
-check_children_to <- function(children_to, id_col, parent_col, call = caller_env()) {
+check_children_to <- function(
+  children_to,
+  id_col,
+  parent_col,
+  call = caller_env()
+) {
   children_to <- vctrs::vec_cast(children_to, character(), call = call)
   children_to <- vctrs::vec_assert(children_to, size = 1L, call = call)
   check_arg_different(

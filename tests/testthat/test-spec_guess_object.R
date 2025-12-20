@@ -73,7 +73,9 @@ test_that("can guess tib_vector for a scalar list", {
 
   expect_equal(
     guess_tspec_object(list(x = list(new_datetime(1))), simplify_list = TRUE),
-    tspec_object(x = tib_vector("x", new_datetime(), input_form = "scalar_list"))
+    tspec_object(
+      x = tib_vector("x", new_datetime(), input_form = "scalar_list")
+    )
   )
 
   # checks size
@@ -90,7 +92,10 @@ test_that("can guess tib_vector for a scalar list", {
 
 test_that("can guess tib_vector for input form = object", {
   expect_equal(
-    guess_tspec_object(list(x = list(a = TRUE, b = TRUE)), simplify_list = TRUE),
+    guess_tspec_object(
+      list(x = list(a = TRUE, b = TRUE)),
+      simplify_list = TRUE
+    ),
     tspec_object(x = tib_lgl_vec("x", input_form = "object"))
   )
 })
@@ -126,7 +131,10 @@ test_that("can guess tib_row", {
 
 test_that("can guess tib_row with a scalar list", {
   expect_equal(
-    guess_tspec_object(list(x = list(a = list(1L, 2L), b = "a")), simplify_list = TRUE),
+    guess_tspec_object(
+      list(x = list(a = list(1L, 2L), b = "a")),
+      simplify_list = TRUE
+    ),
     tspec_object(
       x = tib_row(
         "x",

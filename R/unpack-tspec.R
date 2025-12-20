@@ -37,13 +37,21 @@
 #' unpack_tspec(spec, fields = "x")
 #' # do not unpack the fields in `y`
 #' unpack_tspec(spec, recurse = FALSE)
-unpack_tspec <- function(spec,
-                         ...,
-                         fields = NULL,
-                         recurse = TRUE,
-                         names_sep = NULL,
-                         names_repair = c("unique", "universal", "check_unique", "unique_quiet", "universal_quiet"),
-                         names_clean = NULL) {
+unpack_tspec <- function(
+  spec,
+  ...,
+  fields = NULL,
+  recurse = TRUE,
+  names_sep = NULL,
+  names_repair = c(
+    "unique",
+    "universal",
+    "check_unique",
+    "unique_quiet",
+    "universal_quiet"
+  ),
+  names_clean = NULL
+) {
   rlang::check_dots_empty()
   check_character(fields, allow_null = TRUE)
   check_bool(recurse)
@@ -76,7 +84,12 @@ unpack_tspec <- function(spec,
     message = "In field {.field {cnd$name}}."
   )
 
-  spec$fields <- unchop_fields(spec$fields, names_repair, names_clean, error_call)
+  spec$fields <- unchop_fields(
+    spec$fields,
+    names_repair,
+    names_clean,
+    error_call
+  )
   spec
 }
 
@@ -95,13 +108,15 @@ check_unpack_cols <- function(fields, spec, error_call = caller_env()) {
   fields
 }
 
-unpack_field <- function(field_spec,
-                         recurse,
-                         name,
-                         names_sep,
-                         names_repair,
-                         names_clean,
-                         error_call) {
+unpack_field <- function(
+  field_spec,
+  recurse,
+  name,
+  names_sep,
+  names_repair,
+  names_clean,
+  error_call
+) {
   if (recurse && field_spec$type %in% c("row", "df")) {
     field_spec$fields <- purrr::imap(
       field_spec$fields,

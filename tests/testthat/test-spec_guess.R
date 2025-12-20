@@ -5,15 +5,15 @@ test_that("checks input", {
 })
 
 test_that("can guess spec for discog", {
-  expect_snapshot(guess_tspec(discog) %>% print())
+  expect_snapshot(guess_tspec(discog) |> print())
 })
 
 test_that("can guess spec for gh_users", {
-  expect_snapshot(guess_tspec(gh_users) %>% print())
+  expect_snapshot(guess_tspec(gh_users) |> print())
 })
 
 test_that("can guess spec for gh_repos", {
-  expect_snapshot(guess_tspec(gh_repos) %>% print())
+  expect_snapshot(guess_tspec(gh_repos) |> print())
 })
 
 test_that("can guess spec for got_chars", {

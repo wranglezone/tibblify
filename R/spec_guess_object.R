@@ -1,10 +1,12 @@
 #' @rdname guess_tspec
 #' @export
-guess_tspec_object <- function(x,
-                              ...,
-                              empty_list_unspecified = FALSE,
-                              simplify_list = FALSE,
-                              call = rlang::current_call()) {
+guess_tspec_object <- function(
+  x,
+  ...,
+  empty_list_unspecified = FALSE,
+  simplify_list = FALSE,
+  call = rlang::current_call()
+) {
   check_dots_empty()
   withr::local_options(list(tibblify.used_empty_list_arg = NULL))
   if (is.data.frame(x)) {
@@ -35,15 +37,19 @@ guess_tspec_object <- function(x,
   )
 
   tspec_object(
-    vector_allows_empty_list = is_true(getOption("tibblify.used_empty_list_arg")),
+    vector_allows_empty_list = is_true(getOption(
+      "tibblify.used_empty_list_arg"
+    )),
     !!!fields
   )
 }
 
-guess_object_field_spec <- function(value,
-                                    name,
-                                    empty_list_unspecified,
-                                    simplify_list) {
+guess_object_field_spec <- function(
+  value,
+  name,
+  empty_list_unspecified,
+  simplify_list
+) {
   if (is_null(value) || identical(unname(value), list())) {
     return(tib_unspecified(name))
   }
@@ -73,7 +79,10 @@ guess_object_field_spec <- function(value,
   }
 
   if (value_type != "list") {
-    cli::cli_abort("{.fn tib_type_of} returned an unexpected type", .internal = TRUE) # nocov
+    cli::cli_abort(
+      "{.fn tib_type_of} returned an unexpected type",
+      .internal = TRUE
+    ) # nocov
   }
 
   if (is_list_of_null(value)) {
@@ -87,7 +96,11 @@ guess_object_field_spec <- function(value,
   }
 
   if (object_list) {
-    fields <- guess_object_list_spec(value, empty_list_unspecified, simplify_list)
+    fields <- guess_object_list_spec(
+      value,
+      empty_list_unspecified,
+      simplify_list
+    )
     names_to <- if (is_named(value) && !is_empty(value)) ".names"
 
     spec <- tib_df(name, !!!fields, .names_to = names_to)
@@ -149,9 +162,19 @@ guess_vector_input_form <- function(value, name) {
 
   if (is_field_scalar(value)) {
     if (is_named(value)) {
-      tib_spec <- tib_vector(name, ptype, required = TRUE, input_form = "object")
+      tib_spec <- tib_vector(
+        name,
+        ptype,
+        required = TRUE,
+        input_form = "object"
+      )
     } else {
-      tib_spec <- tib_vector(name, ptype, required = TRUE, input_form = "scalar_list")
+      tib_spec <- tib_vector(
+        name,
+        ptype,
+        required = TRUE,
+        input_form = "scalar_list"
+      )
     }
 
     return(list(can_simplify = TRUE, tib_spec = tib_spec))

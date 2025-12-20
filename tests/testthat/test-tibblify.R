@@ -41,7 +41,10 @@ test_that("names are checked", {
     (expect_error(tibblify(list(row = list(z = 1, y = 2, 3, a = 4)), spec2)))
 
     # `NA` name
-    (expect_error(tibblify(list(row = set_names(list(1, 2), c("x", NA))), spec2)))
+    (expect_error(tibblify(
+      list(row = set_names(list(1, 2), c("x", NA))),
+      spec2
+    )))
 
     # duplicate name
     (expect_error(tibblify(list(row = list(x = 1, x = 2)), spec2)))
@@ -77,20 +80,41 @@ test_that("tib_scalar works", {
 
   # fallback default works
   expect_equal(tib(list(), tib_lgl("x", required = FALSE)), tibble(x = NA))
-  expect_equal(tib(list(), tib_int("x", required = FALSE)), tibble(x = NA_integer_))
-  expect_equal(tib(list(), tib_dbl("x", required = FALSE)), tibble(x = NA_real_))
-  expect_equal(tib(list(), tib_chr("x", required = FALSE)), tibble(x = NA_character_))
-  expect_equal(tib(list(), tib_scalar("x", dtt, required = FALSE)), tibble(x = vctrs::new_datetime(NA_real_)))
+  expect_equal(
+    tib(list(), tib_int("x", required = FALSE)),
+    tibble(x = NA_integer_)
+  )
+  expect_equal(
+    tib(list(), tib_dbl("x", required = FALSE)),
+    tibble(x = NA_real_)
+  )
+  expect_equal(
+    tib(list(), tib_chr("x", required = FALSE)),
+    tibble(x = NA_character_)
+  )
+  expect_equal(
+    tib(list(), tib_scalar("x", dtt, required = FALSE)),
+    tibble(x = vctrs::new_datetime(NA_real_))
+  )
 
   # use NA if NULL
-  expect_equal(tib(list(x = NULL), tib_lgl("x", required = FALSE, fill = FALSE)), tibble(x = NA))
   expect_equal(
-    tib(list(x = NULL), tib_scalar("x", vec_ptype(dtt), required = FALSE, fill = dtt)),
+    tib(list(x = NULL), tib_lgl("x", required = FALSE, fill = FALSE)),
+    tibble(x = NA)
+  )
+  expect_equal(
+    tib(
+      list(x = NULL),
+      tib_scalar("x", vec_ptype(dtt), required = FALSE, fill = dtt)
+    ),
     tibble(x = vec_init(dtt))
   )
 
   # specified default works
-  expect_equal(tib(list(), tib_lgl("x", required = FALSE, fill = FALSE)), tibble(x = FALSE))
+  expect_equal(
+    tib(list(), tib_lgl("x", required = FALSE, fill = FALSE)),
+    tibble(x = FALSE)
+  )
   expect_equal(
     tib(list(), tib_scalar("x", vec_ptype(dtt), required = FALSE, fill = dtt)),
     tibble(x = dtt)
@@ -153,7 +177,8 @@ test_that("tib_scalar respect ptype_inner", {
   }
   spec <- tspec_df(
     tib_scalar(
-      "x", Sys.Date(),
+      "x",
+      Sys.Date(),
       required = FALSE,
       ptype_inner = character(),
       fill = "2000-01-01",
@@ -171,7 +196,8 @@ test_that("tib_scalar respect ptype_inner", {
 
   spec2 <- tspec_df(
     tib_scalar(
-      "x", Sys.Date(),
+      "x",
+      Sys.Date(),
       required = FALSE,
       ptype_inner = Sys.time(),
       fill = as.POSIXct("2000-01-01", tz = "UTC"),
@@ -193,8 +219,14 @@ test_that("tib_vector works", {
   dtt <- vctrs::new_datetime(1)
 
   # can parse
-  expect_equal(tib(list(x = c(TRUE, FALSE)), tib_lgl_vec("x")), tibble(x = list_of(c(TRUE, FALSE))))
-  expect_equal(tib(list(x = c(dtt, dtt + 1)), tib_vector("x", dtt)), tibble(x = list_of(c(dtt, dtt + 1))))
+  expect_equal(
+    tib(list(x = c(TRUE, FALSE)), tib_lgl_vec("x")),
+    tibble(x = list_of(c(TRUE, FALSE)))
+  )
+  expect_equal(
+    tib(list(x = c(dtt, dtt + 1)), tib_vector("x", dtt)),
+    tibble(x = list_of(c(dtt, dtt + 1)))
+  )
 
   # errors if required but absent
   expect_snapshot({
@@ -206,15 +238,30 @@ test_that("tib_vector works", {
   expect_snapshot((expect_error(tib(list(x = "a"), tib_lgl_vec("x")))))
 
   # fallback default works
-  expect_equal(tib(list(), tib_lgl_vec("x", required = FALSE)), tibble(x = list_of(NULL, .ptype = logical())))
-  expect_equal(tib(list(), tib_vector("x", dtt, required = FALSE)), tibble(x = list_of(NULL, .ptype = vctrs::new_datetime())))
+  expect_equal(
+    tib(list(), tib_lgl_vec("x", required = FALSE)),
+    tibble(x = list_of(NULL, .ptype = logical()))
+  )
+  expect_equal(
+    tib(list(), tib_vector("x", dtt, required = FALSE)),
+    tibble(x = list_of(NULL, .ptype = vctrs::new_datetime()))
+  )
 
   # specified default works
-  expect_equal(tib(list(), tib_lgl_vec("x", required = FALSE, fill = c(TRUE, FALSE))), tibble(x = list_of(c(TRUE, FALSE))))
-  expect_equal(tib(list(), tib_vector("x", dtt, required = FALSE, fill = c(dtt, dtt + 1))), tibble(x = list_of(c(dtt, dtt + 1))))
+  expect_equal(
+    tib(list(), tib_lgl_vec("x", required = FALSE, fill = c(TRUE, FALSE))),
+    tibble(x = list_of(c(TRUE, FALSE)))
+  )
+  expect_equal(
+    tib(list(), tib_vector("x", dtt, required = FALSE, fill = c(dtt, dtt + 1))),
+    tibble(x = list_of(c(dtt, dtt + 1)))
+  )
 
   # uses NULL for NULL
-  expect_equal(tib(list(x = NULL), tib_int_vec("x", fill = 1:2)), tibble(x = list_of(NULL, .ptype = integer())))
+  expect_equal(
+    tib(list(x = NULL), tib_int_vec("x", fill = 1:2)),
+    tibble(x = list_of(NULL, .ptype = integer()))
+  )
 
   # elt_transform works
   expect_equal(
@@ -222,7 +269,10 @@ test_that("tib_vector works", {
     tibble(x = list_of(c(FALSE, TRUE)))
   )
   expect_equal(
-    tib(list(x = c(dtt - 1, dtt)), tib_vector("x", dtt, elt_transform = ~ .x + 1)),
+    tib(
+      list(x = c(dtt - 1, dtt)),
+      tib_vector("x", dtt, elt_transform = ~ .x + 1)
+    ),
     tibble(x = list_of(c(dtt, dtt + 1)))
   )
 
@@ -230,7 +280,10 @@ test_that("tib_vector works", {
   expect_equal(
     tib(
       list(x = c(TRUE, FALSE)),
-      tib_lgl_vec("x", transform = ~ vctrs::new_list_of(purrr::map(.x, `!`), ptype = logical()))
+      tib_lgl_vec(
+        "x",
+        transform = ~ vctrs::new_list_of(purrr::map(.x, `!`), ptype = logical())
+      )
     ),
     tibble(x = list_of(c(FALSE, TRUE)))
   )
@@ -245,7 +298,8 @@ test_that("tib_vector works", {
 test_that("tib_vector respect ptype_inner", {
   spec <- tspec_df(
     tib_vector(
-      "x", Sys.Date(),
+      "x",
+      Sys.Date(),
       required = FALSE,
       ptype_inner = character(),
       fill = as.Date("2000-01-01"),
@@ -255,7 +309,11 @@ test_that("tib_vector respect ptype_inner", {
 
   expect_equal(
     tibblify(
-      list(list(x = "2022-06-01"), list(x = c("2022-06-02", "2022-06-03")), list()),
+      list(
+        list(x = "2022-06-01"),
+        list(x = c("2022-06-02", "2022-06-03")),
+        list()
+      ),
       spec
     ),
     tibble(
@@ -408,11 +466,16 @@ test_that("tib_vector can parse object", {
 test_that("tib_vector creates tibble with names_to", {
   # TODO not quite sure whether `val` should be named
   expect_equal(
-    tib(list(x = c(a = 1L, b = 2L)), tib_int_vec("x", names_to = "name", values_to = "val")),
-    tibble(x = list_of(
-      tibble(name = c("a", "b"), val = c(a = 1L, b = 2L)),
-      .ptype = tibble(name = character(), val = integer())
-    ))
+    tib(
+      list(x = c(a = 1L, b = 2L)),
+      tib_int_vec("x", names_to = "name", values_to = "val")
+    ),
+    tibble(
+      x = list_of(
+        tibble(name = c("a", "b"), val = c(a = 1L, b = 2L)),
+        .ptype = tibble(name = character(), val = integer())
+      )
+    )
   )
 
   # can handle missing names
@@ -421,7 +484,12 @@ test_that("tib_vector creates tibble with names_to", {
     tibble(x = list_of(tibble(name = NA_character_, val = 1:2)))
   )
 
-  spec <- tib_int_vec("x", input_form = "object", values_to = "val", names_to = "name")
+  spec <- tib_int_vec(
+    "x",
+    input_form = "object",
+    values_to = "val",
+    names_to = "name"
+  )
   expect_equal(
     tib(list(x = list(a = 1, b = NULL)), spec),
     tibble(x = list_of(tibble(name = c("a", "b"), val = c(1L, NA))))
@@ -514,7 +582,9 @@ test_that("tib_variant works", {
   expect_equal(
     tibblify(
       list(list(x = c(TRUE, FALSE)), list(x = 1)),
-      tspec_df(x = tib_variant("x", required = FALSE, elt_transform = ~ length(.x)))
+      tspec_df(
+        x = tib_variant("x", required = FALSE, elt_transform = ~ length(.x))
+      )
     ),
     tibble(x = list(2, 1))
   )
@@ -552,7 +622,13 @@ test_that("tib_row works", {
         list(x = list()),
         list()
       ),
-      tspec_df(x = tib_row("x", .required = FALSE, a = tib_int("a", required = FALSE, fill = -1)))
+      tspec_df(
+        x = tib_row(
+          "x",
+          .required = FALSE,
+          a = tib_int("a", required = FALSE, fill = -1)
+        )
+      )
     ),
     tibble(x = tibble(a = c(1L, -1L, -1L)))
   )
@@ -564,7 +640,13 @@ test_that("tib_row works", {
       list(
         list(x = NULL)
       ),
-      tspec_df(x = tib_row("x", .required = FALSE, a = tib_int("a", required = FALSE, fill = -1)))
+      tspec_df(
+        x = tib_row(
+          "x",
+          .required = FALSE,
+          a = tib_int("a", required = FALSE, fill = -1)
+        )
+      )
     ),
     tibble(x = tibble(a = -1L))
   )
@@ -575,10 +657,12 @@ test_that("tib_df works", {
   expect_equal(
     tibblify(
       list(
-        list(x = list(
-          list(a = TRUE),
-          list(a = FALSE)
-        ))
+        list(
+          x = list(
+            list(a = TRUE),
+            list(a = FALSE)
+          )
+        )
       ),
       tspec_df(x = tib_df("x", a = tib_lgl("a")))
     ),
@@ -589,10 +673,12 @@ test_that("tib_df works", {
   expect_snapshot({
     (expect_error(tibblify(
       list(
-        list(x = list(
-          list(a = TRUE),
-          list(a = FALSE)
-        )),
+        list(
+          x = list(
+            list(a = TRUE),
+            list(a = FALSE)
+          )
+        ),
         list(a = 1)
       ),
       tspec_df(x = tib_df("x", a = tib_lgl("a")))
@@ -601,29 +687,33 @@ test_that("tib_df works", {
     # correct path `[[1]]$x[[2]]$a`
     (expect_error(tibblify(
       list(
-        list(x = list(
-          list(a = TRUE),
-          list()
-        ))
+        list(
+          x = list(
+            list(a = TRUE),
+            list()
+          )
+        )
       ),
       tspec_df(x = tib_df("x", a = tib_lgl("a")))
     )))
   })
 
-
-
   # fallback default works
   expect_equal(
     tibblify(
       list(
-        list(x = list(
-          list(a = TRUE),
-          list(a = FALSE)
-        )),
+        list(
+          x = list(
+            list(a = TRUE),
+            list(a = FALSE)
+          )
+        ),
         list(x = list()),
         list()
       ),
-      tspec_df(x = tib_df("x", .required = FALSE, a = tib_lgl("a", required = FALSE)))
+      tspec_df(
+        x = tib_df("x", .required = FALSE, a = tib_lgl("a", required = FALSE))
+      )
     ),
     tibble(x = list_of(tibble(a = c(TRUE, FALSE)), tibble(a = logical()), NULL))
   )
@@ -684,10 +774,12 @@ test_that("tib_df can use names_to", {
   expect_equal(
     tibblify(
       list(
-        list(x = list(
-          a = list(a = TRUE),
-          b = list(a = FALSE)
-        ))
+        list(
+          x = list(
+            a = list(a = TRUE),
+            b = list(a = FALSE)
+          )
+        )
       ),
       spec
     ),
@@ -797,14 +889,18 @@ test_that("nested keys work", {
 
   out <- tibblify(
     list(
-      list(a = list(
-        e = list(k = -0.1, l = 1L),
-        f = list(k = "a")
-      )),
-      list(a = list(
-        e = list(k = +0.2, l = 2L),
-        f = list(k = "b")
-      ))
+      list(
+        a = list(
+          e = list(k = -0.1, l = 1L),
+          f = list(k = "a")
+        )
+      ),
+      list(
+        a = list(
+          e = list(k = +0.2, l = 2L),
+          f = list(k = "b")
+        )
+      )
     ),
     spec
   )
@@ -881,11 +977,11 @@ test_that("discog works", {
     basic_information = tibble(
       labels = list_of(
         tibble(
-          name             = "Tobi Records (2)",
-          entity_type      = "1",
-          catno            = "TOB-013",
-          resource_url     = "https://api.discogs.com/labels/633407",
-          id               = 633407L,
+          name = "Tobi Records (2)",
+          entity_type = "1",
+          catno = "TOB-013",
+          resource_url = "https://api.discogs.com/labels/633407",
+          id = 633407L,
           entity_type_name = "Label"
         )
       ),
@@ -893,13 +989,13 @@ test_that("discog works", {
       master_url = NA_character_,
       artists = list_of(
         tibble(
-          join         = "",
-          name         = "Mollot",
-          anv          = "",
-          tracks       = "",
-          role         = "",
+          join = "",
+          name = "Mollot",
+          anv = "",
+          tracks = "",
+          role = "",
           resource_url = "https://api.discogs.com/artists/4619796",
-          id           = 4619796L
+          id = 4619796L
         )
       ),
       id = 7496378L,
@@ -908,9 +1004,9 @@ test_that("discog works", {
       formats = list_of(
         tibble(
           descriptions = list_of("Numbered"),
-          text         = "Black",
-          name         = "Cassette",
-          qty          = "1"
+          text = "Black",
+          name = "Cassette",
+          qty = "1"
         )
       ),
       cover_image = "https://img.discogs.com/EmbMh7vsElksjRgoXLFSuY1sjRQ=/fit-in/500x499/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-7496378-1442692247-1195.jpeg.jpg",
@@ -1059,7 +1155,10 @@ test_that("tspec_object() works", {
       list(a = "a", c = "c", b = list(a = "ba", b = "bb")),
       spec3
     ),
-    structure(list(c = "c", bb = "bb", a = "a", ba = "ba"), class = "tibblify_object")
+    structure(
+      list(c = "c", bb = "bb", a = "a", ba = "ba"),
+      class = "tibblify_object"
+    )
   )
 })
 
@@ -1213,7 +1312,12 @@ test_that("colmajor: tib_scalar respect ptype_inner", {
   date_times <- as.POSIXct("2022-06-02") + c(-60, 60)
   expect_equal(
     tib_cm(
-      tib_scalar("x", Sys.Date(), ptype_inner = Sys.time(), transform = as.Date),
+      tib_scalar(
+        "x",
+        Sys.Date(),
+        ptype_inner = Sys.time(),
+        transform = as.Date
+      ),
       x = date_times
     ),
     tibble(x = as.Date(date_times))
@@ -1224,8 +1328,14 @@ test_that("colmajor: tib_vector works", {
   dtt <- vctrs::new_datetime(1)
 
   # can parse
-  expect_equal(tib_cm(tib_lgl_vec("x"), x = list(c(TRUE, FALSE))), tibble(x = list_of(c(TRUE, FALSE))))
-  expect_equal(tib_cm(tib_vector("x", dtt), x = list(c(dtt, dtt + 1))), tibble(x = list_of(c(dtt, dtt + 1))))
+  expect_equal(
+    tib_cm(tib_lgl_vec("x"), x = list(c(TRUE, FALSE))),
+    tibble(x = list_of(c(TRUE, FALSE)))
+  )
+  expect_equal(
+    tib_cm(tib_vector("x", dtt), x = list(c(dtt, dtt + 1))),
+    tibble(x = list_of(c(dtt, dtt + 1)))
+  )
 
   # errors if bad type
   expect_snapshot({
@@ -1238,14 +1348,24 @@ test_that("colmajor: tib_vector works", {
   # transform works
   expect_equal(
     tib_cm(
-      tib_lgl_vec("x", transform = ~ vctrs::new_list_of(purrr::map(.x, `!`), logical())),
+      tib_lgl_vec(
+        "x",
+        transform = ~ vctrs::new_list_of(purrr::map(.x, `!`), logical())
+      ),
       x = list(c(TRUE, FALSE))
     ),
     tibble(x = list_of(c(FALSE, TRUE)))
   )
   expect_equal(
     tib_cm(
-      tib_vector("x", dtt, transform = ~ vctrs::new_list_of(purrr::map(.x, ~ .x + 1), vctrs::vec_ptype(dtt))),
+      tib_vector(
+        "x",
+        dtt,
+        transform = ~ vctrs::new_list_of(
+          purrr::map(.x, ~ .x + 1),
+          vctrs::vec_ptype(dtt)
+        )
+      ),
       x = list(c(dtt - 1, dtt))
     ),
     tibble(x = list_of(c(dtt, dtt + 1))),
@@ -1301,7 +1421,9 @@ test_that("colmajor: tib_row works", {
       tib_row("x", tib_row("row", tib_int("int"), tib_chr_vec("chr_vec"))),
       x = list(row = list(int = 1:2, chr_vec = list("a", c("b", "c"))))
     ),
-    tibble(x = tibble(row = tibble(int = 1:2, chr_vec = list_of("a", c("b", "c")))))
+    tibble(
+      x = tibble(row = tibble(int = 1:2, chr_vec = list_of("a", c("b", "c"))))
+    )
   )
 })
 
@@ -1323,19 +1445,31 @@ test_that("colmajor: tib_df works", {
     tib_cm(
       tib_df(
         "x",
-        tib_row("row", tib_int("int")), tib_df("df", tib_int("df_int"))
+        tib_row("row", tib_int("int")),
+        tib_df("df", tib_int("df_int"))
       ),
       x = list(
-        list(row = list(int = 1:2), df = list(list(df_int = 1), list(df_int = 3:4))),
+        list(
+          row = list(int = 1:2),
+          df = list(list(df_int = 1), list(df_int = 3:4))
+        ),
         list(row = list(int = 3), df = list(NULL))
         # TODO should this be able to handle an empty unnamed list?
         # list(row = list(int = 3), df = list(list()))
       )
     ),
-    tibble(x = list_of(
-      tibble(row = tibble(int = 1:2), df = list_of(tibble(df_int = 1), tibble(df_int = 3:4))),
-      tibble(row = tibble(int = 3), df = list_of(NULL, .ptype = tibble(df_int = integer())))
-    ))
+    tibble(
+      x = list_of(
+        tibble(
+          row = tibble(int = 1:2),
+          df = list_of(tibble(df_int = 1), tibble(df_int = 3:4))
+        ),
+        tibble(
+          row = tibble(int = 3),
+          df = list_of(NULL, .ptype = tibble(df_int = integer()))
+        )
+      )
+    )
   )
 
   # Field x$x[[2]]$b has size 1
@@ -1358,7 +1492,10 @@ test_that("colmajor: tibble with list columns work - #43", {
   )
 
   y <- tibble::tibble(x = list(tibble(a = 1:2), NULL, tibble(a = 1)))
-  spec <- tspec_df(x = tib_df("x", tib_dbl("a"), .required = FALSE), .input_form = "colmajor")
+  spec <- tspec_df(
+    x = tib_df("x", tib_dbl("a"), .required = FALSE),
+    .input_form = "colmajor"
+  )
   expect_equal(
     tibblify(y, tspec_df(x = tib_df("x", tib_dbl("a")))),
     tibble(x = list_of(tibble(a = 1:2), NULL, tibble(a = 1)))
@@ -1398,7 +1535,11 @@ test_that("colmajor: errors if field is absent", {
   expect_snapshot({
     (expect_error(tib_cm(tib_int("y"), x = list(b = 1:3))))
     # errors even if `required = FALSE`
-    (expect_error(tib_cm(tib_int("x"), tib_int("y", required = FALSE), x = list(b = 1:3))))
+    (expect_error(tib_cm(
+      tib_int("x"),
+      tib_int("y", required = FALSE),
+      x = list(b = 1:3)
+    )))
   })
 })
 
@@ -1473,7 +1614,12 @@ test_that("colmajor: errors on NULL value", {
 test_that("colmajor: checks size", {
   expect_snapshot({
     (expect_error(tib_cm(tib_int("x"), tib_int("y"), x = 1:2, y = 1:3)))
-    (expect_error(tib_cm(tib_int("x"), tib_row("y", tib_int("x")), x = 1:2, y = list(x = 1:3))))
+    (expect_error(tib_cm(
+      tib_int("x"),
+      tib_row("y", tib_int("x")),
+      x = 1:2,
+      y = list(x = 1:3)
+    )))
     (expect_error(tib_cm(tib_int("x"), tib_int_vec("y"), x = 1:2, y = list(1))))
   })
 })
@@ -1518,26 +1664,50 @@ test_that("recursive: works", {
     tibble(
       id = 1L,
       name = "a",
-      children = list(tibble(id = integer(), name = character(), children = list()))
+      children = list(tibble(
+        id = integer(),
+        name = character(),
+        children = list()
+      ))
     )
   )
 
   # deeply nested works
   x <- list(
-    list(id = 1, name = "a", children = list(
-      list(id = 11, name = "aa"),
-      list(id = 12, name = "ab", children = list(
-        list(id = 121, name = "aba")
-      ))
-    )),
-    list(id = 2, name = "b", children = list(
-      list(id = 21, name = "ba", children = list(
-        list(id = 121, name = "bba", children = list(
-          list(id = 1211, name = "bbaa")
-        ))
-      )),
-      list(id = 22, name = "bb")
-    ))
+    list(
+      id = 1,
+      name = "a",
+      children = list(
+        list(id = 11, name = "aa"),
+        list(
+          id = 12,
+          name = "ab",
+          children = list(
+            list(id = 121, name = "aba")
+          )
+        )
+      )
+    ),
+    list(
+      id = 2,
+      name = "b",
+      children = list(
+        list(
+          id = 21,
+          name = "ba",
+          children = list(
+            list(
+              id = 121,
+              name = "bba",
+              children = list(
+                list(id = 1211, name = "bbaa")
+              )
+            )
+          )
+        ),
+        list(id = 22, name = "bb")
+      )
+    )
   )
 
   expected <- tibble(
@@ -1570,7 +1740,10 @@ test_that("recursive: works", {
   )
 
   expect_equal(tibblify(x, spec), expected)
-  expect_equal(tibblify(list(data = x), spec2), structure(list(data = expected), class = "tibblify_object"))
+  expect_equal(
+    tibblify(list(data = x), spec2),
+    structure(list(data = expected), class = "tibblify_object")
+  )
 
   # tibble input
   expect_equal(tibblify(expected, spec), expected)
@@ -1641,7 +1814,10 @@ test_that("recursive: empty spec works", {
 
 test_that("recursive: .children_to works", {
   expect_equal(
-    tibblify(list(), tspec_recursive(.children = "children", .children_to = "child_col")),
+    tibblify(
+      list(),
+      tspec_recursive(.children = "children", .children_to = "child_col")
+    ),
     tibble(child_col = list())
   )
 })

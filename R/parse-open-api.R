@@ -159,7 +159,10 @@ parse_path_item_object <- function(path_item_object, openapi_spec) {
 
   ops <- c("get", "put", "post", "delete", "options", "head", "patch", "trace")
   operations <- path_item_object[intersect(names(path_item_object), ops)]
-  parsed_operations <- purrr::map(operations, ~ parse_operation_object(.x, openapi_spec))
+  parsed_operations <- purrr::map(
+    operations,
+    ~ parse_operation_object(.x, openapi_spec)
+  )
   out <- vctrs::vec_rbind(!!!parsed_operations, .names_to = "operation")
   if (nrow(out) > 0) {
     out$global_parameters <- list(parameters)
@@ -225,9 +228,10 @@ parse_parameters <- function(parameters, openapi_spec) {
     return(NULL)
   }
 
-  parameters <- purrr::map(parameters, ~ openapi_resolve_reference(.x, openapi_spec))
-
-
+  parameters <- purrr::map(
+    parameters,
+    ~ openapi_resolve_reference(.x, openapi_spec)
+  )
 
   spec <- tspec_df(
     tib_chr("in"),
@@ -274,7 +278,10 @@ parse_response_object <- function(response_object, openapi_spec) {
   parsed_response <- tibblify(response_object, spec)
 
   if (!is_empty(parsed_response$headers)) {
-    parsed_response$headers <- parse_header_objects(parsed_response$headers, openapi_spec)
+    parsed_response$headers <- parse_header_objects(
+      parsed_response$headers,
+      openapi_spec
+    )
   }
   # FIXME links
   if (!is_empty(parsed_response$links)) {
@@ -282,7 +289,10 @@ parse_response_object <- function(response_object, openapi_spec) {
       "We do not yet support {.field links} in OpenAPI response objects."
     )
   }
-  parsed_response$content <- parse_media_type_objects(parsed_response$content, openapi_spec)
+  parsed_response$content <- parse_media_type_objects(
+    parsed_response$content,
+    openapi_spec
+  )
 
   parsed_response$headers <- list(parsed_response$headers)
   parsed_response$content <- list(parsed_response$content)
@@ -292,7 +302,10 @@ parse_response_object <- function(response_object, openapi_spec) {
 }
 
 parse_media_type_objects <- function(media_type_objects, openapi_spec) {
-  out <- purrr::map(media_type_objects, ~ parse_media_type_object(.x, openapi_spec))
+  out <- purrr::map(
+    media_type_objects,
+    ~ parse_media_type_object(.x, openapi_spec)
+  )
   fast_tibble(
     list(media_type = names2(out), spec = unname(out)),
     n = length(out)
@@ -309,7 +322,10 @@ parse_header_objects <- function(header_objects, openapi_spec) {
   # * `name` MUST NOT be specified, it is given in the corresponding headers map.
   # * `in` MUST NOT be specified, it is implicitly in header.
   # * All traits that are affected by the location MUST be applicable to a location of header (for example, style).
-  header_objects <- purrr::map(header_objects, ~ openapi_resolve_reference(.x, openapi_spec))
+  header_objects <- purrr::map(
+    header_objects,
+    ~ openapi_resolve_reference(.x, openapi_spec)
+  )
 
   spec <- tspec_df(
     .names_to = "name",
@@ -349,14 +365,20 @@ schema_to_tspec <- function(schema, openapi_spec) {
 
   type <- get_openapi_type(schema)
   if (type == "object") {
-    fields <- purrr::imap(schema$properties, ~ parse_schema_memoised(.x, .y, openapi_spec))
+    fields <- purrr::imap(
+      schema$properties,
+      ~ parse_schema_memoised(.x, .y, openapi_spec)
+    )
     fields <- apply_required(fields, schema$required)
 
     tspec_row(!!!fields)
   } else if (type == "array") {
     schema <- openapi_resolve_reference(schema$items, openapi_spec)
 
-    fields <- purrr::imap(schema$properties, ~ parse_schema_memoised(.x, .y, openapi_spec))
+    fields <- purrr::imap(
+      schema$properties,
+      ~ parse_schema_memoised(.x, .y, openapi_spec)
+    )
     fields <- apply_required(fields, schema$required)
 
     tspec_df(!!!fields)
@@ -472,13 +494,15 @@ parse_schema <- function(schema, name, openapi_spec) {
   # TODO description, example
   # TODO format?!
 
-  if (is_empty(type)) {
-  } else if (type == "object") {
+  if (is_empty(type)) {} else if (type == "object") {
     if (!is.null(schema$additionalProperties)) {
       # FIXME hack required for asana which somehow has `additionalProperties = TRUE`
       # openapi_spec$components$schemas$RuleTriggerRequest$properties$action_data$additionalProperties
       if (is.list(schema$additionalProperties)) {
-        additional_properties <- openapi_resolve_reference(schema$additionalProperties, openapi_spec)
+        additional_properties <- openapi_resolve_reference(
+          schema$additionalProperties,
+          openapi_spec
+        )
       } else {
         additional_properties <- NULL
       }
@@ -486,8 +510,14 @@ parse_schema <- function(schema, name, openapi_spec) {
       additional_properties <- NULL
     }
 
-    fields <- purrr::imap(c(schema$properties, additional_properties$properties), ~ parse_schema_memoised(.x, .y, openapi_spec))
-    fields <- apply_required(fields, c(schema$required, additional_properties$required))
+    fields <- purrr::imap(
+      c(schema$properties, additional_properties$properties),
+      ~ parse_schema_memoised(.x, .y, openapi_spec)
+    )
+    fields <- apply_required(
+      fields,
+      c(schema$required, additional_properties$required)
+    )
     tib_row(name, !!!fields, .required = FALSE)
 
     # TODO additionalProperties?
@@ -551,34 +581,43 @@ handle_one_of <- function(schema, name, openapi_spec) {
   out <- purrr::map(schema$oneOf, ~ parse_schema(.x, name, openapi_spec))
   # must satisfy one of the schemas
   # for now simply try to combine them...
-  tryCatch({
-    # TODO fix `call`
-    tib_combine(out, name, current_call())
-  }, error = function(cnd) {
-    types <- purrr::map_chr(out, "type")
-    if ("row" %in% types) {
-      tib_combine(out[types == "row"], name, current_call())
-    } else {
-      tib_variant(name, required = FALSE)
+  tryCatch(
+    {
+      # TODO fix `call`
+      tib_combine(out, name, current_call())
+    },
+    error = function(cnd) {
+      types <- purrr::map_chr(out, "type")
+      if ("row" %in% types) {
+        tib_combine(out[types == "row"], name, current_call())
+      } else {
+        tib_variant(name, required = FALSE)
+      }
     }
-  })
+  )
 }
 
 handle_one_of_tspec <- function(schema, openapi_spec) {
   out <- purrr::map(schema$oneOf, ~ schema_to_tspec(.x, openapi_spec))
   # must satisfy one of the schemas
   # for now simply try to combine them...
-  tryCatch({
-    tspec_combine(!!!out)
-  }, error = function(cnd) {
-    # browser()
-    # stop("Can't combine")
-    tib_variant("dummy")
-  })
+  tryCatch(
+    {
+      tspec_combine(!!!out)
+    },
+    error = function(cnd) {
+      # browser()
+      # stop("Can't combine")
+      tib_variant("dummy")
+    }
+  )
 }
 
 if (is_installed("memoise")) {
-  parse_schema_memoised <- memoise::memoise(parse_schema, omit_args = "openapi_spec")
+  parse_schema_memoised <- memoise::memoise(
+    parse_schema,
+    omit_args = "openapi_spec"
+  )
 } else {
   parse_schema_memoised <- parse_schema
 }

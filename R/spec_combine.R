@@ -38,7 +38,7 @@ tspec_combine <- function(...) {
     return(tspec_row(!!!fields))
   } else if (type == "object") {
     return(tspec_object(!!!fields))
-  } else if( type == "df") {
+  } else if (type == "df") {
     # TODO input_form, vector_allows_empty_list
     names_to <- tib_combine_names_col(spec_list, current_call())
 
@@ -79,7 +79,10 @@ tspec_combine_field_list <- function(spec_list, call) {
   empty_idx <- lengths(fields_list) == 0
   nms_list <- purrr::map(fields_list, function(x) names(x))
   nms <- vec_unique(vec_flatten(nms_list, character()))
-  fields_list_t <- purrr::list_transpose(fields_list[!empty_idx], template = nms)
+  fields_list_t <- purrr::list_transpose(
+    fields_list[!empty_idx],
+    template = nms
+  )
 
   out <- purrr::imap(fields_list_t, ~ tib_combine(.x, .y, call))
   if (any(empty_idx)) {
@@ -141,7 +144,12 @@ tib_combine <- function(tib_list, name, call) {
       return(tib_row(key, !!!fields, .required = required))
     } else if (type == "df") {
       names_col <- tib_combine_names_col(tib_list, call)
-      return(tib_df(key, !!!fields, .required = required, .names_to = names_col))
+      return(tib_df(
+        key,
+        !!!fields,
+        .required = required,
+        .names_to = names_col
+      ))
     }
   }
 

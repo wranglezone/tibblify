@@ -1,8 +1,10 @@
-check_list <- function(x,
-                       ...,
-                       allow_null = FALSE,
-                       arg = caller_arg(x),
-                       call = caller_env()) {
+check_list <- function(
+  x,
+  ...,
+  allow_null = FALSE,
+  arg = caller_arg(x),
+  call = caller_env()
+) {
   if (!missing(x)) {
     if (vctrs::vec_is_list(x)) {
       return(invisible(NULL))
@@ -23,10 +25,12 @@ check_list <- function(x,
   )
 }
 
-check_arg_different <- function(arg,
-                                ...,
-                                arg_name = caller_arg(arg),
-                                call = caller_env()) {
+check_arg_different <- function(
+  arg,
+  ...,
+  arg_name = caller_arg(arg),
+  call = caller_env()
+) {
   other_args <- dots_list(..., .named = TRUE)
 
   for (i in seq_along(other_args)) {
@@ -156,7 +160,12 @@ stop_colmajor_null <- function(path) {
   tibblify_abort(msg)
 }
 
-stop_colmajor_wrong_size_element <- function(path, size_act, path_exp, size_exp) {
+stop_colmajor_wrong_size_element <- function(
+  path,
+  size_act,
+  path_exp,
+  size_exp
+) {
   path_str <- path_to_string(path)
   path_str_exp <- path_to_string(path_exp)
   msg <- c(
@@ -204,15 +213,22 @@ compat_map_chr <- function(x, .f, ...) {
   purrr::map_vec(x, .f, ..., .ptype = character())
 }
 
-with_indexed_errors <- function(expr,
-                                message,
-                                error_call = caller_env(),
-                                env = caller_env()) {
+with_indexed_errors <- function(
+  expr,
+  message,
+  error_call = caller_env(),
+  env = caller_env()
+) {
   try_fetch(
     expr,
     purrr_error_indexed = function(cnd) {
       msg_env <- new_environment(list(cnd = cnd), parent = env)
-      cli::cli_abort(message, call = error_call, parent = cnd$parent, .envir = msg_env)
+      cli::cli_abort(
+        message,
+        call = error_call,
+        parent = cnd$parent,
+        .envir = msg_env
+      )
     }
   )
 }

@@ -1,12 +1,14 @@
 #' @export
 #' @rdname guess_tspec
-guess_tspec_df <- function(x,
-                          ...,
-                          empty_list_unspecified = FALSE,
-                          simplify_list = FALSE,
-                          inform_unspecified = should_inform_unspecified(),
-                          call = rlang::current_call(),
-                          arg = rlang::caller_arg(x)) {
+guess_tspec_df <- function(
+  x,
+  ...,
+  empty_list_unspecified = FALSE,
+  simplify_list = FALSE,
+  inform_unspecified = should_inform_unspecified(),
+  call = rlang::current_call(),
+  arg = rlang::caller_arg(x)
+) {
   check_dots_empty()
   check_bool(empty_list_unspecified, call = call)
   check_bool(simplify_list, call = call)
@@ -19,7 +21,9 @@ guess_tspec_df <- function(x,
     fields <- purrr::imap(x, col_to_spec, empty_list_unspecified)
     spec <- tspec_df(
       !!!fields,
-      vector_allows_empty_list = is_true(getOption("tibblify.used_empty_list_arg"))
+      vector_allows_empty_list = is_true(getOption(
+        "tibblify.used_empty_list_arg"
+      ))
     )
   } else {
     check_list(x, arg = arg)
@@ -37,7 +41,9 @@ guess_tspec_df <- function(x,
     )
   }
 
-  if (inform_unspecified) spec_inform_unspecified(spec)
+  if (inform_unspecified) {
+    spec_inform_unspecified(spec)
+  }
   spec
 }
 
@@ -59,7 +65,10 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
   }
 
   if (col_type != "list") {
-    cli::cli_abort("{.fn tib_type_of} returned an unexpected type", .internal = TRUE)
+    cli::cli_abort(
+      "{.fn tib_type_of} returned an unexpected type",
+      .internal = TRUE
+    )
   }
 
   # `col` must be a list, so we need to check what its elements are
@@ -110,22 +119,33 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
 
   if (ptype_type == "list") {
     # TODO this could share code with other guessers
-    cli::cli_abort("List columns that only consists of lists are not supported yet.")
+    cli::cli_abort(
+      "List columns that only consists of lists are not supported yet."
+    )
   }
 
   if (col_type != "list") {
-    cli::cli_abort("{.fn get_col_type} returned an unexpected type", .internal = TRUE)
+    cli::cli_abort(
+      "{.fn get_col_type} returned an unexpected type",
+      .internal = TRUE
+    )
   }
 }
 
-col_to_spec_df <- function(ptype,
-                           col,
-                           name,
-                           list_of_col,
-                           empty_list_unspecified) {
+col_to_spec_df <- function(
+  ptype,
+  col,
+  name,
+  list_of_col,
+  empty_list_unspecified
+) {
   if (list_of_col) {
     col_required <- TRUE
-    has_non_vec_cols <- purrr::detect_index(ptype, ~ !is_vec(.x) || is.data.frame(.x)) > 0
+    has_non_vec_cols <- purrr::detect_index(
+      ptype,
+      ~ !is_vec(.x) || is.data.frame(.x)
+    ) >
+      0
     if (has_non_vec_cols) {
       # non-vector columns need to be inspected further to actually get their
       # specification

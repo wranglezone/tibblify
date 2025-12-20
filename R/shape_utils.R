@@ -4,7 +4,7 @@ is_object <- function(x) {
 
 should_guess_object <- function(x) {
   # TODO upper limit on width of object?
-  .Call(ffi_is_object, x);
+  .Call(ffi_is_object, x)
 }
 
 is_object_list <- function(x) {
@@ -44,9 +44,15 @@ should_guess_object_list <- function(x) {
   n <- vec_size(names_list)
 
   # TODO why is this here?
-  if (n == 0) return(FALSE)
+  if (n == 0) {
+    return(FALSE)
+  }
 
-  all_names <- list_unchop(names_list, ptype = character(), name_spec = "{inner}")
+  all_names <- list_unchop(
+    names_list,
+    ptype = character(),
+    name_spec = "{inner}"
+  )
   names_count <- vec_count(all_names, "location")
 
   n_min <- floor(0.9 * n)
@@ -58,9 +64,7 @@ get_overview <- function(x) {
   paste0("  ", names(classes), ": ", classes, collapse = "\n")
 }
 
-guess_type <- function(x,
-                       arg = caller_arg(x),
-                       error_call = caller_env()) {
+guess_type <- function(x, arg = caller_arg(x), error_call = caller_env()) {
   object <- is_object(x)
   object_list <- is_object_list(x)
 
@@ -89,9 +93,11 @@ guess_type <- function(x,
   abort_not_tibblifiable(x, arg, error_call)
 }
 
-abort_not_tibblifiable <- function(x,
-                                   arg = caller_arg(x),
-                                   error_call = caller_env()) {
+abort_not_tibblifiable <- function(
+  x,
+  arg = caller_arg(x),
+  error_call = caller_env()
+) {
   lgl_to_bullet <- function(x) {
     bullets <- c("x", "v")
     x2 <- as.integer(x) + 1L
@@ -104,7 +110,11 @@ abort_not_tibblifiable <- function(x,
     "is fully named,",
     "and has unique names."
   )
-  object_bullets <- lgl_to_bullet(c(vec_is_list(x), is_named2(x), anyDuplicated(names(x)) == 0))
+  object_bullets <- lgl_to_bullet(c(
+    vec_is_list(x),
+    is_named2(x),
+    anyDuplicated(names(x)) == 0
+  ))
   o_msg <- set_names(object_cnd, c("", object_bullets))
 
   object_list_cnd <- c(

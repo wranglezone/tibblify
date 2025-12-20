@@ -54,9 +54,7 @@
 #' out
 #' out$children
 #' out$children[[1]]$children[[2]]
-tibblify <- function(x,
-                     spec = NULL,
-                     unspecified = NULL) {
+tibblify <- function(x, spec = NULL, unspecified = NULL) {
   withr::local_locale(c(LC_COLLATE = "C"))
 
   if (is_null(spec)) {
@@ -173,7 +171,10 @@ spec_prep <- function(spec) {
   if (type == "recursive") {
     spec$type <- "df"
     spec["names_col"] <- list(NULL)
-    spec$child_coll_pos <- which(compat_map_chr(spec$fields, "type") == "recursive_helper") - 1L
+    spec$child_coll_pos <- which(
+      compat_map_chr(spec$fields, "type") == "recursive_helper"
+    ) -
+      1L
   }
 
   spec
@@ -200,7 +201,8 @@ prep_nested_keys2 <- function(spec, coll_locations) {
     function(x) {
       x$key <- x$key[[1]]
 
-      x <- switch (x$type,
+      x <- switch(
+        x$type,
         scalar = prep_tib_scalar(x),
         vector = prep_tib_vector(x),
         row = spec_prep(x),
@@ -226,7 +228,8 @@ prep_nested_keys2 <- function(spec, coll_locations) {
   spec_complex <- purrr::map(spec[is_sub], remove_first_key)
   spec_split <- vec_split(spec_complex, first_keys[is_sub])
   spec_complex_prepped <- purrr::map2(
-    spec_split$key, spec_split$val,
+    spec_split$key,
+    spec_split$val,
     function(key, sub_spec) {
       out <- list(
         key = key,

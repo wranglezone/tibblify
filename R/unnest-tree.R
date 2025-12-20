@@ -45,12 +45,14 @@
 #'   parent_to = "parent",
 #'   ancestors_to = "ancestors"
 #' )
-unnest_tree <- function(data,
-                        id_col,
-                        child_col,
-                        level_to = "level",
-                        parent_to = "parent",
-                        ancestors_to = NULL) {
+unnest_tree <- function(
+  data,
+  id_col,
+  child_col,
+  level_to = "level",
+  parent_to = "parent",
+  ancestors_to = NULL
+) {
   if (!is.data.frame(data)) {
     cli_abort("{.arg data} must be a data frame.")
   }
@@ -61,7 +63,12 @@ unnest_tree <- function(data,
 
   level_to <- check_unnest_level_to(level_to, data)
   parent_to <- check_unnest_parent_to(parent_to, data, level_to)
-  ancestors_to <- check_unnest_ancestors_to(ancestors_to, data, level_to, parent_to)
+  ancestors_to <- check_unnest_ancestors_to(
+    ancestors_to,
+    data,
+    level_to,
+    parent_to
+  )
 
   call <- current_env()
 
@@ -96,7 +103,11 @@ unnest_tree <- function(data,
 
     if (!is_null(ancestors_to)) {
       if (level > 1L) {
-        ancestors_simple <- purrr::map2(cur_ancestors, vctrs::vec_chop(parent_ids), function(x, y) c(x, y))
+        ancestors_simple <- purrr::map2(
+          cur_ancestors,
+          vctrs::vec_chop(parent_ids),
+          function(x, y) c(x, y)
+        )
         cur_ancestors <- vctrs::vec_rep_each(ancestors_simple, ns)
       }
       level_ancestors[[level]] <- cur_ancestors
@@ -176,7 +187,12 @@ check_unnest_level_to <- function(level_to, data, call = caller_env()) {
   level_to
 }
 
-check_unnest_parent_to <- function(parent_to, data, level_to, call = caller_env()) {
+check_unnest_parent_to <- function(
+  parent_to,
+  data,
+  level_to,
+  call = caller_env()
+) {
   if (!is_null(parent_to)) {
     parent_to <- vctrs::vec_cast(parent_to, character(), call = call)
     vctrs::vec_assert(parent_to, size = 1L, call = call)
@@ -187,11 +203,13 @@ check_unnest_parent_to <- function(parent_to, data, level_to, call = caller_env(
   parent_to
 }
 
-check_unnest_ancestors_to <- function(ancestors_to,
-                                      data,
-                                      level_to,
-                                      parent_to,
-                                      call = caller_env()) {
+check_unnest_ancestors_to <- function(
+  ancestors_to,
+  data,
+  level_to,
+  parent_to,
+  call = caller_env()
+) {
   if (!is_null(ancestors_to)) {
     ancestors_to <- vctrs::vec_cast(ancestors_to, character(), call = call)
     vctrs::vec_assert(ancestors_to, size = 1L, call = call)
@@ -202,11 +220,13 @@ check_unnest_ancestors_to <- function(ancestors_to,
   ancestors_to
 }
 
-check_col_new <- function(data,
-                          col,
-                          col_arg = caller_arg(col),
-                          data_arg = "data",
-                          call = caller_env()) {
+check_col_new <- function(
+  data,
+  col,
+  col_arg = caller_arg(col),
+  data_arg = "data",
+  call = caller_env()
+) {
   if (col %in% colnames(data)) {
     msg <- "{.arg {col_arg}} must not be a column in {.arg {data_arg}}."
     cli_abort(msg, call = call)
