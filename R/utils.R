@@ -216,3 +216,7 @@ with_indexed_errors <- function(expr,
     }
   )
 }
+
+is_url_string <- function(x, arg = caller_arg(x), call = caller_env()) {
+  rlang::is_scalar_character(x) && grepl("^https?://", x)
+}

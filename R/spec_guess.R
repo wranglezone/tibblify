@@ -12,7 +12,7 @@
 #'   determined?
 #' @param call The execution environment of a currently running function, e.g.
 #'   `caller_env()`. The function will be mentioned in error messages as the
-#'   source of the error. See the `call` argument of [`abort()`] for more
+#'   source of the error. See the `call` argument of [`rlang::abort()`] for more
 #'   information.
 #' @param arg An argument name as a string. This argument will be mentioned in
 #'   error messages as the input that is at the origin of a problem.
