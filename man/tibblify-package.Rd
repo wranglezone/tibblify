@@ -10,8 +10,8 @@ A tool to rectangle a nested list, that is to convert it into a tibble. This is 
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://tibblify.wrangle.zone}
   \item \url{https://github.com/wranglezone/tibblify}
-  \item \url{https://wranglezone.github.io/tibblify/}
   \item Report bugs at \url{https://github.com/wranglezone/tibblify/issues}
 }
 
