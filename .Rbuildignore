@@ -15,3 +15,5 @@
 ^docs$
 ^pkgdown$
 ^memory-tests$
+^[.]?air[.]toml$
+^\.vscode$

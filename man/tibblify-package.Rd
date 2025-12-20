@@ -17,7 +17,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Maximilian Girlich \email{maximilian.girlich@outlook.com} [copyright holder]
+\strong{Maintainer}: Jon Harmon \email{jonthegeek@gmail.com} (\href{https://orcid.org/0000-0003-4781-4346}{ORCID})
+
+Authors:
+\itemize{
+  \item Maximilian Girlich \email{maximilian.girlich@outlook.com} [copyright holder]
+}
 
 Other contributors:
 \itemize{
