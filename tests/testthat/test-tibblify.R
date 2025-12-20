@@ -441,7 +441,7 @@ test_that("tib_vector can parse object", {
     (expect_error(tib(list(x = list(1, 2)), spec)))
   )
 
-  # partial or duplicate names are not checked - https://github.com/mgirlich/tibblify/issues/103
+  # partial or duplicate names are not checked - #103
   expect_equal(
     tib(list(x = list(a = 1, 2)), spec),
     tibble(x = list_of(c(1L, 2L)))
