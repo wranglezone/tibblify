@@ -1,0 +1,182 @@
+{
+    "0": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Instructor Interface for Plagiarism Detection",
+        "description": "Plagiarism Detection is among the significant and crucial tools provided by Submitty. I would like to work on improvising the current Plagiarism Detector by implementing following features- Plagiarism detector extension to pdf/txt files, extending the language support to further include Matlab.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "Submitty",
+            "disambiguatingDescription": "Programming assignment submission with automated grading and manual TA grading",
+            "description": "Submitty is an open source programming assignment submission system with secure and automated testing, automated grading, and efficient manual TA/instructor grading & overall course grades management.  Submitty was launched by the [Rensselaer Center for Open Source Software (RCOS)](https://rcos.io).\n\nThe Submitty project is hosted on GitHub.  https://github.com/Submitty/\n\nKey Features\n* Secure testing of many languages: Python, C/C++, Java, Scheme, Prolog, SPIM, and anything available on GNU / Linux!\n* Customizable automated grading with immediate feedback to students\n* Advanced grading tools: static analysis, JUnit, code coverage, memory debuggers, etc.\n* Student upload by drag-and-drop, zip upload, or version control\n* Correct mistakes through multiple submissions, flexible ``late day\u2019\u2019 policy, hidden tests\n* Interface for complementary instructor/TA manual grading, overall grade summaries\n* Instructors have full access to logs for debugging, launch batch regrading\n* Scales to multiple courses with thousands of students\n* Supports multiple instructors and TAs per course\n* Open-source, free to use, install on your own hardware, or VPS\n* Discussion forum\n* Plagiarism Detection\n\nIn the Fall 2017 term, Submitty was used by 1800+ students in 14 different courses in the [RPI Computer Science](https://cs.rpi.edu) department.  The largest class, Computer Science I, had more than 700 students.   The courses using Submitty cover the full spectrum of the computer science undergraduate and graduate curriculum from introductory programming courses, intermediate and advanced theory courses, popular junior/senior electives with team programming projects and written report projects, and specialized advanced topics cross-listed as graduate courses.  \n\nSubmitty was presented at [ACM SIGCSE 2017](http://submitty.org/publications/) in March 2017 and subsequently successfully used by instructors for courses at 3 other universities in Fall 2017.  Submitty will be presenting both a demo and posters at SIGCSE 2018 and aims to expand to more users.",
+            "url": "http://submitty.org",
+            "logo": "//lh3.googleusercontent.com/FLRWAXOdIRaYKzSA7YULWdjVDGqdcOC5p4n0XEu2zDyachPeNHrF6Roz_6dCtkSFTnL_7PYtldjFyJJlIM8MHsJ5EgEz9A"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Tushar Gurjar"
+        }
+    },
+    "1": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Improve UI and Add Test for Apache Taverna Mobile",
+        "description": "I looked at the Taverna mobile and I found that this app is for anyone who wants to create and run workflows, It basically shows workflow, developed by different users,\nthis app is to give them a platform by which they can view, that is not at his desk. For\ninstance, when visiting a conference he might hear about someone's workflow, which\nhe can quickly locate and add to starred workflows for later exploration.So, In this GSoC 2018 I will write the new tests for this apache taverna mobile application.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "Apache Software Foundation",
+            "disambiguatingDescription": "Providing open source software to the public free of charge",
+            "description": "The Foundation provides an established framework for intellectual property and financial contributions that simultaneously limits contributors potential legal exposure. Through a collaborative and meritocratic development process, Apache projects deliver enterprise-grade, freely available software products that attract large communities of users. The pragmatic Apache License makes it easy for all users, commercial and individual, to deploy Apache products.",
+            "url": "https://apache.org",
+            "logo": "//lh3.googleusercontent.com/Ts05O7XpiUbt2I8JQlpAp2lVKVTRp-dsfu0FH9-FJouJud6XN6jSlkdnoBfiTE31BnIl8j75CXTF2RLgvhdPQC6s5COZFmDH"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Hitesh Gautam"
+        }
+    },
+    "2": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Kernel space SOCKS proxy for Linux 4.x",
+        "description": "Currently no open source SOCKS proxy available for recent kernel versions. In fact router proxification depends on user-space proxy applications. This makes the operation much slower because of the intensive packet copy between kernel space and user-space. With this kernel module low-cost embedded devices can do the proxy function entirely in kernel space which makes the whole operation much faster, avoiding copies.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "freifunk",
+            "disambiguatingDescription": "Freifunk is a non-commercial initiative for free and open wireless networks.",
+            "description": "More and more people are single-handedly installing and maintaining free networks. Every user in the free wireless network provides his or her wireless LAN router for data transfer to other participants. In return, he or she can also transmit data, such as text, music and movies through a free internal network or use services setup by participants to chat, call or play online games. We use mesh networks.\n\nUmbrella Organisation\n-----\n\nWe act as umbrella organisation for other wireless communities like [Ninux](http://ninux.org), [qaul.net](http://qaul.net), [Guifi.net](http://guifi.net) or [WLAN Slovenija](https://wlan-si.net/) and communites developing software we extensivly use like [OpenWRT](https://openwrt.org/), [OLSR](http://www.olsr.org/mediawiki/index.php/Main_Page), [BATMAN](https://www.open-mesh.org/projects/open-mesh/wiki), [libremesh](http://libremesh.org/) or [retroshare](http://retroshare.sourceforge.net/).\n\nLocal communities provide software adapted to their own needs on their websites. There are more and more free wireless groups that meet regularly access in villages and cities.\n\nHardware and Software\n----\n\nMost devices in our networks are routers for home use. They should run with LEDE. In our local communities there are a lot of different approaches for different routing protocols, monitoring systems and map solutions. LEDE as OS for routers and OLSR, BATMAN and Babel as routing daemons are only a few examples of software developed together with freifunk.\nYou can find a great variety of topics where you can go on with wireless communities. We're looking for people working on new hardware drivers, improving routing protocols, developing network monitoring tools and user interface topics on the web interfaces, helping us with new features and tools to organize decentralized communities.\n\nCommon freifunk goals\n----\n\n* Educating and creating awareness on the subject of communication and freedom of information\n* Reducing the digital divide\n* Unhindered distribution of knowledge and resources\n* Empowering people to build and operate their own networks\n* Promote and support existing and new social structures\n\nAs we are decentralized there are some challenges, e.g. to get and show information about communities, working together with all those communties.",
+            "url": "https://freifunk.net",
+            "logo": "//lh3.googleusercontent.com/F_FWRzu838WIU-EDb-Teq9Y7OxaJSmqqIsl_aWHUQba98QrinymiU6iwPJYKSYcw5ghNPwVN6Ln3jsukc5Cam4gizRflkw"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Fejes Ferenc"
+        }
+    },
+    "3": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "General Improvements",
+        "description": "The aim of the project is to implement some of the enhancements suggested in the issue tracker to improve user experience(adding new useful features and making the app easier to use), security and  performance.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "phpMyAdmin",
+            "disambiguatingDescription": "A web interface for MySQL written in PHP",
+            "description": "phpMyAdmin is a free and open source tool written in PHP intended to handle the administration of MySQL with the use of a web browser. It can perform various tasks such as creating, modifying or deleting databases, tables, fields or rows; executing SQL statements; or managing users and permissions.",
+            "url": "https://www.phpmyadmin.net",
+            "logo": "//lh3.googleusercontent.com/eMrz9DWSz4hvXSQFqfVpV3_j7OMjYrcN_G_H6Z5yRKB16YkkXJMFCvf6Grdy11NJ64oHGTQHOtx41A4cA6LSxvkDCUFDvsQ"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "lakshya.arora"
+        }
+    },
+    "4": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Revamp Print Dialog",
+        "description": "The idea is make Print Dialog clean, simple and straightforward for the user.\n\nPrint Dialog content will only feature essential printing options. All other options could be displayed on a new \"More Options\" Dialog. This proposal also intends to solve printing ambiguity between the Print Dialog and the Printer Properties Dialog.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "LibreOffice",
+            "disambiguatingDescription": "LibreOffice is the leading free and open source office suite.",
+            "description": "LibreOffice is a modern Free & Open Source Office suite, one of the largest open source projects, and used by millions of users worldwide. LibreOffice is compatible with many file formats like Microsoft\u00ae Word, Excel, PowerPoint and Publisher. At its heart though, LibreOffice is built around an open standard, the OpenDocument Format, as its native file format.\n\nLibreOffice is developed by users who, just like you, believe in the principles of Free Software and in sharing their work with the world in non-restrictive ways. The development of LibreOffice is supported by The Document Foundation which provides the infrastructure for the project.\n\nWe believe that users should have the freedom to run, copy, distribute, study, change and improve the software that we distribute. While we do offer no-cost downloads of the LibreOffice suite of programs, Free Software is first and foremost a matter of liberty, not price. We campaign for these freedoms because we believe that everyone deserves them.\n\nThough the members of our community hail from many different backgrounds, we all value personal choice and transparency, which translates practically into wider compatibility, more utility, and no end-user lock-in to a single product. We believe that Free Software can provide better-quality, higher-reliability, increased-security, and greater-flexibility than proprietary alternatives. LibreOffice is a large project (approx. 6MLOC), which makes it interestingly complex, but at the same time, provides a place for all sorts of contribution & skills.\n\nThe community behind LibreOffice is the heart of the project, without which we would not have the resources to continue developing our software. The passion and drive that every individual brings to the community results in collaborative development that often exceeds our own expectations. With tons of different roles in the project, we invite everyone to join us in our work and help us to make LibreOffice known, prosper, and accessible to all.",
+            "url": "https://www.libreoffice.org/",
+            "logo": "//lh3.googleusercontent.com/O95m5reO6o-koX6olazgJEd18frr4_ZCBENbFopAjRKdSUXj3ldlG5OOBnFk5QI-Dzt7_0zFP3Mqx-RUOiwJINig1rn_Vcc"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Daniel Silva"
+        }
+    },
+    "5": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Adding All-to-All Communication to HPX",
+        "description": "All-to-All Communications is a very important feature that is supported by HPC libraries to allow many processes on different localities to process data efficiently and easily. Making HPX support this feature will increase the library's performance and capabilities. It's not an easy project and it needs researching to get the best algorithms that fit with the library's architecture.\n\nAlready there is a basic implementation of broadcast method in HPX. Many algorithms will be tested to refine the existing implementation. After that different methods (like scatter, gather, etc...) will be supported. Also benchmarks will be provided to test the performance of the algorithms.\n\nA new important feature is on the way!",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "STE||AR Group",
+            "disambiguatingDescription": "HPX: The C++ Standard Library for Parallelism and Concurrency",
+            "description": "The STE||AR Group is an international team of researchers who understand that a new approach to parallel computation is needed. Our work is crafted around the idea that we need to invent new ways to more efficiently use the resources that we have and use the knowledge that we gain to help guide the creation of the machines of tomorrow. While we develop several software products, the library which is most heavily developed and core to our team is HPX.\n\nHPX (High Performance ParalleX) is a general purpose C++ runtime system for parallel and distributed applications of any scale. It strives to provide a unified programming model which transparently utilizes the available resources to achieve unprecedented levels of scalability. This library strictly adheres to the C++11 Standard and leverages the Boost C++ Libraries which makes HPX easy to use, highly optimized, and very portable. HPX is developed for conventional architectures including Linux-based systems, Windows, Mac, and the BlueGene/Q, as well as accelerators such as the Xeon Phi.\n\nHPX (High Performance ParalleX) is a general purpose C++ runtime system for parallel and distributed applications of any scale. It strives to provide a unified programming model which transparently utilizes the available resources to achieve unprecedented levels of scalability. This library strictly adheres to the C++11 Standard and leverages the Boost C++ Libraries which makes HPX easy to use, highly optimized, and very portable. HPX is developed for conventional architectures including Linux-based systems, Windows, Mac, and the BlueGene/Q, as well as accelerators such as the Xeon Phi.\n\nIf you are looking for a project which incorporates cutting edge HPC research, runtime library development, and C++ standardization check out our [ideas page](https://github.com/STEllAR-GROUP/hpx/wiki/GSoC-2018-Project-Ideas) and contact us either though the #ste||ar channel on IRC (Freenode).",
+            "url": "https://stellar-group.org/",
+            "logo": "//lh3.googleusercontent.com/BZjTF0797RlT90P0Jh-glnJDke9pXyAS_fziKCWjiCQL61RK5SGKNwkbXATEv1jzbia3z0Q04zJmN8mWH6SvxPCDseLwNw"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Ahmed Samir"
+        }
+    },
+    "6": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Custom Analytics",
+        "description": "Worldbrain - Memex already has analytics but they\u2019re limited. This proposal involves storing, tracking and analysing an event log of the user activity, both on individual and whole user-base levels.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "WorldBrain.io - Verifying the Internet",
+            "disambiguatingDescription": "Bookmarking extension that works like your brain - full-text search everything.",
+            "description": "WorldBrain\u2019s mission is to make it easier for people to organise, recover, and share the most useful and trustworthy content they find on the web.\nTo do that, we built Memex. An open-source bookmarking tool for great thinkers: the researchers, scientists, academics, students, polemics, publishers, reporters, and writers who want to make the world a better place using facts, research, and verified information.\n\nWith Memex  we want to help you ease the frustration of not being able to find something you\u2019ve seen online, whether it\u2019s a website, a post on social media, a useful comment, or important quote.\nUsers can find things again, by searching for every word of every website visited \u2013 plus they can filter by domain, custom tags or time.\nAlso users can create links to highlights of articles, they can send to other people.  \n\nMemex is built with full privacy and data ownership in mind. \nAll data is stored locally on a user\u2019s own computer. You can also pause indexing, or to blacklist domains or URLs. \n\nOur long-term vision is to battle online misinformation, by enabling users to build on the past web-research of other people, and break out of their filter bubbles by comparing multiple different opinions. (worldbrain.io/vision)",
+            "url": "http://worldbrain.io",
+            "logo": "//lh3.googleusercontent.com/8g3dUIyto5-mko4qVa5DTHNuS3EXJdLPFrEqOIT328p-9BmRiO7D7Pgr-I7EGBkEzPLuj_5JV3YMNm9-23dFsds4YxJlDu73"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Mukesh Kumar Kharita"
+        }
+    },
+    "7": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Predict relevance of search results from historical clicks using a Neural Click Model",
+        "description": "Click models are algorithmic approaches which help in the \u200bunderstanding relevance of documents over a given query by modeling the search queries in a particular fashion. Currently, Wikimedia Search uses Dynamic Bayesian Network[DBN] which is based on the probabilistic graphical model. An algorithmic model, Neural Click Model [NCM] has been proposed, which is not only more accurate than DBN but also provides a way to input semantic features apart from click data. This project is about implementing, testing and analyzing NCM verify if it provides any computational or prediction benefits to the current model and finally integrating with the Mjolnir library.",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "Wikimedia Foundation",
+            "disambiguatingDescription": "Global movement whose mission is to bring free educational content to the world",
+            "description": "We believe that knowledge should be free for every human being. We prioritize efforts that empower disadvantaged and underrepresented communities, and that help overcome barriers to participation. We believe in mass collaboration, diversity and consensus building to achieve our goals. Wikipedia has become the fifth most-visited site in the world, used by more than 400 million people every month in more than 270 languages. We have other content projects including Wikimedia Commons, Wikidata and the most recent one, Wikivoyage. We also maintain the MediaWiki engine and a wide collection of open source software projects around it. But there is much more we can do: stabilize infrastructure, increase participation, improve quality, increase reach, encourage innovation. You can help to these goals in many ways.",
+            "url": "http://wikimediafoundation.org/",
+            "logo": "//lh3.googleusercontent.com/MlBzuKHKCyx1jUHyDfDnSBEI7zeepAweZs3ko4ZeTPv5Z6DxunmwYiItjPflMiSUZjiINE_BU4BNbEwwaKHSbxTsfoQoXatx"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Karan Dhingra"
+        }
+    },
+    "8": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Console Interface Improvements",
+        "description": "Radare2 has a very flexible console interface, including command line, different visual modes and Unix-like integration with other tools. But there are still a lot of things to be done, mainly:\n\n1) Unify similar code between all different modes\n\n2) Fixing Unicode support in RCanvas and Visual Panels mode\n\n3) Write a popup window widget for selection/autocompletion\n\n4) Add the table API/commands like it is done for graphs\n\n5) Add API and command for setting graph node background\n\n6) Show minigraph together with graph\n\n7) Radiff2 visual split-view mode\n\n8) Tests and documentation (r2book) for new commands",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "radare",
+            "disambiguatingDescription": "Radare2 reverse engineering framework and toolset",
+            "description": "The radare project started in February of 2006 aiming to provide a free and simple command line interface for a hexadecimal editor supporting 64 bit offsets to search and recover data from hard-disks.\n\nSince then, the project has grown, and its aim has changed to provide a complete framework for analyzing binaries with some basic *NIX concepts in mind, like everything is a file, small programs that interact with each other using stdin/out, and keep it simple.\n\nRadare2 is a complete LGPL3 rewrite of the original project, which removes design issues of the first iteration, and makes it more modular and easier to script and maintain. It features a testsuite that aims to cover as many cases as possible in order to catch regressions.\n\nRadare2 is composed of a hexadecimal editor at its core, with support for several architectures and binary formats. It features code analysis capabilities, scripting, data and code visualization through graphs and other means, a visual mode, easy unix integration, a binary diffing engine for code and data, a shellcode compiler, and much, much more!",
+            "url": "http://radare.org",
+            "logo": "//lh3.googleusercontent.com/re0Te9JbBl-aHG9tpxO_3WvYsTFrchihB4opiq9oRH3y14Vn4vTihp30Uohpd-Yalsap1VfgE5Mx31MgetJnfWGPFgHikDU"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Luca Di Bartolomeo"
+        }
+    },
+    "9": {
+        "@context": "http://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Improvement and Extension of Data Transforms in Vega-Lite",
+        "description": "Implementation of some of the useful transforms from Vega currently not present in Vega-Lite",
+        "sponsor": {
+            "@type": "Organization",
+            "name": "The Vega Visualization Tools by the UW Interactive Data Lab",
+            "disambiguatingDescription": "Declarative formats & Applications for Creating, Saving & Sharing Visualizations",
+            "description": "Over years working in data visualization, we\u2019ve sought to build tools that help designers craft sophisticated graphics, including systems such as Prefuse, Protovis and D3.js. However, in the grand scheme of things, \u201cartisanal\u201d visualizations hand-coded by skilled designers are the exception, not the rule. The vast majority of the world\u2019s visualizations instead are produced using end-user applications such as spreadsheets and business intelligence tools. While valuable, these tools often fall short of fully supporting the iterative, interactive process of data analysis. Improved tools could help a larger swath of people create effective visualizations and better understand their data.\nThe goal of the Vega project is to promote an ecosystem of usable and interoperable visualization tools, supporting use cases ranging from exploratory data analysis to effective communication via custom visualization design.\nThis goal has led us to develop not a singular system, but rather a stack of tools for interactive data visualization. At the foundation of this stack is the Vega visualization grammar. Similar to how SQL provides a language for expressing database queries, Vega provides a declarative language for describing interactive visualizations with primitive building blocks such as data, transforms, marks, and event streams.  On top of Vega, Vega-Lite provides a concise language for rapidly generating statistical graphics to support data analysis.  With Vega and Vega-Lite, we have built a number of graphical user interfaces including the Voyager visualization tool, which blends manual and automated chart authoring to facilitate exploratory data analysis. \nTools from the Vega ecosystems have been adopted by the Jupyter/Python data science communities, Wikipedia, and leading tech companies including Apple, Google, Microsoft, Netflix, FitBit, and Twitter.",
+            "url": "https://vega.github.io/",
+            "logo": "//lh3.googleusercontent.com/SpPtZ6sYc5OVjLDRkPVEYbLOEaAATKi3_2XrrZb7a-zaAnuicKkjEnifBbL-Kw2Etalj9m3ip8ukIg-mUDSSxg3SCcwgu9E"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "invokesus"
+        }
+    }
+}

@@ -1,0 +1,39 @@
+* installing *source* package ‘tibblify’ ...
+** this is package ‘tibblify’ version ‘0.3.1.9000’
+** using staged installation
+** libs
+using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’
+using C++ compiler: ‘g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c add-value.c -o add-value.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c collector.c -o collector.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c finalize.c -o finalize.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c globals.c -o globals.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c guess-utils.c -o guess-utils.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c init.c -o init.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c parse-spec.c -o parse-spec.o
+g++ -std=gnu++17 -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include    -fpic  -g -O2   -c rlang-rcc.cpp -o rlang-rcc.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c rlang.c -o rlang.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c tibblify-vctrs-private.c -o tibblify-vctrs-private.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c tibblify-vctrs-public.c -o tibblify-vctrs-public.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c tibblify2.c -o tibblify2.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c utils.c -o utils.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c vctrs-type-info.c -o vctrs-type-info.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c vctrs-unspecified.c -o vctrs-unspecified.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c vctrs-utils-dispatch.c -o vctrs-utils-dispatch.o
+gcc -std=gnu2x -I"/opt/R/4.5.2/lib/R/include" -DNDEBUG -I./rlang -I'/home/runner/work/_temp/Library/vctrs/include' -I/usr/local/include   -fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE -fpic  -g -O2  -c vctrs-utils.c -o vctrs-utils.o
+g++ -std=gnu++17 -shared -L/opt/R/4.5.2/lib/R/lib -L/usr/local/lib -o tibblify.so add-value.o collector.o finalize.o globals.o guess-utils.o init.o parse-spec.o rlang-rcc.o rlang.o tibblify-vctrs-private.o tibblify-vctrs-public.o tibblify2.o utils.o vctrs-type-info.o vctrs-unspecified.o vctrs-utils-dispatch.o vctrs-utils.o -L/opt/R/4.5.2/lib/R/lib -lR
+installing to /home/runner/work/tibblify/tibblify/tibblify/check/tibblify.Rcheck/00LOCK-tibblify/00new/tibblify/libs
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (tibblify)

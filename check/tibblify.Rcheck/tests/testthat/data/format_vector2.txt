@@ -1,0 +1,1 @@
+lcol_int("a", .fill = NA_integer_)

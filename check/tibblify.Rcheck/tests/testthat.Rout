@@ -1,0 +1,41 @@
+
+R version 4.5.2 (2025-10-31) -- "[Not] Part in a Rumble"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(tibblify)
+> 
+> test_check("tibblify")
+[ FAIL 0 | WARN 1 | SKIP 1 | PASS 683 ]
+
+══ Skipped tests (1) ═══════════════════════════════════════════════════════════
+• improve guessing logic (1): 'test-spec_guess_object_list.R:140:3'
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+── Warning ('test-tibblify.R:949:3'): does not confuse key order due to case - #96 ──
+OS reports request to set locale to "en_US" cannot be honored
+Backtrace:
+    ▆
+ 1. └─withr::local_locale(c(LC_COLLATE = "en_US")) at test-tibblify.R:949:3
+ 2.   └─withr:::set_locale(cats)
+ 3.     └─base::mapply(Sys.setlocale, names(cats), cats)
+ 4.       └─base (local) `<fn>`(dots[[1L]][[1L]], dots[[2L]][[1L]])
+
+[ FAIL 0 | WARN 1 | SKIP 1 | PASS 683 ]
+> 
+> proc.time()
+   user  system elapsed 
+ 39.538   0.605  39.803 

@@ -1,0 +1,20 @@
+formatting              Printing tibblify specifications
+get_spec                Examine the column specification
+gh_repos                GitHub Repositories
+gh_users                GitHub Users
+got_chars               Game of Thrones POV characters
+guess_tspec             Guess the 'tibblify()' Specification
+nest_tree               Convert a data frame to a tree
+parse_openapi_spec      Parse an OpenAPI spec
+politicians             Politicians
+should_inform_unspecified
+                        Determine whether to inform about unspecified
+                        fields in spec
+tib_unspecified         Create a Field Specification
+tibblify                Rectangle a nested list
+tspec_combine           Combine multiple specifications
+tspec_df                Create a Tibblify Specification
+unnest_tree             Unnest a recursive data frame
+unpack_tspec            Unpack a tibblify specification
+untibblify              Convert a data frame or object into a nested
+                        list

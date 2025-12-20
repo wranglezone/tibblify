@@ -1,0 +1,1092 @@
+{
+  "statuses": [
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:15 +0000 2014",
+      "id": 505874924095815700,
+      "id_str": "505874924095815681",
+      "text": "@aym0566x \n\n名前:前田あゆみ\n第一印象:なんか怖っ！\n今の印象:とりあえずキモい。噛み合わない\n好きなところ:ぶすでキモいとこ😋✨✨\n思い出:んーーー、ありすぎ😊❤️\nLINE交換できる？:あぁ……ごめん✋\nトプ画をみて:照れますがな😘✨\n一言:お前は一生もんのダチ💖",
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": 866260188,
+      "in_reply_to_user_id_str": "866260188",
+      "in_reply_to_screen_name": "aym0566x",
+      "user": {
+        "id": 1186275104,
+        "id_str": "1186275104",
+        "name": "AYUMI",
+        "screen_name": "ayuu0123",
+        "location": "",
+        "description": "元野球部マネージャー❤︎…最高の夏をありがとう…❤︎",
+        "url": null,
+        "entities": {
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 262,
+        "friends_count": 252,
+        "listed_count": 0,
+        "created_at": "Sat Feb 16 13:40:25 +0000 2013",
+        "favourites_count": 235,
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "verified": false,
+        "statuses_count": 1769,
+        "lang": "en",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/497760886795153410/LDjAwR_y_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/497760886795153410/LDjAwR_y_normal.jpeg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1186275104/1409318784",
+        "profile_link_color": "0084B4",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "screen_name": "aym0566x",
+            "name": "前田あゆみ",
+            "id": 866260188,
+            "id_str": "866260188",
+            "indices": [
+              0,
+              9
+            ]
+          }
+        ]
+      },
+      "favorited": false,
+      "retweeted": false,
+      "lang": "ja"
+    },
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:14 +0000 2014",
+      "id": 505874922023837700,
+      "id_str": "505874922023837696",
+      "text": "RT @KATANA77: えっそれは・・・（一同） http://t.co/PkCJAcSuYK",
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 903487807,
+        "id_str": "903487807",
+        "name": "RT&ファボ魔のむっつんさっm",
+        "screen_name": "yuttari1998",
+        "location": "関西    ↓詳しいプロ↓",
+        "description": "無言フォローはあまり好みません ゲームと動画が好きですシモ野郎ですがよろしく…最近はMGSとブレイブルー、音ゲーをプレイしてます",
+        "url": "http://t.co/Yg9e1Fl8wd",
+        "entities": {
+          "url": {
+            "urls": [
+              {
+                "url": "http://t.co/Yg9e1Fl8wd",
+                "expanded_url": "http://twpf.jp/yuttari1998",
+                "display_url": "twpf.jp/yuttari1998",
+                "indices": [
+                  0,
+                  22
+                ]
+              }
+            ]
+          },
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 95,
+        "friends_count": 158,
+        "listed_count": 1,
+        "created_at": "Thu Oct 25 08:27:13 +0000 2012",
+        "favourites_count": 3652,
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "verified": false,
+        "statuses_count": 10276,
+        "lang": "ja",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/500268849275494400/AoXHZ7Ij_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/500268849275494400/AoXHZ7Ij_normal.jpeg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/903487807/1409062272",
+        "profile_link_color": "0084B4",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": {
+        "metadata": {
+          "result_type": "recent",
+          "iso_language_code": "ja"
+        },
+        "created_at": "Sat Aug 30 23:49:35 +0000 2014",
+        "id": 505864943636197400,
+        "id_str": "505864943636197376",
+        "text": "えっそれは・・・（一同） http://t.co/PkCJAcSuYK",
+        "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 77915997,
+          "id_str": "77915997",
+          "name": "(有)刀",
+          "screen_name": "KATANA77",
+          "location": "",
+          "description": "プリキュア好きのサラリーマンです。好きなプリキュアシリーズはハートキャッチ、最愛のキャラクターは月影ゆりさんです。 http://t.co/QMLJeFmfMTご質問、お問い合わせはこちら http://t.co/LU8T7vmU3h",
+          "url": null,
+          "entities": {
+            "description": {
+              "urls": [
+                {
+                  "url": "http://t.co/QMLJeFmfMT",
+                  "expanded_url": "http://www.pixiv.net/member.php?id=4776",
+                  "display_url": "pixiv.net/member.php?id=…",
+                  "indices": [
+                    58,
+                    80
+                  ]
+                },
+                {
+                  "url": "http://t.co/LU8T7vmU3h",
+                  "expanded_url": "http://ask.fm/KATANA77",
+                  "display_url": "ask.fm/KATANA77",
+                  "indices": [
+                    95,
+                    117
+                  ]
+                }
+              ]
+            }
+          },
+          "protected": false,
+          "followers_count": 1095,
+          "friends_count": 740,
+          "listed_count": 50,
+          "created_at": "Mon Sep 28 03:41:27 +0000 2009",
+          "favourites_count": 3741,
+          "utc_offset": 32400,
+          "time_zone": "Tokyo",
+          "geo_enabled": true,
+          "verified": false,
+          "statuses_count": 19059,
+          "lang": "ja",
+          "contributors_enabled": false,
+          "is_translator": false,
+          "is_translation_enabled": false,
+          "profile_background_color": "C0DEED",
+          "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/808597451/45b82f887085d32bd4b87dfc348fe22a.png",
+          "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/808597451/45b82f887085d32bd4b87dfc348fe22a.png",
+          "profile_background_tile": true,
+          "profile_image_url": "http://pbs.twimg.com/profile_images/480210114964504577/MjVIEMS4_normal.jpeg",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/480210114964504577/MjVIEMS4_normal.jpeg",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/77915997/1404661392",
+          "profile_link_color": "0084B4",
+          "profile_sidebar_border_color": "FFFFFF",
+          "profile_sidebar_fill_color": "DDEEF6",
+          "profile_text_color": "333333",
+          "profile_use_background_image": true,
+          "default_profile": false,
+          "default_profile_image": false,
+          "following": false,
+          "follow_request_sent": false,
+          "notifications": false
+        },
+        "geo": null,
+        "coordinates": null,
+        "place": null,
+        "contributors": null,
+        "retweet_count": 82,
+        "favorite_count": 42,
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "id": 505864942575034400,
+              "id_str": "505864942575034369",
+              "indices": [
+                13,
+                35
+              ],
+              "media_url": "http://pbs.twimg.com/media/BwUxfC6CIAEr-Ye.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/BwUxfC6CIAEr-Ye.jpg",
+              "url": "http://t.co/PkCJAcSuYK",
+              "display_url": "pic.twitter.com/PkCJAcSuYK",
+              "expanded_url": "http://twitter.com/KATANA77/status/505864943636197376/photo/1",
+              "type": "photo",
+              "sizes": {
+                "medium": {
+                  "w": 600,
+                  "h": 338,
+                  "resize": "fit"
+                },
+                "small": {
+                  "w": 340,
+                  "h": 192,
+                  "resize": "fit"
+                },
+                "thumb": {
+                  "w": 150,
+                  "h": 150,
+                  "resize": "crop"
+                },
+                "large": {
+                  "w": 765,
+                  "h": 432,
+                  "resize": "fit"
+                }
+              }
+            }
+          ]
+        },
+        "favorited": false,
+        "retweeted": false,
+        "possibly_sensitive": false,
+        "lang": "ja"
+      },
+      "retweet_count": 82,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "screen_name": "KATANA77",
+            "name": "(有)刀",
+            "id": 77915997,
+            "id_str": "77915997",
+            "indices": [
+              3,
+              12
+            ]
+          }
+        ],
+        "media": [
+          {
+            "id": 505864942575034400,
+            "id_str": "505864942575034369",
+            "indices": [
+              27,
+              49
+            ],
+            "media_url": "http://pbs.twimg.com/media/BwUxfC6CIAEr-Ye.jpg",
+            "media_url_https": "https://pbs.twimg.com/media/BwUxfC6CIAEr-Ye.jpg",
+            "url": "http://t.co/PkCJAcSuYK",
+            "display_url": "pic.twitter.com/PkCJAcSuYK",
+            "expanded_url": "http://twitter.com/KATANA77/status/505864943636197376/photo/1",
+            "type": "photo",
+            "sizes": {
+              "medium": {
+                "w": 600,
+                "h": 338,
+                "resize": "fit"
+              },
+              "small": {
+                "w": 340,
+                "h": 192,
+                "resize": "fit"
+              },
+              "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+              },
+              "large": {
+                "w": 765,
+                "h": 432,
+                "resize": "fit"
+              }
+            },
+            "source_status_id": 505864943636197400,
+            "source_status_id_str": "505864943636197376"
+          }
+        ]
+      },
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "ja"
+    },
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:14 +0000 2014",
+      "id": 505874920140591100,
+      "id_str": "505874920140591104",
+      "text": "@longhairxMIURA 朝一ライカス辛目だよw",
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "truncated": false,
+      "in_reply_to_status_id": 505874728897085440,
+      "in_reply_to_status_id_str": "505874728897085440",
+      "in_reply_to_user_id": 114188950,
+      "in_reply_to_user_id_str": "114188950",
+      "in_reply_to_screen_name": "longhairxMIURA",
+      "user": {
+        "id": 114786346,
+        "id_str": "114786346",
+        "name": "PROTECT-T",
+        "screen_name": "ttm_protect",
+        "location": "静岡県長泉町",
+        "description": "24 / XXX / @andprotector / @lifefocus0545 potato design works",
+        "url": "http://t.co/5EclbQiRX4",
+        "entities": {
+          "url": {
+            "urls": [
+              {
+                "url": "http://t.co/5EclbQiRX4",
+                "expanded_url": "http://ap.furtherplatonix.net/index.html",
+                "display_url": "ap.furtherplatonix.net/index.html",
+                "indices": [
+                  0,
+                  22
+                ]
+              }
+            ]
+          },
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 1387,
+        "friends_count": 903,
+        "listed_count": 25,
+        "created_at": "Tue Feb 16 16:13:41 +0000 2010",
+        "favourites_count": 492,
+        "utc_offset": 32400,
+        "time_zone": "Osaka",
+        "geo_enabled": false,
+        "verified": false,
+        "statuses_count": 12679,
+        "lang": "ja",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/481360383253295104/4B9Rcfys_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/481360383253295104/4B9Rcfys_normal.jpeg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/114786346/1403600232",
+        "profile_link_color": "0084B4",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "screen_name": "longhairxMIURA",
+            "name": "miura desu",
+            "id": 114188950,
+            "id_str": "114188950",
+            "indices": [
+              0,
+              15
+            ]
+          }
+        ]
+      },
+      "favorited": false,
+      "retweeted": false,
+      "lang": "ja"
+    },
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:14 +0000 2014",
+      "id": 505874919020699650,
+      "id_str": "505874919020699648",
+      "text": "RT @omo_kko: ラウワン脱出→友達が家に連んで帰ってって言うから友達ん家に乗せて帰る(1度も行ったことない田舎道)→友達おろして迷子→500メートルくらい続く変な一本道進む→墓地で行き止まりでUターン出来ずバックで500メートル元のところまで進まないといけない←今ここ",
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 392585658,
+        "id_str": "392585658",
+        "name": "原稿",
+        "screen_name": "chibu4267",
+        "location": "キミの部屋の燃えるゴミ箱",
+        "description": "RTしてTLに濁流を起こすからフォローしない方が良いよ 言ってることもつまらないし 詳細→http://t.co/ANSFlYXERJ 相方@1life_5106_hshd 葛西教徒その壱",
+        "url": "http://t.co/JTFjV89eaN",
+        "entities": {
+          "url": {
+            "urls": [
+              {
+                "url": "http://t.co/JTFjV89eaN",
+                "expanded_url": "http://www.pixiv.net/member.php?id=1778417",
+                "display_url": "pixiv.net/member.php?id=…",
+                "indices": [
+                  0,
+                  22
+                ]
+              }
+            ]
+          },
+          "description": {
+            "urls": [
+              {
+                "url": "http://t.co/ANSFlYXERJ",
+                "expanded_url": "http://twpf.jp/chibu4267",
+                "display_url": "twpf.jp/chibu4267",
+                "indices": [
+                  45,
+                  67
+                ]
+              }
+            ]
+          }
+        },
+        "protected": false,
+        "followers_count": 1324,
+        "friends_count": 1165,
+        "listed_count": 99,
+        "created_at": "Mon Oct 17 08:23:46 +0000 2011",
+        "favourites_count": 9542,
+        "utc_offset": 32400,
+        "time_zone": "Tokyo",
+        "geo_enabled": true,
+        "verified": false,
+        "statuses_count": 369420,
+        "lang": "ja",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/453106940822814720/PcJIZv43.png",
+        "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/453106940822814720/PcJIZv43.png",
+        "profile_background_tile": true,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/505731759216943107/pzhnkMEg_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/505731759216943107/pzhnkMEg_normal.jpeg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/392585658/1362383911",
+        "profile_link_color": "5EB9FF",
+        "profile_sidebar_border_color": "FFFFFF",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "default_profile": false,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": {
+        "metadata": {
+          "result_type": "recent",
+          "iso_language_code": "ja"
+        },
+        "created_at": "Sat Aug 30 16:51:09 +0000 2014",
+        "id": 505759640164892700,
+        "id_str": "505759640164892673",
+        "text": "ラウワン脱出→友達が家に連んで帰ってって言うから友達ん家に乗せて帰る(1度も行ったことない田舎道)→友達おろして迷子→500メートルくらい続く変な一本道進む→墓地で行き止まりでUターン出来ずバックで500メートル元のところまで進まないといけない←今ここ",
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 309565423,
+          "id_str": "309565423",
+          "name": "おもっこ",
+          "screen_name": "omo_kko",
+          "location": "",
+          "description": "ぱんすと",
+          "url": null,
+          "entities": {
+            "description": {
+              "urls": []
+            }
+          },
+          "protected": false,
+          "followers_count": 730,
+          "friends_count": 200,
+          "listed_count": 23,
+          "created_at": "Thu Jun 02 09:15:51 +0000 2011",
+          "favourites_count": 5441,
+          "utc_offset": 32400,
+          "time_zone": "Tokyo",
+          "geo_enabled": true,
+          "verified": false,
+          "statuses_count": 30012,
+          "lang": "ja",
+          "contributors_enabled": false,
+          "is_translator": false,
+          "is_translation_enabled": false,
+          "profile_background_color": "C0DEED",
+          "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+          "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+          "profile_background_tile": false,
+          "profile_image_url": "http://pbs.twimg.com/profile_images/499126939378929664/GLWpIKTW_normal.jpeg",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/499126939378929664/GLWpIKTW_normal.jpeg",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/309565423/1409418370",
+          "profile_link_color": "0084B4",
+          "profile_sidebar_border_color": "C0DEED",
+          "profile_sidebar_fill_color": "DDEEF6",
+          "profile_text_color": "333333",
+          "profile_use_background_image": true,
+          "default_profile": true,
+          "default_profile_image": false,
+          "following": false,
+          "follow_request_sent": false,
+          "notifications": false
+        },
+        "geo": null,
+        "coordinates": null,
+        "place": null,
+        "contributors": null,
+        "retweet_count": 58,
+        "favorite_count": 67,
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "urls": [],
+          "user_mentions": []
+        },
+        "favorited": false,
+        "retweeted": false,
+        "lang": "ja"
+      },
+      "retweet_count": 58,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "screen_name": "omo_kko",
+            "name": "おもっこ",
+            "id": 309565423,
+            "id_str": "309565423",
+            "indices": [
+              3,
+              11
+            ]
+          }
+        ]
+      },
+      "favorited": false,
+      "retweeted": false,
+      "lang": "ja"
+    },
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:13 +0000 2014",
+      "id": 505874918198624260,
+      "id_str": "505874918198624256",
+      "text": "RT @thsc782_407: #LEDカツカツ選手権\n漢字一文字ぶんのスペースに「ハウステンボス」を収める狂気 http://t.co/vmrreDMziI",
+      "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 753161754,
+        "id_str": "753161754",
+        "name": "ねこねこみかん＊",
+        "screen_name": "nekonekomikan",
+        "location": "ソーダ水のあふれるビンの中",
+        "description": "猫×6、大学・高校・旦那各1と暮らしています。猫、子供、日常思った事をつぶやいています／今年の目標：読書、庭の手入れ、ランニング、手芸／猫＊花＊写真＊詩＊林ももこさん＊鉄道など好きな方をフォローさせていただいています。よろしくお願いします♬",
+        "url": null,
+        "entities": {
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 217,
+        "friends_count": 258,
+        "listed_count": 8,
+        "created_at": "Sun Aug 12 14:00:47 +0000 2012",
+        "favourites_count": 7650,
+        "utc_offset": 32400,
+        "time_zone": "Tokyo",
+        "geo_enabled": false,
+        "verified": false,
+        "statuses_count": 20621,
+        "lang": "ja",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/470627990271848448/m83uy6Vc_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/470627990271848448/m83uy6Vc_normal.jpeg",
+        "profile_link_color": "0084B4",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": {
+        "metadata": {
+          "result_type": "recent",
+          "iso_language_code": "ja"
+        },
+        "created_at": "Fri Feb 28 16:04:13 +0000 2014",
+        "id": 439430848190742500,
+        "id_str": "439430848190742528",
+        "text": "#LEDカツカツ選手権\n漢字一文字ぶんのスペースに「ハウステンボス」を収める狂気 http://t.co/vmrreDMziI",
+        "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 82900665,
+          "id_str": "82900665",
+          "name": "[90]青葉台  芦 (第二粟屋) 屋",
+          "screen_name": "thsc782_407",
+          "location": "かんましき",
+          "description": "湯の街の元勃酩姦なんちゃら大　赤い犬の犬（外資系）　肥後で緑ナンバー屋さん勤め\nくだらないことしかつぶやかないし、いちいち訳のわからない記号を連呼するので相当邪魔になると思います。害はないと思います。のりものの画像とかたくさん上げます。さみしい。車輪のついたものならだいたい好き。",
+          "url": null,
+          "entities": {
+            "description": {
+              "urls": []
+            }
+          },
+          "protected": false,
+          "followers_count": 587,
+          "friends_count": 623,
+          "listed_count": 30,
+          "created_at": "Fri Oct 16 15:13:32 +0000 2009",
+          "favourites_count": 1405,
+          "utc_offset": 32400,
+          "time_zone": "Tokyo",
+          "geo_enabled": true,
+          "verified": false,
+          "statuses_count": 60427,
+          "lang": "ja",
+          "contributors_enabled": false,
+          "is_translator": false,
+          "is_translation_enabled": false,
+          "profile_background_color": "352726",
+          "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/154137819/__813-1103.jpg",
+          "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/154137819/__813-1103.jpg",
+          "profile_background_tile": false,
+          "profile_image_url": "http://pbs.twimg.com/profile_images/493760276676620289/32oLiTtT_normal.jpeg",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/493760276676620289/32oLiTtT_normal.jpeg",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/82900665/1398865798",
+          "profile_link_color": "D02B55",
+          "profile_sidebar_border_color": "829D5E",
+          "profile_sidebar_fill_color": "99CC33",
+          "profile_text_color": "3E4415",
+          "profile_use_background_image": true,
+          "default_profile": false,
+          "default_profile_image": false,
+          "following": false,
+          "follow_request_sent": false,
+          "notifications": false
+        },
+        "geo": null,
+        "coordinates": null,
+        "place": null,
+        "contributors": null,
+        "retweet_count": 3291,
+        "favorite_count": 1526,
+        "entities": {
+          "hashtags": [
+            {
+              "text": "LEDカツカツ選手権",
+              "indices": [
+                0,
+                11
+              ]
+            }
+          ],
+          "symbols": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "id": 439430848194936800,
+              "id_str": "439430848194936832",
+              "indices": [
+                41,
+                63
+              ],
+              "media_url": "http://pbs.twimg.com/media/BhksBzoCAAAJeDS.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/BhksBzoCAAAJeDS.jpg",
+              "url": "http://t.co/vmrreDMziI",
+              "display_url": "pic.twitter.com/vmrreDMziI",
+              "expanded_url": "http://twitter.com/thsc782_407/status/439430848190742528/photo/1",
+              "type": "photo",
+              "sizes": {
+                "medium": {
+                  "w": 600,
+                  "h": 450,
+                  "resize": "fit"
+                },
+                "large": {
+                  "w": 1024,
+                  "h": 768,
+                  "resize": "fit"
+                },
+                "thumb": {
+                  "w": 150,
+                  "h": 150,
+                  "resize": "crop"
+                },
+                "small": {
+                  "w": 340,
+                  "h": 255,
+                  "resize": "fit"
+                }
+              }
+            }
+          ]
+        },
+        "favorited": false,
+        "retweeted": false,
+        "possibly_sensitive": false,
+        "lang": "ja"
+      },
+      "retweet_count": 3291,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [
+          {
+            "text": "LEDカツカツ選手権",
+            "indices": [
+              17,
+              28
+            ]
+          }
+        ],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "screen_name": "thsc782_407",
+            "name": "[90]青葉台  芦 (第二粟屋) 屋",
+            "id": 82900665,
+            "id_str": "82900665",
+            "indices": [
+              3,
+              15
+            ]
+          }
+        ],
+        "media": [
+          {
+            "id": 439430848194936800,
+            "id_str": "439430848194936832",
+            "indices": [
+              58,
+              80
+            ],
+            "media_url": "http://pbs.twimg.com/media/BhksBzoCAAAJeDS.jpg",
+            "media_url_https": "https://pbs.twimg.com/media/BhksBzoCAAAJeDS.jpg",
+            "url": "http://t.co/vmrreDMziI",
+            "display_url": "pic.twitter.com/vmrreDMziI",
+            "expanded_url": "http://twitter.com/thsc782_407/status/439430848190742528/photo/1",
+            "type": "photo",
+            "sizes": {
+              "medium": {
+                "w": 600,
+                "h": 450,
+                "resize": "fit"
+              },
+              "large": {
+                "w": 1024,
+                "h": 768,
+                "resize": "fit"
+              },
+              "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+              },
+              "small": {
+                "w": 340,
+                "h": 255,
+                "resize": "fit"
+              }
+            },
+            "source_status_id": 439430848190742500,
+            "source_status_id_str": "439430848190742528"
+          }
+        ]
+      },
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "ja"
+    },
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:13 +0000 2014",
+      "id": 505874918039228400,
+      "id_str": "505874918039228416",
+      "text": "【金一地区太鼓台】川関と小山の見分けがつかない",
+      "source": "<a href=\"http://twittbot.net/\" rel=\"nofollow\">twittbot.net</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2530194984,
+        "id_str": "2530194984",
+        "name": "川之江中高生あるある",
+        "screen_name": "kw_aru",
+        "location": "DMにてネタ提供待ってますよ",
+        "description": "川之江中高生の川之江中高生による川之江中高生のためのあるあるアカウントです。タイムリーなネタはお気に入りにあります。",
+        "url": null,
+        "entities": {
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 113,
+        "friends_count": 157,
+        "listed_count": 0,
+        "created_at": "Wed May 28 15:01:43 +0000 2014",
+        "favourites_count": 30,
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "verified": false,
+        "statuses_count": 4472,
+        "lang": "ja",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/471668359314948097/XbIyXiZK_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/471668359314948097/XbIyXiZK_normal.jpeg",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2530194984/1401289473",
+        "profile_link_color": "0084B4",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": []
+      },
+      "favorited": false,
+      "retweeted": false,
+      "lang": "ja"
+    },
+    {
+      "metadata": {
+        "result_type": "recent",
+        "iso_language_code": "ja"
+      },
+      "created_at": "Sun Aug 31 00:29:13 +0000 2014",
+      "id": 505874915338104800,
+      "id_str": "505874915338104833",
+      "text": "おはようございますん♪ SSDSのDVDが朝一で届いた〜（≧∇≦）",
+      "source": "<a href=\"http://tweetli.st/\" rel=\"nofollow\">TweetList!</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 428179337,
+        "id_str": "428179337",
+        "name": "サラ",
+        "screen_name": "sala_mgn",
+        "location": "東京都",
+        "description": "bot遊びと実況が主目的の趣味アカウント。成人済♀。時々TLお騒がせします。リフォ率低いですがＦ／Ｂご自由に。スパムはブロック！[HOT]K[アニメ]タイバニ/Ｋ/薄桜鬼/トライガン/進撃[小説]冲方丁/森博嗣[漫画]内藤泰弘/高河ゆん[他]声優/演劇 ※@sano_bot1二代目管理人",
+        "url": null,
+        "entities": {
+          "description": {
+            "urls": []
+          }
+        },
+        "protected": false,
+        "followers_count": 104,
+        "friends_count": 421,
+        "listed_count": 2,
+        "created_at": "Sun Dec 04 12:51:18 +0000 2011",
+        "favourites_count": 3257,
+        "utc_offset": -36000,
+        "time_zone": "Hawaii",
+        "geo_enabled": false,
+        "verified": false,
+        "statuses_count": 25303,
+        "lang": "ja",
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "1A1B1F",
+        "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/601682567/put73jtg48ytjylq00if.jpeg",
+        "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/601682567/put73jtg48ytjylq00if.jpeg",
+        "profile_background_tile": false,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/3350624721/755920942e4f512e6ba489df7eb1147e_normal.jpeg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/3350624721/755920942e4f512e6ba489df7eb1147e_normal.jpeg",
+        "profile_link_color": "2FC2EF",
+        "profile_sidebar_border_color": "181A1E",
+        "profile_sidebar_fill_color": "252429",
+        "profile_text_color": "666666",
+        "profile_use_background_image": true,
+        "default_profile": false,
+        "default_profile_image": false,
+        "following": false,
+        "follow_request_sent": false,
+        "notifications": false
+      },
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": []
+      },
+      "favorited": false,
+      "retweeted": false,
+      "lang": "ja"
+    }
+  ],
+  "search_metadata": {
+    "completed_in": 0.087,
+    "max_id": 505874924095815700,
+    "max_id_str": "505874924095815681",
+    "next_results": "?max_id=505874847260352512&q=%E4%B8%80&count=100&include_entities=1",
+    "query": "%E4%B8%80",
+    "refresh_url": "?since_id=505874924095815681&q=%E4%B8%80&include_entities=1",
+    "count": 100,
+    "since_id": 0,
+    "since_id_str": "0"
+  }
+}
