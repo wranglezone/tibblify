@@ -10,9 +10,9 @@ and therefore offers a wide support of vector types.
 
 Useful links:
 
-- <https://github.com/wranglezone/tibblify>
+- <https://tibblify.wrangle.zone>
 
-- <https://wranglezone.github.io/tibblify/>
+- <https://github.com/wranglezone/tibblify>
 
 - Report bugs at <https://github.com/wranglezone/tibblify/issues>
 

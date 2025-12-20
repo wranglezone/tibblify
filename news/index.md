@@ -2,7 +2,7 @@
 
 ## tibblify (development version)
 
-- [`parse_openapi_spec()`](https://wranglezone.github.io/tibblify/reference/parse_openapi_spec.md)
+- [`parse_openapi_spec()`](https://tibblify.wrangle.zone/reference/parse_openapi_spec.md)
   supports many more fields and works for many more APIs
   ([\#190](https://github.com/wranglezone/tibblify/issues/190),
   [\#200](https://github.com/wranglezone/tibblify/issues/200),
@@ -14,24 +14,24 @@
 CRAN release: 2024-01-11
 
 - New
-  [`parse_openapi_spec()`](https://wranglezone.github.io/tibblify/reference/parse_openapi_spec.md)
+  [`parse_openapi_spec()`](https://tibblify.wrangle.zone/reference/parse_openapi_spec.md)
   and
-  [`parse_openapi_schema()`](https://wranglezone.github.io/tibblify/reference/parse_openapi_spec.md)
+  [`parse_openapi_schema()`](https://tibblify.wrangle.zone/reference/parse_openapi_spec.md)
   to convert an OpenAPI specification to a tibblify specification.
 
 - Fix ptype of a
-  [`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_vector()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   inside a
-  [`tib_df()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
+  [`tib_df()`](https://tibblify.wrangle.zone/reference/tib_scalar.md).
 
 - New
-  [`unpack_tspec()`](https://wranglezone.github.io/tibblify/reference/unpack_tspec.md)
+  [`unpack_tspec()`](https://tibblify.wrangle.zone/reference/unpack_tspec.md)
   to unpack the elements of
-  [`tib_row()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_row()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   fields ([\#165](https://github.com/wranglezone/tibblify/issues/165)).
 
 - Improved printing of lists parsed with
-  [`tspec_object()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md).
+  [`tspec_object()`](https://tibblify.wrangle.zone/reference/tspec_df.md).
 
 - Improved performance of the `tspec()` family.
 
@@ -45,19 +45,19 @@ CRAN release: 2022-11-16
 
 - Fixed a memory leak.
 
-- [`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_vector()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   is now uses less memory and is faster.
 
 - `tspec_*()`,
-  [`tib_df()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md),
+  [`tib_df()`](https://tibblify.wrangle.zone/reference/tib_scalar.md),
   and
-  [`tib_row()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_row()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   now discard `NULL` in `...`. This makes it easier to add a field
   conditionally with, for example `tspec_df(if (x) tib_int("a"))`.
 
-- [`tib_variant()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_variant()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   and
-  [`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_vector()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   give you more control for transforming:
 
   - `transform` is now applied to the whole vector.
@@ -66,9 +66,9 @@ CRAN release: 2022-11-16
     element.
 
 - New
-  [`tspec_recursive()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
+  [`tspec_recursive()`](https://tibblify.wrangle.zone/reference/tspec_df.md)
   and
-  [`tib_recursive()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_recursive()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
   to parse tree like structure, e.g. a directory structure with its
   children.
 
@@ -78,8 +78,8 @@ CRAN release: 2022-07-14
 
 Major rewrite of the tibblify package with lots of benefits:
 
-- [`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
-  is now implemented in C and therefore way faster.
+- [`tibblify()`](https://tibblify.wrangle.zone/reference/tibblify.md) is
+  now implemented in C and therefore way faster.
 
 - Support of column major format.
 
@@ -88,29 +88,29 @@ Major rewrite of the tibblify package with lots of benefits:
 - Specification functions have been renamed
 
   - `lcols()` to
-    [`tspec_df()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
+    [`tspec_df()`](https://tibblify.wrangle.zone/reference/tspec_df.md)
   - new specs
-    [`tspec_object()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
+    [`tspec_object()`](https://tibblify.wrangle.zone/reference/tspec_df.md)
     and
-    [`tspec_row()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
+    [`tspec_row()`](https://tibblify.wrangle.zone/reference/tspec_df.md)
   - `lcol_int()` to
-    [`tib_int()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+    [`tib_int()`](https://tibblify.wrangle.zone/reference/tib_scalar.md)
     etc
 
-- [`tspec_df()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
+- [`tspec_df()`](https://tibblify.wrangle.zone/reference/tspec_df.md)
   gains an argument `.names_to` to store the names of a recordlist in a
   column.
 
 - Added
-  [`untibblify()`](https://wranglezone.github.io/tibblify/reference/untibblify.md)
+  [`untibblify()`](https://tibblify.wrangle.zone/reference/untibblify.md)
   to turn a tibble into a nested list, i.e. to reverse the action of
-  [`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md).
+  [`tibblify()`](https://tibblify.wrangle.zone/reference/tibblify.md).
 
 - Added `spec_combine()` to combine multiple specifications.
 
 - Added argument `unspecified` to
-  [`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
-  to control how to handle unspecified fields.
+  [`tibblify()`](https://tibblify.wrangle.zone/reference/tibblify.md) to
+  control how to handle unspecified fields.
 
 - Many bugfixes.
 

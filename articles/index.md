@@ -3,5 +3,5 @@
 ### All vignettes
 
 - [Overview supported
-  structures](https://wranglezone.github.io/tibblify/articles/overview-supported-structures.md):
-- [tibblify](https://wranglezone.github.io/tibblify/articles/tibblify.md):
+  structures](https://tibblify.wrangle.zone/articles/overview-supported-structures.md):
+- [tibblify](https://tibblify.wrangle.zone/articles/tibblify.md):

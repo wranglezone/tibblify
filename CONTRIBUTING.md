@@ -66,6 +66,5 @@ help you write a unit test, if needed).
 ## Code of Conduct
 
 Please note that the tibblify project is released with a [Contributor
-Code of
-Conduct](https://wranglezone.github.io/tibblify/CODE_OF_CONDUCT.md). By
+Code of Conduct](https://tibblify.wrangle.zone/CODE_OF_CONDUCT.md). By
 contributing to this project you agree to abide by its terms.

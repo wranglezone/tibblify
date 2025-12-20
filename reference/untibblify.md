@@ -1,8 +1,8 @@
 # Convert a data frame or object into a nested list
 
 The inverse operation to
-[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md).
-It converts a data frame or an object into a nested list.
+[`tibblify()`](https://tibblify.wrangle.zone/reference/tibblify.md). It
+converts a data frame or an object into a nested list.
 
 ## Usage
 
