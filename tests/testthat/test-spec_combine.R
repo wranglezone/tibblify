@@ -12,7 +12,10 @@ test_that("cannot combine different types of spec", {
 
 test_that("cannot combine different keys", {
   expect_snapshot({
-    (expect_error(tspec_combine(tspec_df(tib_int("a")), tspec_df(a = tib_int("b")))))
+    (expect_error(tspec_combine(
+      tspec_df(tib_int("a")),
+      tspec_df(a = tib_int("b"))
+    )))
   })
 })
 
@@ -49,7 +52,10 @@ test_that("can combine empty spec", {
 
 test_that("can combine required", {
   spec_required <- tspec_df(a = tib_int("a"), b = tib_chr("b"))
-  spec_optional <- tspec_df(a = tib_int("a", required = FALSE), b = tib_chr("b"))
+  spec_optional <- tspec_df(
+    a = tib_int("a", required = FALSE),
+    b = tib_chr("b")
+  )
   spec_missing <- tspec_df(b = tib_chr("b"))
   spec_empty <- tspec_df()
   spec_all_optional <- spec_optional
@@ -68,7 +74,10 @@ test_that("can combine type", {
   tspec_row <- tspec_df(a = tib_row("a"))
   tspec_df <- tspec_df(a = tib_df("a"))
 
-  expect_equal(tspec_combine(spec_unspecified, spec_unspecified), spec_unspecified)
+  expect_equal(
+    tspec_combine(spec_unspecified, spec_unspecified),
+    spec_unspecified
+  )
   expect_equal(tspec_combine(spec_unspecified, spec_scalar), spec_scalar)
   expect_equal(tspec_combine(spec_unspecified, spec_scalar, spec_vec), spec_vec)
   expect_equal(tspec_combine(spec_unspecified, spec_variant), spec_variant)
@@ -117,7 +126,10 @@ test_that("can't combine different defaults", {
   spec_default1_vec <- tspec_df(a = tib_int_vec("a", fill = 1))
   spec_default2_vec <- tspec_df(a = tib_int_vec("a", fill = 2))
 
-  expect_equal(tspec_combine(spec_default1_vec, spec_default1_vec), spec_default1_vec)
+  expect_equal(
+    tspec_combine(spec_default1_vec, spec_default1_vec),
+    spec_default1_vec
+  )
 
   expect_snapshot({
     (expect_error(tspec_combine(spec_no_default_vec, spec_default1_vec)))
@@ -127,7 +139,7 @@ test_that("can't combine different defaults", {
 
 test_that("can't combine different transforms", {
   spec_no_f <- tspec_df(a = tib_int("a"))
-  spec_f1 <- tspec_df(a = tib_int("a", transform = ~ .x))
+  spec_f1 <- tspec_df(a = tib_int("a", transform = ~.x))
   spec_f2 <- tspec_df(a = tib_int("a", transform = ~ .x + 1))
 
   expect_equal(tspec_combine(spec_f1, spec_f1), spec_f1)

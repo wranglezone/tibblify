@@ -18,5 +18,7 @@ test_that("informing about unspecified looks good", {
       `2un3` = tib_unspecified("key")
     )
   )
-  expect_snapshot({spec_inform_unspecified(spec)})
+  expect_snapshot({
+    spec_inform_unspecified(spec)
+  })
 })

@@ -122,7 +122,9 @@ test_that("can unnest", {
             x = "e",
             children = list(
               tibble::tibble(
-                id = 6L, x = "f", children = list(NULL)
+                id = 6L,
+                x = "f",
+                children = list(NULL)
               )
             )
           )

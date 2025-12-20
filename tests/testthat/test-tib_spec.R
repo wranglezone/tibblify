@@ -1,4 +1,3 @@
-
 # spec_* ------------------------------------------------------------------
 
 test_that("errors on invalid names", {
@@ -183,14 +182,34 @@ test_that("tib_vector checks arguments", {
   # names_to
   expect_snapshot({
     # input_form != "object"
-    (expect_error(tib_int_vec("x", input_form = "scalar_list", values_to = "val", names_to = "name")))
+    (expect_error(tib_int_vec(
+      "x",
+      input_form = "scalar_list",
+      values_to = "val",
+      names_to = "name"
+    )))
     # values_to = NULL
     (expect_error(tib_int_vec("x", input_form = "object", names_to = "name")))
     # values_to = names_to
-    (expect_error(tib_int_vec("x", input_form = "object", values_to = "val", names_to = "val")))
+    (expect_error(tib_int_vec(
+      "x",
+      input_form = "object",
+      values_to = "val",
+      names_to = "val"
+    )))
 
-    (expect_error(tib_int_vec("x", input_form = "object", values_to = "val", names_to = 1)))
-    (expect_error(tib_int_vec("x", input_form = "object", values_to = "val", names_to = c("a", "b"))))
+    (expect_error(tib_int_vec(
+      "x",
+      input_form = "object",
+      values_to = "val",
+      names_to = 1
+    )))
+    (expect_error(tib_int_vec(
+      "x",
+      input_form = "object",
+      values_to = "val",
+      names_to = c("a", "b")
+    )))
   })
 })
 

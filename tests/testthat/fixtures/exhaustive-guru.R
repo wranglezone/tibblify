@@ -19,7 +19,9 @@ check_url_exists <- purrr::possibly(
       httr2::req_method("HEAD") |>
       httr2::req_perform() |>
       httr2::resp_status() |>
-      {\(status) status < 400}()
+      {
+        \(status) status < 400
+      }()
   },
   otherwise = FALSE
 )

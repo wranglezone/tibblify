@@ -1,4 +1,3 @@
-
 # tibblify results --------------------------------------------------------
 
 #' @export
@@ -52,7 +51,9 @@ format.tspec_df <- function(x, width = NULL, ..., names = NULL) {
     width = width,
     args = list(
       .names_to = if (!is.null(x$names_col)) deparse(x$names_col),
-      vector_allows_empty_list = if (x$vector_allows_empty_list) x$vector_allows_empty_list,
+      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+        x$vector_allows_empty_list
+      },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
     ),
     force_names = names
@@ -69,7 +70,9 @@ format.tspec_row <- function(x, width = NULL, ..., names = NULL) {
     fields = x$fields,
     width = width,
     args = list(
-      vector_allows_empty_list = if (x$vector_allows_empty_list) x$vector_allows_empty_list,
+      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+        x$vector_allows_empty_list
+      },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
     ),
     force_names = names
@@ -88,7 +91,9 @@ format.tspec_recursive <- function(x, width = NULL, ..., names = NULL) {
     args = list(
       .children = double_tick(x$child),
       .children_to = if (x$child != x$children_to) double_tick(x$children_to),
-      vector_allows_empty_list = if (x$vector_allows_empty_list) x$vector_allows_empty_list,
+      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+        x$vector_allows_empty_list
+      },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
     ),
     force_names = names
@@ -105,7 +110,9 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
     fields = x$fields,
     width = width,
     args = list(
-      vector_allows_empty_list = if (x$vector_allows_empty_list) x$vector_allows_empty_list,
+      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+        x$vector_allows_empty_list
+      },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
     ),
     force_names = names
@@ -116,7 +123,11 @@ format_fields <- function(f_name, fields, width, args = NULL, force_names) {
   if (force_names) {
     canonical_name <- FALSE
   } else {
-    canonical_name <- purrr::map2_lgl(fields, names2(fields), is_tib_name_canonical)
+    canonical_name <- purrr::map2_lgl(
+      fields,
+      names2(fields),
+      is_tib_name_canonical
+    )
     names2(fields)[canonical_name] <- ""
   }
 
@@ -150,7 +161,8 @@ format_fields <- function(f_name, fields, width, args = NULL, force_names) {
   )
 
   paste0(
-    f_name, "(",
+    f_name,
+    "(",
     inner,
     ")"
   )
@@ -178,15 +190,17 @@ print.tib_collector <- function(x, width = NULL, ..., names = NULL) {
 }
 
 #' @export
-format.tib_scalar <- function(x,
-                              ...,
-                              fill = NULL,
-                              ptype_inner = NULL,
-                              transform = NULL,
-                              multi_line = FALSE,
-                              nchar_indent = 0,
-                              width = NULL,
-                              names = FALSE) {
+format.tib_scalar <- function(
+  x,
+  ...,
+  fill = NULL,
+  ptype_inner = NULL,
+  transform = NULL,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  names = FALSE
+) {
   parts <- list(
     deparse(x$key),
     ptype = format_ptype_arg(x),
@@ -211,10 +225,13 @@ format.tib_scalar <- function(x,
 }
 
 #' @export
-format.tib_variant <- function(x, ...,
-                              multi_line = FALSE,
-                              nchar_indent = 0,
-                              width = NULL) {
+format.tib_variant <- function(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL
+) {
   format.tib_scalar(
     x = x,
     elt_transform = x$elt_transform,
@@ -224,10 +241,13 @@ format.tib_variant <- function(x, ...,
   )
 }
 #' @export
-format.tib_vector <- function(x, ...,
-                              multi_line = FALSE,
-                              nchar_indent = 0,
-                              width = NULL) {
+format.tib_vector <- function(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL
+) {
   format.tib_scalar(
     x = x,
     elt_transform = x$elt_transform,
@@ -246,10 +266,13 @@ format.tib_unspecified <- format.tib_scalar
 
 
 #' @export
-format.tib_scalar_chr_date <- function(x, ...,
-                                       multi_line = FALSE,
-                                       nchar_indent = 0,
-                                       width = NULL) {
+format.tib_scalar_chr_date <- function(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL
+) {
   format.tib_scalar(
     x = x,
     fill = if (identical(x$fill, NA_character_)) zap(),
@@ -329,57 +352,101 @@ format_tib_f <- function(x) {
 }
 
 #' @export
-format_tib_f.tib_unspecified <- function(x) {"tib_unspecified"}
+format_tib_f.tib_unspecified <- function(x) {
+  "tib_unspecified"
+}
 
 #' @export
-format_tib_f.tib_scalar_logical <- function(x) {cli::col_yellow("tib_lgl")}
+format_tib_f.tib_scalar_logical <- function(x) {
+  cli::col_yellow("tib_lgl")
+}
 #' @export
-format_tib_f.tib_scalar_integer <- function(x) {cli::col_green("tib_int")}
+format_tib_f.tib_scalar_integer <- function(x) {
+  cli::col_green("tib_int")
+}
 #' @export
-format_tib_f.tib_scalar_numeric <- function(x) {cli::col_green("tib_dbl")}
+format_tib_f.tib_scalar_numeric <- function(x) {
+  cli::col_green("tib_dbl")
+}
 #' @export
-format_tib_f.tib_scalar_character <- function(x) {cli::col_red("tib_chr")}
+format_tib_f.tib_scalar_character <- function(x) {
+  cli::col_red("tib_chr")
+}
 #' @export
-format_tib_f.tib_scalar_date <- function(x) {"tib_date"}
+format_tib_f.tib_scalar_date <- function(x) {
+  "tib_date"
+}
 #' @export
-format_tib_f.tib_scalar_chr_date <- function(x) {"tib_chr_date"}
+format_tib_f.tib_scalar_chr_date <- function(x) {
+  "tib_chr_date"
+}
 #' @export
-format_tib_f.tib_scalar<- function(x) {"tib_scalar"}
+format_tib_f.tib_scalar <- function(x) {
+  "tib_scalar"
+}
 
 #' @export
-format_tib_f.tib_vector_logical <- function(x) {cli::col_yellow("tib_lgl_vec")}
+format_tib_f.tib_vector_logical <- function(x) {
+  cli::col_yellow("tib_lgl_vec")
+}
 #' @export
-format_tib_f.tib_vector_integer <- function(x) {cli::col_green("tib_int_vec")}
+format_tib_f.tib_vector_integer <- function(x) {
+  cli::col_green("tib_int_vec")
+}
 #' @export
-format_tib_f.tib_vector_numeric <- function(x) {cli::col_green("tib_dbl_vec")}
+format_tib_f.tib_vector_numeric <- function(x) {
+  cli::col_green("tib_dbl_vec")
+}
 #' @export
-format_tib_f.tib_vector_character <- function(x) {cli::col_red("tib_chr_vec")}
+format_tib_f.tib_vector_character <- function(x) {
+  cli::col_red("tib_chr_vec")
+}
 #' @export
-format_tib_f.tib_vector_date <- function(x) {cli::col_red("tib_date_vec")}
+format_tib_f.tib_vector_date <- function(x) {
+  cli::col_red("tib_date_vec")
+}
 #' @export
-format_tib_f.tib_vector_chr_date <- function(x) {"tib_chr_date_vec"}
+format_tib_f.tib_vector_chr_date <- function(x) {
+  "tib_chr_date_vec"
+}
 #' @export
-format_tib_f.tib_vector <- function(x) {"tib_vector"}
+format_tib_f.tib_vector <- function(x) {
+  "tib_vector"
+}
 
 #' @export
-format_tib_f.tib_variant <- function(x) {"tib_variant"}
+format_tib_f.tib_variant <- function(x) {
+  "tib_variant"
+}
 
 #' @export
-format_tib_f.tib_row <- function(x) {cli::col_magenta("tib_row")}
+format_tib_f.tib_row <- function(x) {
+  cli::col_magenta("tib_row")
+}
 #' @export
-format_tib_f.tib_df <- function(x) {cli::col_magenta("tib_df")}
+format_tib_f.tib_df <- function(x) {
+  cli::col_magenta("tib_df")
+}
 #' @export
-format_tib_f.tib_recursive <- function(x) {cli::col_magenta("tib_recursive")}
+format_tib_f.tib_recursive <- function(x) {
+  cli::col_magenta("tib_recursive")
+}
 
 #' @export
-format_tib_f.default <- function(x) {class(x)[[1]]} # nocov
+format_tib_f.default <- function(x) {
+  class(x)[[1]]
+} # nocov
 
 
 # format ptype ------------------------------------------------------------
 
 format_ptype_inner <- function(x, ptype_inner) {
-  if (is_zap(ptype_inner)) return(NULL)
-  if (is_null(x$ptype_inner)) return(NULL)
+  if (is_zap(ptype_inner)) {
+    return(NULL)
+  }
+  if (is_null(x$ptype_inner)) {
+    return(NULL)
+  }
   if (!identical(x$ptype, x$ptype_inner)) format_ptype(x$ptype_inner)
 }
 
@@ -396,17 +463,23 @@ format_ptype <- function(x) {
 }
 
 #' @export
-format_ptype.default <- function(x) {deparse(x)}
+format_ptype.default <- function(x) {
+  deparse(x)
+}
 
 #' @export
 format_ptype.difftime <- function(x) {
-  if (!identical(class(x), "difftime")) return(deparse(x))
+  if (!identical(class(x), "difftime")) {
+    return(deparse(x))
+  }
 
   "vctrs::new_duration()"
 }
 #' @export
 format_ptype.Date <- function(x) {
-  if (!vec_is(x, vctrs::new_date())) return(deparse(x))
+  if (!vec_is(x, vctrs::new_date())) {
+    return(deparse(x))
+  }
 
   "vctrs::new_date()"
 }
@@ -415,16 +488,20 @@ format_ptype.POSIXct <- function(x) {
   tzone <- attr(x, "tzone")
   tzone_str <- if (!is_null(tzone)) paste0("tzone = ", deparse(tzone))
 
-  paste0("vctrs::new_datetime(", tzone_str,")")
+  paste0("vctrs::new_datetime(", tzone_str, ")")
 }
 
 
 # format fill -------------------------------------------------------------
 
 format_fill_arg <- function(x, fill) {
-  if (is_zap(fill)) return(NULL)
+  if (is_zap(fill)) {
+    return(NULL)
+  }
 
-  if (is_null(x$fill)) return(NULL)
+  if (is_null(x$fill)) {
+    return(NULL)
+  }
 
   if (is_tib_variant(x) || is_tib_unspecified(x)) {
     return(deparse(x$fill))
@@ -435,11 +512,17 @@ format_fill_arg <- function(x, fill) {
   } else if (is_tib_vector(x)) {
     canonical_default <- vec_init(x$ptype)
   } else {
-    cli::cli_abort("{.arg x} has unexpected type {.cls class(x)}.", .internal = TRUE) # nocov
+    cli::cli_abort(
+      "{.arg x} has unexpected type {.cls class(x)}.",
+      .internal = TRUE
+    ) # nocov
   }
 
-  canonical <- vec_size(x$fill) == 1 && vec_equal(x$fill, canonical_default, na_equal = TRUE)
-  if (canonical) return(NULL)
+  canonical <- vec_size(x$fill) == 1 &&
+    vec_equal(x$fill, canonical_default, na_equal = TRUE)
+  if (canonical) {
+    return(NULL)
+  }
 
   format_fill(x$fill)
 }
@@ -476,9 +559,11 @@ collapse_with_pad <- function(x, multi_line, nchar_prefix = 0, width) {
   x_multi_line <- paste0("\n", paste0(pad(x, 2), ",", collapse = "\n"), "\n")
   line_length <- nchar(x_single_line) + nchar_prefix
 
-  if (multi_line ||
+  if (
+    multi_line ||
       length(x) > 2 ||
-      line_length > tibblify_width(width)) {
+      line_length > tibblify_width(width)
+  ) {
     x_multi_line
   } else {
     x_single_line
@@ -507,7 +592,11 @@ name_exprs <- function(exprs, names, show_name) {
   # nocov end
 
   non_syntactic <- !is_syntactic(names)
-  names[non_syntactic] <- paste0("`", gsub("`", "\\\\`", names[non_syntactic]), "`")
+  names[non_syntactic] <- paste0(
+    "`",
+    gsub("`", "\\\\`", names[non_syntactic]),
+    "`"
+  )
 
   ifelse(show_name, paste0(names, " = ", exprs), exprs)
 }

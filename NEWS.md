@@ -1,6 +1,6 @@
 # tibblify (development version)
 
-* `parse_openapi_spec()` supports many more fields and works for many more APIs (#190, @jonthegeek and @mgirlich).
+* `parse_openapi_spec()` supports many more fields and works for many more APIs (#190, #200, @jonthegeek and @mgirlich).
 
 # tibblify 0.3.1
 

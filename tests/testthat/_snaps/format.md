@@ -1,92 +1,92 @@
 # can format tib_unspecified()
 
     Code
-      tib_unspecified("a") %>% print()
+      print(tib_unspecified("a"))
     Output
       tib_unspecified("a")
 
 # format for scalars works
 
     Code
-      tib_chr("a") %>% print()
+      print(tib_chr("a"))
     Output
       tib_chr("a")
 
 ---
 
     Code
-      tib_date("a") %>% print()
+      print(tib_date("a"))
     Output
       tib_date("a")
 
 ---
 
     Code
-      tib_dbl("a") %>% print()
+      print(tib_dbl("a"))
     Output
       tib_dbl("a")
 
 ---
 
     Code
-      tib_int("a") %>% print()
+      print(tib_int("a"))
     Output
       tib_int("a")
 
 ---
 
     Code
-      tib_lgl("a") %>% print()
+      print(tib_lgl("a"))
     Output
       tib_lgl("a")
 
 ---
 
     Code
-      tib_variant("a") %>% print()
+      print(tib_variant("a"))
     Output
       tib_variant("a")
 
 ---
 
     Code
-      tib_int("a", fill = NA_integer_) %>% print()
+      print(tib_int("a", fill = NA_integer_))
     Output
       tib_int("a")
 
 ---
 
     Code
-      tib_int("a", fill = 1) %>% print()
+      print(tib_int("a", fill = 1))
     Output
       tib_int("a", fill = 1L)
 
 ---
 
     Code
-      tib_int("a", transform = as.integer) %>% print()
+      print(tib_int("a", transform = as.integer))
     Output
       tib_int("a", transform = .Primitive("as.integer"))
 
 ---
 
     Code
-      tib_int("a", fill = NA_integer_, transform = as.integer) %>% print()
+      print(tib_int("a", fill = NA_integer_, transform = as.integer))
     Output
       tib_int("a", transform = .Primitive("as.integer"))
 
 ---
 
     Code
-      tib_scalar("a", ptype = new_difftime(units = "mins")) %>% print()
+      print(tib_scalar("a", ptype = new_difftime(units = "mins")))
     Output
       tib_scalar("a", ptype = vctrs::new_duration())
 
 ---
 
     Code
-      tib_row("a", x = tib_int("x"), y = tib_dbl("y", fill = NA_real_), z = tib_chr(
-        "z", fill = "abc")) %>% print()
+      print(tib_row("a", x = tib_int("x"), y = tib_dbl("y", fill = NA_real_), z = tib_chr(
+        "z", fill = "abc")))
     Output
       tib_row(
         "a",
@@ -109,8 +109,8 @@
 # format breaks long lines
 
     Code
-      tib_row("path", a_long_name = tib_dbl("a looooooooooooooooooooong name", fill = 1)) %>%
-        print(width = 60)
+      print(tib_row("path", a_long_name = tib_dbl("a looooooooooooooooooooong name",
+        fill = 1)), width = 60)
     Output
       tib_row(
         "path",
@@ -123,8 +123,8 @@
 ---
 
     Code
-      tib_row("path", a_long_name = tib_dbl("a looooooooooooooooooooong name", fill = 1)) %>%
-        print(width = 69)
+      print(tib_row("path", a_long_name = tib_dbl("a looooooooooooooooooooong name",
+        fill = 1)), width = 69)
     Output
       tib_row(
         "path",
@@ -134,22 +134,22 @@
 # format for tib_vector works
 
     Code
-      tib_chr_vec("a") %>% print()
+      print(tib_chr_vec("a"))
     Output
       tib_chr_vec("a")
 
 ---
 
     Code
-      tib_vector("a", ptype = vctrs::new_duration()) %>% print()
+      print(tib_vector("a", ptype = vctrs::new_duration()))
     Output
       tib_vector("a", ptype = vctrs::new_duration())
 
 ---
 
     Code
-      tib_vector("a", ptype = vctrs::new_duration(), input_form = "object",
-      values_to = "vals", names_to = "names") %>% print()
+      print(tib_vector("a", ptype = vctrs::new_duration(), input_form = "object",
+      values_to = "vals", names_to = "names"))
     Output
       tib_vector(
         "a",
@@ -162,7 +162,7 @@
 ---
 
     Code
-      tib_int_vec("a", fill = 1:2) %>% print()
+      print(tib_int_vec("a", fill = 1:2))
     Output
       tib_int_vec("a", fill = 1:2)
 
@@ -235,7 +235,7 @@
 # format for tib_row works
 
     Code
-      tib_row("formats", text = tib_chr("text", fill = NA_character_)) %>% print()
+      print(tib_row("formats", text = tib_chr("text", fill = NA_character_)))
     Output
       tib_row(
         "formats",
@@ -245,7 +245,7 @@
 ---
 
     Code
-      tib_row("formats", text = tib_chr("text"), .required = FALSE) %>% print()
+      print(tib_row("formats", text = tib_chr("text"), .required = FALSE))
     Output
       tib_row(
         "formats",
@@ -256,9 +256,9 @@
 ---
 
     Code
-      tib_row("basic_information", labels = tib_row("labels", name = tib_chr("name"),
-      entity_type = tib_chr("entity_type"), catno = tib_chr("catno"), resource_url = tib_chr(
-        "resource_url"), id = tib_int("id"), entity_type_name = tib_chr(
+      print(tib_row("basic_information", labels = tib_row("labels", name = tib_chr(
+        "name"), entity_type = tib_chr("entity_type"), catno = tib_chr("catno"),
+      resource_url = tib_chr("resource_url"), id = tib_int("id"), entity_type_name = tib_chr(
         "entity_type_name")), year = tib_int("year"), master_url = tib_chr(
         "master_url", fill = NA), artists = tib_df("artists", join = tib_chr("join"),
       name = tib_chr("name"), anv = tib_chr("anv"), tracks = tib_chr("tracks"), role = tib_chr(
@@ -267,7 +267,7 @@
         "formats", descriptions = tib_chr_vec("descriptions", fill = NULL), text = tib_chr(
           "text", fill = NA), name = tib_chr("name"), qty = tib_chr("qty")),
       cover_image = tib_chr("cover_image"), resource_url = tib_chr("resource_url"),
-      master_id = tib_int("master_id")) %>% print()
+      master_id = tib_int("master_id")))
     Output
       tib_row(
         "basic_information",
@@ -334,7 +334,7 @@
 # format for tib_df works
 
     Code
-      tib_df("formats", text = tib_chr("text", fill = NA_character_)) %>% print()
+      print(tib_df("formats", text = tib_chr("text", fill = NA_character_)))
     Output
       tib_df(
         "formats",
@@ -344,7 +344,7 @@
 ---
 
     Code
-      tib_df("formats", text = tib_chr("text"), .required = FALSE) %>% print()
+      print(tib_df("formats", text = tib_chr("text"), .required = FALSE))
     Output
       tib_df(
         "formats",
@@ -355,7 +355,7 @@
 ---
 
     Code
-      tib_df("formats", .names_to = "nms", text = tib_chr("text")) %>% print()
+      print(tib_df("formats", .names_to = "nms", text = tib_chr("text")))
     Output
       tib_df(
         "formats",
@@ -366,8 +366,8 @@
 # format for tib_recursive works
 
     Code
-      tib_recursive("data", .children = "children", tib_int("id"), tib_chr("name"), ) %>%
-        print()
+      print(tib_recursive("data", .children = "children", tib_int("id"), tib_chr(
+        "name"), ))
     Output
       tib_recursive(
         "data",
@@ -379,8 +379,8 @@
 ---
 
     Code
-      tib_recursive("data", .children = "children", tib_int("id"), tib_chr("name"),
-      .required = FALSE) %>% print()
+      print(tib_recursive("data", .children = "children", tib_int("id"), tib_chr(
+        "name"), .required = FALSE))
     Output
       tib_recursive(
         "data",
@@ -393,11 +393,11 @@
 # prints non-canonical names
 
     Code
-      tspec_df(b = tib_int("a")) %>% format()
+      format(tspec_df(b = tib_int("a")))
     Output
       [1] "tspec_df(\n  b = tib_int(\"a\"),\n)"
     Code
-      tspec_df(b = tib_int(c("a", "b"))) %>% format()
+      format(tspec_df(b = tib_int(c("a", "b"))))
     Output
       [1] "tspec_df(\n  b = tib_int(c(\"a\", \"b\")),\n)"
 
@@ -411,18 +411,18 @@
 # special ptypes correctly formatted
 
     Code
-      tib_scalar("a", ptype = character(), ptype_inner = Sys.Date()) %>% format()
+      format(tib_scalar("a", ptype = character(), ptype_inner = Sys.Date()))
     Output
       [1] "tib_chr(\"a\", ptype_inner = vctrs::new_date())"
     Code
-      tib_scalar("a", ptype = character(), ptype_inner = Sys.time()) %>% format()
+      format(tib_scalar("a", ptype = character(), ptype_inner = Sys.time()))
     Output
       [1] "tib_chr(\"a\", ptype_inner = vctrs::new_datetime(tzone = \"\"))"
 
 # correctly print results of tspec_object()
 
     Code
-      tibblify(list(a = 1L), tspec_object(tib_int("a"))) %>% print()
+      print(tibblify(list(a = 1L), tspec_object(tib_int("a"))))
     Output
       $a
       [1] 1

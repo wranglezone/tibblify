@@ -8,22 +8,26 @@ is_vec <- function(x) {
 }
 
 get_ptype_common <- function(x, empty_list_unspecified) {
-  try_fetch({
-    if (empty_list_unspecified) {
-      x <- drop_empty_lists(x)
-    }
+  try_fetch(
+    {
+      if (empty_list_unspecified) {
+        x <- drop_empty_lists(x)
+      }
 
-    ptype <- vec_ptype_common(!!!x)
-    list(
-      has_common_ptype = TRUE,
-      ptype = special_ptype_handling(ptype),
-      had_empty_lists = x %@% had_empty_lists
-    )
-  }, vctrs_error_incompatible_type = function(cnd) {
-    list(has_common_ptype = FALSE)
-  }, vctrs_error_scalar_type = function(cnd) {
-    list(has_common_ptype = FALSE)
-  })
+      ptype <- vec_ptype_common(!!!x)
+      list(
+        has_common_ptype = TRUE,
+        ptype = special_ptype_handling(ptype),
+        had_empty_lists = x %@% had_empty_lists
+      )
+    },
+    vctrs_error_incompatible_type = function(cnd) {
+      list(has_common_ptype = FALSE)
+    },
+    vctrs_error_scalar_type = function(cnd) {
+      list(has_common_ptype = FALSE)
+    }
+  )
 }
 
 drop_empty_lists <- function(x) {

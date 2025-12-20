@@ -25,12 +25,14 @@
 #' guess_tspec(list(list(x = 1), list(x = 2)))
 #'
 #' guess_tspec(gh_users)
-guess_tspec <- function(x,
-                        ...,
-                        empty_list_unspecified = FALSE,
-                        simplify_list = FALSE,
-                        inform_unspecified = should_inform_unspecified(),
-                        call = rlang::current_call()) {
+guess_tspec <- function(
+  x,
+  ...,
+  empty_list_unspecified = FALSE,
+  simplify_list = FALSE,
+  inform_unspecified = should_inform_unspecified(),
+  call = rlang::current_call()
+) {
   check_dots_empty()
   check_bool(empty_list_unspecified, call = call)
   check_bool(simplify_list, call = call)
@@ -62,13 +64,15 @@ guess_tspec <- function(x,
   }
 }
 
-guess_tspec_list <- function(x,
-                             ...,
-                             empty_list_unspecified = FALSE,
-                             simplify_list = FALSE,
-                             inform_unspecified = should_inform_unspecified(),
-                             arg = caller_arg(x),
-                             call = current_call()) {
+guess_tspec_list <- function(
+  x,
+  ...,
+  empty_list_unspecified = FALSE,
+  simplify_list = FALSE,
+  inform_unspecified = should_inform_unspecified(),
+  arg = caller_arg(x),
+  call = current_call()
+) {
   check_dots_empty()
   check_bool(empty_list_unspecified, call = call)
   check_bool(simplify_list, call = call)
@@ -100,7 +104,9 @@ guess_tspec_list <- function(x,
     abort_not_tibblifiable(x, arg, call)
   }
 
-  if (inform_unspecified) spec_inform_unspecified(spec)
+  if (inform_unspecified) {
+    spec_inform_unspecified(spec)
+  }
 
   spec
 }

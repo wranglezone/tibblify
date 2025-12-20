@@ -1,8 +1,14 @@
-spec_inform_unspecified <- function(spec, action = "inform", call = caller_env()) {
+spec_inform_unspecified <- function(
+  spec,
+  action = "inform",
+  call = caller_env()
+) {
   unspecified_paths <- get_unspecfied_paths(spec)
 
   lines <- format_unspecified_paths(unspecified_paths)
-  if (is_empty(lines)) return(spec)
+  if (is_empty(lines)) {
+    return(spec)
+  }
 
   msg <- c(
     "The spec contains {length(lines)} unspecified field{?s}:",

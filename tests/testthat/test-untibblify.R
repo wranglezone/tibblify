@@ -42,16 +42,20 @@ test_that("can untibblify a tibble column", {
   expect_equal(
     untibblify(x),
     list(
-      list(x = list(
-        int = 1L,
-        chr_vec = "a",
-        df = list(chr = "a")
-      )),
-      list(x = list(
-        int = 2L,
-        chr_vec = NULL,
-        df = list(chr = "b")
-      ))
+      list(
+        x = list(
+          int = 1L,
+          chr_vec = "a",
+          df = list(chr = "a")
+        )
+      ),
+      list(
+        x = list(
+          int = 2L,
+          chr_vec = NULL,
+          df = list(chr = "b")
+        )
+      )
     )
   )
 })
