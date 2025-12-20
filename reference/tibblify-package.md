@@ -10,11 +10,11 @@ and therefore offers a wide support of vector types.
 
 Useful links:
 
-- <https://github.com/mgirlich/tibblify>
+- <https://github.com/wranglezone/tibblify>
 
-- <https://mgirlich.github.io/tibblify/>
+- <https://wranglezone.github.io/tibblify/>
 
-- Report bugs at <https://github.com/mgirlich/tibblify/issues>
+- Report bugs at <https://github.com/wranglezone/tibblify/issues>
 
 ## Author
 

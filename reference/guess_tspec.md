@@ -73,7 +73,7 @@ guess_tspec_object(
 ## Value
 
 A specification object that can used in
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md).
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md).
 
 ## Examples
 

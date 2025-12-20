@@ -7,7 +7,7 @@ library(tibblify)
 ## Supported input for `tibblify()`
 
 The idea of
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md)
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
 is to make it easier and more robust to convert lists of lists into
 tibbles. This is a typical task after receiving API responses in JSON
 format. The following provides an overview which kind of R objects are
@@ -42,15 +42,15 @@ they:
 Examples are `Date` or `POSIXct`.
 
 In general a scalar can be parsed with
-[`tib_scalar()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md).
+[`tib_scalar()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
 There are some special functions for common types:
 
-- [`tib_lgl()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
-- [`tib_int()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
-- [`tib_dbl()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
-- [`tib_chr()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
-- [`tib_date()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
-- [`tib_chr_date()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_lgl()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_int()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_dbl()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_chr()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_date()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
+- [`tib_chr_date()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   to parse dates encoded as string.
 
 ### Vectors
@@ -80,9 +80,9 @@ As for scalars other types are also supported as long as they are a
 vector in the vctrs definition.
 
 They can be parsed with
-[`tib_vector()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md).
+[`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
 As for scalars there are shortcuts for some common types,
-e.g. [`tib_lgl_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md).
+e.g. [`tib_lgl_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
 
 #### Empty lists
 
@@ -154,7 +154,7 @@ str(x)
 ```
 
 By default they cannot be parsed with
-[`tib_vector()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 
 ``` r
 tibblify(x, tspec_df(tib_int_vec("a")))
@@ -165,7 +165,7 @@ tibblify(x, tspec_df(tib_int_vec("a")))
 ```
 
 Use `input_form = "scalar_list"` in
-[`tib_vector()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 to parse them:
 
 ``` r
@@ -203,7 +203,7 @@ str(x)
 ```
 
 Use `input_form = "object"` in
-[`tib_vector()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 to parse them. To actually store the names use the `names_to` and
 `values_to` argument:
 
@@ -253,7 +253,7 @@ list(1, "a", TRUE)
 ```
 
 can be parsed with
-[`tib_variant()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md).
+[`tib_variant()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
 
 ### Object
 
@@ -276,7 +276,7 @@ x <- list(
 ```
 
 They can be parsed with
-[`tib_row()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md).
+[`tib_row()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
 For example
 
 ``` r
@@ -320,7 +320,7 @@ x <- list(
 ```
 
 They can be parsed with
-[`tib_df()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md).
+[`tib_df()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md).
 
 #### Object of objects
 
@@ -342,7 +342,7 @@ x <- list(
 ```
 
 They are also parsed with
-[`tib_df()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_df()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 but you can parse the names into an extra column via the `.names_to`
 argument:
 

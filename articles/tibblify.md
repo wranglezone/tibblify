@@ -3,11 +3,11 @@
 ## Introduction
 
 With
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md)
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
 you can rectangle deeply nested lists into a tidy tibble. These lists
 might come from an API in the form of JSON or from scraping XML. The
 reasons to use
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md)
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
 over other tools like
 [`jsonlite::fromJSON()`](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)
 or `tidyr::hoist()` are:
@@ -36,7 +36,7 @@ names(gh_users_small[[1]])
 ```
 
 Quickly rectangling `gh_users_small` is as easy as applying
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md)
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
 to it:
 
 ``` r
@@ -53,7 +53,7 @@ tibblify(gh_users_small)
 ```
 
 We can now look at the specification
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md)
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md)
 used for rectangling
 
 ``` r
@@ -96,7 +96,7 @@ tibblify(gh_users_small, spec)
 We refer to lists like `gh_users_small` as *collection* and *objects*
 are the elements of such lists. Objects and collections are the typical
 input for
-[`tibblify()`](https://mgirlich.github.io/tibblify/reference/tibblify.md).
+[`tibblify()`](https://wranglezone.github.io/tibblify/reference/tibblify.md).
 
 Basically, an *object* is simply something that can be converted to a
 one row tibble. This boils down to a condition on the names of the
@@ -129,49 +129,49 @@ Providing an explicit specification has a couple of advantages:
 - you can specify what happens if a value is missing.
 
 As seen before the specification for a collection is done with
-[`tspec_df()`](https://mgirlich.github.io/tibblify/reference/tspec_df.md).
+[`tspec_df()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md).
 The columns of the output tibble are describe with the `tib_*()`
 functions. They describe the path to the field to extract and the output
 type of the field. There are the following five types of functions:
 
 - `tib_scalar(ptype)`: a length one vector with type `ptype`
 - `tib_vector(ptype)`: a vector of arbitrary length with type `ptype`
-- [`tib_variant()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md):
+- [`tib_variant()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md):
   a vector of arbitrary length and type; you should barely ever need
   this
 - `tib_row(...)`: an object with the fields `...`
 - `tib_df(...)`: a collection where the objects have the fields `...`
 
 For convenience there are shortcuts for
-[`tib_scalar()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_scalar()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 and
-[`tib_vector()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_vector()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 for the most common prototypes:
 
 - [`logical()`](https://rdrr.io/r/base/logical.html):
-  [`tib_lgl()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_lgl()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   and
-  [`tib_lgl_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_lgl_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 - [`integer()`](https://rdrr.io/r/base/integer.html):
-  [`tib_int()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_int()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   and
-  [`tib_int_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_int_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 - [`double()`](https://rdrr.io/r/base/double.html):
-  [`tib_dbl()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_dbl()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   and
-  [`tib_dbl_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_dbl_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 - [`character()`](https://rdrr.io/r/base/character.html):
-  [`tib_chr()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_chr()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   and
-  [`tib_chr_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_chr_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 - `Date`:
-  [`tib_date()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_date()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   and
-  [`tib_date_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_date_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 - `Date` encoded as character:
-  [`tib_chr_date()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_chr_date()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
   and
-  [`tib_chr_date_vec()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+  [`tib_chr_date_vec()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 
 ### Scalar Elements
 
@@ -197,7 +197,7 @@ tibblify(
 ```
 
 With
-[`tib_scalar()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_scalar()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 you can also provide your own prototype
 
 Let’s say you have a list with durations
@@ -225,7 +225,7 @@ x
 ```
 
 and then use it in
-[`tib_scalar()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_scalar()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 
 ``` r
 tibblify(
@@ -309,7 +309,7 @@ gh_repos_small[[1]]
 
 the field `owner` is an object itself. The specification to extract it
 uses
-[`tib_row()`](https://mgirlich.github.io/tibblify/reference/tib_scalar.md)
+[`tib_row()`](https://wranglezone.github.io/tibblify/reference/tib_scalar.md)
 
 ``` r
 spec <- guess_tspec(gh_repos_small)
@@ -439,9 +439,9 @@ tibblify(x, spec)
 ## Converting a Single Object
 
 To rectangle a single object you have two options:
-[`tspec_object()`](https://mgirlich.github.io/tibblify/reference/tspec_df.md)
+[`tspec_object()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
 which produces a list or
-[`tspec_row()`](https://mgirlich.github.io/tibblify/reference/tspec_df.md)
+[`tspec_row()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
 which produces a tibble with one row.
 
 While tibbles are great for a single object it often makes more sense to

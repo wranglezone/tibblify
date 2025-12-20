@@ -17,9 +17,9 @@ tibblify(x, spec = NULL, unspecified = NULL)
 - spec:
 
   A specification how to convert `x`. Generated with
-  [`tspec_row()`](https://mgirlich.github.io/tibblify/reference/tspec_df.md)
+  [`tspec_row()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md)
   or
-  [`tspec_df()`](https://mgirlich.github.io/tibblify/reference/tspec_df.md).
+  [`tspec_df()`](https://wranglezone.github.io/tibblify/reference/tspec_df.md).
 
 - unspecified:
 
@@ -41,7 +41,7 @@ Either a tibble or a list, depending on the specification
 ## See also
 
 Use
-[`untibblify()`](https://mgirlich.github.io/tibblify/reference/untibblify.md)
+[`untibblify()`](https://wranglezone.github.io/tibblify/reference/untibblify.md)
 to undo the result of `tibblify()`.
 
 ## Examples

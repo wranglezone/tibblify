@@ -27,7 +27,7 @@ help you write a unit test, if needed).
 
 - Fork the package and clone onto your computer. If you haven’t done
   this before, we recommend using
-  `usethis::create_from_github("mgirlich/tibblify", fork = TRUE)`.
+  `usethis::create_from_github("wranglezone/tibblify", fork = TRUE)`.
 
 - Install all development dependences with
   `devtools::install_dev_deps()`, and then make sure the package passes
@@ -67,5 +67,5 @@ help you write a unit test, if needed).
 
 Please note that the tibblify project is released with a [Contributor
 Code of
-Conduct](https://mgirlich.github.io/tibblify/CODE_OF_CONDUCT.md). By
+Conduct](https://wranglezone.github.io/tibblify/CODE_OF_CONDUCT.md). By
 contributing to this project you agree to abide by its terms.

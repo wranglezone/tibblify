@@ -45,7 +45,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mgirlich/tibblify/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/wranglezone/tibblify/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -68,7 +68,7 @@
 <p>Or install the development version from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mgirlich/tibblify"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"wranglezone/tibblify"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -87,7 +87,7 @@
 </h2>
 <p>Let’s start with <code>gh_users</code>, which is a list containing information about four GitHub users.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mgirlich/tibblify" class="external-link">tibblify</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/wranglezone/tibblify" class="external-link">tibblify</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gh_users_small</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">gh_users</span>, <span class="op">~</span> <span class="va">.x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"followers"</span>, <span class="st">"login"</span>, <span class="st">"url"</span>, <span class="st">"name"</span>, <span class="st">"location"</span>, <span class="st">"email"</span>, <span class="st">"public_gists"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
@@ -493,8 +493,8 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=tibblify" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/mgirlich/tibblify/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/mgirlich/tibblify/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/wranglezone/tibblify/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/wranglezone/tibblify/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -536,9 +536,9 @@
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://CRAN.R-project.org/package=tibblify" class="external-link"><img src="https://www.r-pkg.org/badges/version/tibblify" alt="CRAN status"></a></li>
-<li><a href="https://app.codecov.io/gh/mgirlich/tibblify?branch=main" class="external-link"><img src="https://codecov.io/gh/mgirlich/tibblify/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/mgirlich/tibblify/actions" class="external-link"><img src="https://github.com/mgirlich/tibblify/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://github.com/mgirlich/tibblify/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/mgirlich/tibblify/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/wranglezone/tibblify?branch=main" class="external-link"><img src="https://codecov.io/gh/wranglezone/tibblify/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/wranglezone/tibblify/actions" class="external-link"><img src="https://github.com/wranglezone/tibblify/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/wranglezone/tibblify/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/wranglezone/tibblify/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
