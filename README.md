@@ -10,10 +10,10 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/tibblify)](https://CRAN.R-project.org/package=tibblify)
 [![Codecov test
-coverage](https://codecov.io/gh/mgirlich/tibblify/branch/master/graph/badge.svg)](https://app.codecov.io/gh/mgirlich/tibblify?branch=main)
+coverage](https://codecov.io/gh/wranglezone/tibblify/branch/master/graph/badge.svg)](https://app.codecov.io/gh/wranglezone/tibblify?branch=main)
 [![R build
-status](https://github.com/mgirlich/tibblify/workflows/R-CMD-check/badge.svg)](https://github.com/mgirlich/tibblify/actions)
-[![R-CMD-check](https://github.com/mgirlich/tibblify/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mgirlich/tibblify/actions/workflows/R-CMD-check.yaml)
+status](https://github.com/wranglezone/tibblify/workflows/R-CMD-check/badge.svg)](https://github.com/wranglezone/tibblify/actions)
+[![R-CMD-check](https://github.com/wranglezone/tibblify/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wranglezone/tibblify/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of tibblify is to provide an easy way of converting a nested
@@ -32,7 +32,7 @@ Or install the development version from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("mgirlich/tibblify")
+devtools::install_github("wranglezone/tibblify")
 ```
 
 ## Introduction
