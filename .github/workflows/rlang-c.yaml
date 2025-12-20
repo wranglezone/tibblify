@@ -1,0 +1,140 @@
+name: Update Vendored rlang
+
+on:
+  schedule:
+    # Run daily at 3am UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write      # To push the branch
+  issues: write        # To create/comment on issues
+  pull-requests: write # To create the PR
+
+jobs:
+  update-rlang:
+    runs-on: ubuntu-latest
+    env:
+      # R-lib actions often look for GITHUB_PAT; mapping the default token here is standard practice
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout Tibblify
+        uses: actions/checkout@v4
+        with:
+          path: tibblify
+
+      - name: Checkout rlang
+        uses: actions/checkout@v4
+        with:
+          repository: r-lib/rlang
+          path: rlang-source
+
+      - name: Update Vendored Files
+        run: |
+          cd tibblify
+          
+          # 1. Clear old directory
+          rm -rf src/rlang/*
+          
+          # 2. Copy new source from rlang repo
+          cp -r ../rlang-source/src/rlang/* src/rlang/
+
+      - name: Check for changes
+        id: check_changes
+        working-directory: tibblify
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in rlang source."
+          else
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+            echo "No changes detected."
+          fi
+
+      - name: Ensure Tracking Issue Exists
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        working-directory: tibblify
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="Update vendored rlang C code"
+          
+          # 1. Search for existing issue
+          ISSUE_JSON=$(gh issue list --search "$TITLE" --json number,state,title --limit 1)
+          ISSUE_NUM=$(echo "$ISSUE_JSON" | jq -r '.[0].number')
+          ISSUE_STATE=$(echo "$ISSUE_JSON" | jq -r '.[0].state')
+          
+          # 2. Create or Reopen
+          if [ "$ISSUE_NUM" == "null" ]; then
+            echo "Creating new issue..."
+            NEW_URL=$(gh issue create \
+              --title "$TITLE" \
+            ISSUE_NUM=$(gh issue create \
+              --title "$TITLE" \
+              --body "The automated workflow detected changes in \`r-lib/rlang\`. This issue tracks the validation and integration of those changes.<br><br>Current Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              --json number --jq '.number')
+            echo "Created issue #$ISSUE_NUM"
+          else
+            if [ "$ISSUE_STATE" == "CLOSED" ]; then
+            if [ "$ISSUE_STATE" == "CLOSED" ]; then
+              echo "Reopening issue #$ISSUE_NUM"
+              gh issue reopen "$ISSUE_NUM"
+              gh issue comment "$ISSUE_NUM" --body "Reopening: New changes detected in upstream rlang. Validation run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            else
+              echo "Issue #$ISSUE_NUM is already open."
+              gh issue comment "$ISSUE_NUM" --body "New changes detected. Starting validation run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            fi
+          fi
+          
+          # 3. Save Issue Number for later steps
+          echo "TRACKING_ISSUE_NUM=$ISSUE_NUM" >> $GITHUB_ENV
+
+      - name: Setup R
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Setup dependencies
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: tibblify
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - name: Check Package (Build & Test)
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        id: r_check
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          working-directory: tibblify
+          error-on: "warning"
+
+      - name: Report Failure
+        if: failure() && steps.check_changes.outputs.changes_detected == 'true'
+        working-directory: tibblify
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "$TRACKING_ISSUE_NUM" ]; then
+             gh issue comment "$TRACKING_ISSUE_NUM" --body $'❌ **Validation Failed**\n\nThe updated rlang code caused build or test failures (or warnings). Manual intervention required.\n\nSee logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          fi
+
+      - name: Create Pull Request (On Success)
+        if: success() && steps.check_changes.outputs.changes_detected == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          path: tibblify
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update vendored rlang sources"
+          branch: "vendor/rlang-update"
+          delete-branch: true
+          title: "chore: update vendored rlang sources"
+          body: |
+            Automated update of vendored `rlang` C sources from `r-lib/rlang`.
+            
+            This PR updates the contents of `src/rlang/` to match the latest upstream source.
+            
+            Closes #${{ env.TRACKING_ISSUE_NUM }}
