@@ -120,7 +120,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -n "$TRACKING_ISSUE_NUM" ]; then
-             gh issue comment "$TRACKING_ISSUE_NUM" --body "❌ **Validation Failed** <br> The updated rlang code caused build or test failures (or warnings). Manual intervention required. <br><br> See logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+             gh issue comment "$TRACKING_ISSUE_NUM" --body $'❌ **Validation Failed**\n\nThe updated rlang code caused build or test failures (or warnings). Manual intervention required.\n\nSee logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
           fi
 
       - name: Create Pull Request (On Success)
