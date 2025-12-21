@@ -18,3 +18,4 @@
 ^[.]?air[.]toml$
 ^\.vscode$
 ^CODE_OF_CONDUCT\.md$
+^update-vctrs\.sh$

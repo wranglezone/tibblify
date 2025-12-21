@@ -1,11 +1,11 @@
 # nocov start
 
 .onLoad <- function(libname, pkgname) {
-  # Load vctrs namespace for access to C callables
-  requireNamespace("vctrs", quietly = TRUE)
+  # Load vctrs explicitly to ensure it's available
+  vctrs_ns <- loadNamespace("vctrs")
 
-  # Initialize tibblify C globals
-  .Call(tibblify_initialize, ns_env("tibblify"))
+  # Pass BOTH namespaces to the C initializer
+  .Call(tibblify_initialize, ns_env("tibblify"), vctrs_ns)
 }
 
 # nocov end

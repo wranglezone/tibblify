@@ -92,7 +92,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
     return;                                                    \
   }                                                            \
                                                                \
-  r_obj* value_casted = KEEP(vec_cast(value, EMPTY));          \
+  r_obj* value_casted = KEEP(tib_vec_cast(value, EMPTY));          \
   r_ssize size = short_vec_size(value_casted);                 \
   if (size != 1) {                                             \
     stop_scalar(size, v_path->data);                            \
@@ -109,7 +109,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
     return;                                                    \
   }                                                            \
                                                                \
-  r_obj* value_casted = KEEP(vec_cast(value, PTYPE));          \
+  r_obj* value_casted = KEEP(tib_vec_cast(value, PTYPE));          \
   r_ssize size = short_vec_size(value_casted);                 \
   if (size != 1) {                                             \
     stop_scalar(size, v_path->data);                           \
@@ -145,7 +145,7 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
     return;
   }
 
-  r_obj* value_casted = KEEP(vec_cast(value, v_collector->details.scalar_coll.ptype_inner));
+  r_obj* value_casted = KEEP(tib_vec_cast(value, v_collector->details.scalar_coll.ptype_inner));
   r_ssize size = short_vec_size(value_casted);
   if (size != 1) {
     stop_scalar(size, v_path->data);
@@ -161,7 +161,7 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
 // For scalars the `data` field is not allocated to avoid unnecessary memory
 // consumption.
 #define ADD_VALUE_COLMAJOR(PTYPE)                              \
-  v_collector->data = KEEP(vec_cast(value, PTYPE));            \
+  v_collector->data = KEEP(tib_vec_cast(value, PTYPE));            \
   r_list_poke(v_collector->shelter, 0, v_collector->data);     \
   FREE(1);
 
@@ -270,7 +270,7 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
   if (v_vec_coll->elt_transform != r_null) value = apply_transform(value, v_vec_coll->elt_transform);
   KEEP(value);
 
-  r_obj* value_casted = KEEP(vec_cast(value, v_collector->ptype));
+  r_obj* value_casted = KEEP(tib_vec_cast(value, v_collector->ptype));
   r_obj* value_prepped = KEEP(v_vec_coll->prep_data(value_casted, names, v_vec_coll->col_names));
 
   r_list_poke(v_collector->data, v_collector->current_row, value_prepped);
