@@ -7,11 +7,6 @@
 #include "tibblify.h"
 
 static inline
-bool is_data_frame(r_obj* x) {
-  return r_inherits(x, "data.frame");
-}
-
-static inline
 r_obj* alloc_df(r_ssize n_rows, r_ssize n_cols, r_obj* col_names) {
   r_obj* df = KEEP(r_alloc_list(n_cols));
   r_attrib_poke_names(df, col_names);
