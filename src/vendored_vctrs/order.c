@@ -368,7 +368,7 @@ SEXP vec_order_info_impl(
   // locations haven't been requested by the user.
   // It is more efficient to ignore it when possible.
   bool force_groups = group_sizes;
-  bool ignore_groups = force_groups ? false : (is_data_frame(proxy) ? false : true);
+  bool ignore_groups = force_groups ? false : (vendored_is_data_frame(proxy) ? false : true);
 
   // Construct the two sets of group info needed for tracking groups.
   // We switch between them after each data frame column is processed.
@@ -3583,7 +3583,7 @@ SEXP vec_order_expand_args(
     Rf_errorcall(R_NilValue, "Internal error: `na_largest` can't contain missing values.");
   }
 
-  if (is_data_frame(x)) {
+  if (vendored_is_data_frame(x)) {
     args = df_expand_args(x, args);
     UNPROTECT(1);
     return args;
@@ -3708,7 +3708,7 @@ int vec_decreasing_expansion(SEXP x) {
 
   // Compute number of cols in df-cols,
   // and do proxy-compare on the cols as needed
-  if (is_data_frame(x)) {
+  if (vendored_is_data_frame(x)) {
     return df_decreasing_expansion(x);
   }
 
@@ -3720,7 +3720,7 @@ int vec_decreasing_expansion(SEXP x) {
 
   // If the `proxy` is a data frame, the expansion factor is the
   // number of columns. Otherwise it is 1.
-  if (is_data_frame(proxy)) {
+  if (vendored_is_data_frame(proxy)) {
     expansion = Rf_length(proxy);
   } else {
     expansion = 1;

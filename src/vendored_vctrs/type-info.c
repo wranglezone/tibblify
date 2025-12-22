@@ -68,7 +68,7 @@ enum vctrs_type vec_base_typeof(r_obj* x, bool proxied) {
   case R_TYPE_list:
     // Bare lists and data frames are vectors
     if (!r_is_object(x)) return VCTRS_TYPE_list;
-    if (is_data_frame(x)) return VCTRS_TYPE_dataframe;
+    if (vendored_is_data_frame(x)) return VCTRS_TYPE_dataframe;
     // S3 lists are only vectors if they are proxied
     if (proxied || r_inherits(x, "list")) return VCTRS_TYPE_list;
     // fallthrough

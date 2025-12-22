@@ -48,7 +48,7 @@ r_obj* vec_restore_opts(
   case VCTRS_CLASS_bare_tibble: return vec_bare_df_restore(x, to, p_opts);
   case VCTRS_CLASS_data_frame: return vec_df_restore(x, to, p_opts);
   default:
-    if (p_opts->recursively_proxied && is_data_frame(x)) {
+    if (p_opts->recursively_proxied && vendored_is_data_frame(x)) {
       return vec_df_restore(x, to, p_opts);
     } else {
       return vec_restore_dispatch(x, to);
@@ -132,7 +132,7 @@ r_obj* vec_restore_default(r_obj* x, r_obj* to, enum vctrs_ownership ownership) 
     // Check if `to` is a data frame early. If `x` and `to` point
     // to the same reference, then `r_poke_attrib()` would alter `to`.
     r_obj* rownms = KEEP(df_rownames(x));
-    const bool restore_rownms = rownms != r_null && is_data_frame(to);
+    const bool restore_rownms = rownms != r_null && vendored_is_data_frame(to);
 
     r_poke_attrib(x, attrib);
 
@@ -190,9 +190,9 @@ r_obj* vec_bare_df_restore(r_obj* x,
 
   int n_prot = 0;
 
-  if (!is_data_frame(to)) {
+  if (!vendored_is_data_frame(to)) {
     to = KEEP_N(vec_proxy(to), &n_prot);
-    if (!is_data_frame(to)) {
+    if (!vendored_is_data_frame(to)) {
       r_stop_internal("Expected restoration target to have a df proxy.");
     }
   }

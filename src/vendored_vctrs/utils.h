@@ -117,7 +117,7 @@ SEXP map_with_data(SEXP x, SEXP (*fn)(SEXP, void*), void* data);
 SEXP df_map(SEXP df, SEXP (*fn)(SEXP));
 SEXP bare_df_map(SEXP df, SEXP (*fn)(SEXP));
 
-bool is_data_frame(SEXP x);
+bool vendored_is_data_frame(SEXP x);
 bool is_bare_data_frame(SEXP x);
 bool is_bare_tibble(SEXP x);
 

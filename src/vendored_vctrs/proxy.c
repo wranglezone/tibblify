@@ -17,7 +17,7 @@ r_obj* vec_proxy_2(r_obj* x, bool recurse) {
   case VCTRS_TYPE_s3: {
     r_obj* x_proxy_method = KEEP(vec_proxy_method(x));
     r_obj* out = KEEP(vec_proxy_invoke(x, x_proxy_method));
-    if (recurse && is_data_frame(out)) {
+    if (recurse && vendored_is_data_frame(out)) {
       out = df_proxy_recurse(out);
     }
     FREE(2);
@@ -53,7 +53,7 @@ r_obj* df_proxy_recurse(r_obj* x) {
 r_obj* vec_proxy_equal(r_obj* x) {
   r_obj* out = KEEP(vec_proxy_equal_impl(x));
 
-  if (is_data_frame(out)) {
+  if (vendored_is_data_frame(out)) {
     // Automatically proxy df-proxies recursively.
     // Also flattens and unwraps them (#1537, #1664).
     out = df_proxy(out, VCTRS_PROXY_KIND_equal);
@@ -67,7 +67,7 @@ r_obj* vec_proxy_equal(r_obj* x) {
 r_obj* vec_proxy_compare(r_obj* x) {
   r_obj* out = KEEP(vec_proxy_compare_impl(x));
 
-  if (is_data_frame(out)) {
+  if (vendored_is_data_frame(out)) {
     // Automatically proxy df-proxies recursively.
     // Also flattens and unwraps them (#1537, #1664).
     out = df_proxy(out, VCTRS_PROXY_KIND_compare);
@@ -81,7 +81,7 @@ r_obj* vec_proxy_compare(r_obj* x) {
 r_obj* vec_proxy_order(r_obj* x) {
   r_obj* out = KEEP(vec_proxy_order_impl(x));
 
-  if (is_data_frame(out)) {
+  if (vendored_is_data_frame(out)) {
     // Automatically proxy df-proxies recursively.
     // Also flattens and unwraps them (#1537, #1664).
     out = df_proxy(out, VCTRS_PROXY_KIND_order);
@@ -240,7 +240,7 @@ r_obj* ffi_df_proxy(r_obj* x, r_obj* kind) {
 }
 
 r_obj* vec_proxy_unwrap(r_obj* x) {
-  if (r_typeof(x) == R_TYPE_list && r_length(x) == 1 && is_data_frame(x)) {
+  if (r_typeof(x) == R_TYPE_list && r_length(x) == 1 && vendored_is_data_frame(x)) {
     x = vec_proxy_unwrap(r_list_get(x, 0));
   }
   return x;

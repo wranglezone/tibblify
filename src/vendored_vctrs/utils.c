@@ -1,5 +1,5 @@
 #include "vctrs-core.h"
-#include "vctrs.h"
+#include "vendored_vctrs.h"
 #include "type-data-frame.h"
 #include "vec-bool.h"
 #include <R_ext/Rdynload.h>

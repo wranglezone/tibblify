@@ -4,6 +4,35 @@
 #include "collector.h"
 #include "tibblify.h"
 
+// -----------------------------------------------------------------------------
+// Type predicates
+// -----------------------------------------------------------------------------
+
+static inline bool r_is_list(SEXP x) {
+  return r_typeof(x) == R_TYPE_list;
+}
+
+static inline bool r_is_data_frame(SEXP x) {
+  return r_is_list(x) && r_inherits(x, "data.frame");
+}
+
+/**
+ * Check if an object is a "bare" list.
+ *
+ * A bare list is a VECSXP that does not have a class attribute (is not an S3
+ * object), or where the class attribute is "list"". This excludes data frames
+ * and other S3 list-based classes.
+ *
+ * @param x The object to check.
+ * @return true if x is a list and not any other type of object, false
+ *   otherwise.
+ */
+bool r_is_bare_list(r_obj* x);
+
+// -----------------------------------------------------------------------------
+// Other
+// -----------------------------------------------------------------------------
+
 static inline
 r_obj* alloc_df(r_ssize n_rows, r_ssize n_cols, r_obj* col_names) {
   r_obj* df = KEEP(r_alloc_list(n_cols));

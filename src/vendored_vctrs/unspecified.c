@@ -1,5 +1,5 @@
 #include "unspecified.h"
-#include "vctrs.h"
+#include "vendored_vctrs.h"
 
 #include "decl/unspecified-decl.h"
 

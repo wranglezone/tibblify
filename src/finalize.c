@@ -2,13 +2,14 @@
 #include "tibblify.h"
 #include "collector.h"
 #include "utils.h"
+#include "r-vctrs.h"
 
 r_obj* finalize_atomic_scalar(struct collector* v_collector) {
   r_obj* data = v_collector->data;
   if (v_collector->transform != r_null) data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
-  data = tib_vec_cast(data, v_collector->ptype);
+  data = rvctrs_vec_cast(data, v_collector->ptype);
   FREE(1);
   return data;
 }
@@ -26,7 +27,7 @@ r_obj* finalize_scalar(struct collector* v_collector) {
   if (v_collector->transform != r_null) data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
-  r_obj* value_cast = tib_vec_cast(data, v_collector->ptype);
+  r_obj* value_cast = rvctrs_vec_cast(data, v_collector->ptype);
   FREE(2);
   return value_cast;
 }

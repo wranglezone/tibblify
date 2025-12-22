@@ -833,7 +833,7 @@ r_obj* vec_set_df_rownames(r_obj* x, r_obj* names, bool proxy, const enum vctrs_
 r_obj* vec_set_names_impl(r_obj* x, r_obj* names, bool proxy, const enum vctrs_ownership ownership) {
   check_names(x, names);
 
-  if (is_data_frame(x)) {
+  if (vendored_is_data_frame(x)) {
     return vec_set_df_rownames(x, names, proxy, ownership);
   }
 

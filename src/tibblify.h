@@ -55,14 +55,4 @@ struct r_vector_form_struct {
 };
 extern struct r_vector_form_struct r_vector_form;
 
-// static inline int short_vec_size(SEXP x) {
-//   return (int)vec_size(x);
-// }
-
-static inline SEXP tib_vec_cast(SEXP x, SEXP to) {
-  struct vendored_vctrs_arg arg = vendored_vec_as_arg(R_NilValue);
-  struct r_lazy dummy_call = {0};
-  return vendored_vec_cast(x, to, &arg, &arg, dummy_call);
-}
-
 #endif

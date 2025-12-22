@@ -3,7 +3,7 @@
 #include "type-data-frame.h"
 #include "decl/type-data-frame-decl.h"
 
-bool is_data_frame(r_obj* x) {
+bool vendored_is_data_frame(r_obj* x) {
   return
     r_typeof(x) == R_TYPE_list &&
     class_type_is_data_frame(class_type(x));
@@ -317,7 +317,7 @@ r_obj* df_list_unpack(r_obj* x) {
 
     r_obj* col = r_list_get(x, i);
 
-    if (is_data_frame(col)) {
+    if (vendored_is_data_frame(col)) {
       any_needs_unpack = true;
       break;
     }
@@ -346,7 +346,7 @@ r_obj* df_list_unpack(r_obj* x) {
 
     r_obj* col = r_list_get(x, i);
 
-    if (is_data_frame(col)) {
+    if (vendored_is_data_frame(col)) {
       width += r_length(col);
       p_unpack[i] = 1;
     } else {
@@ -908,7 +908,7 @@ r_ssize df_flat_width(r_obj* x) {
 
   for (r_ssize i = 0; i < n; ++i) {
     r_obj* col = v_x[i];
-    if (is_data_frame(col)) {
+    if (vendored_is_data_frame(col)) {
       out = out + df_flat_width(col) - 1;
     }
   }
@@ -932,7 +932,7 @@ struct flatten_info df_flatten_info(r_obj* x) {
 
   for (r_ssize i = 0; i < n; ++i) {
     r_obj* col = v_x[i];
-    if (is_data_frame(col)) {
+    if (vendored_is_data_frame(col)) {
       flatten = true;
       width = width + df_flat_width(col) - 1;
     }
@@ -987,7 +987,7 @@ r_ssize df_flatten_loop(r_obj* x,
   for (r_ssize i = 0; i < n; ++i) {
     r_obj* col = r_list_get(x, i);
 
-    if (is_data_frame(col)) {
+    if (vendored_is_data_frame(col)) {
       counter = df_flatten_loop(col, out, out_names, counter);
     } else {
       r_list_poke(out, counter, col);

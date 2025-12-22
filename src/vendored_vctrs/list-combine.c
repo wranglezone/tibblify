@@ -471,7 +471,7 @@ r_obj* list_combine_impl(
 
   const bool assign_names = !r_inherits(name_spec, "rlang_zap");
   r_obj* xs_names = KEEP_N(r_names(xs), &n_protect);
-  const bool xs_is_named = xs_names != r_null && !is_data_frame(ptype);
+  const bool xs_is_named = xs_names != r_null && !vendored_is_data_frame(ptype);
 
   r_keep_loc out_pi;
   r_obj* out = vec_init(ptype, size);
@@ -681,7 +681,7 @@ r_obj* list_combine_impl(
 
   if (
     s3_fallback == S3_FALLBACK_true &&
-      is_data_frame(out) &&
+      vendored_is_data_frame(out) &&
       needs_df_list_combine_common_class_fallback(out)
   ) {
     // Perform the common class fallback on any columns of the
@@ -859,7 +859,7 @@ bool needs_df_list_combine_common_class_fallback(r_obj* x) {
     if (vec_is_common_class_fallback(col)) {
       return true;
     }
-    if (is_data_frame(col) && needs_df_list_combine_common_class_fallback(col)) {
+    if (vendored_is_data_frame(col) && needs_df_list_combine_common_class_fallback(col)) {
       return true;
     }
   }
@@ -893,9 +893,9 @@ void df_list_combine_common_class_fallback(
 
   r_obj* ptype_orig = ptype;
 
-  if (!is_data_frame(ptype)) {
+  if (!vendored_is_data_frame(ptype)) {
     ptype = KEEP_N(vec_proxy(ptype), &n_protect);
-    if (!is_data_frame(ptype)) {
+    if (!vendored_is_data_frame(ptype)) {
       r_stop_internal("Expected fallback target to have a df proxy.");
     }
   }
@@ -910,7 +910,7 @@ void df_list_combine_common_class_fallback(
     r_obj* col = r_list_get(out, i);
     r_obj* ptype_col = r_list_get(ptype, i);
 
-    if (is_data_frame(col) && needs_df_list_combine_common_class_fallback(ptype_col)) {
+    if (vendored_is_data_frame(col) && needs_df_list_combine_common_class_fallback(ptype_col)) {
       // Recurse into df-cols
       r_obj* out_col = r_list_get(out, i);
       r_obj* xs_col = KEEP(list_pluck(xs, i));

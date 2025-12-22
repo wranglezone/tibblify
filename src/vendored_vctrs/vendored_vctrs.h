@@ -101,7 +101,7 @@ SEXP vec_in(
   struct r_lazy call
 );
 
-bool is_data_frame(SEXP x);
+bool vendored_is_data_frame(SEXP x);
 
 SEXP vec_unique(SEXP x);
 bool duplicated_any(SEXP names);
