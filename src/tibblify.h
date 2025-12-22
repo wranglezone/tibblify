@@ -9,8 +9,6 @@
 #include <stdint.h>
 #include <rlang.h>
 
-SEXP vec_unspecified(R_len_t n);
-bool vec_is_unspecified(SEXP x);
 SEXP r_new_shared_vector(SEXPTYPE type, R_len_t n);
 
 #include "vctrs/vctrs.h"
@@ -62,7 +60,7 @@ static inline int short_vec_size(SEXP x) {
 static inline SEXP tib_vec_cast(SEXP x, SEXP to) {
   struct vctrs_arg arg = vec_as_arg(R_NilValue);
   struct r_lazy dummy_call = {0};
-  return vec_cast(x, to, &arg, &arg, dummy_call);
+  return vendored_vec_cast(x, to, &arg, &arg, dummy_call);
 }
 
 #endif

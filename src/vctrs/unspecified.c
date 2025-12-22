@@ -27,7 +27,7 @@ SEXP vctrs_unspecified(SEXP n) {
     Rf_errorcall(R_NilValue, "`n` must be a single number");
   }
   if (TYPEOF(n) != INTSXP) {
-    n = vec_cast(n,
+    n = vendored_vec_cast(n,
                  r_globals.empty_int,
                  vec_args.empty,
                  vec_args.empty,

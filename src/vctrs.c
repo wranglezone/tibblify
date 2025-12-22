@@ -14,7 +14,7 @@
 #include "vctrs/compare.c"
 #include "vctrs/complete.c"
 #include "vctrs/conditions.c"
-#include "vctrs/dictionary.c"
+#include "vctrs/dictionary.c" // Cannot be removed
 #include "vctrs/dim.c"
 #include "vctrs/equal.c"
 #include "vctrs/expand.c"
@@ -50,7 +50,7 @@
 #include "vctrs/subscript.c"
 #include "vctrs/subscript-loc.c"
 #include "vctrs/translate.c"
-#include "vctrs/type-data-frame.c"
+#include "vctrs/type-data-frame.c" // Cannot be removed
 #include "vctrs/type-date-time.c"
 #include "vctrs/type-factor.c"
 #include "vctrs/type-info.c"

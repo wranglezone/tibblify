@@ -440,7 +440,7 @@ static
 r_obj* dbl_as_location(r_obj* subscript,
                        r_ssize n,
                        const struct location_opts* opts) {
-  subscript = KEEP(vec_cast(subscript,
+  subscript = KEEP(vendored_vec_cast(subscript,
                             r_globals.empty_int,
                             vec_args.empty,
                             vec_args.empty,
@@ -526,7 +526,7 @@ r_obj* ffi_as_location(r_obj* subscript,
     n = r_length(subscript);
   } else {
     if (r_is_object(ffi_n) || r_typeof(ffi_n) != R_TYPE_integer) {
-      ffi_n = vec_cast(ffi_n,
+      ffi_n = vendored_vec_cast(ffi_n,
                        r_globals.empty_int,
                        vec_args.n,
                        vec_args.empty,

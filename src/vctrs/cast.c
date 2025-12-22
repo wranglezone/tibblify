@@ -14,7 +14,7 @@ r_obj* ffi_cast(r_obj* x,
 
   struct r_lazy call = { .x = syms_call, .env = frame };
 
-  return vec_cast(x, to, &x_arg, &to_arg, call);
+  return vendored_vec_cast(x, to, &x_arg, &to_arg, call);
 }
 
 r_obj* vec_cast_opts(const struct cast_opts* opts) {
@@ -25,12 +25,12 @@ r_obj* vec_cast_opts(const struct cast_opts* opts) {
   struct r_lazy call = opts->call;
 
   if (x == r_null) {
-    // Allow both `vec_cast(NULL, <vector>)` and `vec_cast(NULL, NULL)`
+    // Allow both `vendored_vec_cast(NULL, <vector>)` and `vendored_vec_cast(NULL, NULL)`
     obj_check_vector(to, VCTRS_ALLOW_NULL_yes, p_to_arg, call);
     return x;
   }
   if (to == r_null) {
-    // Allow `vec_cast(<vector>, NULL)`
+    // Allow `vendored_vec_cast(<vector>, NULL)`
     obj_check_vector(x, VCTRS_ALLOW_NULL_no, p_x_arg, call);
     return x;
   }
@@ -184,12 +184,12 @@ r_obj* vec_cast_dispatch_s3(const struct cast_opts* opts) {
   r_obj* x = opts->x;
   r_obj* to = opts->to;
   r_obj* method_sym = r_null;
-  r_obj* method = s3_find_method_xy("vec_cast", to, x, vctrs_method_table, &method_sym);
+  r_obj* method = s3_find_method_xy("vendored_vec_cast", to, x, vctrs_method_table, &method_sym);
 
   // Compatibility with legacy double dispatch mechanism
   if (method == r_null) {
     r_obj* to_method_sym = r_null;
-    r_obj* to_method = KEEP(s3_find_method2("vec_cast",
+    r_obj* to_method = KEEP(s3_find_method2("vendored_vec_cast",
                                              to,
                                              vctrs_method_table,
                                              &to_method_sym));

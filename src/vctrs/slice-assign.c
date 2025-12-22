@@ -60,7 +60,7 @@ r_obj* vec_assign_opts(r_obj* x,
   };
 
   // Cast `value` and check that it can recycle
-  value = KEEP(vec_cast(value, x, assign_opts.value_arg, assign_opts.x_arg, assign_opts.call));
+  value = KEEP(vendored_vec_cast(value, x, assign_opts.value_arg, assign_opts.x_arg, assign_opts.call));
 
   check_recyclable_against_index(
     value,
@@ -1103,7 +1103,7 @@ r_obj* ffi_assign_seq(
   const r_ssize x_size = vec_size(x);
 
   // Cast `value` and check that it can recycle
-  value = KEEP(vec_cast(value, x, vec_args.value, vec_args.x, call));
+  value = KEEP(vendored_vec_cast(value, x, vec_args.value, vec_args.x, call));
 
   check_recyclable_against_index(
     value,
@@ -1162,7 +1162,7 @@ r_obj* ffi_assign_compact_condition(
   const r_ssize x_size = vec_size(x);
 
   // Cast `value` and check that it can recycle
-  value = KEEP(vec_cast(value, x, vec_args.value, vec_args.x, call));
+  value = KEEP(vendored_vec_cast(value, x, vec_args.value, vec_args.x, call));
 
   check_recyclable_against_index(
     value,

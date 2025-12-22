@@ -53,7 +53,7 @@ r_obj* ffi_vec_rep(r_obj* x, r_obj* ffi_times, r_obj* frame) {
   struct r_lazy times_arg_lazy = { .x = syms.times_arg, .env = frame };
   struct vctrs_arg times_arg = new_lazy_arg(&times_arg_lazy);
 
-  ffi_times = KEEP(vec_cast(ffi_times,
+  ffi_times = KEEP(vendored_vec_cast(ffi_times,
                             r_globals.empty_int,
                             &times_arg,
                             vec_args.empty,
@@ -78,7 +78,7 @@ r_obj* vec_rep_each(r_obj* x,
                     struct r_lazy error_call,
                     struct vctrs_arg* p_x_arg,
                     struct vctrs_arg* p_times_arg) {
-  times = KEEP(vec_cast(times,
+  times = KEEP(vendored_vec_cast(times,
                         r_globals.empty_int,
                         p_times_arg,
                         vec_args.empty,

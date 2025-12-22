@@ -22,7 +22,7 @@ struct cast_common_opts {
 r_obj* vec_cast_opts(const struct cast_opts* opts);
 
 static inline
-r_obj* vec_cast(r_obj* x,
+r_obj* vendored_vec_cast(r_obj* x,
                 r_obj* to,
                 struct vctrs_arg* p_x_arg,
                 struct vctrs_arg* p_to_arg,

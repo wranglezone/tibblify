@@ -550,7 +550,7 @@ r_obj* list_as_locations(r_obj* indices, r_ssize n, r_obj* names, bool allow_com
 
 static
 r_obj* vec_as_chop_sizes(r_obj* sizes, r_ssize size) {
-  sizes = KEEP(vec_cast(
+  sizes = KEEP(vendored_vec_cast(
     sizes,
     r_globals.empty_int,
     vec_args.sizes,

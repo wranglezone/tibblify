@@ -1821,3 +1821,8 @@ test_that("recursive: .children_to works", {
     tibble(child_col = list())
   )
 })
+
+test_that("get_spec works", {
+  df <- tibblify(list(list(x = 1, y = "a"), list(x = 2)))
+  expect_equal(get_spec(df), attr(df, "tib_spec"))
+})

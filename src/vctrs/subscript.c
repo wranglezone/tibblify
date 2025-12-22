@@ -54,13 +54,13 @@ r_obj* vec_as_subscript_opts(r_obj* subscript,
   if (opts->logical == SUBSCRIPT_TYPE_ACTION_ERROR && vec_is_unspecified(subscript)) {
     struct vctrs_arg* arg = opts->subscript_arg;
     if (opts->numeric == SUBSCRIPT_TYPE_ACTION_CAST) {
-      subscript = vec_cast(subscript,
+      subscript = vendored_vec_cast(subscript,
                            r_globals.empty_int,
                            arg,
                            NULL,
                            r_lazy_null);
     } else {
-      subscript = vec_cast(subscript,
+      subscript = vendored_vec_cast(subscript,
                            r_globals.empty_chr,
                            arg,
                            NULL,

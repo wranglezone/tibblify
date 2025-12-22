@@ -1,8 +1,6 @@
 #ifndef TIBBLIFY_UTILS_H
 #define TIBBLIFY_UTILS_H
 
-// #include <vector>
-
 #include "collector.h"
 #include "tibblify.h"
 
@@ -62,8 +60,8 @@ bool chr_equal(r_obj* x, r_obj* y);
 
 void check_names_unique(r_obj* field_names,
                         const int ind[],
-                        const int n_fields,
-                        const struct Path* path);
+                                     const int n_fields,
+                                     const struct Path* path);
 
 static inline
 bool vec_is(SEXP x, SEXP ptype) {

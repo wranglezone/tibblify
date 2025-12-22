@@ -1,4 +1,4 @@
-#include "tibblify.h" // Includes vctrs headers, giving us access to syms_x, etc.
+#include "tibblify.h"
 #include "utils.h"
 #include "conditions.h"
 
@@ -45,7 +45,6 @@ void match_chr(r_obj* needles_sorted,
                r_obj* haystack,
                int* indices,
                const r_ssize n_haystack) {
-  // CAREFUL: this assumes needles to be sorted!
   r_obj* const * v_needles = r_chr_cbegin(needles_sorted);
   r_obj* const * v_haystack = r_chr_cbegin(haystack);
 
