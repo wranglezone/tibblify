@@ -1,2 +1,2 @@
-PKG_CPPFLAGS = -I./rlang -I./vctrs
+PKG_CPPFLAGS = -I./rlang -I./vendored_vctrs
 PKG_CFLAGS = $(C_VISIBILITY) -DHAVE_VISIBILITY_ATTRIBUTE

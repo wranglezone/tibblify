@@ -39,6 +39,8 @@ Suggests:
     yaml (>= 2.3.6)
 VignetteBuilder:
     knitr
+LinkingTo:
+    vctrs
 Remotes:
     r-lib/vctrs
 Config/testthat/edition: 3
