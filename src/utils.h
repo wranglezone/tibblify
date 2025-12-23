@@ -44,7 +44,9 @@ static inline bool r_is_data_frame(SEXP x) {
  * @return true if x is a list and not any other type of object, false
  * otherwise.
  */
-bool r_is_bare_list(r_obj* x);
+static inline bool r_is_bare_list(r_obj* x) {
+  return r_is_list(x) && !r_is_object(x);
+}
 
 // -----------------------------------------------------------------------------
 // Other
@@ -54,7 +56,6 @@ static inline
 r_obj* alloc_df(r_ssize n_rows, r_ssize n_cols, r_obj* col_names) {
   r_obj* df = KEEP(r_alloc_list(n_cols));
   r_attrib_poke_names(df, col_names);
-  // Uses vendored rlang implementation
   r_init_tibble(df, n_rows);
 
   FREE(1);
@@ -97,7 +98,7 @@ bool chr_equal(r_obj* x, r_obj* y);
 
 void check_names_unique(r_obj* field_names,
                         const int ind[],
-                                     const int n_fields,
-                                     const struct Path* path);
+                        const int n_fields,
+                        const struct Path* path);
 
 #endif

@@ -97,8 +97,8 @@ bool chr_equal(r_obj* x, r_obj* y) {
 
 void check_names_unique(r_obj* field_names,
                         const int ind[],
-                                     const int n_fields,
-                                     const struct Path* path) {
+                        const int n_fields,
+                        const struct Path* path) {
   if (n_fields == 0) return;
 
   r_obj* const * v_field_names = r_chr_cbegin(field_names);
@@ -114,25 +114,9 @@ void check_names_unique(r_obj* field_names,
     if (field_nm == field_nm_prev) stop_duplicate_name(path->data, field_nm);
 
     if (field_nm == r_globals.na_str || field_nm == strings_empty) {
-      stop_empty_name(path->data, ind[field_index]);
+      stop_empty_name(path->data, ind[field_index]); // # nocov
     }
   }
-}
-
-bool r_is_bare_list(r_obj* x) {
-  if (!r_is_list(x)) {
-    return false;
-  }
-
-  if (!r_is_object(x)) {
-    return true;
-  }
-
-  if (r_length(r_class(x)) == 1 && r_inherits(x, "list")) {
-    return true;
-  }
-
-  return false;
 }
 
 // [[register()]]
