@@ -39,24 +39,11 @@ export void R_init_tibblify(DllInfo* dll){
 // Initialization Hooks
 // --------------------------------------------------------
 
-void vctrs_init_globals(SEXP ns);
-void vctrs_init_utils(SEXP ns);
-void vctrs_init_cast(SEXP ns);
-void vctrs_init_data(SEXP ns);
-void vctrs_init_type_date_time(SEXP ns);
-
 void tibblify_init_utils(SEXP ns, SEXP vctrs_ns);
 SEXP r_init_library(SEXP);
 
 SEXP tibblify_initialize(SEXP ns, SEXP vctrs_ns) {
   r_init_library(ns);
-
-  vctrs_init_globals(vctrs_ns);
-  vctrs_init_utils(vctrs_ns);
-  vctrs_init_cast(vctrs_ns);
-  vctrs_init_data(vctrs_ns);
-  vctrs_init_type_date_time(vctrs_ns);
-
   tibblify_init_utils(ns, vctrs_ns);
   rvctrs_init(vctrs_ns);
 

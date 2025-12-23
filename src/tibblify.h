@@ -8,12 +8,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <rlang.h>
+#include <vctrs.h>
 
 SEXP r_new_shared_vector(SEXPTYPE type, R_len_t n);
-
-#include "vendored_vctrs/vendored_vctrs.h"
-// Include the public API from the vctrs package
-#include <vctrs.h>
 
 extern SEXP tibblify_ns_env;
 
