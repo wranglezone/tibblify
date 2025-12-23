@@ -1,9 +1,8 @@
-#include "tibblify.h"
+#include "shape_utils.h"
 #include "utils.h"
 
 bool is_object(r_obj* x) {
-  // TODO unsure if it needs to be this strict
-  if (!(obj_is_list(x))) {
+  if (!r_is_bare_list(x)) {
     return false;
   }
 
@@ -11,16 +10,17 @@ bool is_object(r_obj* x) {
     return true;
   }
 
+  // r_is_named checks for existence of names AND ensures no empty strings ("")
   if (!r_is_named(x)) {
     return false;
   }
 
   r_obj* nms = r_names(x);
+
   if (r_chr_has(nms, CHAR(r_globals.na_str))) {
     return false;
   }
 
-  // TODO use vctrs when exported?
   if (Rf_any_duplicated(nms, false)) {
     return false;
   }
@@ -28,21 +28,17 @@ bool is_object(r_obj* x) {
   return true;
 }
 
-r_obj* ffi_is_object(r_obj* x) {
-  return r_lgl(is_object(x));
-}
-
 bool is_object_list(r_obj* x) {
-  if (r_typeof(x) != R_TYPE_list) {
+  if (!r_is_list(x)) {
     return false;
   }
 
-  if (is_data_frame(x)) {
+  if (r_is_data_frame(x)) {
     return true;
   }
 
-  // TODO unsure if it needs to be this strict
-  if (!(obj_is_list(x))) {
+  // If it is not a data frame, it must be a bare list to be a container
+  if (r_is_object(x)) {
     return false;
   }
 
@@ -58,13 +54,9 @@ bool is_object_list(r_obj* x) {
   return true;
 }
 
-r_obj* ffi_is_object_list(r_obj* x) {
-  return r_lgl(is_object_list(x));
-}
-
 bool is_null_list(r_obj* x) {
-  if (r_typeof(x) != R_TYPE_list) {
-    r_stop_internal("`x` is not a list");
+  if (!r_is_list(x)) {
+    r_abort("`x` is not a list");
   }
 
   r_ssize n = r_length(x);
@@ -78,13 +70,9 @@ bool is_null_list(r_obj* x) {
   return true;
 }
 
-r_obj* ffi_is_null_list(r_obj* x) {
-  return r_lgl(is_null_list(x));
-}
-
 bool list_is_null_list(r_obj* x) {
-  if (r_typeof(x) != R_TYPE_list) {
-    r_stop_internal("`x` is not a list");
+  if (!r_is_list(x)) {
+    r_abort("`x` is not a list");
   }
 
   r_ssize n = r_length(x);
@@ -97,6 +85,22 @@ bool list_is_null_list(r_obj* x) {
   }
 
   return true;
+}
+
+// -----------------------------------------------------------------------------
+// FFI Wrappers
+// -----------------------------------------------------------------------------
+
+r_obj* ffi_is_object(r_obj* x) {
+  return r_lgl(is_object(x));
+}
+
+r_obj* ffi_is_object_list(r_obj* x) {
+  return r_lgl(is_object_list(x));
+}
+
+r_obj* ffi_is_null_list(r_obj* x) {
+  return r_lgl(is_null_list(x));
 }
 
 r_obj* ffi_list_is_list_null(r_obj* x) {

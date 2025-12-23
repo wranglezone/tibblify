@@ -4,6 +4,7 @@
 #include "Path.h"
 #include "utils.h"
 #include "tibblify.h"
+#include "r-vctrs.h"
 
 void add_stop_required(struct collector* v_collector, struct Path* v_path) {
   stop_required(v_path->data);
@@ -92,7 +93,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
     return;                                                    \
   }                                                            \
                                                                \
-  r_obj* value_casted = KEEP(tib_vec_cast(value, EMPTY));          \
+  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, EMPTY));          \
   r_ssize size = short_vec_size(value_casted);                 \
   if (size != 1) {                                             \
     stop_scalar(size, v_path->data);                            \
@@ -109,7 +110,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
     return;                                                    \
   }                                                            \
                                                                \
-  r_obj* value_casted = KEEP(tib_vec_cast(value, PTYPE));          \
+  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, PTYPE));          \
   r_ssize size = short_vec_size(value_casted);                 \
   if (size != 1) {                                             \
     stop_scalar(size, v_path->data);                           \
@@ -145,7 +146,7 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
     return;
   }
 
-  r_obj* value_casted = KEEP(tib_vec_cast(value, v_collector->details.scalar_coll.ptype_inner));
+  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, v_collector->details.scalar_coll.ptype_inner));
   r_ssize size = short_vec_size(value_casted);
   if (size != 1) {
     stop_scalar(size, v_path->data);
@@ -161,7 +162,7 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
 // For scalars the `data` field is not allocated to avoid unnecessary memory
 // consumption.
 #define ADD_VALUE_COLMAJOR(PTYPE)                              \
-  v_collector->data = KEEP(tib_vec_cast(value, PTYPE));            \
+  v_collector->data = KEEP(rvctrs_vec_cast(value, PTYPE));            \
   r_list_poke(v_collector->shelter, 0, v_collector->data);     \
   FREE(1);
 
@@ -204,13 +205,13 @@ r_obj* list_unchop_value(r_obj* value,
       break;
     }
 
-    if (vec_size(*v_value) != 1) {
+    if (short_vec_size(*v_value) != 1) {
       stop_vector_wrong_size_element(v_path->data, input_form, value);
     }
   }
 
   if (loc_first_null == -1) {
-    return(vec_flatten(value, ptype));
+    return(rvctrs_list_unchop(value, ptype));
   }
 
   // Theoretically a shallow duplicate should be more efficient but in
@@ -222,12 +223,12 @@ r_obj* list_unchop_value(r_obj* value,
       continue;
     }
 
-    if (vec_size(*v_value) != 1) {
+    if (short_vec_size(*v_value) != 1) {
       stop_vector_wrong_size_element(v_path->data, input_form, value);
     }
   }
 
-  r_obj* out = vec_flatten(out_list, ptype);
+  r_obj* out = rvctrs_list_unchop(out_list, ptype);
   FREE(1);
   return out;
 }
@@ -270,7 +271,7 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
   if (v_vec_coll->elt_transform != r_null) value = apply_transform(value, v_vec_coll->elt_transform);
   KEEP(value);
 
-  r_obj* value_casted = KEEP(tib_vec_cast(value, v_collector->ptype));
+  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, v_collector->ptype));
   r_obj* value_prepped = KEEP(v_vec_coll->prep_data(value_casted, names, v_vec_coll->col_names));
 
   r_list_poke(v_collector->data, v_collector->current_row, value_prepped);
@@ -487,7 +488,7 @@ r_obj* parse(struct collector* v_collector,
   r_ssize n_rows = short_vec_size(value);
   alloc_row_collector(v_collector, n_rows);
 
-  if (is_data_frame(value)) {
+  if (r_is_data_frame(value)) {
     add_value_row_colmajor(v_collector, value, v_path);
   } else {
     check_list(value, v_path);

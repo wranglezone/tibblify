@@ -156,7 +156,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
       Caused by error:
-      ! Can't convert <character> to <logical>.
+      ! Can't convert `"a"` <character> to <logical>.
     Code
       (expect_error(tib(list(x = 1), tib_scalar("x", dtt))))
     Output
@@ -164,7 +164,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
       Caused by error:
-      ! Can't convert <double> to <datetime<local>>.
+      ! Can't convert `1` <double> to <datetime<local>>.
 
 # tib_vector works
 
@@ -192,7 +192,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
       Caused by error:
-      ! Can't convert <character> to <logical>.
+      ! Can't convert `"a"` <character> to <logical>.
 
 # tib_vector respects vector_allows_empty_list
 
@@ -203,7 +203,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[2]]$x`
       Caused by error:
-      ! Can't convert <list> to <integer>.
+      ! Can't convert `<list>` <list> to <integer>.
 
 # tib_vector can parse scalar list
 
@@ -251,7 +251,7 @@
       <error/tibblify_error>
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
-      Caused by error in `vctrs::list_unchop()`:
+      Caused by error in `list_unchop()`:
       ! Can't convert `x[[2]]` <character> to <integer>.
 
 # tib_vector can parse object
@@ -380,7 +380,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x$x`
       Caused by error:
-      ! Can't convert <character> to <logical>.
+      ! Can't convert `"a"` <character> to <logical>.
     Code
       (expect_error(tib_cm(x = 1, tib_scalar("x", dtt))))
     Output
@@ -388,7 +388,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x$x`
       Caused by error:
-      ! Can't convert <double> to <datetime<local>>.
+      ! Can't convert `1` <double> to <datetime<local>>.
 
 # colmajor: tib_vector works
 
@@ -405,7 +405,7 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x$x`
       Caused by error:
-      ! Can't convert <character> to <logical>.
+      ! Can't convert `"a"` <character> to <logical>.
 
 # colmajor: tib_df works
 
@@ -493,5 +493,5 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$children[[2]]$children[[1]]$id`
       Caused by error:
-      ! Can't convert <character> to <integer>.
+      ! Can't convert `"does not work"` <character> to <integer>.
 

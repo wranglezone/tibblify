@@ -5,7 +5,7 @@
 #include "parse-spec.h"
 #include "add-value.h"
 #include "finalize.h"
-
+#include "r-vctrs.h"
 
 // for colmajor there is no need to allocate space as the data is used as is
 #define ALLOC_SCALAR_COLLECTOR(RTYPE, BEGIN, COLL)             \
@@ -292,7 +292,7 @@ struct collector* new_scalar_collector(bool required,
   struct collector* p_coll = r_raw_begin(coll_raw);
 
   p_coll->shelter = shelter;
-  if (vec_is(ptype_inner, r_globals.empty_lgl)) {
+  if (rvctrs_vec_is(ptype_inner, r_globals.empty_lgl)) {
     p_coll->alloc = &alloc_lgl_collector;
     p_coll->add_value = &add_value_lgl;
     p_coll->add_value_colmajor = &add_value_lgl_colmajor;
@@ -300,21 +300,21 @@ struct collector* new_scalar_collector(bool required,
     p_coll->finalize = &finalize_atomic_scalar;
     p_coll->details.lgl_coll.default_value = *r_lgl_begin(default_value);
     // `ptype_inner` and `na` don't need to be stored b/c of the appropriate functions used
-  } else if (vec_is(ptype_inner, r_globals.empty_int)) {
+  } else if (rvctrs_vec_is(ptype_inner, r_globals.empty_int)) {
     p_coll->alloc = &alloc_int_collector;
     p_coll->add_value = &add_value_int;
     p_coll->add_value_colmajor = &add_value_int_colmajor;
     p_coll->add_default = &add_default_int;
     p_coll->finalize = &finalize_atomic_scalar;
     p_coll->details.int_coll.default_value = *r_int_begin(default_value);
-  } else if (vec_is(ptype_inner, r_globals.empty_dbl)) {
+  } else if (rvctrs_vec_is(ptype_inner, r_globals.empty_dbl)) {
     p_coll->alloc = &alloc_dbl_collector;
     p_coll->add_value = &add_value_dbl;
     p_coll->add_value_colmajor = &add_value_dbl_colmajor;
     p_coll->add_default = &add_default_dbl;
     p_coll->finalize = &finalize_atomic_scalar;
     p_coll->details.dbl_coll.default_value = *r_dbl_begin(default_value);
-  } else if (vec_is(ptype_inner, r_globals.empty_chr)) {
+  } else if (rvctrs_vec_is(ptype_inner, r_globals.empty_chr)) {
     p_coll->alloc = &alloc_chr_collector;
     p_coll->add_value = &add_value_chr;
     p_coll->add_value_colmajor = &add_value_chr_colmajor;
