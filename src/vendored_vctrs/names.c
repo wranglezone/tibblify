@@ -150,7 +150,7 @@ r_obj* vec_names_impl(r_obj* x, bool proxy) {
 
   if (vec_bare_dim(x) == r_null) {
     if (!proxy && has_class) {
-      return vctrs_dispatch1(syms_names, fns_names, syms_x, x);
+      return vctrs_dispatch1(syms_names, fns_names, vendored_syms_x, x);
     } else {
       return r_names(x);
     }
@@ -206,7 +206,7 @@ r_obj* ffi_as_minimal_names(r_obj* names) {
 
   for (; i < n; ++i) {
     if (v_names[i] == r_globals.na_str) {
-      r_chr_poke(names, i, strings_empty);
+      r_chr_poke(names, i, vendored_strings_empty);
     }
   }
 
@@ -287,7 +287,7 @@ r_obj* as_unique_names_impl(r_obj* names, bool quiet) {
     // Set `NA` and dots values to "" so they get replaced by `...n`
     // later on
     if (needs_suffix(elt)) {
-      elt = strings_empty;
+      elt = vendored_strings_empty;
       r_chr_poke(new_names, i, elt);
       continue;
     }
@@ -310,7 +310,7 @@ r_obj* as_unique_names_impl(r_obj* names, bool quiet) {
   for (r_ssize i = 0; i < n; ++i) {
     r_obj* elt = v_new_names[i];
 
-    if (elt != strings_empty && !dups_ptr[i]) {
+    if (elt != vendored_strings_empty && !dups_ptr[i]) {
       continue;
     }
 
@@ -441,7 +441,7 @@ static bool needs_suffix(r_obj* str) {
   return
     str == r_globals.na_str ||
     str == strings_dots ||
-    str == strings_empty ||
+    str == vendored_strings_empty ||
     is_dotdotint(r_str_c_string(str));
 }
 
@@ -529,7 +529,7 @@ r_obj* outer_names(r_obj* names, r_obj* outer, r_ssize n) {
     r_stop_internal("`outer` must be a scalar string.");
   }
 
-  if (outer == strings_empty || outer == r_globals.na_str) {
+  if (outer == vendored_strings_empty || outer == r_globals.na_str) {
     return names;
   }
 
@@ -585,7 +585,7 @@ r_obj* apply_name_spec(r_obj* name_spec, r_obj* outer, r_obj* inner, r_ssize n) 
     r_stop_internal("`outer` must be a scalar string.");
   }
 
-  if (outer == strings_empty || outer == r_globals.na_str) {
+  if (outer == vendored_strings_empty || outer == r_globals.na_str) {
     if (inner == r_null) {
       return chrs_empty;
     } else {
@@ -733,14 +733,14 @@ r_obj* r_seq_chr(const char* prefix, r_ssize n) {
 static
 r_obj* set_rownames_dispatch(r_obj* x, r_obj* names) {
   return vctrs_dispatch2(syms_set_rownames_dispatch, fns_set_rownames_dispatch,
-                         syms_x, x,
+                         vendored_syms_x, x,
                          syms_names, names);
 }
 
 static
 r_obj* set_names_dispatch(r_obj* x, r_obj* names) {
   return vctrs_dispatch2(syms_set_names_dispatch, fns_set_names_dispatch,
-                         syms_x, x,
+                         vendored_syms_x, x,
                          syms_names, names);
 }
 

@@ -205,13 +205,13 @@ r_obj* list_unchop_value(r_obj* value,
       break;
     }
 
-    if (vec_size(*v_value) != 1) {
+    if (short_vec_size(*v_value) != 1) {
       stop_vector_wrong_size_element(v_path->data, input_form, value);
     }
   }
 
   if (loc_first_null == -1) {
-    return(vec_flatten(value, ptype));
+    return(rvctrs_list_unchop(value, ptype));
   }
 
   // Theoretically a shallow duplicate should be more efficient but in
@@ -223,12 +223,12 @@ r_obj* list_unchop_value(r_obj* value,
       continue;
     }
 
-    if (vec_size(*v_value) != 1) {
+    if (short_vec_size(*v_value) != 1) {
       stop_vector_wrong_size_element(v_path->data, input_form, value);
     }
   }
 
-  r_obj* out = vec_flatten(out_list, ptype);
+  r_obj* out = rvctrs_list_unchop(out_list, ptype);
   FREE(1);
   return out;
 }
@@ -488,7 +488,7 @@ r_obj* parse(struct collector* v_collector,
   r_ssize n_rows = short_vec_size(value);
   alloc_row_collector(v_collector, n_rows);
 
-  if (is_data_frame(value)) {
+  if (r_is_data_frame(value)) {
     add_value_row_colmajor(v_collector, value, v_path);
   } else {
     check_list(value, v_path);

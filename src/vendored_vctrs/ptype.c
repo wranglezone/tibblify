@@ -89,7 +89,7 @@ r_obj* vec_ptype_method(r_obj* x) {
 
 static inline
 r_obj* vec_ptype_invoke(r_obj* x, r_obj* method) {
-  return vctrs_dispatch1(syms_vec_ptype, method, syms_x, x);
+  return vctrs_dispatch1(syms_vec_ptype, method, vendored_syms_x, x);
 }
 
 r_obj* df_ptype(r_obj* x, bool bare) {

@@ -431,17 +431,17 @@ r_obj* chop_fallback(r_obj* x, struct vctrs_chop_indices* p_indices) {
   // as in `vctrs_dispatch_n()`, reimplemented here to allow repeated
   // evaluations in a loop.
   r_obj* env = KEEP(r_alloc_empty_environment(r_envs.global));
-  r_env_poke(env, syms_x, x);
+  r_env_poke(env, vendored_syms_x, x);
 
   // Construct call with symbols, not values, for performance.
   // TODO - Remove once bit64 is updated on CRAN. Special casing integer64
   // objects to ensure correct slicing with `NA_integer_`.
   r_obj* call;
   if (is_integer64(x)) {
-    call = KEEP(r_call3(syms.vec_slice_dispatch_integer64, syms_x, syms_i));
+    call = KEEP(r_call3(syms.vec_slice_dispatch_integer64, vendored_syms_x, syms_i));
     r_env_poke(env, syms.vec_slice_dispatch_integer64, fns.vec_slice_dispatch_integer64);
   } else {
-    call = KEEP(r_call3(syms_bracket, syms_x, syms_i));
+    call = KEEP(r_call3(syms_bracket, vendored_syms_x, syms_i));
     r_env_poke(env, syms_bracket, fns_bracket);
   }
 

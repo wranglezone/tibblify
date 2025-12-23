@@ -42,11 +42,11 @@ SEXP proxy_apply_chr_proxy_collate(SEXP proxy, SEXP chr_proxy_collate) {
 static
 SEXP chr_apply(SEXP x, SEXP chr_proxy_collate) {
   // Don't use vctrs dispatch utils because we match argument positionally
-  SEXP call = PROTECT(Rf_lang2(syms_chr_proxy_collate, syms_x));
+  SEXP call = PROTECT(Rf_lang2(syms_chr_proxy_collate, vendored_syms_x));
 
   SEXP mask = PROTECT(r_alloc_empty_environment(R_GlobalEnv));
   Rf_defineVar(syms_chr_proxy_collate, chr_proxy_collate, mask);
-  Rf_defineVar(syms_x, x, mask);
+  Rf_defineVar(vendored_syms_x, x, mask);
 
   SEXP out = PROTECT(Rf_eval(call, mask));
 

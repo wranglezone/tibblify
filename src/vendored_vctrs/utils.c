@@ -1006,7 +1006,7 @@ static SEXP fns_colnames = NULL;
 // [[ include("utils.h") ]]
 SEXP colnames(SEXP x) {
   return vctrs_dispatch1(syms_colnames, fns_colnames,
-                         syms_x, x);
+                         vendored_syms_x, x);
 }
 
 r_obj* colnames2(r_obj* x) {
@@ -1334,7 +1334,7 @@ bool r_has_name_at(SEXP names, R_len_t i) {
   }
 
   SEXP elt = STRING_ELT(names, i);
-  return elt != NA_STRING && elt != strings_empty;
+  return elt != NA_STRING && elt != vendored_strings_empty;
 }
 
 bool r_is_minimal_names(SEXP x) {
@@ -1347,7 +1347,7 @@ bool r_is_minimal_names(SEXP x) {
 
   for (R_len_t i = 0; i < n; ++i, ++p) {
     SEXP elt = *p;
-    if (elt == NA_STRING || elt == strings_empty) {
+    if (elt == NA_STRING || elt == vendored_strings_empty) {
       return false;
     }
   }
@@ -1369,7 +1369,7 @@ bool r_is_empty_names(SEXP x) {
 
   for (R_len_t i = 0; i < n; ++i, ++p) {
     SEXP elt = *p;
-    if (elt != NA_STRING && elt != strings_empty) {
+    if (elt != NA_STRING && elt != vendored_strings_empty) {
       return false;
     }
   }
@@ -1395,7 +1395,7 @@ bool r_is_names(SEXP names) {
 
   for (R_len_t i = 0; i < n; ++i, ++p) {
     SEXP nm = *p;
-    if (nm == strings_empty || nm == NA_STRING) {
+    if (nm == vendored_strings_empty || nm == NA_STRING) {
       return false;
     }
   }
@@ -1420,7 +1420,7 @@ SEXP r_as_data_frame(SEXP x) {
   if (is_bare_data_frame(x)) {
     return x;
   } else {
-    return vctrs_dispatch1(syms_as_data_frame2, fns_as_data_frame2, syms_x, x);
+    return vctrs_dispatch1(syms_as_data_frame2, fns_as_data_frame2, vendored_syms_x, x);
   }
 }
 
@@ -1567,7 +1567,7 @@ SEXP vctrs_shared_missing_list = NULL;
 SEXP vctrs_shared_zero_int = NULL;
 
 SEXP strings2 = NULL;
-SEXP strings_empty = NULL;
+SEXP vendored_strings_empty = NULL;
 SEXP strings_dots = NULL;
 SEXP strings_none = NULL;
 SEXP strings_minimal = NULL;
@@ -1617,7 +1617,7 @@ SEXP chrs_which = NULL;
 SEXP syms_i = NULL;
 SEXP syms_j = NULL;
 SEXP syms_n = NULL;
-SEXP syms_x = NULL;
+SEXP vendored_syms_x = NULL;
 SEXP syms_y = NULL;
 SEXP syms_x_size = NULL;
 SEXP syms_y_size = NULL;
@@ -1632,14 +1632,14 @@ SEXP syms_subscript_arg = NULL;
 SEXP syms_needles_arg = NULL;
 SEXP syms_haystack_arg = NULL;
 SEXP syms_out = NULL;
-SEXP syms_value = NULL;
+SEXP vendored_syms_value = NULL;
 SEXP syms_quiet = NULL;
 SEXP syms_dot_name_spec = NULL;
 SEXP syms_outer = NULL;
 SEXP syms_inner = NULL;
 SEXP syms_tilde = NULL;
 SEXP syms_dot_environment = NULL;
-SEXP syms_ptype = NULL;
+SEXP vendored_syms_ptype = NULL;
 SEXP syms_missing = NULL;
 SEXP syms_size = NULL;
 SEXP syms_subscript_action = NULL;
@@ -1750,8 +1750,8 @@ void vctrs_init_utils(SEXP ns) {
   strings_dots = Rf_mkChar("...");
   SET_STRING_ELT(strings2, 0, strings_dots);
 
-  strings_empty = Rf_mkChar("");
-  SET_STRING_ELT(strings2, 1, strings_empty);
+  vendored_strings_empty = Rf_mkChar("");
+  SET_STRING_ELT(strings2, 1, vendored_strings_empty);
 
   strings_date = Rf_mkChar("Date");
   SET_STRING_ELT(strings2, 2, strings_date);
@@ -1919,7 +1919,7 @@ void vctrs_init_utils(SEXP ns) {
   syms_i = Rf_install("i");
   syms_j = Rf_install("j");
   syms_n = Rf_install("n");
-  syms_x = Rf_install("x");
+  vendored_syms_x = Rf_install("x");
   syms_y = Rf_install("y");
   syms_x_size = Rf_install("x_size");
   syms_y_size = Rf_install("y_size");
@@ -1934,14 +1934,14 @@ void vctrs_init_utils(SEXP ns) {
   syms_needles_arg = Rf_install("needles_arg");
   syms_haystack_arg = Rf_install("haystack_arg");
   syms_out = Rf_install("out");
-  syms_value = Rf_install("value");
+  vendored_syms_value = Rf_install("value");
   syms_quiet = Rf_install("quiet");
   syms_dot_name_spec = Rf_install(".name_spec");
   syms_outer = Rf_install("outer");
   syms_inner = Rf_install("inner");
   syms_tilde = Rf_install("~");
   syms_dot_environment = Rf_install(".Environment");
-  syms_ptype = Rf_install("ptype");
+  vendored_syms_ptype = Rf_install("ptype");
   syms_missing = R_MissingArg;
   syms_size = Rf_install("size");
   syms_subscript_action = Rf_install("subscript_action");

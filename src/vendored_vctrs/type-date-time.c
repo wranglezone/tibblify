@@ -442,7 +442,7 @@ static SEXP tzone_get(SEXP x) {
 
 // `tzone_get()` is guaranteed to return 1 element
 static inline bool tzone_is_local(SEXP tzone) {
-  return STRING_ELT(tzone, 0) == strings_empty;
+  return STRING_ELT(tzone, 0) == vendored_strings_empty;
 }
 
 static SEXP tzone_union(SEXP x_tzone, SEXP y_tzone) {
@@ -483,42 +483,42 @@ static SEXP syms_as_date = NULL;
 static SEXP fns_as_date = NULL;
 
 static SEXP r_as_date(SEXP x) {
-  return vctrs_dispatch1(syms_as_date, fns_as_date, syms_x, x);
+  return vctrs_dispatch1(syms_as_date, fns_as_date, vendored_syms_x, x);
 }
 
 static SEXP syms_as_posixct = NULL;
 static SEXP fns_as_posixct = NULL;
 
 static SEXP r_as_posixct(SEXP x, SEXP tzone) {
-  return vctrs_dispatch2(syms_as_posixct, fns_as_posixct, syms_x, x, syms_tz, tzone);
+  return vctrs_dispatch2(syms_as_posixct, fns_as_posixct, vendored_syms_x, x, syms_tz, tzone);
 }
 
 static SEXP syms_as_posixlt = NULL;
 static SEXP fns_as_posixlt = NULL;
 
 static SEXP r_as_posixlt(SEXP x, SEXP tzone) {
-  return vctrs_dispatch2(syms_as_posixlt, fns_as_posixlt, syms_x, x, syms_tz, tzone);
+  return vctrs_dispatch2(syms_as_posixlt, fns_as_posixlt, vendored_syms_x, x, syms_tz, tzone);
 }
 
 static SEXP syms_date_as_character = NULL;
 static SEXP fns_date_as_character = NULL;
 
 static SEXP r_date_as_character(SEXP x) {
-  return vctrs_dispatch1(syms_date_as_character, fns_date_as_character, syms_x, x);
+  return vctrs_dispatch1(syms_date_as_character, fns_date_as_character, vendored_syms_x, x);
 }
 
 static SEXP syms_chr_date_as_posixct = NULL;
 static SEXP fns_chr_date_as_posixct = NULL;
 
 static SEXP r_chr_date_as_posixct(SEXP x, SEXP tzone) {
-  return vctrs_dispatch2(syms_chr_date_as_posixct, fns_chr_date_as_posixct, syms_x, x, syms_tzone, tzone);
+  return vctrs_dispatch2(syms_chr_date_as_posixct, fns_chr_date_as_posixct, vendored_syms_x, x, syms_tzone, tzone);
 }
 
 static SEXP syms_chr_date_as_posixlt = NULL;
 static SEXP fns_chr_date_as_posixlt = NULL;
 
 static SEXP r_chr_date_as_posixlt(SEXP x, SEXP tzone) {
-  return vctrs_dispatch2(syms_chr_date_as_posixlt, fns_chr_date_as_posixlt, syms_x, x, syms_tzone, tzone);
+  return vctrs_dispatch2(syms_chr_date_as_posixlt, fns_chr_date_as_posixlt, vendored_syms_x, x, syms_tzone, tzone);
 }
 
 // -----------------------------------------------------------------------------

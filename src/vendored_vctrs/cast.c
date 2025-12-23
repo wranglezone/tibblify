@@ -159,7 +159,7 @@ r_obj* vec_cast_default_full(r_obj* x,
 
   r_obj* ffi_call = KEEP(r_lazy_eval(call));
   r_obj* out = vctrs_eval_mask7(syms.vec_default_cast,
-                                syms_x, x,
+                                vendored_syms_x, x,
                                 syms_to, to,
                                 syms_x_arg, ffi_x_arg,
                                 syms_to_arg, ffi_to_arg,
@@ -232,7 +232,7 @@ r_obj* vec_cast_dispatch_s3(const struct cast_opts* opts) {
   r_obj* r_to_arg = KEEP(vendored_vctrs_arg(opts->p_to_arg));
 
   r_obj* out = vec_invoke_coerce_method(method_sym, method,
-                                        syms_x, x,
+                                        vendored_syms_x, x,
                                         syms_to, to,
                                         syms_x_arg, r_x_arg,
                                         syms_to_arg, r_to_arg,

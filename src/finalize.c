@@ -20,7 +20,7 @@ r_obj* finalize_scalar(struct collector* v_collector) {
   // flattened into a vector. In colmajor format the data is already in
   // vector form, so no need to flatten.
   if (v_collector->rowmajor) {
-    data = vec_flatten(v_collector->data, v_collector->details.vec_coll.ptype_inner);
+    data = rvctrs_list_unchop(v_collector->data, v_collector->details.vec_coll.ptype_inner);
   }
   KEEP(data);
 

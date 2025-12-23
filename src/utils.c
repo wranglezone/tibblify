@@ -1,16 +1,18 @@
 #include "tibblify.h"
 #include "utils.h"
 #include "conditions.h"
+#include "r-vctrs.h"
 
 SEXP tibblify_ns_env = NULL;
 SEXP classes_list_of = NULL;
 
-// 'syms_transform' is specific to tibblify, so we keep it.
-// syms_x, syms_value, syms_ptype are provided by vctrs/utils.c
 SEXP syms_transform = NULL;
+SEXP syms_value = NULL;
+SEXP syms_x = NULL;
+SEXP syms_ptype = NULL;
 
-SEXP syms_vec_is = NULL;
-SEXP syms_vec_flatten = NULL;
+SEXP strings_empty = NULL;
+SEXP strings_object = NULL;
 
 // -----------------------------------------------------------------------------
 
@@ -29,7 +31,6 @@ r_obj* r_list_get_by_name(r_obj* x, const char* nm) {
 }
 
 r_obj* apply_transform(r_obj* value, r_obj* fn) {
-  // Uses tibblify's 'syms_transform' and vctrs's 'syms_value'
   r_obj* call = KEEP(r_call2(syms_transform, syms_value));
 
   r_obj* mask = KEEP(r_alloc_environment(2, R_GlobalEnv));
@@ -103,7 +104,6 @@ void check_names_unique(r_obj* field_names,
   r_obj* const * v_field_names = r_chr_cbegin(field_names);
   r_obj* field_nm = v_field_names[ind[0]];
 
-  // Use vctrs 'r_globals.na_str' and 'strings_empty'
   if (field_nm == r_globals.na_str || field_nm == strings_empty) {
     stop_empty_name(path->data, ind[0]);
   }
@@ -119,9 +119,28 @@ void check_names_unique(r_obj* field_names,
   }
 }
 
+bool r_is_bare_list(r_obj* x) {
+  if (!r_is_list(x)) {
+    return false;
+  }
+
+  if (!r_is_object(x)) {
+    return true;
+  }
+
+  if (r_length(r_class(x)) == 1 && r_inherits(x, "list")) {
+    return true;
+  }
+
+  return false;
+}
+
 // [[register()]]
-void tibblify_init_utils(SEXP ns, SEXP vctrs_ns) {
+void tibblify_init_utils(SEXP ns) {
   tibblify_ns_env = ns;
+
+  r_preserve_global(strings_empty = r_str(""));
+  r_preserve_global(strings_object = r_str("object"));
 
   r_preserve_global(r_string_input_form.rowmajor = r_str("rowmajor"));
   r_preserve_global(r_string_input_form.colmajor = r_str("colmajor"));
@@ -138,7 +157,9 @@ void tibblify_init_utils(SEXP ns, SEXP vctrs_ns) {
   r_preserve_global(r_vector_form.scalar_list = r_str("scalar_list"));
   r_preserve_global(r_vector_form.object_list = r_str("object"));
 
-  classes_list_of = r_new_shared_vector(STRSXP, 3);
+  classes_list_of = Rf_allocVector(STRSXP, 3);
+  r_preserve_global(classes_list_of);
+
   r_obj* strings_list_of = r_str("vctrs_list_of");
   r_chr_poke(classes_list_of, 0, strings_list_of);
   r_obj* strings_vctr = r_str("vctrs_vctr");
@@ -147,7 +168,7 @@ void tibblify_init_utils(SEXP ns, SEXP vctrs_ns) {
   r_chr_poke(classes_list_of, 2, strings_list);
 
   syms_transform = r_sym("transform");
-
-  syms_vec_is = Rf_findFun(r_sym("vec_is"), vctrs_ns);
-  syms_vec_flatten = Rf_findFun(r_sym("vec_flatten"), ns);
+  syms_value = r_sym("value");
+  syms_x = r_sym("x");
+  syms_ptype = r_sym("ptype");
 }

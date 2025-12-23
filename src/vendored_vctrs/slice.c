@@ -209,12 +209,12 @@ r_obj* vec_slice_fallback(r_obj* x, r_obj* subscript) {
   // objects to ensure correct slicing with `NA_integer_`.
   if (is_integer64(x)) {
     return vctrs_dispatch2(syms.vec_slice_fallback_integer64, fns.vec_slice_fallback_integer64,
-                           syms_x, x,
+                           vendored_syms_x, x,
                            syms_i, subscript);
   }
 
   return vctrs_dispatch2(syms.vec_slice_fallback, fns.vec_slice_fallback,
-                         syms_x, x,
+                         vendored_syms_x, x,
                          syms_i, subscript);
 }
 
@@ -224,12 +224,12 @@ r_obj* vec_slice_dispatch(r_obj* x, r_obj* subscript) {
   // objects to ensure correct slicing with `NA_integer_`.
   if (is_integer64(x)) {
     return vctrs_dispatch2(syms.vec_slice_dispatch_integer64, fns.vec_slice_dispatch_integer64,
-                           syms_x, x,
+                           vendored_syms_x, x,
                            syms_i, subscript);
   }
 
   return vctrs_dispatch2(syms_bracket, fns_bracket,
-                         syms_x, x,
+                         vendored_syms_x, x,
                          syms_i, subscript);
 }
 
@@ -239,7 +239,7 @@ r_obj* vec_slice_altrep(r_obj* x, r_obj* subscript) {
   r_obj* out = vctrs_dispatch2(
     syms.vec_slice_altrep,
     fns.vec_slice_altrep,
-    syms_x,
+    vendored_syms_x,
     x,
     syms_i,
     subscript

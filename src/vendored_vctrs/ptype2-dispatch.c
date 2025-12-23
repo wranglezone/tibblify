@@ -86,7 +86,7 @@ r_obj* vec_ptype2_default_full(r_obj* x,
   r_obj* ffi_call = KEEP(r_lazy_eval(call));
 
   r_obj* out = vctrs_eval_mask7(syms_vec_ptype2_default,
-                                syms_x, x,
+                                vendored_syms_x, x,
                                 syms_y, y,
                                 syms_x_arg, ffi_x_arg,
                                 syms_y_arg, ffi_y_arg,
@@ -173,7 +173,7 @@ r_obj* vec_ptype2_dispatch_s3(
   r_obj* out = vec_invoke_coerce_method(
     method_sym,
     method,
-    syms_x,
+    vendored_syms_x,
     x,
     syms_y,
     y,

@@ -251,7 +251,7 @@
       <error/tibblify_error>
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
-      Caused by error in `vctrs::list_unchop()`:
+      Caused by error in `list_unchop()`:
       ! Can't convert `x[[2]]` <character> to <integer>.
 
 # tib_vector can parse object

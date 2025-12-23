@@ -130,7 +130,7 @@ r_obj* vec_proxy_invoke(r_obj* x, r_obj* method) {
     return x;
   } else {
     return vctrs_dispatch1(syms_vec_proxy, method,
-                           syms_x, x);
+                           vendored_syms_x, x);
   }
 }
 
@@ -174,7 +174,7 @@ r_obj* vec_proxy_invoke_impl(r_obj* x,
                              r_obj* vec_proxy_sym,
                              r_obj* (*vec_proxy_impl_fn)(r_obj*)) {
   if (method != r_null) {
-    return vctrs_dispatch1(vec_proxy_sym, method, syms_x, x);
+    return vctrs_dispatch1(vec_proxy_sym, method, vendored_syms_x, x);
   }
 
   /* Fallback on S3 objects with no proxy */

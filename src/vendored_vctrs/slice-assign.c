@@ -853,11 +853,11 @@ r_obj* vec_assign_fallback(
   }
 
   return vctrs_dispatch5(syms_vec_assign_fallback, fns_vec_assign_fallback,
-                         syms_x, x,
+                         vendored_syms_x, x,
                          syms_i, index,
                          syms_slice_value, ffi_slice_value,
                          syms_index_style, ffi_index_style,
-                         syms_value, value);
+                         vendored_syms_value, value);
 }
 
 static

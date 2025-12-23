@@ -52,7 +52,7 @@ void stop_incompatible_type(SEXP x,
                             struct vendored_vctrs_arg* y_arg,
                             bool cast) {
   SEXP syms[6] = {
-    syms_x,
+    vendored_syms_x,
     syms_y,
     syms_x_arg,
     syms_y_arg,
@@ -83,7 +83,7 @@ void stop_incompatible_size(r_obj* x,
                             struct vendored_vctrs_arg* y_arg,
                             struct r_lazy call) {
   r_obj* syms[8] = {
-    syms_x,
+    vendored_syms_x,
     syms_y,
     syms_x_size,
     syms_y_size,

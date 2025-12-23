@@ -60,7 +60,7 @@ r_obj* vec_restore_opts(
 static
 r_obj* vec_restore_dispatch(r_obj* x, r_obj* to) {
   return vctrs_dispatch2(syms_vec_restore_dispatch, fns_vec_restore_dispatch,
-                         syms_x, x,
+                         vendored_syms_x, x,
                          syms_to, to);
 }
 

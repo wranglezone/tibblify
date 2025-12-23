@@ -124,7 +124,7 @@ static
 r_obj* vec_ptype_finalise_dispatch(r_obj* x) {
   return vctrs_dispatch1(
     syms_vec_ptype_finalise_dispatch, fns_vec_ptype_finalise_dispatch,
-    syms_x, x
+    vendored_syms_x, x
   );
 }
 
