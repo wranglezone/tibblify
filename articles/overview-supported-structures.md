@@ -112,7 +112,7 @@ tibblify(x, tspec_df(tib_int_vec("a")))
 #> Error in `tibblify()`:
 #> ! Problem while tibblifying `x[[2]]$a`
 #> Caused by error:
-#> ! Can't convert <list> to <integer>.
+#> ! Can't convert `<list>` <list> to <integer>.
 ```
 
 Use `vector_allows_empty_list = TRUE` in `tspec_*()` so that they are
@@ -161,7 +161,7 @@ tibblify(x, tspec_df(tib_int_vec("a")))
 #> Error in `tibblify()`:
 #> ! Problem while tibblifying `x[[1]]$a`
 #> Caused by error:
-#> ! Can't convert <list> to <integer>.
+#> ! Can't convert `<list>` <list> to <integer>.
 ```
 
 Use `input_form = "scalar_list"` in
