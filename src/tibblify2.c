@@ -28,6 +28,10 @@ r_obj* ffi_tibblify(r_obj* data, r_obj* spec, r_obj* ffi_path) {
   r_obj* type = r_chr_get(r_list_get_by_name(spec, "type"), 0);
   r_obj* out;
 
+  if (r_is_data_frame(data) && short_vec_size(data) == 0) {
+    data = r_alloc_list(0);
+  }
+
   if (coll_parser->rowmajor) {
     if (type == r_string_types.df || type == r_string_types.recursive) {
       out = parse(coll_parser, data, &path);
