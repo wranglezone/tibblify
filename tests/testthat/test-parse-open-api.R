@@ -49,3 +49,10 @@ test_that("can parse brex.io open api spec", {
   # saveRDS(test_result, rds_file)
   expect_equal(test_result, readRDS(rds_file))
 })
+
+test_that("OpenAPI version < 3 throws an informative error", {
+  expect_error(
+    parse_openapi_spec(list()),
+    "OpenAPI versions before 3 are not supported"
+  )
+})

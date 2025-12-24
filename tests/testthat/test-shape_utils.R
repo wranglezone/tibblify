@@ -16,6 +16,10 @@ test_that("is_object() works", {
   expect_true(is_object(list()))
   expect_true(is_object(list(x = 1)))
   expect_true(is_object(list(x = 1, y = "a")))
+
+  listy_list <- list()
+  class(listy_list) <- "list"
+  expect_true(is_object(listy_list))
 })
 
 test_that("is_object_list() works", {
@@ -49,6 +53,8 @@ test_that("is_list_of_null() works", {
   expect_true(is_list_of_null(list(NULL, NULL)))
 
   expect_false(is_list_of_null(list(NULL, 1)))
+
+  expect_error(is_list_of_null("not a list"), "is not a list")
 })
 
 test_that("list_is_list_of_null() works", {
@@ -56,5 +62,8 @@ test_that("list_is_list_of_null() works", {
   expect_true(list_is_list_of_null(list(NULL)))
   expect_true(list_is_list_of_null(list(NULL, list())))
   expect_true(list_is_list_of_null(list(list(NULL))))
+
   expect_false(list_is_list_of_null(list(list(NULL, 1))))
+
+  expect_error(list_is_list_of_null("not a list"), "is not a list")
 })

@@ -485,7 +485,7 @@ struct collector* new_multi_collector(enum collector_type coll_type,
     p_coll->check_colmajor_nrows = &check_colmajor_nrows_default;
     p_coll->unpack = false;
     break;
-  default:
+  default: // # nocov
     r_stop_internal("Unexpected collector type."); // # nocov
   }
   p_coll->copy = &copy_multi_collector;
