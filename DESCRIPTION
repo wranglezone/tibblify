@@ -13,7 +13,7 @@ Description: A tool to rectangle a nested list, that is to convert it into
     parsing JSON files or the JSON response of REST APIs. It is supported
     by the 'vctrs' package and therefore offers a wide support of vector
     types.
-License: GPL-3
+License: MIT + file LICENSE
 URL: https://tibblify.wrangle.zone,
     https://github.com/wranglezone/tibblify
 BugReports: https://github.com/wranglezone/tibblify/issues
