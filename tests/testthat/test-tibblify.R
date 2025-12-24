@@ -1232,6 +1232,22 @@ test_that("guesses spec by default", {
   )
 })
 
+test_that("can tibblify empty objects - #204", {
+  spec <- tspec_df(tib_chr("id"))
+  expect_equal(
+    tibblify(list(), spec),
+    tibble(id = character())
+  )
+  expect_equal(
+    tibblify(data.frame(), spec),
+    tibble(id = character())
+  )
+  expect_equal(
+    tibblify(tibble(), spec),
+    tibble(id = character())
+  )
+})
+
 # colmajor ----------------------------------------------------------------
 
 test_that("colmajor: names are checked", {
