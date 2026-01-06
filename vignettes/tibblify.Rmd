@@ -14,27 +14,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r packages-used}
+library(tibblify)
+library(purrr)
+library(vctrs)
 ```
 
 ## Introduction
 
-With `tibblify()` you can rectangle deeply nested lists into a tidy tibble. These
-lists might come from an API in the form of JSON or from scraping XML. The reasons
-to use `tibblify()` over other tools like `jsonlite::fromJSON()` or `tidyr::hoist()`
-are:
-
-* It can guess the output format like `jsonlite::fromJSON()`.
-* You can also provide a specification how to rectangle.
-* The specification is easy to understand.
-* You can bring most inputs into the shape you want in a single step.
-* Rectangling is much faster than with `jsonlite::fromJSON()`.
-
+With `tibblify()` you can rectangle deeply nested lists into a tidy tibble. 
+These lists might come from an API in the form of JSON or from scraping XML.
 
 ## Example
 
-Let's start with `gh_users`, which is a list containing information about four
-GitHub users.
+Let's start with `gh_users`, which is a list containing information about four GitHub users. 
+We'll select a subset of columns to keep the example relatively simple.
 
 ```{r}
 library(tibblify)
@@ -44,20 +38,19 @@ gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name
 names(gh_users_small[[1]])
 ```
 
-Quickly rectangling `gh_users_small` is as easy as applying `tibblify()` to it:
+We can quickly rectangle `gh_users_small` with `tibblify()`.
 
 ```{r}
 tibblify(gh_users_small)
 ```
 
-We can now look at the specification `tibblify()` used for rectangling
+We can now look at the specification `tibblify()` used for rectangling.
 
 ```{r}
 guess_tspec(gh_users_small)
 ```
 
-
-If we are only interested in some of the fields we can easily adapt the specification
+If we are only interested in some of the fields we can easily adapt the specification.
 
 ```{r}
 spec <- tspec_df(
@@ -72,47 +65,46 @@ tibblify(gh_users_small, spec)
 
 ## Objects
 
-We refer to lists like `gh_users_small` as _collection_ and _objects_ are the
-elements of such lists. Objects and collections are the typical input for
-`tibblify()`.
+We refer to lists like `gh_users_small` as _collections_, and each element of that list is an _object_. 
+Objects and collections are the typical input for `tibblify()`.
 
-Basically, an _object_ is simply something that can be converted to a one row tibble.
+Basically, an _object_ is something that can be converted to a one-row tibble. 
 This boils down to a condition on the names of the object:
 
-* the `object` must have names (the `names` attribute must not be `NULL`),
-* every element must be named (no name can be `NA` or `""`),
-* and the names must be unique.
+1. The `object` must have names (the `names` attribute must not be `NULL`).
+2. Every element must be named (no name can be `NA` or `""`).
+3. The names must be unique.
 
-In other words, the names must fulfill `vec_as_names(repair = "check_unique")`.
+In other words, the names must fulfill `vctrs::vec_as_names(names, repair = "check_unique")`. 
 The name-value pairs of an object are the _fields_.
 
-For example `list(x = 1, y = "a")` is an object with the fields `(x, 1)` and
-`(y, "a")` but `list(1, z = 3)` is not an object because it is not fully named.
+For example `list(x = 1, y = "a")` is an object with the fields `(x, 1)` and `(y, "a")` but `list(1, z = 3)` is not an object because it is not fully named.
 
-A _collection_ is basically just a list of similar objects so that the fields can
-become the columns in a tibble.
-
+A _collection_ is a list of similar objects so that the fields can become the columns in a tibble.
 
 ## Specification
 
-Providing an explicit specification has a couple of advantages:
+Providing an explicit specification has several advantages:
 
-* you can ensure type and shape stability of the resulting tibble in automated scripts.
-* you can give the columns different names.
-* you can restrict to parsing only the fields you need.
-* you can specify what happens if a value is missing.
+1. You can ensure type and shape stability of the resulting tibble in automated scripts.
+2. You can give the columns names that are different than their names in the source collection.
+3. You can parse only the fields you need (and ignore any others).
+4. You can specify what happens if a value is missing.
 
+To create a specification for a collection, use `tspec_df()`. Describe the columns of the output tibble with the `tib_*()` functions. The `tib_*()` functions describe the path to the field to extract and the output type of the field. Throughout these functions, we use the concept of `ptype` (prototype) as used in the {vctrs} package (see `vignette("type-size", package = "vctrs")`).
 
-As seen before the specification for a collection is done with `tspec_df()`. The
-columns of the output tibble are describe with the `tib_*()` functions. They
-describe the path to the field to extract and the output type of the field. There
-are the following five types of functions:
+There are five main types of `tib_*()` functions:
 
-* `tib_scalar(ptype)`: a length one vector with type `ptype`
-* `tib_vector(ptype)`: a vector of arbitrary length with type `ptype`
-* `tib_variant()`: a vector of arbitrary length and type; you should barely ever need this
-* `tib_row(...)`: an object with the fields `...`
-* `tib_df(...)`: a collection where the objects have the fields `...`
+* `tib_scalar(ptype)`: A length-one vector with type `ptype`. The result is a column of that type.
+* `tib_vector(ptype)`: A vector of arbitrary length with type `ptype`. The result is a list column, with each row containing a vector of that type.
+* `tib_variant()`: A vector of arbitrary length and type. The result is a list column, with each row containing a list. You should rarely need this function.
+* `tib_row(...)`: An object with the fields `...`. The result is a tibble column, with each row containing the specified one-row tibble.
+* `tib_df(...)`: A collection where the objects have the fields `...`. The result is a tibble column, with each row containing a tibble.
+
+There are also two other `tib_*()` functions for special cases:
+
+* `tib_recursive()`: A collection where objects can themselves be collections of the same structure, such as a directory tree. The result is a tibble column, with each row containing a tibble of the same structure (until `NULL` is reached, terminating recursion).
+* `tib_unspecified()`: An unspecified field where the type and shape is not known in advance. The `unspecified` argument of `tibblify()` controls how such fields are handled.
 
 For convenience there are shortcuts for `tib_scalar()` and `tib_vector()` for
 the most common prototypes:
@@ -124,10 +116,9 @@ the most common prototypes:
 * `Date`: `tib_date()` and `tib_date_vec()`
 * `Date` encoded as character: `tib_chr_date()` and `tib_chr_date_vec()`
 
-
 ### Scalar Elements
 
-Scalar elements are the most common case and result in a normal vector column
+Scalar elements are the most common case and result in a normal vector column.
 
 ```{r}
 tibblify(
@@ -142,9 +133,8 @@ tibblify(
 )
 ```
 
-With `tib_scalar()` you can also provide your own prototype
-
-Let's say you have a list with durations
+With `tib_scalar()`, you can also provide your own prototype for column types not included in our shortcuts. 
+For example, let's say you have a list with durations (objects with class "difftime").
 
 ```{r}
 x <- list(
@@ -154,7 +144,7 @@ x <- list(
 x
 ```
 
-and then use it in `tib_scalar()`
+Use `tib_scalar()` with `vctrs::new_duration()` to specify the duration `ptype`.
 
 ```{r}
 tibblify(
@@ -169,8 +159,8 @@ tibblify(
 
 ### Vector Elements
 
-If an element does not always have size one then it is a vector element. If it
-still always has the same type `ptype` then it produces a list of `ptype` column:
+If an element does not always have size one then it is a vector element. 
+If it still always has the same type `ptype` then it produces a list column with elements of `ptype`.
 
 ```{r}
 x <- list(
@@ -193,7 +183,7 @@ You can use [`tidyr::unnest()`](https://tidyr.tidyverse.org/reference/nest.html)
 
 ### Object Elements
 
-For example in `gh_repos_small`
+In `gh_repos_small`, the field `owner` is an object itself.
 
 ```{r}
 gh_repos_small <- purrr::map(gh_repos, ~ .x[c("id", "name", "owner")])
@@ -208,29 +198,28 @@ gh_repos_small <- purrr::map(
 gh_repos_small[[1]]
 ```
 
-the field `owner` is an object itself. The specification to extract it uses `tib_row()`
+The specification to extract it uses `tib_row()`.
 
 ```{r}
 spec <- guess_tspec(gh_repos_small)
 spec
 ```
 
-and results in a tibble column
+This specification results in a tibble column.
 
 ```{r}
 tibblify(gh_repos_small, spec)
 ```
 
-If you don't like the tibble column you can unpack it with `tidyr::unpack()`.
-Alternatively, if you only want to extract some of the fields in `owner` you
-can use a nested path
+If you don't like the tibble column you can unpack it with `tidyr::unpack()`. 
+Alternatively, if you only want to extract some of the fields in `owner` you can use a character vector path.
 
 ```{r}
 spec2 <- tspec_df(
   id = tib_int("id"),
   name = tib_chr("name"),
-  owner_id = tib_int(c("owner", "id")),
-  owner_login = tib_chr(c("owner", "login"))
+  owner_id = tib_int(c("owner", "id")), # "id" in "owner"
+  owner_login = tib_chr(c("owner", "login")) # "login" in "owner"
 )
 spec2
 
@@ -240,8 +229,8 @@ tibblify(gh_repos_small, spec2)
 
 ## Required and Optional Fields
 
-Objects usually have some fields that always exist and some that are optional.
-By default `tib_*()` demands that a field exists
+Objects usually have some fields that always exist and some that are optional. 
+By default `tib_*()` requires that a field exists.
 
 ```{r error=TRUE}
 x <- list(
@@ -257,7 +246,7 @@ spec <- tspec_df(
 tibblify(x, spec)
 ```
 
-You can mark a field as optional with the argument `required = FALSE`:
+You can mark a field as optional with the argument `required = FALSE`.
 
 ```{r}
 spec <- tspec_df(
@@ -268,7 +257,7 @@ spec <- tspec_df(
 tibblify(x, spec)
 ```
 
-You can specify the value to use with the `fill` argument
+You can specify the value to use with the `fill` argument.
 
 ```{r}
 spec <- tspec_df(
@@ -282,13 +271,10 @@ tibblify(x, spec)
 
 ## Converting a Single Object
 
-To rectangle a single object you have two options: `tspec_object()` which produces
-a list or `tspec_row()` which produces a tibble with one row.
+To rectangle a single object you have two options: `tspec_object()` which produces a list, or `tspec_row()` which produces a tibble with one row.
 
-While tibbles are great for a single object it often makes more sense to convert
-them to a list.
-
-For example a typical API response might be something like
+It often makes more sense to convert such objects to a list. 
+For example a typical API response might be something like this.
 
 ```{r}
 api_output <- list(
@@ -301,8 +287,7 @@ api_output <- list(
 )
 ```
 
-
-To convert to a one row tibble
+Use `tspec_row()` to convert to a one-row tibble.
 
 ```{r}
 row_spec <- tspec_row(
@@ -317,8 +302,8 @@ api_output_df <- tibblify(api_output, row_spec)
 api_output_df
 ```
 
-it is necessary to wrap `data` in a list. To access `data` one has to use
-`api_output_df$data[[1]]` which is not very nice.
+To access `data` one has to use `api_output_df$data[[1]]`, which is not very nice. 
+We can use `tspec_object()` to simplify this situation.
 
 ```{r}
 object_spec <- tspec_object(
@@ -333,8 +318,8 @@ api_output_list <- tibblify(api_output, object_spec)
 api_output_list
 ```
 
-Now accessing `data` does not required an extra subsetting step
+Now accessing `data` does not require an extra subsetting step.
 
 ```{r}
-api_output_list$data
+api_output_list$data # No [[1]] needed
 ```

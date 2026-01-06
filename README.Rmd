@@ -23,27 +23,59 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/wranglezone/tibblify/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wranglezone/tibblify/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of tibblify is to provide an easy way of converting a nested list into a tibble.
+The goal of tibblify is to provide an easy way to convert a nested list into a tibble.
 
 ## Installation
 
-You can install the released version of tibblify from [CRAN](https://CRAN.R-project.org) with:
+Install the released version of tibblify from [CRAN](https://cran.r-project.org/):
 
 ``` r
 install.packages("tibblify")
 ```
+::: {.pkgdown-devel}
+Install the development version of tibblify from [GitHub](https://github.com/):
 
-Or install the development version from GitHub with:
+``` r
+# install.packages("pak")
+pak::pak("wranglezone/tibblify")
+```
+:::
 
-```{r, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("wranglezone/tibblify")
+## Usage
+
+To illustrate how `tibblify()` works, we'll start with a list containing information about four GitHub users.
+
+```{r}
+library(tibblify)
+
+gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")])
+
+names(gh_users_small[[1]])
 ```
 
+We can rectangle `gh_users_small` automatically with `tibblify()`:
 
-```{r child='vignettes/tibblify.Rmd'} 
+```{r}
+tibblify(gh_users_small)
 ```
 
+We can avoid the note about the unspecified field by formally providing a spec starting with `guess_tspec()`:
+
+```{r}
+spec <- guess_tspec(gh_users_small, inform_unspecified = FALSE)
+# Drop the unused email specification.
+spec$fields$email <- NULL
+tibblify(gh_users_small, spec = spec)
+```
+
+Learn more in `vignette("tibblify")`.
+
+## Similar packages
+
+* [jsonlite](https://cran.r-project.org/package=jsonlite): `jsonlite::fromJSON()` is excellent for parsing JSON, but `tibblify` allows for strict specifications and can be faster for complex nested lists.
+* [tidyr](https://tidyr.tidyverse.org/): `tidyr::hoist()` and `tidyr::unnest_longer()` allow for step-by-step rectangling. `tibblify` aims to rectangle the data in a single step based on a schema.
+* [rrapply](https://jorischau.github.io/rrapply/): Provides extended functionality for applying functions to nested lists, and can also be used to melt or prune lists.
+* [tidyjson](https://github.com/colearendt/tidyjson): Offers a grammar for manipulating JSON data.
 
 ## Code of Conduct
 

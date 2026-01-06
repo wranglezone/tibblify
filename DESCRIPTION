@@ -10,9 +10,9 @@ Authors@R: c(
 Description: A tool to rectangle a nested list, that is to convert it into
     a tibble. This is done automatically or according to a given
     specification.  A common use case is for nested lists coming from
-    parsing JSON files or the JSON response of REST APIs. It is supported
-    by the 'vctrs' package and therefore offers a wide support of vector
-    types.
+    parsing 'JSON' files, or the 'JSON' responses of 'REST' 'APIs'.
+    Rectangling uses the 'vctrs' package, and therefore offers a wide
+    support of vector types.
 License: MIT + file LICENSE
 URL: https://tibblify.wrangle.zone,
     https://github.com/wranglezone/tibblify
@@ -37,10 +37,11 @@ Suggests:
     spelling (>= 2.2),
     testthat (>= 3.1.4),
     yaml (>= 2.3.6)
+LinkingTo:
+    rlang,
+    vctrs
 VignetteBuilder:
     knitr
-LinkingTo:
-    vctrs
 Remotes:
     r-lib/vctrs
 Config/testthat/edition: 3
