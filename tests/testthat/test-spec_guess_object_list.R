@@ -134,7 +134,9 @@ test_that("can guess vector input form", {
     ),
     tib_variant("x")
   )
+})
 
+test_that("can guess object input form", {
   # there need to be enough different elements to be recognized as input_form = "object"
   # TODO should ask the user?
   skip("improve guessing logic")
