@@ -38,7 +38,7 @@
       (expect_error(tspec_combine(df_spec, tib_int("a"))))
     Output
       <error/rlang_error>
-      Error in `check_tspec_combine_dots()`:
+      Error in `tspec_combine()`:
       ! Every element of `...` must be a tibblify spec.
       x Element 2 has class <tib_scalar_integer>.
 

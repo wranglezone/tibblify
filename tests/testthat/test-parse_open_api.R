@@ -1,3 +1,7 @@
+# These tests are very slow, even moreso when something goes wrong. If they're
+# slow, uncomment the sub-tests to debug. Obviously ideally this whole thing
+# should be sped up a lot on refactor.
+
 test_that("can parse 'Sponsored Products' open api spec", {
   # Spec downloaded locally so tests don't require internet connection.
   url <- "https://dtrnk0o2zy01c.cloudfront.net/openapi/en-us/dest/SponsoredProducts_prod_3p.json"
@@ -8,6 +12,14 @@ test_that("can parse 'Sponsored Products' open api spec", {
   })
   rds_file <- sub("json$", "rds", file)
   # saveRDS(test_result, rds_file)
+  # expected_result <- readRDS(rds_file)
+  # expect_equal(names(test_result), names(expected_result))
+  # expect_equal(test_result$endpoint, expected_result$endpoint)
+  # rows_to_test <- sample(seq_along(test_result$endpoint), 5)
+  # expect_equal(
+  #   test_result$operations[rows_to_test],
+  #   expected_result$operations[rows_to_test]
+  # )
   expect_equal(test_result, readRDS(rds_file))
 })
 

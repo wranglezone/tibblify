@@ -53,7 +53,7 @@ test_that("can combine empty spec", {
 test_that("can combine required", {
   spec_required <- tspec_df(a = tib_int("a"), b = tib_chr("b"))
   spec_optional <- tspec_df(
-    a = tib_int("a", required = FALSE),
+    a = tib_int("a", .required = FALSE),
     b = tib_chr("b")
   )
   spec_missing <- tspec_df(b = tib_chr("b"))
@@ -112,8 +112,8 @@ test_that("can combine ptype", {
 
 test_that("can't combine different defaults", {
   spec_no_default <- tspec_df(a = tib_int("a"))
-  spec_default1 <- tspec_df(a = tib_int("a", fill = 1))
-  spec_default2 <- tspec_df(a = tib_int("a", fill = 2))
+  spec_default1 <- tspec_df(a = tib_int("a", .fill = 1))
+  spec_default2 <- tspec_df(a = tib_int("a", .fill = 2))
 
   expect_equal(tspec_combine(spec_default1, spec_default1), spec_default1)
 
@@ -123,8 +123,8 @@ test_that("can't combine different defaults", {
   })
 
   spec_no_default_vec <- tspec_df(a = tib_int_vec("a"))
-  spec_default1_vec <- tspec_df(a = tib_int_vec("a", fill = 1))
-  spec_default2_vec <- tspec_df(a = tib_int_vec("a", fill = 2))
+  spec_default1_vec <- tspec_df(a = tib_int_vec("a", .fill = 1))
+  spec_default2_vec <- tspec_df(a = tib_int_vec("a", .fill = 2))
 
   expect_equal(
     tspec_combine(spec_default1_vec, spec_default1_vec),
@@ -139,8 +139,8 @@ test_that("can't combine different defaults", {
 
 test_that("can't combine different transforms", {
   spec_no_f <- tspec_df(a = tib_int("a"))
-  spec_f1 <- tspec_df(a = tib_int("a", transform = ~.x))
-  spec_f2 <- tspec_df(a = tib_int("a", transform = ~ .x + 1))
+  spec_f1 <- tspec_df(a = tib_int("a", .transform = ~.x))
+  spec_f2 <- tspec_df(a = tib_int("a", .transform = ~ .x + 1))
 
   expect_equal(tspec_combine(spec_f1, spec_f1), spec_f1)
 
@@ -153,8 +153,8 @@ test_that("can't combine different transforms", {
 test_that("can't combine different input forms", {
   spec_scalar <- tspec_df(a = tib_int("a"))
   spec_vec <- tspec_df(a = tib_int_vec("a"))
-  spec_vec_scalar <- tspec_df(a = tib_int_vec("a", input_form = "scalar_list"))
-  spec_vec_object <- tspec_df(a = tib_int_vec("a", input_form = "object"))
+  spec_vec_scalar <- tspec_df(a = tib_int_vec("a", .input_form = "scalar_list"))
+  spec_vec_object <- tspec_df(a = tib_int_vec("a", .input_form = "object"))
 
   expect_equal(tspec_combine(spec_vec_object, spec_vec_object), spec_vec_object)
 

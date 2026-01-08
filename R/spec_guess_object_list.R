@@ -22,7 +22,7 @@ guess_tspec_object_list <- function(
   tspec_df(
     !!!fields,
     .names_to = if (is_named(x)) ".names",
-    vector_allows_empty_list = is_true(getOption(
+    .vector_allows_empty_list = is_true(getOption(
       "tibblify.used_empty_list_arg"
     ))
   )
@@ -56,10 +56,10 @@ guess_object_list_spec <- function(
     }
   )
 
-  update_required_fields(fields, required)
+  .update_required_fields(fields, required)
 }
 
-update_required_fields <- function(fields, required) {
+.update_required_fields <- function(fields, required) {
   for (field_name in names(required)) {
     fields[[field_name]]$required <- required[[field_name]]
   }
@@ -85,7 +85,7 @@ guess_object_list_field_spec <- function(
 
   # now we know that every element essentially has type `ptype`
   ptype <- ptype_result$ptype
-  if (is_null(ptype)) {
+  if (is.null(ptype)) {
     return(tib_unspecified(name))
   }
 
@@ -162,9 +162,9 @@ guess_object_list_field_spec <- function(
 
   if (could_be_vector) {
     if (is_named(value_flat)) {
-      return(tib_vector(name, ptype_result$ptype, input_form = "object"))
+      return(tib_vector(name, ptype_result$ptype, .input_form = "object"))
     } else {
-      return(tib_vector(name, ptype_result$ptype, input_form = "scalar_list"))
+      return(tib_vector(name, ptype_result$ptype, .input_form = "scalar_list"))
     }
   }
 

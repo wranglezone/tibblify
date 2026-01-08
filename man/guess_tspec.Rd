@@ -5,7 +5,7 @@
 \alias{guess_tspec}
 \alias{guess_tspec_df}
 \alias{guess_tspec_object}
-\title{Guess the \code{tibblify()} Specification}
+\title{Guess the \code{tibblify()} specification}
 \usage{
 guess_tspec(
   x,

@@ -45,13 +45,13 @@ format.tspec_df <- function(x, width = NULL, ..., names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     "tspec_df",
     fields = x$fields,
     width = width,
     args = list(
       .names_to = if (!is.null(x$names_col)) deparse(x$names_col),
-      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+      .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
@@ -65,12 +65,12 @@ format.tspec_row <- function(x, width = NULL, ..., names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     "tspec_row",
     fields = x$fields,
     width = width,
     args = list(
-      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+      .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
@@ -84,14 +84,14 @@ format.tspec_recursive <- function(x, width = NULL, ..., names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     "tspec_recursive",
     fields = x$fields,
     width = width,
     args = list(
       .children = double_tick(x$child),
       .children_to = if (x$child != x$children_to) double_tick(x$children_to),
-      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+      .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
@@ -105,12 +105,12 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     "tspec_object",
     fields = x$fields,
     width = width,
     args = list(
-      vector_allows_empty_list = if (x$vector_allows_empty_list) {
+      .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
       .input_form = if (x$input_form != "rowmajor") double_tick(x$input_form)
@@ -119,7 +119,7 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
   )
 }
 
-format_fields <- function(f_name, fields, width, args = NULL, force_names) {
+.format_fields <- function(f_name, fields, width, args = NULL, force_names) {
   if (force_names) {
     canonical_name <- FALSE
   } else {
@@ -295,7 +295,7 @@ format.tib_row <- function(x, ..., width = NULL, names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     format_tib_f(x),
     fields = x$fields,
     width = width,
@@ -312,7 +312,7 @@ format.tib_df <- function(x, ..., width = NULL, names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     format_tib_f(x),
     fields = x$fields,
     width = width,
@@ -330,7 +330,7 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
   names <- names %||% should_force_names()
   check_bool(names)
 
-  format_fields(
+  .format_fields(
     format_tib_f(x),
     fields = x$fields,
     width = width,
@@ -444,7 +444,7 @@ format_ptype_inner <- function(x, ptype_inner) {
   if (is_zap(ptype_inner)) {
     return(NULL)
   }
-  if (is_null(x$ptype_inner)) {
+  if (is.null(x$ptype_inner)) {
     return(NULL)
   }
   if (!identical(x$ptype, x$ptype_inner)) format_ptype(x$ptype_inner)
@@ -486,7 +486,7 @@ format_ptype.Date <- function(x) {
 #' @export
 format_ptype.POSIXct <- function(x) {
   tzone <- attr(x, "tzone")
-  tzone_str <- if (!is_null(tzone)) paste0("tzone = ", deparse(tzone))
+  tzone_str <- if (!is.null(tzone)) paste0("tzone = ", deparse(tzone))
 
   paste0("vctrs::new_datetime(", tzone_str, ")")
 }
@@ -499,17 +499,17 @@ format_fill_arg <- function(x, fill) {
     return(NULL)
   }
 
-  if (is_null(x$fill)) {
+  if (is.null(x$fill)) {
     return(NULL)
   }
 
-  if (is_tib_variant(x) || is_tib_unspecified(x)) {
+  if (.is_tib_variant(x) || .is_tib_unspecified(x)) {
     return(deparse(x$fill))
   }
 
-  if (is_tib_scalar(x)) {
+  if (.is_tib_scalar(x)) {
     canonical_default <- vec_init(x$ptype_inner)
-  } else if (is_tib_vector(x)) {
+  } else if (.is_tib_vector(x)) {
     canonical_default <- vec_init(x$ptype)
   } else {
     cli::cli_abort(
@@ -544,7 +544,7 @@ format_fill.Date <- function(x) {
 # helper functions --------------------------------------------------------
 
 double_tick <- function(x) {
-  if (is_null(x)) {
+  if (is.null(x)) {
     return(NULL)
   }
 

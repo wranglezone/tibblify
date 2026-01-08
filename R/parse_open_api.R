@@ -60,7 +60,7 @@ parse_openapi_spec <- function(file) {
   openapi_spec <- read_spec(file)
 
   version <- openapi_spec$openapi
-  if (is_null(version) || version < "3") {
+  if (is.null(version) || version < "3") {
     cli_abort("OpenAPI versions before 3 are not supported.")
   }
   # cannot use `openapi_spec` for memoising, as hashing it takes much more time
@@ -177,15 +177,15 @@ parse_operation_object <- function(operation_object, openapi_spec) {
   operation_object <- openapi_resolve_reference(operation_object, openapi_spec)
 
   spec <- tspec_object(
-    tib_chr("summary", required = FALSE),
-    tib_chr("description", required = FALSE),
-    operation_id = tib_chr("operationId", required = FALSE),
-    tib_chr_vec("tags", required = FALSE),
-    tib_variant("parameters", required = FALSE),
-    request_body = tib_variant("requestBody", required = FALSE),
-    tib_variant("responses", required = FALSE),
-    tib_lgl("deprecated", required = FALSE, fill = FALSE),
-    tib_variant("security", required = FALSE),
+    tib_chr("summary", .required = FALSE),
+    tib_chr("description", .required = FALSE),
+    operation_id = tib_chr("operationId", .required = FALSE),
+    tib_chr_vec("tags", .required = FALSE),
+    tib_variant("parameters", .required = FALSE),
+    request_body = tib_variant("requestBody", .required = FALSE),
+    tib_variant("responses", .required = FALSE),
+    tib_lgl("deprecated", .required = FALSE, .fill = FALSE),
+    tib_variant("security", .required = FALSE),
   )
   operation_object$tags <- as.character(unlist(operation_object$tags))
   data <- tibblify(operation_object, spec)
@@ -201,7 +201,7 @@ parse_operation_object <- function(operation_object, openapi_spec) {
 
 parse_request_body <- function(request_body, openapi_spec) {
   # https://spec.openapis.org/oas/v3.1.0#requestBodyObject
-  if (is_null(request_body)) {
+  if (is.null(request_body)) {
     return(NULL)
   }
 
@@ -209,9 +209,9 @@ parse_request_body <- function(request_body, openapi_spec) {
 
   # TODO add extensions?
   spec <- tspec_row(
-    tib_chr("description", required = FALSE),
+    tib_chr("description", .required = FALSE),
     tib_variant("content"),
-    tib_lgl("required", required = FALSE, fill = FALSE)
+    tib_lgl("required", .required = FALSE, .fill = FALSE)
   )
   parsed_request_body <- tibblify(request_body, spec)
   parsed_request_body$content[[1]] <- parse_media_type_objects(
@@ -224,7 +224,7 @@ parse_request_body <- function(request_body, openapi_spec) {
 
 parse_parameters <- function(parameters, openapi_spec) {
   # https://spec.openapis.org/oas/v3.1.0#parameter-object
-  if (is_null(parameters)) {
+  if (is.null(parameters)) {
     return(NULL)
   }
 
@@ -236,23 +236,23 @@ parse_parameters <- function(parameters, openapi_spec) {
   spec <- tspec_df(
     tib_chr("in"),
     tib_chr("name"),
-    tib_chr("description", required = FALSE),
-    tib_lgl("required", required = FALSE, fill = FALSE),
-    tib_lgl("deprecated", required = FALSE, fill = FALSE),
-    tib_lgl("allowEmptyValue", required = FALSE, fill = FALSE),
+    tib_chr("description", .required = FALSE),
+    tib_lgl("required", .required = FALSE, .fill = FALSE),
+    tib_lgl("deprecated", .required = FALSE, .fill = FALSE),
+    tib_lgl("allowEmptyValue", .required = FALSE, .fill = FALSE),
     # TODO can use `parse_schema()`?
     tib_row(
       "schema",
-      tib_chr("type", required = FALSE),
-      tib_chr("description", required = FALSE),
+      tib_chr("type", .required = FALSE),
+      tib_chr("description", .required = FALSE),
       # FIXME `enum` and `format` should go into a details column
-      tib_variant("enum", required = FALSE),
-      tib_chr("format", required = FALSE),
+      tib_variant("enum", .required = FALSE),
+      tib_chr("format", .required = FALSE),
       .required = FALSE
     ),
     # FIXME `explode` and `style` should go into a details column
-    tib_lgl("explode", required = FALSE, fill = FALSE),
-    tib_chr("style", required = FALSE),
+    tib_lgl("explode", .required = FALSE, .fill = FALSE),
+    tib_chr("style", .required = FALSE),
   )
 
   tibblify(parameters, spec)
@@ -270,10 +270,10 @@ parse_responses_object <- function(responses_object, openapi_spec) {
 
 parse_response_object <- function(response_object, openapi_spec) {
   spec <- tspec_object(
-    tib_chr("description", required = FALSE),
-    tib_variant("headers", required = FALSE),
-    tib_variant("content", required = FALSE),
-    tib_variant("links", required = FALSE),
+    tib_chr("description", .required = FALSE),
+    tib_variant("headers", .required = FALSE),
+    tib_variant("content", .required = FALSE),
+    tib_variant("links", .required = FALSE),
   )
   parsed_response <- tibblify(response_object, spec)
 
@@ -329,23 +329,23 @@ parse_header_objects <- function(header_objects, openapi_spec) {
 
   spec <- tspec_df(
     .names_to = "name",
-    tib_chr("description", required = FALSE),
-    tib_lgl("required", required = FALSE, fill = FALSE),
-    tib_lgl("deprecated", required = FALSE, fill = FALSE),
-    tib_lgl("allowEmptyValue", required = FALSE, fill = FALSE),
+    tib_chr("description", .required = FALSE),
+    tib_lgl("required", .required = FALSE, .fill = FALSE),
+    tib_lgl("deprecated", .required = FALSE, .fill = FALSE),
+    tib_lgl("allowEmptyValue", .required = FALSE, .fill = FALSE),
     # TODO can use `parse_schema()`?
     tib_row(
       "schema",
-      tib_chr("type", required = FALSE),
-      tib_chr("description", required = FALSE),
+      tib_chr("type", .required = FALSE),
+      tib_chr("description", .required = FALSE),
       # FIXME `enum` and `format` should go into a details column
-      tib_chr_vec("enum", required = FALSE),
-      tib_chr("format", required = FALSE),
+      tib_chr_vec("enum", .required = FALSE),
+      tib_chr("format", .required = FALSE),
       .required = FALSE
     ),
     # FIXME `explode` and `style` should go into a details column
-    tib_lgl("explode", required = FALSE, fill = FALSE),
-    tib_chr("style", required = FALSE),
+    tib_lgl("explode", .required = FALSE, .fill = FALSE),
+    tib_chr("style", .required = FALSE),
   )
 
   tibblify(header_objects, spec)
@@ -369,7 +369,7 @@ schema_to_tspec <- function(schema, openapi_spec) {
       schema$properties,
       ~ parse_schema_memoised(.x, .y, openapi_spec)
     )
-    fields <- apply_required(fields, schema$required)
+    fields <- .apply_required(fields, schema$required)
 
     tspec_row(!!!fields)
   } else if (type == "array") {
@@ -379,7 +379,7 @@ schema_to_tspec <- function(schema, openapi_spec) {
       schema$properties,
       ~ parse_schema_memoised(.x, .y, openapi_spec)
     )
-    fields <- apply_required(fields, schema$required)
+    fields <- .apply_required(fields, schema$required)
 
     tspec_df(!!!fields)
   } else {
@@ -391,7 +391,7 @@ schema_to_tspec <- function(schema, openapi_spec) {
   }
 }
 
-apply_required <- function(fields, required) {
+.apply_required <- function(fields, required) {
   for (field_name in intersect(required, names(fields))) {
     fields[[field_name]]$required <- TRUE
   }
@@ -459,10 +459,10 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
 
 get_openapi_type <- function(schema) {
   type <- schema$type
-  if (is_null(type)) {
-    if (!is_null(schema$properties)) {
+  if (is.null(type)) {
+    if (!is.null(schema$properties)) {
       type <- "object"
-    } else if (!is_null(schema$items)) {
+    } else if (!is.null(schema$items)) {
       type <- "array"
     }
   }
@@ -514,7 +514,7 @@ parse_schema <- function(schema, name, openapi_spec) {
       c(schema$properties, additional_properties$properties),
       ~ parse_schema_memoised(.x, .y, openapi_spec)
     )
-    fields <- apply_required(
+    fields <- .apply_required(
       fields,
       c(schema$required, additional_properties$required)
     )
@@ -523,10 +523,10 @@ parse_schema <- function(schema, name, openapi_spec) {
     # TODO additionalProperties?
   } else if (type == "string") {
     # TODO support for `enum` or `pattern`?
-    tib_chr(name, required = FALSE)
+    tib_chr(name, .required = FALSE)
   } else if (type == "array") {
     items <- schema$items
-    if (is_null(items)) {
+    if (is.null(items)) {
       cli::cli_inform("Array has no items")
       field_spec <- tib_variant(name)
       return(field_spec)
@@ -534,7 +534,7 @@ parse_schema <- function(schema, name, openapi_spec) {
 
     inner_tib <- parse_schema_memoised(schema$items, name, openapi_spec)
     if (inner_tib$type == "scalar") {
-      tib_vector(name, inner_tib$ptype, required = FALSE)
+      tib_vector(name, inner_tib$ptype, .required = FALSE)
     } else if (inner_tib$type == "row") {
       tib_df(name, !!!inner_tib$fields, .required = FALSE)
     } else {
@@ -542,13 +542,13 @@ parse_schema <- function(schema, name, openapi_spec) {
     }
     # TODO support for `minItems`, `maxItems`?
   } else if (type == "integer") {
-    tib_int(name, required = FALSE)
+    tib_int(name, .required = FALSE)
   } else if (type == "boolean") {
-    tib_lgl(name, required = FALSE)
+    tib_lgl(name, .required = FALSE)
   } else if (type == "number") {
-    tib_dbl(name, required = FALSE)
+    tib_dbl(name, .required = FALSE)
   } else if (type == "variant") {
-    tib_variant(name, required = FALSE)
+    tib_variant(name, .required = FALSE)
   } else {
     cli_abort("Unsupported type")
   }
@@ -591,7 +591,7 @@ handle_one_of <- function(schema, name, openapi_spec) {
       if ("row" %in% types) {
         tib_combine(out[types == "row"], name, current_call())
       } else {
-        tib_variant(name, required = FALSE)
+        tib_variant(name, .required = FALSE)
       }
     }
   )

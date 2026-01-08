@@ -429,7 +429,7 @@
       ! Field y is required but does not exist in `x`.
       i For `.input_form = "colmajor"` every field is required.
     Code
-      (expect_error(tib_cm(tib_int("x"), tib_int("y", required = FALSE), x = list(b = 1:
+      (expect_error(tib_cm(tib_int("x"), tib_int("y", .required = FALSE), x = list(b = 1:
         3))))
     Output
       <error/tibblify_error>

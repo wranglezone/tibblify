@@ -33,7 +33,7 @@ untibblify <- function(x, spec = NULL) {
 }
 
 untibblify_df <- function(x, spec, call) {
-  if (is_null(spec)) {
+  if (is.null(spec)) {
     idx <- seq_len(vec_size(x))
     out <- purrr::map(idx, ~ untibblify_row(vec_slice(x, .x), spec, call))
     return(out)
@@ -44,7 +44,7 @@ untibblify_df <- function(x, spec, call) {
 }
 
 untibblify_row <- function(x, spec, call) {
-  if (!is_null(spec)) {
+  if (!is.null(spec)) {
     x <- apply_spec_renaming(x, spec)
   }
   # browser()
@@ -57,7 +57,7 @@ untibblify_row <- function(x, spec, call) {
       out[[i]] <- untibblify_row(elt, fields[[i]], call)
     } else if (is.list(elt)) {
       tmp <- untibblify_list_elt(elt[[1]], fields[[i]], call)
-      if (is_null(tmp)) {
+      if (is.null(tmp)) {
         out[i] <- list(NULL)
       } else {
         out[[i]] <- tmp
@@ -71,7 +71,7 @@ untibblify_row <- function(x, spec, call) {
 }
 
 untibblify_list <- function(x, spec, call) {
-  if (!is_null(spec)) {
+  if (!is.null(spec)) {
     x <- apply_spec_renaming(x, spec)
   }
 
@@ -88,11 +88,11 @@ untibblify_list_elt <- function(x, field_spec, call) {
   if (is.data.frame(x)) {
     untibblify_df(x, field_spec, call)
   } else {
-    if (is_null(field_spec)) {
+    if (is.null(field_spec)) {
       return(x)
     }
 
-    if (is_tib_row(field_spec)) {
+    if (.is_tib_row(field_spec)) {
       x <- new_data_frame(x, n = 1L)
       out <- untibblify_df(x, field_spec, call)
       return(out[[1]])
