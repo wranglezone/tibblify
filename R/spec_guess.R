@@ -46,7 +46,7 @@ guess_tspec <- function(
       inform_unspecified = inform_unspecified,
       call = call
     )
-  } else if (vec_is_list(x)) {
+  } else if (vctrs::vec_is_list(x)) {
     guess_tspec_list(
       x,
       empty_list_unspecified = empty_list_unspecified,

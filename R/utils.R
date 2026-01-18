@@ -54,7 +54,7 @@ path_to_string <- function(path) {
     return("x")
   }
 
-  path_elements <- compat_map_chr(
+  path_elements <- .compat_map_chr(
     path_elts[1:depth],
     function(elt) {
       if (is.character(elt)) {
@@ -142,7 +142,7 @@ stop_vector_non_list_element <- function(path, input_form, x) {
 
 stop_vector_wrong_size_element <- function(path, input_form, x) {
   path_str <- path_to_string(path)
-  sizes <- list_sizes(x)
+  sizes <- vctrs::list_sizes(x)
   idx <- which(sizes != 1 & !vctrs::vec_detect_missing(x))
   if (input_form == "scalar_list") {
     desc <- "a list of scalars"
@@ -200,12 +200,12 @@ stop_non_list_element <- function(path, x) {
   tibblify_abort(msg)
 }
 
-vec_flatten <- function(x, ptype, name_spec = zap()) {
+.vec_flatten <- function(x, ptype, name_spec = zap()) {
   vctrs::list_unchop(x, ptype = ptype, name_spec = name_spec)
 }
 
 list_drop_null <- function(x) {
-  null_flag <- vec_detect_missing(x)
+  null_flag <- vctrs::vec_detect_missing(x)
   if (any(null_flag)) {
     x <- x[!null_flag]
   }
@@ -213,20 +213,20 @@ list_drop_null <- function(x) {
   x
 }
 
-compat_map_chr <- function(x, .f, ...) {
+.compat_map_chr <- function(x, .f, ...) {
   purrr::map_vec(x, .f, ..., .ptype = character())
 }
 
-with_indexed_errors <- function(
+.with_indexed_errors <- function(
   expr,
   message,
   error_call = caller_env(),
   env = caller_env()
 ) {
-  try_fetch(
+  rlang::try_fetch(
     expr,
     purrr_error_indexed = function(cnd) {
-      msg_env <- new_environment(list(cnd = cnd), parent = env)
+      msg_env <- rlang::new_environment(list(cnd = cnd), parent = env)
       cli::cli_abort(
         message,
         call = error_call,

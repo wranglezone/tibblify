@@ -66,7 +66,7 @@ guess_object_field_spec <- function(
       return(tib_unspecified(name))
     }
 
-    if (vec_size(value) == 1) {
+    if (vctrs::vec_size(value) == 1) {
       return(tib_scalar(name, ptype))
     } else {
       return(tib_vector(name, ptype))
@@ -134,7 +134,7 @@ check_object_names <- function(x, call) {
   }
 
   x_nms <- names(x)
-  if (vec_duplicate_any(x_nms)) {
+  if (vctrs::vec_duplicate_any(x_nms)) {
     msg <- "Names of {.arg x} must be unique."
     cli::cli_abort(msg, call = call)
   }

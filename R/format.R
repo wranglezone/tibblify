@@ -170,7 +170,7 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
 
 is_tib_name_canonical <- function(field, name) {
   key <- field$key
-  if (vec_size(key) > 1 || !is.character(key)) {
+  if (vctrs::vec_size(key) > 1 || !is.character(key)) {
     return(FALSE)
   }
 
@@ -477,7 +477,7 @@ format_ptype.difftime <- function(x) {
 }
 #' @export
 format_ptype.Date <- function(x) {
-  if (!vec_is(x, vctrs::new_date())) {
+  if (!vctrs::vec_is(x, vctrs::new_date())) {
     return(deparse(x))
   }
 
@@ -508,9 +508,9 @@ format_fill_arg <- function(x, fill) {
   }
 
   if (.is_tib_scalar(x)) {
-    canonical_default <- vec_init(x$ptype_inner)
+    canonical_default <- vctrs::vec_init(x$ptype_inner)
   } else if (.is_tib_vector(x)) {
-    canonical_default <- vec_init(x$ptype)
+    canonical_default <- vctrs::vec_init(x$ptype)
   } else {
     cli::cli_abort(
       "{.arg x} has unexpected type {.cls class(x)}.",
@@ -518,8 +518,8 @@ format_fill_arg <- function(x, fill) {
     ) # nocov
   }
 
-  canonical <- vec_size(x$fill) == 1 &&
-    vec_equal(x$fill, canonical_default, na_equal = TRUE)
+  canonical <- vctrs::vec_size(x$fill) == 1 &&
+    vctrs::vec_equal(x$fill, canonical_default, na_equal = TRUE)
   if (canonical) {
     return(NULL)
   }

@@ -7,13 +7,21 @@
 tspec_combine(...)
 }
 \arguments{
-\item{...}{Specifications to combine.}
+\item{...}{(\code{tspec}) Specifications to combine.}
 }
 \value{
 A tibblify specification.
 }
 \description{
-Combine multiple specifications
+Combine specifications created by \code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, or
+\code{\link[=tspec_object]{tspec_object()}}. The resulting specification includes all fields from the
+input specifications.
+}
+\details{
+If a field is specified in multiple input specifications, the field
+specifications will be combined to produce a single field specification,
+using the most specific specification for each argument. See the examples for
+details.
 }
 \examples{
 # union of fields
@@ -24,8 +32,8 @@ tspec_combine(
 
 # unspecified + x -> x
 tspec_combine(
-  tspec_df(tib_unspecified("a"), tib_chr("b")),
-  tspec_df(tib_int("a"), tib_variant("b"))
+  tspec_df(tib_unspecified("a")),
+  tspec_df(tib_int("a"))
 )
 
 # scalar + vector -> vector
@@ -37,6 +45,7 @@ tspec_combine(
 # scalar/vector + variant -> variant
 tspec_combine(
   tspec_df(tib_chr("a")),
+  tspec_df(tib_chr_vec("a")),
   tspec_df(tib_variant("a"))
 )
 }

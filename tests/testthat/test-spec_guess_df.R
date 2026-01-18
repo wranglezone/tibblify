@@ -33,7 +33,7 @@ test_that("can guess scalar NA columns", {
     tib_int("int")
   )
 
-  na_date <- vec_init(vctrs::new_date())
+  na_date <- vctrs::vec_init(vctrs::new_date())
   expect_equal(
     col_to_spec(na_date, "date", FALSE),
     tib_scalar("date", .ptype = vctrs::new_date())
@@ -109,12 +109,12 @@ test_that("can guess list of NULL columns", {
 
 test_that("can guess list of columns", {
   expect_equal(
-    col_to_spec(list_of(1L, 2:3), "x", FALSE),
+    col_to_spec(vctrs::list_of(1L, 2:3), "x", FALSE),
     tib_int_vec("x")
   )
 
   expect_equal(
-    col_to_spec(list_of(.ptype = integer()), "x", FALSE),
+    col_to_spec(vctrs::list_of(.ptype = integer()), "x", FALSE),
     tib_int_vec("x")
   )
 })
@@ -195,9 +195,9 @@ test_that("can guess spec for list_of column", {
   expect_equal(
     guess_tspec_df(
       tibble(
-        x = list_of(1L, 2:3),
-        y = list_of(tibble(a = 1:2)),
-        z = list_of(tibble(a = list(1, 2)))
+        x = vctrs::list_of(1L, 2:3),
+        y = vctrs::list_of(tibble(a = 1:2)),
+        z = vctrs::list_of(tibble(a = list(1, 2)))
       )
     ),
     tspec_df(
@@ -209,7 +209,7 @@ test_that("can guess spec for list_of column", {
 
   expect_equal(
     guess_tspec_df(
-      tibble(x = list_of(tibble(a = list(1, "a"))))
+      tibble(x = vctrs::list_of(tibble(a = list(1, "a"))))
     ),
     tspec_df(tib_df("x", tib_variant("a")))
   )
@@ -416,10 +416,12 @@ test_that("can guess 0 row tibbles", {
     guess_tspec_df(
       tibble(
         int = integer(),
-        dbl_vec = list_of(.ptype = 1),
+        dbl_vec = vctrs::list_of(.ptype = 1),
         row = tibble(chr = character()),
-        df = list_of(.ptype = tibble(dbl = 1, chr = "a")),
-        df2 = list_of(.ptype = tibble(chr_vec = list_of(.ptype = "a")))
+        df = vctrs::list_of(.ptype = tibble(dbl = 1, chr = "a")),
+        df2 = vctrs::list_of(
+          .ptype = tibble(chr_vec = vctrs::list_of(.ptype = "a"))
+        )
       )
     ),
     tspec_df(

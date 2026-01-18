@@ -1,3 +1,24 @@
+# nice error when combining non-specs
+
+    Code
+      (expect_error(tspec_combine(df_spec, tib_int("a"))))
+    Output
+      <error/rlang_error>
+      Error in `tspec_combine()`:
+      ! Every element of `...` must be a tibblify spec.
+      x Element 2 has class <tib_scalar_integer>.
+
+# nice error for unknown spec type
+
+    Code
+      (expect_error(tspec_combine(df_spec, df_spec)))
+    Output
+      <error/rlang_error>
+      Error in `tspec_combine()`:
+      ! Unknown spec type
+      i This is an internal error that was detected in the tibblify package.
+        Please report it at <https://github.com/wranglezone/tibblify/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
+
 # cannot combine different types of spec
 
     Code
@@ -32,15 +53,19 @@
       Caused by error in `tspec_combine()`:
       ! Cannot combine tibs of different keys a and b
 
-# nice error when combining non-specs
+# nice error for unknown tib type
 
     Code
-      (expect_error(tspec_combine(df_spec, tib_int("a"))))
+      (expect_error(tspec_combine(df_spec, df_spec)))
     Output
-      <error/rlang_error>
-      Error in `tspec_combine()`:
-      ! Every element of `...` must be a tibblify spec.
-      x Element 2 has class <tib_scalar_integer>.
+      <error/purrr_error_indexed>
+      Error in `map2()`:
+      i In index: 1.
+      i With name: a.
+      Caused by error in `tspec_combine()`:
+      ! Unknown tib type
+      i This is an internal error that was detected in the tibblify package.
+        Please report it at <https://github.com/wranglezone/tibblify/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # can combine type
 

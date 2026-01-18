@@ -120,7 +120,7 @@ unnest_tree <- function(
 
     parent_ids <- data[[id_col]]
     # unclass `list_of` to avoid performance hit
-    children <- with_indexed_errors(
+    children <- .with_indexed_errors(
       purrr::map(children, ~ unclass_list_of(.x, child_col, call = NULL)),
       message = "In child {cnd$location}."
     )
@@ -132,7 +132,7 @@ unnest_tree <- function(
   out <- vctrs::vec_rbind(!!!level_data, .ptype = out_ptype)
 
   if (!is.null(level_to)) {
-    times <- list_sizes(level_data)
+    times <- vctrs::list_sizes(level_data)
     levels <- vctrs::vec_seq_along(level_data)
     out[[level_to]] <- vctrs::vec_rep_each(levels, times)
   }
@@ -180,8 +180,8 @@ unclass_list_of <- function(x, child_col, call = caller_env()) {
 check_unnest_level_to <- function(level_to, data, call = caller_env()) {
   if (!is.null(level_to)) {
     level_to <- vctrs::vec_cast(level_to, character(), call = call)
-    obj_check_vector(level_to, call = call)
-    vec_check_size(level_to, size = 1L, call = call)
+    vctrs::obj_check_vector(level_to, call = call)
+    vctrs::vec_check_size(level_to, size = 1L, call = call)
     check_col_new(data, level_to, call = call)
   }
 
@@ -196,8 +196,8 @@ check_unnest_parent_to <- function(
 ) {
   if (!is.null(parent_to)) {
     parent_to <- vctrs::vec_cast(parent_to, character(), call = call)
-    obj_check_vector(parent_to, call = call)
-    vec_check_size(parent_to, size = 1L, call = call)
+    vctrs::obj_check_vector(parent_to, call = call)
+    vctrs::vec_check_size(parent_to, size = 1L, call = call)
     check_arg_different(parent_to, level_to, call = call)
     check_col_new(data, parent_to, call = call)
   }
@@ -214,8 +214,8 @@ check_unnest_ancestors_to <- function(
 ) {
   if (!is.null(ancestors_to)) {
     ancestors_to <- vctrs::vec_cast(ancestors_to, character(), call = call)
-    obj_check_vector(ancestors_to, call = call)
-    vec_check_size(ancestors_to, size = 1L, call = call)
+    vctrs::obj_check_vector(ancestors_to, call = call)
+    vctrs::vec_check_size(ancestors_to, size = 1L, call = call)
     check_arg_different(ancestors_to, level_to, parent_to, call = call)
     check_col_new(data, ancestors_to, call = call)
   }

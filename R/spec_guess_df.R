@@ -72,7 +72,7 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
   }
 
   # `col` must be a list, so we need to check what its elements are
-  list_of_col <- is_list_of(col)
+  list_of_col <- vctrs::is_list_of(col)
   if (list_of_col) {
     ptype <- col %@% ptype
     ptype_type <- tib_type_of(ptype, name, other = FALSE)
@@ -149,13 +149,13 @@ col_to_spec_df <- function(
     if (has_non_vec_cols) {
       # non-vector columns need to be inspected further to actually get their
       # specification
-      col_flat <- list_unchop(col, ptype = ptype)
+      col_flat <- vctrs::list_unchop(col, ptype = ptype)
     } else {
       col_flat <- ptype
     }
   } else {
     col_required <- df_guess_required(col, colnames(ptype))
-    col_flat <- list_unchop(col, ptype = ptype)
+    col_flat <- vctrs::list_unchop(col, ptype = ptype)
   }
 
   fields_spec <- purrr::imap(col_flat, col_to_spec, empty_list_unspecified)

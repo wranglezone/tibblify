@@ -50,7 +50,7 @@
 #'   using [guess_tspec()]), you should most likely specify such columns with
 #'   `tib_variant()`, or leave them out of the spec entirely.
 #'
-#' @return A tibblify field collector. This specification can be used with
+#' @returns A tibblify field collector. This specification can be used with
 #'   [tspec_df()] or another `tspec_*()` function to specify how to process an
 #'   object.
 #' @name tib_spec
@@ -72,6 +72,13 @@ NULL
 
 # tib_collector ----------------------------------------------------------------
 
+#' Create a tib collector
+#'
+#' @param .type (`character(1)`) The type of the collector.
+#' @param .class (`character` or `NULL`) Additional classes for the collector.
+#' @inheritParams .shared-params
+#' @returns (`tib_collector`) A tibblify collector.
+#' @keywords internal
 .tib_collector <- function(
   .key,
   .type,
@@ -89,7 +96,7 @@ NULL
     type = .type,
     key = .key,
     required = .required,
-    transform = .prep_transform(.transform, call = .call),
+    transform = .prep_transform(.transform, .call),
     elt_transform = .prep_transform(
       .elt_transform,
       .call,
@@ -106,9 +113,14 @@ NULL
   out
 }
 
+#' Check if a key is valid
+#'
+#' @inheritParams .shared-params
+#' @returns (`NULL`) Throws an error if invalid.
+#' @keywords internal
 .check_key <- function(.key, .call = caller_env()) {
   check_character(.key, call = .call)
-  n <- vec_size(.key)
+  n <- vctrs::vec_size(.key)
   if (n == 0) {
     cli::cli_abort("{.arg .key} must not be empty.", call = .call)
   }
@@ -120,8 +132,8 @@ NULL
       cli::cli_abort("{.arg .key} must not be an empty string.", call = .call)
     }
   } else {
-    if (vec_any_missing(.key)) {
-      na_idx <- purrr::detect_index(vec_detect_missing(.key), ~.x)
+    if (vctrs::vec_any_missing(.key)) {
+      na_idx <- purrr::detect_index(vctrs::vec_detect_missing(.key), ~.x)
       msg <- "`.key[{.field {na_idx}}] must not be NA."
       cli::cli_abort(msg, call = .call)
     }
@@ -133,28 +145,47 @@ NULL
   }
 }
 
-.choose_native_ptype <- function(ptype, class, fields) {
-  if (!is.null(class)) {
-    return(class)
+#' Choose native ptype class
+#'
+#' @param .fields (`list`) The fields list.
+#' @inheritParams .tib_collector
+#' @inheritParams .shared-params
+#' @returns (`character` or `NULL`) The native ptype class name.
+#' @keywords internal
+.choose_native_ptype <- function(.ptype, .class, .fields) {
+  if (!is.null(.class)) {
+    return(.class)
   }
-  cls <- tolower(class(ptype))
+  cls <- tolower(class(.ptype))
   if (
-    isTRUE(fields$type %in% c("scalar", "vector")) &&
+    isTRUE(.fields$type %in% c("scalar", "vector")) &&
       length(cls) == 1 &&
       cls %in% c("logical", "integer", "numeric", "character", "date")
   ) {
-    return(glue::glue("tib_{fields$type}_{cls}"))
+    return(glue::glue("tib_{.fields$type}_{cls}"))
   }
   return(NULL)
 }
 
-.prep_transform <- function(f, call, arg = ".transform") {
+#' Prepare transform function
+#'
+#' @param f (`function` or `NULL`) The function to prepare.
+#' @param arg (`character(1)`) The argument name.
+#' @inheritParams .shared-params
+#' @returns (`function` or `NULL`) The prepared function.
+#' @keywords internal
+.prep_transform <- function(f, .call, arg = ".transform") {
   if (is.null(f)) {
     return(f)
   }
-  as_function(f, arg = arg, call = call)
+  rlang::as_function(f, arg = arg, call = .call)
 }
 
+#' Check if object is a tib collector
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tib_collector`.
+#' @keywords internal
 .is_tib <- function(x) {
   inherits(x, "tib_collector")
 }
@@ -205,25 +236,35 @@ tib_scalar <- function(
   )
 }
 
+#' Implementation of tib_scalar
+#'
+#' @inheritParams .tib_collector
+#' @inheritParams .shared-params
+#' @returns (`tib_scalar`) A tibblify scalar collector.
+#' @keywords internal
 .tib_scalar_impl <- function(
   .key,
   .ptype,
   ...,
   .required = TRUE,
-  .fill = vec_init(.ptype_inner),
+  .fill = vctrs::vec_init(.ptype_inner),
   .ptype_inner = .ptype,
   .transform = NULL,
   .class = NULL,
   .call = caller_env()
 ) {
-  .ptype <- vec_ptype(.ptype, x_arg = ".ptype", call = .call)
-  .ptype_inner <- vec_ptype(.ptype_inner, x_arg = ".ptype_inner", call = .call)
+  .ptype <- vctrs::vec_ptype(.ptype, x_arg = ".ptype", call = .call)
+  .ptype_inner <- vctrs::vec_ptype(
+    .ptype_inner,
+    x_arg = ".ptype_inner",
+    call = .call
+  )
   if (is.null(.fill)) {
-    .fill <- vec_init(.ptype_inner)
+    .fill <- vctrs::vec_init(.ptype_inner)
   } else {
-    obj_check_vector(.fill, call = .call)
-    vec_check_size(.fill, size = 1L, call = .call)
-    .fill <- vec_cast(
+    vctrs::obj_check_vector(.fill, call = .call)
+    vctrs::vec_check_size(.fill, size = 1L, call = .call)
+    .fill <- vctrs::vec_cast(
       .fill,
       .ptype_inner,
       call = .call,
@@ -245,6 +286,11 @@ tib_scalar <- function(
   )
 }
 
+#' Check if object is a tib scalar
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tib_scalar`.
+#' @keywords internal
 .is_tib_scalar <- function(x) {
   inherits(x, "tib_scalar")
 }
@@ -301,6 +347,13 @@ tib_vector <- function(
   )
 }
 
+#' Implementation of tib_vector
+#'
+#' @inheritParams .tib_collector
+#' @inheritParams .shared-params-tib
+#' @inheritParams .shared-params
+#' @returns (`tib_vector`) A tibblify vector collector.
+#' @keywords internal
 .tib_vector_impl <- function(
   .key,
   .ptype,
@@ -321,10 +374,14 @@ tib_vector <- function(
     c("vector", "scalar_list", "object"),
     error_call = .call
   )
-  .ptype <- vec_ptype(.ptype, call = .call, x_arg = ".ptype")
-  .ptype_inner <- vec_ptype(.ptype_inner, call = .call, x_arg = ".ptype_inner")
+  .ptype <- vctrs::vec_ptype(.ptype, call = .call, x_arg = ".ptype")
+  .ptype_inner <- vctrs::vec_ptype(
+    .ptype_inner,
+    call = .call,
+    x_arg = ".ptype_inner"
+  )
   if (!is.null(.fill)) {
-    .fill <- vec_cast(.fill, .ptype, call = .call, to_arg = ".ptype")
+    .fill <- vctrs::vec_cast(.fill, .ptype, call = .call, to_arg = ".ptype")
   }
   .values_to <- .stabilize_values_to(.values_to, .call)
   .names_to <- .stabilize_names_to(.names_to, .values_to, .input_form, .call)
@@ -347,6 +404,11 @@ tib_vector <- function(
   )
 }
 
+#' Stabilize values_to argument
+#'
+#' @inheritParams .shared-params
+#' @returns (`character(1)` or `NULL`) Validated `.values_to`.
+#' @keywords internal
 .stabilize_values_to <- function(.values_to, .call) {
   if (!is.null(.values_to)) {
     check_string(.values_to, call = .call)
@@ -354,6 +416,12 @@ tib_vector <- function(
   .values_to
 }
 
+#' Stabilize names_to argument
+#'
+#' @inheritParams .shared-params-tib
+#' @inheritParams .shared-params
+#' @returns (`character(1)` or `NULL`) Validated `.names_to`.
+#' @keywords internal
 .stabilize_names_to <- function(.names_to, .values_to, .input_form, .call) {
   if (!is.null(.names_to)) {
     if (is.null(.values_to)) {
@@ -373,6 +441,11 @@ tib_vector <- function(
   .names_to
 }
 
+#' Check if object is a tib vector
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tib_vector`.
+#' @keywords internal
 .is_tib_vector <- function(x) {
   inherits(x, "tib_vector")
 }
@@ -399,12 +472,31 @@ tib_unspecified <- function(
   )
 }
 
+#' Check if object is a tib unspecified
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tib_unspecified`.
+#' @keywords internal
 .is_tib_unspecified <- function(x) {
   inherits(x, "tib_unspecified")
 }
 
 # deprecation helper -----------------------------------------------------------
 
+#' Handle deprecated arguments
+#'
+#' @param good_arg (`any`) The value of the new argument.
+#' @param bad_arg (`any`) The value of the deprecated argument.
+#' @param fn_name (`character(1)`) Name of the calling function.
+#' @param pkg_version (`character(1)`) Package version when deprecation
+#'   occurred.
+#' @param good_arg_name (`character(1)`) Name of the new argument.
+#' @param bad_arg_name (`character(1)`) Name of the deprecated argument.
+#' @param user_env (`environment`) The environment from which the calling
+#'   function is being called.
+#' @inheritParams .shared-params
+#' @returns (`any`) The value to use.
+#' @keywords internal
 .deprecate_arg <- function(
   good_arg,
   bad_arg,
@@ -412,7 +504,7 @@ tib_unspecified <- function(
   pkg_version = "0.4.0",
   good_arg_name = rlang::caller_arg(good_arg),
   bad_arg_name = rlang::caller_arg(bad_arg),
-  call = rlang::caller_env(),
+  .call = rlang::caller_env(),
   user_env = rlang::caller_env(2)
 ) {
   force(fn_name)
@@ -421,7 +513,7 @@ tib_unspecified <- function(
       pkg_version,
       glue::glue("{fn_name}({bad_arg_name} = )"),
       glue::glue("{fn_name}({good_arg_name} = )"),
-      env = call,
+      env = .call,
       user_env = user_env
     )
     return(bad_arg)

@@ -161,11 +161,11 @@ test_that("can handle list_of children", {
   df <- tibble::tibble(
     id = 1L,
     x = "a",
-    children = list_of(
+    children = vctrs::list_of(
       tibble::tibble(
         id = 2:3,
         x = c("b", "c"),
-        children = list_of(
+        children = vctrs::list_of(
           tibble(id = 4, x = "d"),
           NULL
         )

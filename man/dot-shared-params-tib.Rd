@@ -4,21 +4,24 @@
 \alias{.shared-params-tib}
 \title{Shared tib_spec parameters}
 \arguments{
-\item{.input_form}{A string that describes the structure of the field. Can be
+\item{.input_form}{(\code{character(1)}) The structure of the input field. Can be
 one of:
 \itemize{
 \item \code{"vector"}: The field is a vector, e.g. \code{c(1, 2, 3)}.
 \item \code{"scalar_list"}: The field is a list of scalars, e.g. \code{list(1, 2, 3)}.
-\item \code{"object"}: The field is a named list of scalars, e.g. \code{list(a = 1, b = 2, c = 3)}.
+\item \code{"object"}: The field is a named list of scalars, e.g.
+\code{list(a = 1, b = 2, c = 3)}.
 }}
 
-\item{.names_to}{What to do with the inner names of the object. Can be one
-of:
+\item{.names_to}{(\code{character(1)} or \code{NULL}) What to do with the inner names
+of the object. Can be one of:
 \itemize{
 \item \code{NULL}: the default. The inner names of the field are not used.
-\item A string: This can only be used if 1) the input form is \code{"object"}
-or \code{"vector"} and 2) \code{.values_to} is a string. The inner names of the field
-will populate the specified column in the field's tibble.
+\item A string: Use only if 1) the input form is \code{"object"} or \code{"vector"} and
+}
+\enumerate{
+\item \code{.values_to} is a string. The inner names of the field will populate the
+specified column in the field's tibble.
 }}
 }
 \description{

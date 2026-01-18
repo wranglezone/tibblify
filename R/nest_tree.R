@@ -197,7 +197,7 @@ check_children_to <- function(
   call = caller_env()
 ) {
   children_to <- vctrs::vec_cast(children_to, character(), call = call)
-  vec_check_size(children_to, size = 1L, call = call)
+  vctrs::vec_check_size(children_to, size = 1L, call = call)
   check_arg_different(
     children_to,
     id_col = names(id_col),

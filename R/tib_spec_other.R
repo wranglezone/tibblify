@@ -31,6 +31,11 @@ tib_variant <- function(
   )
 }
 
+#' Check if object is a tib variant
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tib_variant`.
+#' @keywords internal
 .is_tib_variant <- function(x) {
   inherits(x, "tib_variant")
 }
@@ -72,6 +77,11 @@ tib_row <- function(.key, ..., .required = TRUE) {
   )
 }
 
+#' Check if object is a tib row
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tib_row`.
+#' @keywords internal
 .is_tib_row <- function(x) {
   inherits(x, "tib_row")
 }

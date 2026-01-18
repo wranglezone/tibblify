@@ -14,11 +14,6 @@ test_that("tib_recursive produces the expected spec", {
 })
 
 test_that("empty dots create empty list", {
-  # TODO: These should be in tspec.
-  # expect_equal(tspec_df()$fields, list())
-  # expect_equal(tspec_row()$fields, list())
-  # expect_equal(tspec_object()$fields, list())
-
   expect_equal(tib_df("x")$fields, list())
   expect_equal(tib_row("x")$fields, list())
 })

@@ -5,8 +5,8 @@ test_that("can guess scalar elements", {
   )
 
   expect_equal(
-    guess_tspec_object(list(x = new_datetime(1))),
-    tspec_object(x = tib_scalar("x", new_datetime()))
+    guess_tspec_object(list(x = vctrs::new_datetime(1))),
+    tspec_object(x = tib_scalar("x", vctrs::new_datetime()))
   )
 
   # also for record types
@@ -40,8 +40,10 @@ test_that("can guess vector elements", {
   )
 
   expect_equal(
-    guess_tspec_object(list(x = c(new_datetime(1), new_datetime(2)))),
-    tspec_object(x = tib_vector("x", new_datetime()))
+    guess_tspec_object(list(
+      x = c(vctrs::new_datetime(1), vctrs::new_datetime(2))
+    )),
+    tspec_object(x = tib_vector("x", vctrs::new_datetime()))
   )
 
   # also for record types
@@ -72,9 +74,12 @@ test_that("can guess tib_vector for a scalar list", {
   )
 
   expect_equal(
-    guess_tspec_object(list(x = list(new_datetime(1))), simplify_list = TRUE),
+    guess_tspec_object(
+      list(x = list(vctrs::new_datetime(1))),
+      simplify_list = TRUE
+    ),
     tspec_object(
-      x = tib_vector("x", new_datetime(), .input_form = "scalar_list")
+      x = tib_vector("x", vctrs::new_datetime(), .input_form = "scalar_list")
     )
   )
 

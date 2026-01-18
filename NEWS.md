@@ -1,6 +1,8 @@
 # tibblify (development version)
 
 * `parse_openapi_spec()` supports many more fields and works for many more APIs (#190, #200, @jonthegeek and @mgirlich).
+* The underlying C implementation has been updated to better comply with R's C API. We also fixed various bugs during this update (#203, #204, #222).
+* Documentation of all functions has been updated for clarity (#228, #245, #246).
 
 # tibblify 0.3.1
 

@@ -172,7 +172,7 @@ spec_prep <- function(spec) {
     spec$type <- "df"
     spec["names_col"] <- list(NULL)
     spec$child_coll_pos <- which(
-      compat_map_chr(spec$fields, "type") == "recursive_helper"
+      .compat_map_chr(spec$fields, "type") == "recursive_helper"
     ) -
       1L
   }
@@ -226,7 +226,7 @@ prep_nested_keys2 <- function(spec, coll_locations) {
   }
 
   spec_complex <- purrr::map(spec[is_sub], remove_first_key)
-  spec_split <- vec_split(spec_complex, first_keys[is_sub])
+  spec_split <- vctrs::vec_split(spec_complex, first_keys[is_sub])
   spec_complex_prepped <- purrr::map2(
     spec_split$key,
     spec_split$val,
@@ -246,11 +246,11 @@ prep_nested_keys2 <- function(spec, coll_locations) {
     spec_complex_prepped
   )
   coll_locations <- c(
-    vec_chop(coll_locations[!is_sub]),
-    vec_split(coll_locations[is_sub], first_keys[is_sub])$val
+    vctrs::vec_chop(coll_locations[!is_sub]),
+    vctrs::vec_split(coll_locations[is_sub], first_keys[is_sub])$val
   )
 
-  first_keys <- compat_map_chr(spec_out, list("key", 1))
+  first_keys <- .compat_map_chr(spec_out, list("key", 1))
   key_order <- order(first_keys)
 
   list(
@@ -288,7 +288,7 @@ prep_tib_vector <- function(x) {
 
   x["col_names"] <- list(col_names)
   x$list_of_ptype <- list_of_ptype
-  x$na <- vec_init(x$ptype)
+  x$na <- vctrs::vec_init(x$ptype)
 
   x
 }
