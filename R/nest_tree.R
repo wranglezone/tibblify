@@ -22,7 +22,10 @@
 #' out$children[[2]]$children
 nest_tree <- function(data, id_col, parent_col, children_to) {
   if (!is.data.frame(data)) {
-    cli_abort("{.arg data} must be a data frame.")
+    cli_abort(
+      "{.arg data} must be a data frame.",
+      class = c("tibblify-error-invalid_data_frame", "tibblify-error")
+    )
   }
 
   id_col <- eval_pull(data, enquo(id_col), "id_col")
@@ -105,7 +108,11 @@ check_lvls <- function(lvls, call) {
       "Each element must be connected to a root element.",
       i = "The {qty(n)}element{?s} {not_found_loc} {qty(n)}{?is/are} not connected."
     )
-    cli_abort(msg, call = call)
+    cli_abort(
+      msg,
+      call = call,
+      class = c("tibblify-error-detached_tree_parts", "tibblify-error")
+    )
   }
 }
 
@@ -118,7 +125,10 @@ eval_pull <- function(data, col, col_arg) {
   # https://github.com/r-lib/tidyselect/issues/189
   col <- tidyselect::eval_select(col, data, allow_rename = FALSE)
   if (length(col) != 1L) {
-    cli_abort("{.arg {col_arg}} must select 1 column, not {length(col)}.")
+    cli_abort(
+      "{.arg {col_arg}} must select 1 column, not {length(col)}.",
+      class = c("tibblify-error-invalid_column_selection", "tibblify-error")
+    )
   }
 
   nm <- colnames(data)[[col]]
@@ -187,7 +197,7 @@ check_children_to <- function(
   call = caller_env()
 ) {
   children_to <- vctrs::vec_cast(children_to, character(), call = call)
-  children_to <- vctrs::vec_assert(children_to, size = 1L, call = call)
+  vec_check_size(children_to, size = 1L, call = call)
   check_arg_different(
     children_to,
     id_col = names(id_col),

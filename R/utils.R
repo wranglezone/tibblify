@@ -9,7 +9,7 @@ check_list <- function(
     if (vctrs::vec_is_list(x)) {
       return(invisible(NULL))
     }
-    if (allow_null && is_null(x)) {
+    if (allow_null && is.null(x)) {
       return(invisible(NULL))
     }
   }
@@ -37,7 +37,11 @@ check_arg_different <- function(
     if (identical(arg, other_args[[i]])) {
       other_arg_nm <- names(other_args)[[i]]
       msg <- "{.arg {arg_name}} must be different from {.arg {other_arg_nm}}."
-      cli_abort(msg, call = call)
+      cli_abort(
+        msg,
+        call = call,
+        class = c("tibblify-error-args_same_value", "tibblify-error")
+      )
     }
   }
 }

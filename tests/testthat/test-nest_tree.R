@@ -6,19 +6,46 @@ test_that("checks arguments", {
   )
 
   expect_snapshot({
-    (expect_error(nest_tree(1L)))
+    (expect_error(nest_tree(1L), class = "tibblify-error-invalid_data_frame"))
 
-    (expect_error(nest_tree(df, "not-there")))
-    (expect_error(nest_tree(df, 1:2)))
+    (expect_error(
+      nest_tree(df, "not-there"),
+      class = "vctrs_error_subscript_oob"
+    ))
+    (expect_error(
+      nest_tree(df, 1:2),
+      class = "tibblify-error-invalid_column_selection"
+    ))
 
-    (expect_error(nest_tree(df, id, parent_col = "not-there")))
-    (expect_error(nest_tree(df, id, parent_col = 1:2)))
-    (expect_error(nest_tree(df, id, parent_col = id)))
+    (expect_error(
+      nest_tree(df, id, parent_col = "not-there"),
+      class = "vctrs_error_subscript_oob"
+    ))
+    (expect_error(
+      nest_tree(df, id, parent_col = 1:2),
+      class = "tibblify-error-invalid_column_selection"
+    ))
+    (expect_error(
+      nest_tree(df, id, parent_col = id),
+      class = "tibblify-error-args_same_value"
+    ))
 
-    (expect_error(nest_tree(df, id, parent, children_to = 1L)))
-    (expect_error(nest_tree(df, id, parent, children_to = c("a", "b"))))
-    (expect_error(nest_tree(df, id, parent, children_to = "id")))
-    (expect_error(nest_tree(df, id, parent, children_to = "parent")))
+    (expect_error(
+      nest_tree(df, id, parent, children_to = 1L),
+      class = "vctrs_error_cast"
+    ))
+    (expect_error(
+      nest_tree(df, id, parent, children_to = c("a", "b")),
+      class = "vctrs_error_assert_size"
+    ))
+    (expect_error(
+      nest_tree(df, id, parent, children_to = "id"),
+      class = "tibblify-error-args_same_value"
+    ))
+    (expect_error(
+      nest_tree(df, id, parent, children_to = "parent"),
+      class = "tibblify-error-args_same_value"
+    ))
   })
 })
 
@@ -103,7 +130,10 @@ test_that("errors if there are detached parts of the tree", {
   )
 
   expect_snapshot({
-    (expect_error(nest_tree(df, id, parent, children_to = "children")))
+    (expect_error(
+      nest_tree(df, id, parent, children_to = "children"),
+      class = "tibblify-error-detached_tree_parts"
+    ))
   })
 })
 

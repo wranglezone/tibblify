@@ -7,7 +7,7 @@ test_that("can guess scalar columns", {
   )
   expect_equal(
     col_to_spec(vctrs::new_datetime(), "dtt", FALSE),
-    tib_scalar("dtt", ptype = vctrs::new_datetime())
+    tib_scalar("dtt", .ptype = vctrs::new_datetime())
   )
 
   # also for record types
@@ -22,7 +22,7 @@ test_that("scalar POSIXlt is converted to POSIXct", {
   x_posixlt <- as.POSIXlt(vctrs::new_date(0))
   expect_equal(
     col_to_spec(x_posixlt, "x", FALSE),
-    tib_scalar("x", ptype = vctrs::new_datetime())
+    tib_scalar("x", .ptype = vctrs::new_datetime())
   )
 })
 
@@ -36,7 +36,7 @@ test_that("can guess scalar NA columns", {
   na_date <- vec_init(vctrs::new_date())
   expect_equal(
     col_to_spec(na_date, "date", FALSE),
-    tib_scalar("date", ptype = vctrs::new_date())
+    tib_scalar("date", .ptype = vctrs::new_date())
   )
 
   # simple NA creates tib_unspecified
@@ -56,7 +56,7 @@ test_that("can guess vector columns", {
   )
   expect_equal(
     col_to_spec(list(vctrs::new_datetime()), "dtt_vec", FALSE),
-    tib_vector("dtt_vec", ptype = vctrs::new_datetime())
+    tib_vector("dtt_vec", .ptype = vctrs::new_datetime())
   )
 
   # also for record types
@@ -71,7 +71,7 @@ test_that("vector POSIXlt is converted to POSIXct", {
   x_posixlt <- as.POSIXlt(vctrs::new_date(0))
   expect_equal(
     col_to_spec(list(x_posixlt), "x", FALSE),
-    tib_vector("x", ptype = vctrs::new_datetime())
+    tib_vector("x", .ptype = vctrs::new_datetime())
   )
 })
 
@@ -89,12 +89,12 @@ test_that("respect empty_list_unspecified for vector columns", {
     tib_variant("int_vec")
   )
 
-  # needs to check against `tspec_df()` for `vector_allows_empty_list`
+  # needs to check against `tspec_df()` for `.vector_allows_empty_list`
   x <- tibble(int_vec = list(1:2, list()))
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = TRUE),
     tspec_df(
-      vector_allows_empty_list = TRUE,
+      .vector_allows_empty_list = TRUE,
       int_vec = tib_int_vec("int_vec")
     )
   )
@@ -182,7 +182,7 @@ test_that("respect empty_list_unspecified in tibble columns", {
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = TRUE),
     tspec_df(
-      vector_allows_empty_list = TRUE,
+      .vector_allows_empty_list = TRUE,
       tib_row("x", tib_int_vec("int_vec"))
     )
   )
@@ -230,7 +230,7 @@ test_that("can guess list of tibble columns", {
       df_list = tib_df(
         "df_list",
         dbl = tib_dbl("dbl"),
-        chr = tib_chr("chr", required = FALSE)
+        chr = tib_chr("chr", .required = FALSE)
       )
     )
   )
@@ -305,7 +305,7 @@ test_that("respect empty_list_unspecified for list of tibble columns", {
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = TRUE),
     tspec_df(
-      vector_allows_empty_list = TRUE,
+      .vector_allows_empty_list = TRUE,
       tib_df("x", tib_int_vec("int_vec"))
     )
   )
@@ -325,7 +325,7 @@ test_that("can guess required for list of tibble columns", {
       x = tib_df(
         "x",
         a = tib_dbl("a"),
-        b = tib_chr("b", required = FALSE)
+        b = tib_chr("b", .required = FALSE)
       )
     )
   )
@@ -362,7 +362,7 @@ test_that("can guess spec for nested df columns", {
       df2 = tib_df(
         "df2",
         dbl2 = tib_dbl("dbl2"),
-        chr2 = tib_chr("chr2", required = FALSE)
+        chr2 = tib_chr("chr2", .required = FALSE)
       )
     )
   )
@@ -402,7 +402,7 @@ test_that("can guess spec for nested list of df columns", {
       df2 = tib_df(
         "df2",
         dbl2 = tib_dbl("dbl2"),
-        chr2 = tib_chr("chr2", required = FALSE)
+        chr2 = tib_chr("chr2", .required = FALSE)
       )
     )
   )

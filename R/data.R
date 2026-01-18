@@ -24,14 +24,14 @@
 #' @format A list of lists.
 "politicians"
 
-#' GitHub Users
+#' GitHub users
 #'
 #' A dataset containing some basic information about six GitHub users.
 #'
 #' @format A list of lists.
 "gh_users"
 
-#' GitHub Repositories
+#' GitHub repositories
 #'
 #' A dataset containing some basic information about some GitHub repositories.
 #'

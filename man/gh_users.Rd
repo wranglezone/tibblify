@@ -3,7 +3,7 @@
 \docType{data}
 \name{gh_users}
 \alias{gh_users}
-\title{GitHub Users}
+\title{GitHub users}
 \format{
 A list of lists.
 }

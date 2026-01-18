@@ -57,12 +57,12 @@
 tibblify <- function(x, spec = NULL, unspecified = NULL) {
   withr::local_locale(c(LC_COLLATE = "C"))
 
-  if (is_null(spec)) {
+  if (is.null(spec)) {
     spec <- guess_tspec(x, inform_unspecified = TRUE, call = current_call())
     unspecified <- unspecified %||% "list"
   }
 
-  if (!is_tspec(spec)) {
+  if (!.is_tspec(spec)) {
     friendly_type <- obj_type_friendly(spec)
     msg <- "{.arg spec} must be a tibblify spec, not {friendly_type}."
     cli::cli_abort(msg)
@@ -149,7 +149,7 @@ spec_prep <- function(spec) {
   }
 
   n_cols <- length(spec$fields)
-  if (is_null(spec$names_col)) {
+  if (is.null(spec$names_col)) {
     coll_locations <- seq2(1, n_cols) - 1L
     spec$col_names <- names2(spec$fields)
   } else {
@@ -319,7 +319,7 @@ spec_replace_unspecified <- function(spec, unspecified) {
       if (unspecified == "drop") {
         fields[[i]] <- NULL
       } else {
-        fields[[i]] <- tib_variant(field$key, required = field$required)
+        fields[[i]] <- tib_variant(field$key, .required = field$required)
       }
     } else if (field$type %in% c("df", "row")) {
       fields[[i]] <- spec_replace_unspecified(field, unspecified)

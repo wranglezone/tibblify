@@ -16,33 +16,33 @@ test_that("format for scalars works", {
 
   expect_snapshot(tib_variant("a") |> print())
 
-  expect_snapshot(tib_int("a", fill = NA_integer_) |> print())
-  expect_snapshot(tib_int("a", fill = 1) |> print())
+  expect_snapshot(tib_int("a", .fill = NA_integer_) |> print())
+  expect_snapshot(tib_int("a", .fill = 1) |> print())
 
-  expect_snapshot(tib_int("a", transform = as.integer) |> print())
+  expect_snapshot(tib_int("a", .transform = as.integer) |> print())
   expect_snapshot(
-    tib_int("a", fill = NA_integer_, transform = as.integer) |> print()
+    tib_int("a", .fill = NA_integer_, .transform = as.integer) |> print()
   )
 
   expect_snapshot(
-    tib_scalar("a", ptype = new_difftime(units = "mins")) |> print()
+    tib_scalar("a", .ptype = new_difftime(units = "mins")) |> print()
   )
 
   expect_snapshot(
     tib_row(
       "a",
       x = tib_int("x"),
-      y = tib_dbl("y", fill = NA_real_),
-      z = tib_chr("z", fill = "abc")
+      y = tib_dbl("y", .fill = NA_real_),
+      z = tib_chr("z", .fill = "abc")
     ) |>
       print()
   )
 
   expect_snapshot(
     tib_int(
-      key = "x",
-      ptype_inner = character(),
-      fill = "a"
+      .key = "x",
+      .ptype_inner = character(),
+      .fill = "a"
     )
   )
 })
@@ -53,7 +53,7 @@ test_that("format breaks long lines", {
   expect_snapshot(
     tib_row(
       "path",
-      a_long_name = tib_dbl("a looooooooooooooooooooong name", fill = 1)
+      a_long_name = tib_dbl("a looooooooooooooooooooong name", .fill = 1)
     ) |>
       print(width = 60)
   )
@@ -61,7 +61,7 @@ test_that("format breaks long lines", {
   expect_snapshot(
     tib_row(
       "path",
-      a_long_name = tib_dbl("a looooooooooooooooooooong name", fill = 1)
+      a_long_name = tib_dbl("a looooooooooooooooooooong name", .fill = 1)
     ) |>
       print(width = 69)
   )
@@ -71,27 +71,27 @@ test_that("format breaks long lines", {
 test_that("format for tib_vector works", {
   local_options(cli.num_colors = 1)
   expect_snapshot(tib_chr_vec("a") |> print())
-  expect_snapshot(tib_vector("a", ptype = vctrs::new_duration()) |> print())
+  expect_snapshot(tib_vector("a", .ptype = vctrs::new_duration()) |> print())
 
   expect_snapshot(
     tib_vector(
       "a",
-      ptype = vctrs::new_duration(),
-      input_form = "object",
-      values_to = "vals",
-      names_to = "names"
+      .ptype = vctrs::new_duration(),
+      .input_form = "object",
+      .values_to = "vals",
+      .names_to = "names"
     ) |>
       print()
   )
 
   # multi value default
-  expect_snapshot(tib_int_vec("a", fill = 1:2) |> print())
+  expect_snapshot(tib_int_vec("a", .fill = 1:2) |> print())
 
   expect_snapshot(
     tib_int_vec(
-      key = "x",
-      ptype_inner = character(),
-      fill = 1:2
+      .key = "x",
+      .ptype_inner = character(),
+      .fill = 1:2
     )
   )
 
@@ -107,16 +107,16 @@ test_that("format for tib_vector works", {
 test_that("format for tib_chr_date works", {
   expect_snapshot({
     tib_chr_date("a")
-    tib_chr_date("a", required = FALSE, fill = "2022-01-01", format = "%Y")
+    tib_chr_date("a", .required = FALSE, .fill = "2022-01-01", .format = "%Y")
   })
 
   expect_snapshot({
     tib_chr_date_vec("a")
     tib_chr_date_vec(
       "a",
-      required = FALSE,
-      fill = as.Date("2022-01-01"),
-      format = "%Y"
+      .required = FALSE,
+      .fill = as.Date("2022-01-01"),
+      .format = "%Y"
     )
   })
 })
@@ -126,7 +126,7 @@ test_that("format for tib_row works", {
   expect_snapshot(
     tib_row(
       "formats",
-      text = tib_chr("text", fill = NA_character_)
+      text = tib_chr("text", .fill = NA_character_)
     ) |>
       print()
   )
@@ -153,7 +153,7 @@ test_that("format for tib_row works", {
         entity_type_name = tib_chr("entity_type_name")
       ),
       year = tib_int("year"),
-      master_url = tib_chr("master_url", fill = NA),
+      master_url = tib_chr("master_url", .fill = NA),
       artists = tib_df(
         "artists",
         join = tib_chr("join"),
@@ -171,9 +171,9 @@ test_that("format for tib_row works", {
         "formats",
         descriptions = tib_chr_vec(
           "descriptions",
-          fill = NULL
+          .fill = NULL
         ),
-        text = tib_chr("text", fill = NA),
+        text = tib_chr("text", .fill = NA),
         name = tib_chr("name"),
         qty = tib_chr("qty")
       ),
@@ -187,8 +187,8 @@ test_that("format for tib_row works", {
 
 test_that("format for tib_variant works", {
   expect_snapshot(tib_variant("a"))
-  expect_snapshot(tib_variant("a", fill = tibble(a = 1:2)))
-  expect_snapshot(tib_variant("a", elt_transform = as.character))
+  expect_snapshot(tib_variant("a", .fill = tibble(a = 1:2)))
+  expect_snapshot(tib_variant("a", .elt_transform = as.character))
 })
 
 test_that("format for tib_df works", {
@@ -196,7 +196,7 @@ test_that("format for tib_df works", {
   expect_snapshot(
     tib_df(
       "formats",
-      text = tib_chr("text", fill = NA_character_)
+      text = tib_chr("text", .fill = NA_character_)
     ) |>
       print()
   )
@@ -267,8 +267,8 @@ test_that("can force to print canonical names", {
 
 test_that("special ptypes correctly formatted", {
   expect_snapshot({
-    tib_scalar("a", ptype = character(), ptype_inner = Sys.Date()) |> format()
-    tib_scalar("a", ptype = character(), ptype_inner = Sys.time()) |> format()
+    tib_scalar("a", .ptype = character(), .ptype_inner = Sys.Date()) |> format()
+    tib_scalar("a", .ptype = character(), .ptype_inner = Sys.time()) |> format()
   })
 })
 
@@ -292,8 +292,8 @@ test_that("prints arguments of spec_*", {
   )
 
   expect_equal(
-    format(tspec_df(tib_int("a"), vector_allows_empty_list = TRUE)),
-    'tspec_df(\n  vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
+    format(tspec_df(tib_int("a"), .vector_allows_empty_list = TRUE)),
+    'tspec_df(\n  .vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
   )
 })
 
@@ -311,7 +311,7 @@ test_that("format uses trailing comma", {
   )
 })
 
-test_that("special ptypes are cprrectly formatted", {
+test_that("special ptypes are correctly formatted", {
   check_native <- function(ptype, ctr) {
     # native
     expect_equal(format_ptype(ptype), ctr)

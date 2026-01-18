@@ -2,20 +2,6 @@
 
 # guess_object_list_field_spec() ------------------------------------------
 
-guess_ol_field <- function(
-  value,
-  name = "x",
-  empty_list_unspecified = FALSE,
-  simplify_list = FALSE
-) {
-  guess_object_list_field_spec(
-    value = value,
-    name = name,
-    empty_list_unspecified = empty_list_unspecified,
-    simplify_list = simplify_list
-  )
-}
-
 test_that("can guess scalar elements", {
   expect_equal(
     guess_ol_field(list(TRUE, FALSE)),
@@ -62,7 +48,7 @@ test_that("respect empty_list_unspecified for scalar elements", {
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = TRUE),
     tspec_df(
-      vector_allows_empty_list = TRUE,
+      .vector_allows_empty_list = TRUE,
       tib_int_vec("x")
     )
   )
@@ -100,7 +86,7 @@ test_that("respect empty_list_unspecified for vector elements", {
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = TRUE),
     tspec_df(
-      vector_allows_empty_list = TRUE,
+      .vector_allows_empty_list = TRUE,
       x = tib_int_vec("x")
     )
   )
@@ -113,7 +99,7 @@ test_that("can guess vector input form", {
       simplify_list = TRUE,
       empty_list_unspecified = FALSE
     ),
-    tib_dbl_vec("x", input_form = "scalar_list")
+    tib_dbl_vec("x", .input_form = "scalar_list")
   )
 
   # checks size
@@ -137,7 +123,7 @@ test_that("can guess vector input form", {
 })
 
 test_that("can guess object input form", {
-  # there need to be enough different elements to be recognized as input_form = "object"
+  # there need to be enough different elements to be recognized as .input_form = "object"
   # TODO should ask the user?
   skip("improve guessing logic")
   x <- list(
@@ -151,7 +137,7 @@ test_that("can guess object input form", {
       simplify_list = TRUE,
       empty_list_unspecified = FALSE
     ),
-    tspec_df(x = tib_dbl_vec("x", input_form = "object"))
+    tspec_df(x = tib_dbl_vec("x", .input_form = "object"))
   )
 })
 
@@ -202,7 +188,7 @@ test_that("respect empty_list_unspecified for object elements", {
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = TRUE),
     tspec_df(
-      vector_allows_empty_list = TRUE,
+      .vector_allows_empty_list = TRUE,
       x = tib_row("x", y = tib_int_vec("y"))
     )
   )
@@ -282,7 +268,7 @@ test_that("order of fields does not matter", {
     tspec_df(
       x = tib_lgl("x"),
       y = tib_int_vec("y"),
-      z = tib_chr("z", required = FALSE)
+      z = tib_chr("z", .required = FALSE)
     )
   )
 

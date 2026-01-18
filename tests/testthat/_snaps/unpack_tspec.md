@@ -4,14 +4,14 @@
       (expect_error(unpack_tspec(spec, fields = "not-there")))
     Output
       <error/rlang_error>
-      Error in `check_unpack_cols()`:
+      Error in `.check_unpack_cols()`:
       ! Can't unpack fields that don't exist.
       Field not-there doesn't exist.
     Code
       (expect_error(unpack_tspec(spec, fields = c("not-there", "also-not-there"))))
     Output
       <error/rlang_error>
-      Error in `check_unpack_cols()`:
+      Error in `.check_unpack_cols()`:
       ! Can't unpack fields that don't exist.
       Fields not-there and also-not-there don't exist.
 

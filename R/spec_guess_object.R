@@ -37,7 +37,7 @@ guess_tspec_object <- function(
   )
 
   tspec_object(
-    vector_allows_empty_list = is_true(getOption(
+    .vector_allows_empty_list = is_true(getOption(
       "tibblify.used_empty_list_arg"
     )),
     !!!fields
@@ -50,7 +50,7 @@ guess_object_field_spec <- function(
   empty_list_unspecified,
   simplify_list
 ) {
-  if (is_null(value) || identical(unname(value), list())) {
+  if (is.null(value) || identical(unname(value), list())) {
     return(tib_unspecified(name))
   }
 
@@ -147,12 +147,12 @@ guess_vector_input_form <- function(value, name) {
   }
 
   ptype <- ptype_result$ptype
-  if (is_null(ptype)) {
+  if (is.null(ptype)) {
     if (is_named(value)) {
       return(list(can_simplify = FALSE))
     }
 
-    tib_spec <- tib_unspecified(name, required = TRUE)
+    tib_spec <- tib_unspecified(name, .required = TRUE)
     return(list(can_simplify = TRUE, tib_spec = tib_spec))
   }
 
@@ -165,20 +165,20 @@ guess_vector_input_form <- function(value, name) {
       tib_spec <- tib_vector(
         name,
         ptype,
-        required = TRUE,
-        input_form = "object"
+        .required = TRUE,
+        .input_form = "object"
       )
     } else {
       tib_spec <- tib_vector(
         name,
         ptype,
-        required = TRUE,
-        input_form = "scalar_list"
+        .required = TRUE,
+        .input_form = "scalar_list"
       )
     }
 
     return(list(can_simplify = TRUE, tib_spec = tib_spec))
   }
 
-  list(can_simplify = TRUE, tib_spec = tib_variant(name, required = TRUE))
+  list(can_simplify = TRUE, tib_spec = tib_variant(name, .required = TRUE))
 }
