@@ -136,7 +136,7 @@ There are five main types of `tib_*()` functions:
 - `tib_vector(ptype)`: A vector of arbitrary length with type `ptype`.
   The result is a list column, with each row containing a vector of that
   type.
-- [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md):
+- [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md):
   A vector of arbitrary length and type. The result is a list column,
   with each row containing a list. You should rarely need this function.
 - `tib_row(...)`: An object with the fields `...`. The result is a
@@ -146,47 +146,47 @@ There are five main types of `tib_*()` functions:
 
 There are also two other `tib_*()` functions for special cases:
 
-- [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md):
+- [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md):
   A collection where objects can themselves be collections of the same
   structure, such as a directory tree. The result is a tibble column,
   with each row containing a tibble of the same structure (until `NULL`
   is reached, terminating recursion).
-- [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md):
+- [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md):
   An unspecified field where the type and shape is not known in advance.
   The `unspecified` argument of
   [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
   controls how such fields are handled.
 
 For convenience there are shortcuts for
-[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 and
-[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 for the most common prototypes:
 
 - [`logical()`](https://rdrr.io/r/base/logical.html):
-  [`tib_lgl()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_lgl()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_lgl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_lgl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 - [`integer()`](https://rdrr.io/r/base/integer.html):
-  [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_int_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_int_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 - [`double()`](https://rdrr.io/r/base/double.html):
-  [`tib_dbl()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_dbl()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_dbl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_dbl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 - [`character()`](https://rdrr.io/r/base/character.html):
-  [`tib_chr()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_chr()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_chr_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_chr_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 - `Date`:
-  [`tib_date()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_date()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 - `Date` encoded as character:
-  [`tib_chr_date()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_chr_date()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_chr_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_chr_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 
 ### Scalar Elements
 
@@ -212,7 +212,7 @@ tibblify(
 ```
 
 With
-[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md),
+[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md),
 you can also provide your own prototype for column types not included in
 our shortcuts. For example, let’s say you have a list with durations
 (objects with class “difftime”).
@@ -240,7 +240,7 @@ x
 ```
 
 Use
-[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 with
 [`vctrs::new_duration()`](https://vctrs.r-lib.org/reference/new_date.html)
 to specify the duration `ptype`.
@@ -253,6 +253,17 @@ tibblify(
     tib_scalar("duration", ptype = vctrs::new_duration())
   )
 )
+#> Warning: The `ptype` argument of `tib_scalar()` is deprecated as of tibblify 0.4.0.
+#> ℹ Please use the `.ptype` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> Warning: The `ptype_inner` argument of `tib_scalar()` is deprecated as of tibblify
+#> 0.4.0.
+#> ℹ Please use the `.ptype_inner` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #> # A tibble: 2 × 2
 #>      id duration
 #>   <int> <drtn>  
@@ -326,7 +337,7 @@ gh_repos_small[[1]]
 ```
 
 The specification to extract it uses
-[`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 ``` r
 spec <- guess_tspec(gh_repos_small)
@@ -428,6 +439,11 @@ spec <- tspec_df(
   x = tib_int("x"),
   y = tib_chr("y", required = FALSE)
 )
+#> Warning: The `required` argument of `tib_chr()` is deprecated as of tibblify 0.4.0.
+#> ℹ Please use the `.required` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 
 tibblify(x, spec)
 #> # A tibble: 2 × 2
@@ -444,6 +460,11 @@ spec <- tspec_df(
   x = tib_int("x"),
   y = tib_chr("y", required = FALSE, fill = "missing")
 )
+#> Warning: The `fill` argument of `tib_chr()` is deprecated as of tibblify 0.4.0.
+#> ℹ Please use the `.fill` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 
 tibblify(x, spec)
 #> # A tibble: 2 × 2

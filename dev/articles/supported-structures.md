@@ -39,15 +39,15 @@ they:
 Examples are `Date` or `POSIXct`.
 
 In general a scalar can be parsed with
-[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 There are some special functions for common types:
 
-- [`tib_lgl()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-- [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-- [`tib_dbl()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-- [`tib_chr()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-- [`tib_date()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-- [`tib_chr_date()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+- [`tib_lgl()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+- [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+- [`tib_dbl()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+- [`tib_chr()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+- [`tib_date()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+- [`tib_chr_date()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   to parse dates encoded as string.
 
 ## Vectors
@@ -77,9 +77,9 @@ As with scalars, other vector types are also supported as long as they
 are a vector in the vctrs definition.
 
 They can be parsed with
-[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 As with scalars, there are shortcuts for some common types,
-e.g. [`tib_lgl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+e.g. [`tib_lgl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 ### Empty lists
 
@@ -116,6 +116,12 @@ converted to an empty vector instead.
 
 ``` r
 tibblify(x, tspec_df(tib_int_vec("a"), vector_allows_empty_list = TRUE))$a
+#> Warning: The `vector_allows_empty_list` argument of `tspec_df()` is deprecated as of
+#> tibblify 0.4.0.
+#> ℹ Please use the `.vector_allows_empty_list` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #> <list_of<integer>[2]>
 #> [[1]]
 #> [1] 1 2
@@ -150,7 +156,7 @@ str(x)
 ```
 
 By default they cannot be parsed with
-[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 ``` r
 tibblify(x, tspec_df(tib_int_vec("a")))
@@ -161,11 +167,17 @@ tibblify(x, tspec_df(tib_int_vec("a")))
 ```
 
 Use `input_form = "scalar_list"` in
-[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 to parse them:
 
 ``` r
 tibblify(x, tspec_df(tib_int_vec("a", input_form = "scalar_list")))$a
+#> Warning: The `input_form` argument of `tib_int_vec()` is deprecated as of tibblify
+#> 0.4.0.
+#> ℹ Please use the `.input_form` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #> <list_of<integer>[2]>
 #> [[1]]
 #> [1] 1 2
@@ -199,7 +211,7 @@ str(x)
 ```
 
 Use `input_form = "object"` in
-[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+[`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 to parse them. To store the names use the `names_to` and `values_to`
 arguments.
 
@@ -212,6 +224,16 @@ spec <- tspec_df(
     values_to = "value"
   )
 )
+#> Warning: The `values_to` argument of `tib_int_vec()` is deprecated as of tibblify 0.4.0.
+#> ℹ Please use the `.values_to` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> Warning: The `names_to` argument of `tib_int_vec()` is deprecated as of tibblify 0.4.0.
+#> ℹ Please use the `.names_to` argument instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 
 tibblify(x, spec)$a[[1]]
 #> # A tibble: 2 × 2
@@ -242,7 +264,7 @@ list(1, "a", TRUE)
 ```
 
 Such lists can be parsed with
-[`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 ## Object
 
@@ -265,7 +287,7 @@ x <- list(
 ```
 
 They can be parsed with
-[`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 For example:
 
 ``` r
@@ -309,7 +331,7 @@ x <- list(
 ```
 
 They can be parsed with
-[`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+[`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 ### Object of objects
 
@@ -331,7 +353,7 @@ x <- list(
 ```
 
 They are also parsed with
-[`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md),
+[`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md),
 but you can parse the names into an extra column via the `.names_to`
 argument:
 

@@ -1,4 +1,4 @@
-# GitHub Users
+# GitHub users
 
 A dataset containing some basic information about six GitHub users.
 

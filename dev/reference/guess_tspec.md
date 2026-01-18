@@ -1,4 +1,4 @@
-# Guess the `tibblify()` Specification
+# Guess the `tibblify()` specification
 
 Use `guess_tspec()` if you don't know the input type. Use
 `guess_tspec_df()` if the input is a data frame or an object list. Use

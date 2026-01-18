@@ -108,10 +108,10 @@ contributing to this project, you agree to abide by its terms.
   : Examine the column specification
 
 - [`gh_repos`](https://tibblify.wrangle.zone/dev/reference/gh_repos.md)
-  : GitHub Repositories
+  : GitHub repositories
 
 - [`gh_users`](https://tibblify.wrangle.zone/dev/reference/gh_users.md)
-  : GitHub Users
+  : GitHub users
 
 - [`got_chars`](https://tibblify.wrangle.zone/dev/reference/got_chars.md)
   : Game of Thrones POV characters
@@ -123,7 +123,7 @@ contributing to this project, you agree to abide by its terms.
 
   Guess the
   [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
-  Specification
+  specification
 
 - [`nest_tree()`](https://tibblify.wrangle.zone/dev/reference/nest_tree.md)
   : Convert a data frame to a tree
@@ -138,26 +138,26 @@ contributing to this project, you agree to abide by its terms.
 - [`should_inform_unspecified()`](https://tibblify.wrangle.zone/dev/reference/should_inform_unspecified.md)
   : Determine whether to inform about unspecified fields in spec
 
-- [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_lgl()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_dbl()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_chr()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_date()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_chr_date()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_lgl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_int_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_dbl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_chr_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_chr_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
-  : Create a Field Specification
+- [`tib_scalar()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_lgl()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_dbl()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_chr()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_date()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_chr_date()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_lgl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_int_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_dbl_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_chr_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_chr_date_vec()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  : Create a field specification
 
 - [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
   : Rectangle a nested list
@@ -167,9 +167,9 @@ contributing to this project, you agree to abide by its terms.
 
 - [`tspec_df()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
   [`tspec_object()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
-  [`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
   [`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
-  : Create a Tibblify Specification
+  [`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
+  : Create a tibblify specification
 
 - [`unnest_tree()`](https://tibblify.wrangle.zone/dev/reference/unnest_tree.md)
   : Unnest a recursive data frame

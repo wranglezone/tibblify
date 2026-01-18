@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,16 +102,16 @@ they:</p>
 <li>have size one, i.e. <code>vctrs::vec_size(x)</code> is 1.</li>
 </ul>
 <p>Examples are <code>Date</code> or <code>POSIXct</code>.</p>
-<p>In general a scalar can be parsed with <code><a href="../reference/tib_scalar.html">tib_scalar()</a></code>.
+<p>In general a scalar can be parsed with <code><a href="../reference/tib_spec.html">tib_scalar()</a></code>.
 There are some special functions for common types:</p>
 <ul>
-<li><code><a href="../reference/tib_scalar.html">tib_lgl()</a></code></li>
-<li><code><a href="../reference/tib_scalar.html">tib_int()</a></code></li>
-<li><code><a href="../reference/tib_scalar.html">tib_dbl()</a></code></li>
-<li><code><a href="../reference/tib_scalar.html">tib_chr()</a></code></li>
-<li><code><a href="../reference/tib_scalar.html">tib_date()</a></code></li>
+<li><code><a href="../reference/tib_spec.html">tib_lgl()</a></code></li>
+<li><code><a href="../reference/tib_spec.html">tib_int()</a></code></li>
+<li><code><a href="../reference/tib_spec.html">tib_dbl()</a></code></li>
+<li><code><a href="../reference/tib_spec.html">tib_chr()</a></code></li>
+<li><code><a href="../reference/tib_spec.html">tib_date()</a></code></li>
 <li>
-<code><a href="../reference/tib_scalar.html">tib_chr_date()</a></code> to parse dates encoded as string.</li>
+<code><a href="../reference/tib_spec.html">tib_chr_date()</a></code> to parse dates encoded as string.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -138,9 +138,9 @@ the same type. In R they correspond to a <code><a href="https://rdrr.io/r/base/l
 </div>
 <p>As with scalars, other vector types are also supported as long as
 they are a vector in the vctrs definition.</p>
-<p>They can be parsed with <code><a href="../reference/tib_scalar.html">tib_vector()</a></code>. As with scalars,
+<p>They can be parsed with <code><a href="../reference/tib_spec.html">tib_vector()</a></code>. As with scalars,
 there are shortcuts for some common types,
-e.g. <code><a href="../reference/tib_scalar.html">tib_lgl_vec()</a></code>.</p>
+e.g. <code><a href="../reference/tib_spec.html">tib_lgl_vec()</a></code>.</p>
 <div class="section level3">
 <h3 id="empty-lists">Empty lists<a class="anchor" aria-label="anchor" href="#empty-lists"></a>
 </h3>
@@ -161,7 +161,7 @@ when parsing an empty JSON array.</p>
 <span><span class="co">#&gt;   ..$ a: list()</span></span></code></pre></div>
 <p>By default they are not supported but produce an error.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_scalar.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `tibblify()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Problem while tibblifying `x[[2]]$a`</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error:</span></span></span>
@@ -170,7 +170,13 @@ when parsing an empty JSON array.</p>
 <code>tspec_*()</code> so that they are converted to an empty vector
 instead.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_scalar.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>, vector_allows_empty_list <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>, vector_allows_empty_list <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
+<span><span class="co">#&gt; Warning: The `vector_allows_empty_list` argument of `tspec_df()` is deprecated as of</span></span>
+<span><span class="co">#&gt; tibblify 0.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.vector_allows_empty_list` argument instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt; &lt;list_of&lt;integer&gt;[2]&gt;</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] 1 2</span></span>
@@ -202,17 +208,23 @@ lists of scalars.</p>
 <span><span class="co">#&gt;   .. ..$ : int 1</span></span>
 <span><span class="co">#&gt;   .. ..$ : int 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : int 3</span></span></code></pre></div>
-<p>By default they cannot be parsed with <code><a href="../reference/tib_scalar.html">tib_vector()</a></code>.</p>
+<p>By default they cannot be parsed with <code><a href="../reference/tib_spec.html">tib_vector()</a></code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_scalar.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `tibblify()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Problem while tibblifying `x[[1]]$a`</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't convert `&lt;list&gt;` &lt;list&gt; to &lt;integer&gt;.</span></span></code></pre></div>
 <p>Use <code>input_form = "scalar_list"</code> in
-<code><a href="../reference/tib_scalar.html">tib_vector()</a></code> to parse them:</p>
+<code><a href="../reference/tib_spec.html">tib_vector()</a></code> to parse them:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_scalar.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span>, input_form <span class="op">=</span> <span class="st">"scalar_list"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span>, input_form <span class="op">=</span> <span class="st">"scalar_list"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
+<span><span class="co">#&gt; Warning: The `input_form` argument of `tib_int_vec()` is deprecated as of tibblify</span></span>
+<span><span class="co">#&gt; 0.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.input_form` argument instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt; &lt;list_of&lt;integer&gt;[2]&gt;</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] 1 2</span></span>
@@ -243,18 +255,28 @@ lists of scalars.</p>
 <span><span class="co">#&gt;   .. ..$ a: int 1</span></span>
 <span><span class="co">#&gt;   .. ..$ b: int 2</span></span>
 <span><span class="co">#&gt;   .. ..$ b: int 3</span></span></code></pre></div>
-<p>Use <code>input_form = "object"</code> in <code><a href="../reference/tib_scalar.html">tib_vector()</a></code>
+<p>Use <code>input_form = "object"</code> in <code><a href="../reference/tib_spec.html">tib_vector()</a></code>
 to parse them. To store the names use the <code>names_to</code> and
 <code>values_to</code> arguments.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/tib_scalar.html">tib_int_vec</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span></span>
 <span>    <span class="st">"a"</span>,</span>
 <span>    input_form <span class="op">=</span> <span class="st">"object"</span>,</span>
 <span>    names_to <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>    values_to <span class="op">=</span> <span class="st">"value"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The `values_to` argument of `tib_int_vec()` is deprecated as of tibblify 0.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.values_to` argument instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
+<span><span class="co">#&gt; Warning: The `names_to` argument of `tib_int_vec()` is deprecated as of tibblify 0.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.names_to` argument instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">spec</span><span class="op">)</span><span class="op">$</span><span class="va">a</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
@@ -284,7 +306,7 @@ instead vary. For example:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<p>Such lists can be parsed with <code><a href="../reference/tib_scalar.html">tib_variant()</a></code>.</p>
+<p>Such lists can be parsed with <code><a href="../reference/tib_spec.html">tib_variant()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="object">Object<a class="anchor" aria-label="anchor" href="#object"></a>
@@ -307,7 +329,7 @@ fulfill the requirements of
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<p>They can be parsed with <code><a href="../reference/tib_scalar.html">tib_row()</a></code>. For example:</p>
+<p>They can be parsed with <code><a href="../reference/tib_spec.html">tib_row()</a></code>. For example:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -315,10 +337,10 @@ fulfill the requirements of
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/tib_scalar.html">tib_row</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/tib_spec.html">tib_row</a></span><span class="op">(</span></span>
 <span>    <span class="st">"row"</span>,</span>
-<span>    <span class="fu"><a href="../reference/tib_scalar.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="../reference/tib_scalar.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/tib_spec.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -348,7 +370,7 @@ fulfill the requirements of
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<p>They can be parsed with <code><a href="../reference/tib_scalar.html">tib_df()</a></code>.</p>
+<p>They can be parsed with <code><a href="../reference/tib_spec.html">tib_df()</a></code>.</p>
 <div class="section level3">
 <h3 id="object-of-objects">Object of objects<a class="anchor" aria-label="anchor" href="#object-of-objects"></a>
 </h3>
@@ -369,7 +391,7 @@ represented as objects where each element is an object.</p>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<p>They are also parsed with <code><a href="../reference/tib_scalar.html">tib_df()</a></code>, but you can parse
+<p>They are also parsed with <code><a href="../reference/tib_spec.html">tib_df()</a></code>, but you can parse
 the names into an extra column via the <code>.names_to</code>
 argument:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -384,10 +406,10 @@ argument:</p>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span><span class="va">x_json</span>, simplifyDataFrame <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/tib_scalar.html">tib_df</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/tib_spec.html">tib_df</a></span><span class="op">(</span></span>
 <span>    <span class="st">"df"</span>,</span>
-<span>    <span class="fu"><a href="../reference/tib_scalar.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="../reference/tib_scalar.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/tib_spec.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,</span>
 <span>    .names_to <span class="op">=</span> <span class="st">"name"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -430,8 +452,8 @@ argument:</p>
 <code>tspec_*()</code>.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/tib_scalar.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/tib_scalar.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/tib_spec.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,</span>
 <span>  .input_form <span class="op">=</span> <span class="st">"colmajor"</span></span>
 <span><span class="op">)</span></span>
 <span></span>

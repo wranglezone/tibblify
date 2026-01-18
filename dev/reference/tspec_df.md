@@ -1,8 +1,9 @@
-# Create a Tibblify Specification
+# Create a tibblify specification
 
 Use `tspec_df()` to specify how to convert a list of objects to a
-tibble. Use `tspec_row()` resp. `tspec_object()` to specify how to
-convert an object to a one row tibble resp. a list.
+tibble. Use `tspec_row()` to specify how to convert an object to a
+one-row tibble. Use `tspec_object()` to specify how to convert an object
+to a list.
 
 ## Usage
 
@@ -11,13 +12,22 @@ tspec_df(
   ...,
   .input_form = c("rowmajor", "colmajor"),
   .names_to = NULL,
-  vector_allows_empty_list = FALSE
+  .vector_allows_empty_list = FALSE,
+  vector_allows_empty_list = deprecated()
 )
 
 tspec_object(
   ...,
   .input_form = c("rowmajor", "colmajor"),
-  vector_allows_empty_list = FALSE
+  .vector_allows_empty_list = FALSE,
+  vector_allows_empty_list = deprecated()
+)
+
+tspec_row(
+  ...,
+  .input_form = c("rowmajor", "colmajor"),
+  .vector_allows_empty_list = FALSE,
+  vector_allows_empty_list = deprecated()
 )
 
 tspec_recursive(
@@ -25,13 +35,8 @@ tspec_recursive(
   .children,
   .children_to = .children,
   .input_form = c("rowmajor", "colmajor"),
-  vector_allows_empty_list = FALSE
-)
-
-tspec_row(
-  ...,
-  .input_form = c("rowmajor", "colmajor"),
-  vector_allows_empty_list = FALSE
+  .vector_allows_empty_list = FALSE,
+  vector_allows_empty_list = deprecated()
 )
 ```
 
@@ -39,35 +44,36 @@ tspec_row(
 
 - ...:
 
-  Column specification created by `tib_*()` or `tspec_*()`.
+  Column specifications created by `tib_*()` or `tspec_*()`. If the dots
+  are named, the name will be used for the resulting column. Otherwise,
+  the name of the input will be used for the column name.
 
 - .input_form:
 
-  The input form of data frame like lists. Can be one of:
+  The input form of data-frame-like lists. Can be one of:
 
-  - `"rowmajor"`: The default. The data frame is formed by a list of
-    rows.
+  - `"rowmajor"`: The default. The input is a named list of rows.
 
-  - `"colmajor"`: The data frame is a named list of columns.
+  - `"colmajor"`: The input is a named list of columns.
 
 - .names_to:
 
-  A string giving the name of the column which will contain the names of
-  elements of the object list. If `NULL`, the default, no name column is
-  created
+  A string giving the name of the column in the output which will
+  contain the names of top-level elements of the input named list. If
+  `NULL`, the default, no name column is created.
 
-- vector_allows_empty_list:
+- .vector_allows_empty_list, vector_allows_empty_list:
 
-  Should empty lists for `input_form = "vector"` be accepted and treated
-  as empty vector?
+  Should empty lists for columns with `.input_form = "vector"` be
+  accepted and treated as empty vectors?
 
 - .children:
 
-  A string giving the name of field that contains the children.
+  A string giving the name of the field that contains the children.
 
 - .children_to:
 
-  A string giving the column name to store the children.
+  A string giving the column name in which to store the children.
 
 ## Value
 
@@ -75,8 +81,8 @@ A tibblify specification.
 
 ## Details
 
-In column major format all fields are required, regardless of the
-`required` argument.
+In column-major format, all fields are required, regardless of the
+`.required` argument.
 
 ## Examples
 
@@ -92,7 +98,19 @@ tspec_df(
 #>   tib_chr_vec("aliases"),
 #> )
 
-# To create multiple columns of the same type use the bang-bang-bang (!!!)
+# Equivalent to
+tspec_df(
+  tib_int("id"),
+  tib_chr("name"),
+  tib_chr_vec("aliases")
+)
+#> tspec_df(
+#>   tib_int("id"),
+#>   tib_chr("name"),
+#>   tib_chr_vec("aliases"),
+#> )
+
+# To create multiple columns of the same type use the bang-bang-bang (`!!!`)
 # operator together with `purrr::map()`
 tspec_df(
   !!!purrr::map(purrr::set_names(c("id", "age")), tib_int),

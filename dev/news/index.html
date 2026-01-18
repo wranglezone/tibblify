@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +45,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="tibblify-031">tibblify 0.3.1<a class="anchor" aria-label="anchor" href="#tibblify-031"></a></h2><p class="text-muted">CRAN release: 2024-01-11</p>
 <ul><li><p>New <code><a href="../reference/parse_openapi_spec.html">parse_openapi_spec()</a></code> and <code><a href="../reference/parse_openapi_spec.html">parse_openapi_schema()</a></code> to convert an OpenAPI specification to a tibblify specification.</p></li>
-<li><p>Fix ptype of a <code><a href="../reference/tib_scalar.html">tib_vector()</a></code> inside a <code><a href="../reference/tib_scalar.html">tib_df()</a></code>.</p></li>
-<li><p>New <code><a href="../reference/unpack_tspec.html">unpack_tspec()</a></code> to unpack the elements of <code><a href="../reference/tib_scalar.html">tib_row()</a></code> fields (<a href="https://github.com/wranglezone/tibblify/issues/165" class="external-link">#165</a>).</p></li>
+<li><p>Fix ptype of a <code><a href="../reference/tib_spec.html">tib_vector()</a></code> inside a <code><a href="../reference/tib_spec.html">tib_df()</a></code>.</p></li>
+<li><p>New <code><a href="../reference/unpack_tspec.html">unpack_tspec()</a></code> to unpack the elements of <code><a href="../reference/tib_spec.html">tib_row()</a></code> fields (<a href="https://github.com/wranglezone/tibblify/issues/165" class="external-link">#165</a>).</p></li>
 <li><p>Improved printing of lists parsed with <code><a href="../reference/tspec_df.html">tspec_object()</a></code>.</p></li>
 <li><p>Improved performance of the <code>tspec()</code> family.</p></li>
 <li><p>Improved guessing.</p></li>
@@ -55,14 +55,14 @@
 <h2 class="pkg-version" data-toc-text="0.3.0" id="tibblify-030">tibblify 0.3.0<a class="anchor" aria-label="anchor" href="#tibblify-030"></a></h2><p class="text-muted">CRAN release: 2022-11-16</p>
 <ul><li><p>In column major format all fields are required.</p></li>
 <li><p>Fixed a memory leak.</p></li>
-<li><p><code><a href="../reference/tib_scalar.html">tib_vector()</a></code> is now uses less memory and is faster.</p></li>
-<li><p><code>tspec_*()</code>, <code><a href="../reference/tib_scalar.html">tib_df()</a></code>, and <code><a href="../reference/tib_scalar.html">tib_row()</a></code> now discard <code>NULL</code> in <code>...</code>. This makes it easier to add a field conditionally with, for example <code>tspec_df(if (x) tib_int("a"))</code>.</p></li>
+<li><p><code><a href="../reference/tib_spec.html">tib_vector()</a></code> is now uses less memory and is faster.</p></li>
+<li><p><code>tspec_*()</code>, <code><a href="../reference/tib_spec.html">tib_df()</a></code>, and <code><a href="../reference/tib_spec.html">tib_row()</a></code> now discard <code>NULL</code> in <code>...</code>. This makes it easier to add a field conditionally with, for example <code>tspec_df(if (x) tib_int("a"))</code>.</p></li>
 <li>
-<p><code><a href="../reference/tib_scalar.html">tib_variant()</a></code> and <code><a href="../reference/tib_scalar.html">tib_vector()</a></code> give you more control for transforming:</p>
+<p><code><a href="../reference/tib_spec.html">tib_variant()</a></code> and <code><a href="../reference/tib_spec.html">tib_vector()</a></code> give you more control for transforming:</p>
 <ul><li><p><code>transform</code> is now applied to the whole vector.</p></li>
 <li><p>There is a new <code>elt_transform</code> argument that is applied to every element.</p></li>
 </ul></li>
-<li><p>New <code><a href="../reference/tspec_df.html">tspec_recursive()</a></code> and <code><a href="../reference/tib_scalar.html">tib_recursive()</a></code> to parse tree like structure, e.g. a directory structure with its children.</p></li>
+<li><p>New <code><a href="../reference/tspec_df.html">tspec_recursive()</a></code> and <code><a href="../reference/tib_spec.html">tib_recursive()</a></code> to parse tree like structure, e.g. a directory structure with its children.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="tibblify-020">tibblify 0.2.0<a class="anchor" aria-label="anchor" href="#tibblify-020"></a></h2><p class="text-muted">CRAN release: 2022-07-14</p>
@@ -78,7 +78,7 @@
 <li>new specs <code><a href="../reference/tspec_df.html">tspec_object()</a></code> and <code><a href="../reference/tspec_df.html">tspec_row()</a></code>
 </li>
 <li>
-<code>lcol_int()</code> to <code><a href="../reference/tib_scalar.html">tib_int()</a></code> etc</li>
+<code>lcol_int()</code> to <code><a href="../reference/tib_spec.html">tib_int()</a></code> etc</li>
 </ul></li>
 <li><p><code><a href="../reference/tspec_df.html">tspec_df()</a></code> gains an argument <code>.names_to</code> to store the names of a recordlist in a column.</p></li>
 <li><p>Added <code><a href="../reference/untibblify.html">untibblify()</a></code> to turn a tibble into a nested list, i.e. to reverse the action of <code><a href="../reference/tibblify.html">tibblify()</a></code>.</p></li>

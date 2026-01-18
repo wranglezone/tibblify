@@ -1,4 +1,4 @@
-# GitHub Repositories
+# GitHub repositories
 
 A dataset containing some basic information about some GitHub
 repositories.

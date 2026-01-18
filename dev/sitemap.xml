@@ -11,6 +11,8 @@
 <url><loc>https://tibblify.wrangle.zone/dev/authors.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/index.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/news/index.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-shared-params-tib.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-shared-params.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/formatting.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/get_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/gh_repos.html</loc></url>
@@ -23,7 +25,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/politicians.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/reexports.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/should_inform_unspecified.html</loc></url>
-<url><loc>https://tibblify.wrangle.zone/dev/reference/tib_scalar.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/tib_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/tibblify-package.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/tibblify.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/tspec_combine.html</loc></url>

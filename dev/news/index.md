@@ -20,14 +20,14 @@ CRAN release: 2024-01-11
   to convert an OpenAPI specification to a tibblify specification.
 
 - Fix ptype of a
-  [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   inside a
-  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md).
+  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 - New
   [`unpack_tspec()`](https://tibblify.wrangle.zone/dev/reference/unpack_tspec.md)
   to unpack the elements of
-  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   fields ([\#165](https://github.com/wranglezone/tibblify/issues/165)).
 
 - Improved printing of lists parsed with
@@ -45,19 +45,19 @@ CRAN release: 2022-11-16
 
 - Fixed a memory leak.
 
-- [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+- [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   is now uses less memory and is faster.
 
 - `tspec_*()`,
-  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md),
+  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md),
   and
-  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   now discard `NULL` in `...`. This makes it easier to add a field
   conditionally with, for example `tspec_df(if (x) tib_int("a"))`.
 
-- [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+- [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   and
-  [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   give you more control for transforming:
 
   - `transform` is now applied to the whole vector.
@@ -68,7 +68,7 @@ CRAN release: 2022-11-16
 - New
   [`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
   and
-  [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+  [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
   to parse tree like structure, e.g. a directory structure with its
   children.
 
@@ -94,7 +94,7 @@ Major rewrite of the tibblify package with lots of benefits:
     and
     [`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
   - `lcol_int()` to
-    [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_scalar.md)
+    [`tib_int()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
     etc
 
 - [`tspec_df()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
