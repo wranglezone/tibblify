@@ -50,14 +50,14 @@ tspec_combine <- function(...) {
 
 check_tspec_combine_dots <- function(..., .call = caller_env()) {
   spec_list <- list2(...)
-  bad_idx <- purrr::detect_index(spec_list, ~ !is_tspec(.x))
+  bad_idx <- purrr::detect_index(spec_list, ~ !.is_tspec(.x))
   if (bad_idx != 0) {
     cls1 <- class(spec_list[[bad_idx]])[[1]]
     msg <- c(
       "Every element of {.arg ...} must be a tibblify spec.",
       x = "Element {bad_idx} has class {.cls {cls1}}."
     )
-    cli::cli_abort(msg, .call = .call)
+    cli::cli_abort(msg, call = .call)
   }
 
   spec_list
@@ -103,15 +103,15 @@ tib_combine <- function(tib_list, name, call) {
   key <- tib_combine_key(tib_list, name, call)
 
   if (type == "unspecified") {
-    return(tib_unspecified(key, required = required))
+    return(tib_unspecified(key, .required = required))
   }
 
   if (type == "variant") {
     out <- tib_variant(
       key,
-      required = required,
-      fill = tib_combine_fill(tib_list, type, NULL, call),
-      transform = tib_combine_transform(tib_list, call)
+      .required = required,
+      .fill = tib_combine_fill(tib_list, type, NULL, call),
+      .transform = tib_combine_transform(tib_list, call)
     )
     return(out)
   }
@@ -122,17 +122,17 @@ tib_combine <- function(tib_list, name, call) {
     transform <- tib_combine_transform(tib_list, call)
 
     args <- list(
-      key = key,
-      ptype = ptype,
-      required = required,
-      fill = fill,
-      transform = transform
+      .key = key,
+      .ptype = ptype,
+      .required = required,
+      .fill = fill,
+      .transform = transform
     )
 
     if (type == "scalar") {
       return(exec(tib_scalar, !!!args))
     } else {
-      args$input_form <- tib_combine_input_form(tib_list, call)
+      args$.input_form <- tib_combine_input_form(tib_list, call)
       return(exec(tib_vector, !!!args))
     }
   }
@@ -199,7 +199,7 @@ tib_combine_key <- function(tib_list, name, call) {
 }
 
 tib_combine_required <- function(tib_list) {
-  null_idx <- purrr::detect_index(tib_list, function(x) is_null(x))
+  null_idx <- purrr::detect_index(tib_list, function(x) is.null(x))
   if (null_idx != 0) {
     return(FALSE)
   }
@@ -269,7 +269,7 @@ tib_combine_fill <- function(tib_list, type, ptype, call) {
 
   fill_value <- fill_values[[1]]
 
-  if (is_null(fill_value)) {
+  if (is.null(fill_value)) {
     fill_value
   } else {
     vec_cast(fill_value, ptype)

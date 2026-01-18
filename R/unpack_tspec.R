@@ -59,7 +59,7 @@ unpack_tspec <- function(
   names_repair <- arg_match(names_repair)
   check_function(names_clean, allow_null = TRUE)
 
-  fields_to_unpack <- check_unpack_cols(fields, spec)
+  fields_to_unpack <- .check_unpack_cols(fields, spec)
   error_call <- current_call()
 
   spec$fields <- with_indexed_errors(
@@ -84,7 +84,7 @@ unpack_tspec <- function(
     message = "In field {.field {cnd$name}}."
   )
 
-  spec$fields <- unchop_fields(
+  spec$fields <- .unchop_fields(
     spec$fields,
     names_repair,
     names_clean,
@@ -93,7 +93,7 @@ unpack_tspec <- function(
   spec
 }
 
-check_unpack_cols <- function(fields, spec, error_call = caller_env()) {
+.check_unpack_cols <- function(fields, spec, error_call = caller_env()) {
   known_fields <- names(spec$fields)
   fields <- fields %||% known_fields
   missing_fields <- setdiff(fields, known_fields)
@@ -133,7 +133,7 @@ unpack_field <- function(
       }
     )
 
-    field_spec$fields <- unchop_fields(
+    field_spec$fields <- .unchop_fields(
       field_spec$fields,
       names_repair,
       names_clean,
@@ -158,7 +158,7 @@ unpack_field <- function(
   }
 }
 
-unchop_fields <- function(fields, names_repair, names_clean, error_call) {
+.unchop_fields <- function(fields, names_repair, names_clean, error_call) {
   fields <- vctrs::list_unchop(fields, name_spec = "{inner}")
   nms <- names(fields)
   nms <- vctrs::vec_as_names(nms, repair = names_repair, call = error_call)

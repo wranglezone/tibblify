@@ -50,43 +50,43 @@
 ---
 
     Code
-      print(tib_int("a", fill = NA_integer_))
+      print(tib_int("a", .fill = NA_integer_))
     Output
       tib_int("a")
 
 ---
 
     Code
-      print(tib_int("a", fill = 1))
+      print(tib_int("a", .fill = 1))
     Output
       tib_int("a", fill = 1L)
 
 ---
 
     Code
-      print(tib_int("a", transform = as.integer))
+      print(tib_int("a", .transform = as.integer))
     Output
       tib_int("a", transform = .Primitive("as.integer"))
 
 ---
 
     Code
-      print(tib_int("a", fill = NA_integer_, transform = as.integer))
+      print(tib_int("a", .fill = NA_integer_, .transform = as.integer))
     Output
       tib_int("a", transform = .Primitive("as.integer"))
 
 ---
 
     Code
-      print(tib_scalar("a", ptype = new_difftime(units = "mins")))
+      print(tib_scalar("a", .ptype = new_difftime(units = "mins")))
     Output
       tib_scalar("a", ptype = vctrs::new_duration())
 
 ---
 
     Code
-      print(tib_row("a", x = tib_int("x"), y = tib_dbl("y", fill = NA_real_), z = tib_chr(
-        "z", fill = "abc")))
+      print(tib_row("a", x = tib_int("x"), y = tib_dbl("y", .fill = NA_real_), z = tib_chr(
+        "z", .fill = "abc")))
     Output
       tib_row(
         "a",
@@ -98,7 +98,7 @@
 ---
 
     Code
-      tib_int(key = "x", ptype_inner = character(), fill = "a")
+      tib_int(.key = "x", .ptype_inner = character(), .fill = "a")
     Output
       tib_int(
         "x",
@@ -110,7 +110,7 @@
 
     Code
       print(tib_row("path", a_long_name = tib_dbl("a looooooooooooooooooooong name",
-        fill = 1)), width = 60)
+        .fill = 1)), width = 60)
     Output
       tib_row(
         "path",
@@ -124,7 +124,7 @@
 
     Code
       print(tib_row("path", a_long_name = tib_dbl("a looooooooooooooooooooong name",
-        fill = 1)), width = 69)
+        .fill = 1)), width = 69)
     Output
       tib_row(
         "path",
@@ -141,15 +141,15 @@
 ---
 
     Code
-      print(tib_vector("a", ptype = vctrs::new_duration()))
+      print(tib_vector("a", .ptype = vctrs::new_duration()))
     Output
       tib_vector("a", ptype = vctrs::new_duration())
 
 ---
 
     Code
-      print(tib_vector("a", ptype = vctrs::new_duration(), input_form = "object",
-      values_to = "vals", names_to = "names"))
+      print(tib_vector("a", .ptype = vctrs::new_duration(), .input_form = "object",
+      .values_to = "vals", .names_to = "names"))
     Output
       tib_vector(
         "a",
@@ -162,14 +162,14 @@
 ---
 
     Code
-      print(tib_int_vec("a", fill = 1:2))
+      print(tib_int_vec("a", .fill = 1:2))
     Output
       tib_int_vec("a", fill = 1:2)
 
 ---
 
     Code
-      tib_int_vec(key = "x", ptype_inner = character(), fill = 1:2)
+      tib_int_vec(.key = "x", .ptype_inner = character(), .fill = 1:2)
     Output
       tib_int_vec(
         "x",
@@ -207,7 +207,7 @@
     Output
       tib_chr_date("a")
     Code
-      tib_chr_date("a", required = FALSE, fill = "2022-01-01", format = "%Y")
+      tib_chr_date("a", .required = FALSE, .fill = "2022-01-01", .format = "%Y")
     Output
       tib_chr_date(
         "a",
@@ -223,7 +223,8 @@
     Output
       tib_chr_date_vec("a")
     Code
-      tib_chr_date_vec("a", required = FALSE, fill = as.Date("2022-01-01"), format = "%Y")
+      tib_chr_date_vec("a", .required = FALSE, .fill = as.Date("2022-01-01"),
+      .format = "%Y")
     Output
       tib_chr_date_vec(
         "a",
@@ -235,7 +236,7 @@
 # format for tib_row works
 
     Code
-      print(tib_row("formats", text = tib_chr("text", fill = NA_character_)))
+      print(tib_row("formats", text = tib_chr("text", .fill = NA_character_)))
     Output
       tib_row(
         "formats",
@@ -260,12 +261,12 @@
         "name"), entity_type = tib_chr("entity_type"), catno = tib_chr("catno"),
       resource_url = tib_chr("resource_url"), id = tib_int("id"), entity_type_name = tib_chr(
         "entity_type_name")), year = tib_int("year"), master_url = tib_chr(
-        "master_url", fill = NA), artists = tib_df("artists", join = tib_chr("join"),
+        "master_url", .fill = NA), artists = tib_df("artists", join = tib_chr("join"),
       name = tib_chr("name"), anv = tib_chr("anv"), tracks = tib_chr("tracks"), role = tib_chr(
         "role"), resource_url = tib_chr("resource_url"), id = tib_int("id")), id = tib_int(
         "id"), thumb = tib_chr("thumb"), title = tib_chr("title"), formats = tib_df(
-        "formats", descriptions = tib_chr_vec("descriptions", fill = NULL), text = tib_chr(
-          "text", fill = NA), name = tib_chr("name"), qty = tib_chr("qty")),
+        "formats", descriptions = tib_chr_vec("descriptions", .fill = NULL), text = tib_chr(
+          "text", .fill = NA), name = tib_chr("name"), qty = tib_chr("qty")),
       cover_image = tib_chr("cover_image"), resource_url = tib_chr("resource_url"),
       master_id = tib_int("master_id")))
     Output
@@ -317,7 +318,7 @@
 ---
 
     Code
-      tib_variant("a", fill = tibble(a = 1:2))
+      tib_variant("a", .fill = tibble(a = 1:2))
     Output
       tib_variant(
         "a",
@@ -327,14 +328,14 @@
 ---
 
     Code
-      tib_variant("a", elt_transform = as.character)
+      tib_variant("a", .elt_transform = as.character)
     Output
       tib_variant("a", elt_transform = .Primitive("as.character"))
 
 # format for tib_df works
 
     Code
-      print(tib_df("formats", text = tib_chr("text", fill = NA_character_)))
+      print(tib_df("formats", text = tib_chr("text", .fill = NA_character_)))
     Output
       tib_df(
         "formats",
@@ -411,11 +412,11 @@
 # special ptypes correctly formatted
 
     Code
-      format(tib_scalar("a", ptype = character(), ptype_inner = Sys.Date()))
+      format(tib_scalar("a", .ptype = character(), .ptype_inner = Sys.Date()))
     Output
       [1] "tib_chr(\"a\", ptype_inner = vctrs::new_date())"
     Code
-      format(tib_scalar("a", ptype = character(), ptype_inner = Sys.time()))
+      format(tib_scalar("a", .ptype = character(), .ptype_inner = Sys.time()))
     Output
       [1] "tib_chr(\"a\", ptype_inner = vctrs::new_datetime(tzone = \"\"))"
 

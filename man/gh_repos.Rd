@@ -3,7 +3,7 @@
 \docType{data}
 \name{gh_repos}
 \alias{gh_repos}
-\title{GitHub Repositories}
+\title{GitHub repositories}
 \format{
 A list of lists.
 }

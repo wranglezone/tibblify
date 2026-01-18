@@ -16,7 +16,7 @@
     Code
       (expect_error(unnest_tree(df, id_col = 1:2)))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-invalid_column_selection>
       Error in `eval_pull()`:
       ! `id_col` must select 1 column, not 2.
     Code
@@ -30,7 +30,7 @@
     Code
       (expect_error(unnest_tree(df, children, children)))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-args_same_value>
       Error in `unnest_tree()`:
       ! `child_col` must be different from `id_col`.
     Code
@@ -54,7 +54,7 @@
     Code
       (expect_error(unnest_tree(df, id, children, parent_to = "level")))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-args_same_value>
       Error in `unnest_tree()`:
       ! `parent_to` must be different from `level_to`.
     Code
@@ -78,13 +78,13 @@
     Code
       (expect_error(unnest_tree(df, id, children, ancestors_to = "level")))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-args_same_value>
       Error in `unnest_tree()`:
       ! `ancestors_to` must be different from `level_to`.
     Code
       (expect_error(unnest_tree(df, id, children, ancestors_to = "parent")))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-args_same_value>
       Error in `unnest_tree()`:
       ! `ancestors_to` must be different from `parent_to`.
     Code

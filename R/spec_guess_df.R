@@ -21,7 +21,7 @@ guess_tspec_df <- function(
     fields <- purrr::imap(x, col_to_spec, empty_list_unspecified)
     spec <- tspec_df(
       !!!fields,
-      vector_allows_empty_list = is_true(getOption(
+      .vector_allows_empty_list = is_true(getOption(
         "tibblify.used_empty_list_arg"
       ))
     )
@@ -89,7 +89,7 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
     }
 
     ptype <- ptype_common$ptype
-    if (is_null(ptype)) {
+    if (is.null(ptype)) {
       # this means that every element is `NULL`
       return(tib_unspecified(name))
     }

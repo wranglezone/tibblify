@@ -1,4 +1,4 @@
-#' Guess the `tibblify()` Specification
+#' Guess the `tibblify()` specification
 #'
 #' Use `guess_tspec()` if you don't know the input type.
 #' Use `guess_tspec_df()` if the input is a data frame or an object list.
@@ -113,8 +113,9 @@ guess_tspec_list <- function(
 
 #' Determine whether to inform about unspecified fields in spec
 #'
+#' @description
 #' Wrapper around `getOption("tibblify.show_unspecified")` that implements some
-#' #' fall back logic if the option is unset. This returns:
+#' fall back logic if the option is unset. This returns:
 #'
 #' * `TRUE` if the option is set to `TRUE`
 #' * `FALSE` if the option is set to `FALSE`

@@ -11,9 +11,7 @@ should_inform_unspecified()
 }
 \description{
 Wrapper around \code{getOption("tibblify.show_unspecified")} that implements some
-#' fall back logic if the option is unset. This returns:
-}
-\details{
+fall back logic if the option is unset. This returns:
 \itemize{
 \item \code{TRUE} if the option is set to \code{TRUE}
 \item \code{FALSE} if the option is set to \code{FALSE}

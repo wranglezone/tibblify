@@ -96,12 +96,12 @@ unnest_tree <- function(
     # we could also directly repeat the parent ids but it is a bit more efficient
     # to store the parent ids and level sizes in a list and expand + repeat them
     # in the end
-    if (!is_null(parent_to)) {
+    if (!is.null(parent_to)) {
       level_sizes[[level]] <- ns
       level_parent_ids[[level]] <- parent_ids
     }
 
-    if (!is_null(ancestors_to)) {
+    if (!is.null(ancestors_to)) {
       if (level > 1L) {
         ancestors_simple <- purrr::map2(
           cur_ancestors,
@@ -131,19 +131,19 @@ unnest_tree <- function(
 
   out <- vctrs::vec_rbind(!!!level_data, .ptype = out_ptype)
 
-  if (!is_null(level_to)) {
+  if (!is.null(level_to)) {
     times <- list_sizes(level_data)
     levels <- vctrs::vec_seq_along(level_data)
     out[[level_to]] <- vctrs::vec_rep_each(levels, times)
   }
 
-  if (!is_null(parent_to)) {
+  if (!is.null(parent_to)) {
     parent_ids <- vctrs::list_unchop(level_parent_ids, ptype = out[[id_col]])
     times <- vctrs::list_unchop(level_sizes, ptype = integer())
     out[[parent_to]] <- vctrs::vec_rep_each(parent_ids, times)
   }
 
-  if (!is_null(ancestors_to)) {
+  if (!is.null(ancestors_to)) {
     out[[ancestors_to]] <- vctrs::list_unchop(level_ancestors)
   }
 
@@ -152,7 +152,7 @@ unnest_tree <- function(
 }
 
 unclass_list_of <- function(x, child_col, call = caller_env()) {
-  if (is_null(x)) {
+  if (is.null(x)) {
     return(NULL)
   }
 
@@ -178,9 +178,10 @@ unclass_list_of <- function(x, child_col, call = caller_env()) {
 }
 
 check_unnest_level_to <- function(level_to, data, call = caller_env()) {
-  if (!is_null(level_to)) {
+  if (!is.null(level_to)) {
     level_to <- vctrs::vec_cast(level_to, character(), call = call)
-    vctrs::vec_assert(level_to, size = 1L, call = call)
+    obj_check_vector(level_to, call = call)
+    vec_check_size(level_to, size = 1L, call = call)
     check_col_new(data, level_to, call = call)
   }
 
@@ -193,9 +194,10 @@ check_unnest_parent_to <- function(
   level_to,
   call = caller_env()
 ) {
-  if (!is_null(parent_to)) {
+  if (!is.null(parent_to)) {
     parent_to <- vctrs::vec_cast(parent_to, character(), call = call)
-    vctrs::vec_assert(parent_to, size = 1L, call = call)
+    obj_check_vector(parent_to, call = call)
+    vec_check_size(parent_to, size = 1L, call = call)
     check_arg_different(parent_to, level_to, call = call)
     check_col_new(data, parent_to, call = call)
   }
@@ -210,9 +212,10 @@ check_unnest_ancestors_to <- function(
   parent_to,
   call = caller_env()
 ) {
-  if (!is_null(ancestors_to)) {
+  if (!is.null(ancestors_to)) {
     ancestors_to <- vctrs::vec_cast(ancestors_to, character(), call = call)
-    vctrs::vec_assert(ancestors_to, size = 1L, call = call)
+    obj_check_vector(ancestors_to, call = call)
+    vec_check_size(ancestors_to, size = 1L, call = call)
     check_arg_different(ancestors_to, level_to, parent_to, call = call)
     check_col_new(data, ancestors_to, call = call)
   }
