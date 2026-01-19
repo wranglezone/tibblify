@@ -115,13 +115,7 @@ Use `vector_allows_empty_list = TRUE` in `tspec_*()` so that they are
 converted to an empty vector instead.
 
 ``` r
-tibblify(x, tspec_df(tib_int_vec("a"), vector_allows_empty_list = TRUE))$a
-#> Warning: The `vector_allows_empty_list` argument of `tspec_df()` is deprecated as of
-#> tibblify 0.4.0.
-#> ℹ Please use the `.vector_allows_empty_list` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
+tibblify(x, tspec_df(tib_int_vec("a"), .vector_allows_empty_list = TRUE))$a
 #> <list_of<integer>[2]>
 #> [[1]]
 #> [1] 1 2
@@ -166,18 +160,12 @@ tibblify(x, tspec_df(tib_int_vec("a")))
 #> ! Can't convert `<list>` <list> to <integer>.
 ```
 
-Use `input_form = "scalar_list"` in
+Use `.input_form = "scalar_list"` in
 [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 to parse them:
 
 ``` r
-tibblify(x, tspec_df(tib_int_vec("a", input_form = "scalar_list")))$a
-#> Warning: The `input_form` argument of `tib_int_vec()` is deprecated as of tibblify
-#> 0.4.0.
-#> ℹ Please use the `.input_form` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
+tibblify(x, tspec_df(tib_int_vec("a", .input_form = "scalar_list")))$a
 #> <list_of<integer>[2]>
 #> [[1]]
 #> [1] 1 2
@@ -210,30 +198,20 @@ str(x)
 #>   .. ..$ b: int 3
 ```
 
-Use `input_form = "object"` in
+Use `.input_form = "object"` in
 [`tib_vector()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
-to parse them. To store the names use the `names_to` and `values_to`
+to parse them. To store the names use the `.names_to` and `.values_to`
 arguments.
 
 ``` r
 spec <- tspec_df(
   tib_int_vec(
     "a",
-    input_form = "object",
-    names_to = "name",
-    values_to = "value"
+    .input_form = "object",
+    .names_to = "name",
+    .values_to = "value"
   )
 )
-#> Warning: The `values_to` argument of `tib_int_vec()` is deprecated as of tibblify 0.4.0.
-#> ℹ Please use the `.values_to` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: The `names_to` argument of `tib_int_vec()` is deprecated as of tibblify 0.4.0.
-#> ℹ Please use the `.names_to` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 
 tibblify(x, spec)$a[[1]]
 #> # A tibble: 2 × 2

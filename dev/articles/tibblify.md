@@ -250,20 +250,9 @@ tibblify(
   x,
   tspec_df(
     tib_int("id"),
-    tib_scalar("duration", ptype = vctrs::new_duration())
+    tib_scalar("duration", .ptype = vctrs::new_duration())
   )
 )
-#> Warning: The `ptype` argument of `tib_scalar()` is deprecated as of tibblify 0.4.0.
-#> ℹ Please use the `.ptype` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: The `ptype_inner` argument of `tib_scalar()` is deprecated as of tibblify
-#> 0.4.0.
-#> ℹ Please use the `.ptype_inner` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 #> # A tibble: 2 × 2
 #>      id duration
 #>   <int> <drtn>  
@@ -432,18 +421,13 @@ tibblify(x, spec)
 #> ℹ Use `required = FALSE` if the field is optional.
 ```
 
-You can mark a field as optional with the argument `required = FALSE`.
+You can mark a field as optional with the argument `.required = FALSE`.
 
 ``` r
 spec <- tspec_df(
   x = tib_int("x"),
-  y = tib_chr("y", required = FALSE)
+  y = tib_chr("y", .required = FALSE)
 )
-#> Warning: The `required` argument of `tib_chr()` is deprecated as of tibblify 0.4.0.
-#> ℹ Please use the `.required` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 
 tibblify(x, spec)
 #> # A tibble: 2 × 2
@@ -453,18 +437,13 @@ tibblify(x, spec)
 #> 2     2 NA
 ```
 
-You can specify the value to use with the `fill` argument.
+You can specify the value to use with the `.fill` argument.
 
 ``` r
 spec <- tspec_df(
   x = tib_int("x"),
-  y = tib_chr("y", required = FALSE, fill = "missing")
+  y = tib_chr("y", .required = FALSE, .fill = "missing")
 )
-#> Warning: The `fill` argument of `tib_chr()` is deprecated as of tibblify 0.4.0.
-#> ℹ Please use the `.fill` argument instead.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 
 tibblify(x, spec)
 #> # A tibble: 2 × 2

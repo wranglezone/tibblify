@@ -8,6 +8,15 @@
   [\#200](https://github.com/wranglezone/tibblify/issues/200),
   [@jonthegeek](https://github.com/jonthegeek) and
   [@mgirlich](https://github.com/mgirlich)).
+- The underlying C implementation has been updated to better comply with
+  R’s C API. We also fixed various bugs during this update
+  ([\#203](https://github.com/wranglezone/tibblify/issues/203),
+  [\#204](https://github.com/wranglezone/tibblify/issues/204),
+  [\#222](https://github.com/wranglezone/tibblify/issues/222)).
+- Documentation of all functions has been updated for clarity
+  ([\#228](https://github.com/wranglezone/tibblify/issues/228),
+  [\#245](https://github.com/wranglezone/tibblify/issues/245),
+  [\#246](https://github.com/wranglezone/tibblify/issues/246)).
 
 ## tibblify 0.3.1
 

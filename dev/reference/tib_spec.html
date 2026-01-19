@@ -9,7 +9,7 @@ object."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -331,11 +331,12 @@ object.</p>
 
 
 <dl><dt id="arg--key-key">.key, key<a class="anchor" aria-label="anchor" href="#arg--key-key"></a></dt>
-<dd><p>The path to the field in the object, as a character vector.</p></dd>
+<dd><p>(<code>character</code>) The path of names to the field in the object.</p></dd>
 
 
 <dt id="arg--ptype-ptype">.ptype, ptype<a class="anchor" aria-label="anchor" href="#arg--ptype-ptype"></a></dt>
-<dd><p>A prototype of the desired output type of the field.</p></dd>
+<dd><p>(<code>vector(0)</code>) A prototype of the desired output type of the
+field.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -343,63 +344,63 @@ object.</p>
 
 
 <dt id="arg--required-required">.required, required<a class="anchor" aria-label="anchor" href="#arg--required-required"></a></dt>
-<dd><p>Throw an error if the field does not exist?</p></dd>
+<dd><p>(<code>logical(1)</code>) Throw an error if the field does not exist?</p></dd>
 
 
 <dt id="arg--fill-fill">.fill, fill<a class="anchor" aria-label="anchor" href="#arg--fill-fill"></a></dt>
-<dd><p>Optionally, a value to use if the field does not exist.</p></dd>
+<dd><p>(<code>vector</code> or <code>NULL</code>) Optionally, a value to use if the field
+does not exist.</p></dd>
 
 
 <dt id="arg--ptype-inner-ptype-inner">.ptype_inner, ptype_inner<a class="anchor" aria-label="anchor" href="#arg--ptype-inner-ptype-inner"></a></dt>
-<dd><p>A prototype of the field.</p></dd>
+<dd><p>(<code>vector(0)</code>) A prototype of the input field.</p></dd>
 
 
 <dt id="arg--transform-transform">.transform, transform<a class="anchor" aria-label="anchor" href="#arg--transform-transform"></a></dt>
-<dd><p>A function to apply to the whole vector after casting to
-<code>.ptype_inner</code>.</p></dd>
+<dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to the whole
+vector after casting to <code>.ptype_inner</code>.</p></dd>
 
 
 <dt id="arg--elt-transform-elt-transform">.elt_transform, elt_transform<a class="anchor" aria-label="anchor" href="#arg--elt-transform-elt-transform"></a></dt>
-<dd><p>A function to apply to each element before casting to
-<code>.ptype_inner</code>.</p></dd>
+<dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to each
+element before casting to <code>.ptype_inner</code>.</p></dd>
 
 
 <dt id="arg--input-form-input-form">.input_form, input_form<a class="anchor" aria-label="anchor" href="#arg--input-form-input-form"></a></dt>
-<dd><p>A string that describes the structure of the field. Can be
+<dd><p>(<code>character(1)</code>) The structure of the input field. Can be
 one of:</p><ul><li><p><code>"vector"</code>: The field is a vector, e.g. <code>c(1, 2, 3)</code>.</p></li>
 <li><p><code>"scalar_list"</code>: The field is a list of scalars, e.g. <code>list(1, 2, 3)</code>.</p></li>
-<li><p><code>"object"</code>: The field is a named list of scalars, e.g. <code>list(a = 1, b = 2, c = 3)</code>.</p></li>
+<li><p><code>"object"</code>: The field is a named list of scalars, e.g.
+<code>list(a = 1, b = 2, c = 3)</code>.</p></li>
 </ul></dd>
 
 
 <dt id="arg--values-to-values-to">.values_to, values_to<a class="anchor" aria-label="anchor" href="#arg--values-to-values-to"></a></dt>
-<dd><p>Can be one of the following:</p><ul><li><p><code>NULL</code>: the default. The field is converted to a <code>.ptype</code> vector.</p></li>
-<li><p>A string: The field is converted to a tibble and the values go into the
-specified column.</p></li>
-</ul></dd>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) For <code>NULL</code> (the default), the
+field is converted to a <code>.ptype</code> vector. If a string is provided, the field
+is converted to a tibble and the values go into the specified column.</p></dd>
 
 
 <dt id="arg--names-to-names-to">.names_to, names_to<a class="anchor" aria-label="anchor" href="#arg--names-to-names-to"></a></dt>
-<dd><p>What to do with the inner names of the object. Can be one
-of:</p><ul><li><p><code>NULL</code>: the default. The inner names of the field are not used.</p></li>
-<li><p>A string: This can only be used if 1) the input form is <code>"object"</code>
-or <code>"vector"</code> and 2) <code>.values_to</code> is a string. The inner names of the field
-will populate the specified column in the field's tibble.</p></li>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) What to do with the inner names
+of the object. Can be one of:</p><ul><li><p><code>NULL</code>: the default. The inner names of the field are not used.</p></li>
+<li><p>A string: Use only if the input form is <code>"object"</code> or <code>"vector"</code>, and <code>.values_to</code> is a string. The inner names of the field will populate the
+specified column in the field's tibble.</p></li>
 </ul></dd>
 
 
 <dt id="arg--format-format">.format, format<a class="anchor" aria-label="anchor" href="#arg--format-format"></a></dt>
-<dd><p>Optional, a string passed to the <code>format</code> argument of
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) Passed to the <code>format</code> argument of
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
 
 
 <dt id="arg--children">.children<a class="anchor" aria-label="anchor" href="#arg--children"></a></dt>
-<dd><p>A string giving the name of the field that contains the
+<dd><p>(<code>character(1)</code>) The name of the field that contains the
 children.</p></dd>
 
 
 <dt id="arg--children-to">.children_to<a class="anchor" aria-label="anchor" href="#arg--children-to"></a></dt>
-<dd><p>A string giving the column name in which to store the
+<dd><p>(<code>character(1)</code>) The column name in which to store the
 children.</p></dd>
 
 </dl></div>

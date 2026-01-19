@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -300,20 +300,9 @@ to specify the duration <code>ptype</code>.</p>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="../reference/tib_spec.html">tib_scalar</a></span><span class="op">(</span><span class="st">"duration"</span>, ptype <span class="op">=</span> <span class="fu">vctrs</span><span class="fu">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_date.html" class="external-link">new_duration</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/tib_spec.html">tib_scalar</a></span><span class="op">(</span><span class="st">"duration"</span>, .ptype <span class="op">=</span> <span class="fu">vctrs</span><span class="fu">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_date.html" class="external-link">new_duration</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `ptype` argument of `tib_scalar()` is deprecated as of tibblify 0.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.ptype` argument instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: The `ptype_inner` argument of `tib_scalar()` is deprecated as of tibblify</span></span>
-<span><span class="co">#&gt; 0.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.ptype_inner` argument instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
 <span><span class="co">#&gt;      id duration</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;drtn&gt;</span>  </span></span>
@@ -470,17 +459,12 @@ exists.</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Field <span style="color: #00BB00;">y</span> is required but does not exist in `x[[2]]`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `required = FALSE` if the field is optional.</span></span></code></pre></div>
 <p>You can mark a field as optional with the argument
-<code>required = FALSE</code>.</p>
+<code>.required = FALSE</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>,</span>
-<span>  y <span class="op">=</span> <span class="fu"><a href="../reference/tib_spec.html">tib_chr</a></span><span class="op">(</span><span class="st">"y"</span>, required <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="../reference/tib_spec.html">tib_chr</a></span><span class="op">(</span><span class="st">"y"</span>, .required <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `required` argument of `tib_chr()` is deprecated as of tibblify 0.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.required` argument instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">spec</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
@@ -488,18 +472,13 @@ exists.</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2 <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
-<p>You can specify the value to use with the <code>fill</code>
+<p>You can specify the value to use with the <code>.fill</code>
 argument.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>,</span>
-<span>  y <span class="op">=</span> <span class="fu"><a href="../reference/tib_spec.html">tib_chr</a></span><span class="op">(</span><span class="st">"y"</span>, required <span class="op">=</span> <span class="cn">FALSE</span>, fill <span class="op">=</span> <span class="st">"missing"</span><span class="op">)</span></span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="../reference/tib_spec.html">tib_chr</a></span><span class="op">(</span><span class="st">"y"</span>, .required <span class="op">=</span> <span class="cn">FALSE</span>, .fill <span class="op">=</span> <span class="st">"missing"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `fill` argument of `tib_chr()` is deprecated as of tibblify 0.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `.fill` argument instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">spec</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>

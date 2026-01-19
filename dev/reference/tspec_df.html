@@ -11,7 +11,7 @@ tspec_object() to specify how to convert an object to a list."><meta name="robot
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,36 +87,38 @@ tspec_object() to specify how to convert an object to a list."><meta name="robot
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Column specifications created by <code>tib_*()</code> or <code>tspec_*()</code>. If the
-dots are named, the name will be used for the resulting column. Otherwise,
-the name of the input will be used for the column name.</p></dd>
+<dd><p>(<code>tib_collector</code> or <code>tspec</code>) Column specifications created by
+<code>tib_*()</code> or <code>tspec_*()</code>. If the dots are named, the name will be used for
+the resulting column. Otherwise, the name of the input will be used for the
+column name.</p></dd>
 
 
 <dt id="arg--input-form">.input_form<a class="anchor" aria-label="anchor" href="#arg--input-form"></a></dt>
-<dd><p>The input form of data-frame-like lists. Can be one of:</p><ul><li><p><code>"rowmajor"</code>: The default. The input is a named list of rows.</p></li>
+<dd><p>(<code>character(1)</code>) The input form of data-frame-like lists.
+Can be one of:</p><ul><li><p><code>"rowmajor"</code>: The default. The input is a named list of rows.</p></li>
 <li><p><code>"colmajor"</code>: The input is a named list of columns.</p></li>
 </ul></dd>
 
 
 <dt id="arg--names-to">.names_to<a class="anchor" aria-label="anchor" href="#arg--names-to"></a></dt>
-<dd><p>A string giving the name of the column in the output which
-will contain the names of top-level elements of the input named list. If
-<code>NULL</code>, the default, no name column is created.</p></dd>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) The name of the column in the
+output which will contain the names of top-level elements of the input
+named list. If <code>NULL</code>, the default, no name column is created.</p></dd>
 
 
 <dt id="arg--vector-allows-empty-list-vector-allows-empty-list">.vector_allows_empty_list, vector_allows_empty_list<a class="anchor" aria-label="anchor" href="#arg--vector-allows-empty-list-vector-allows-empty-list"></a></dt>
-<dd><p>Should empty lists
-for columns with <code>.input_form = "vector"</code> be accepted and treated as empty
-vectors?</p></dd>
+<dd><p>(<code>logical(1)</code>)
+Should empty lists for columns with <code>.input_form = "vector"</code> be accepted
+and treated as empty vectors?</p></dd>
 
 
 <dt id="arg--children">.children<a class="anchor" aria-label="anchor" href="#arg--children"></a></dt>
-<dd><p>A string giving the name of the field that contains the
+<dd><p>(<code>character(1)</code>) The name of the field that contains the
 children.</p></dd>
 
 
 <dt id="arg--children-to">.children_to<a class="anchor" aria-label="anchor" href="#arg--children-to"></a></dt>
-<dd><p>A string giving the column name in which to store the
+<dd><p>(<code>character(1)</code>) The column name in which to store the
 children.</p></dd>
 
 </dl></div>

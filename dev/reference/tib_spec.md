@@ -289,11 +289,11 @@ tib_df(.key, ..., .required = TRUE, .names_to = NULL)
 
 - .key, key:
 
-  The path to the field in the object, as a character vector.
+  (`character`) The path of names to the field in the object.
 
 - .ptype, ptype:
 
-  A prototype of the desired output type of the field.
+  (`vector(0)`) A prototype of the desired output type of the field.
 
 - ...:
 
@@ -301,28 +301,30 @@ tib_df(.key, ..., .required = TRUE, .names_to = NULL)
 
 - .required, required:
 
-  Throw an error if the field does not exist?
+  (`logical(1)`) Throw an error if the field does not exist?
 
 - .fill, fill:
 
-  Optionally, a value to use if the field does not exist.
+  (`vector` or `NULL`) Optionally, a value to use if the field does not
+  exist.
 
 - .ptype_inner, ptype_inner:
 
-  A prototype of the field.
+  (`vector(0)`) A prototype of the input field.
 
 - .transform, transform:
 
-  A function to apply to the whole vector after casting to
-  `.ptype_inner`.
+  (`function` or `NULL`) A function to apply to the whole vector after
+  casting to `.ptype_inner`.
 
 - .elt_transform, elt_transform:
 
-  A function to apply to each element before casting to `.ptype_inner`.
+  (`function` or `NULL`) A function to apply to each element before
+  casting to `.ptype_inner`.
 
 - .input_form, input_form:
 
-  A string that describes the structure of the field. Can be one of:
+  (`character(1)`) The structure of the input field. Can be one of:
 
   - `"vector"`: The field is a vector, e.g. `c(1, 2, 3)`.
 
@@ -334,35 +336,33 @@ tib_df(.key, ..., .required = TRUE, .names_to = NULL)
 
 - .values_to, values_to:
 
-  Can be one of the following:
-
-  - `NULL`: the default. The field is converted to a `.ptype` vector.
-
-  - A string: The field is converted to a tibble and the values go into
-    the specified column.
+  (`character(1)` or `NULL`) For `NULL` (the default), the field is
+  converted to a `.ptype` vector. If a string is provided, the field is
+  converted to a tibble and the values go into the specified column.
 
 - .names_to, names_to:
 
-  What to do with the inner names of the object. Can be one of:
+  (`character(1)` or `NULL`) What to do with the inner names of the
+  object. Can be one of:
 
   - `NULL`: the default. The inner names of the field are not used.
 
-  - A string: This can only be used if 1) the input form is `"object"`
-    or `"vector"` and 2) `.values_to` is a string. The inner names of
-    the field will populate the specified column in the field's tibble.
+  - A string: Use only if the input form is `"object"` or `"vector"`,
+    and `.values_to` is a string. The inner names of the field will
+    populate the specified column in the field's tibble.
 
 - .format, format:
 
-  Optional, a string passed to the `format` argument of
+  (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
 
 - .children:
 
-  A string giving the name of the field that contains the children.
+  (`character(1)`) The name of the field that contains the children.
 
 - .children_to:
 
-  A string giving the column name in which to store the children.
+  (`character(1)`) The column name in which to store the children.
 
 ## Value
 

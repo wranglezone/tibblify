@@ -1,6 +1,10 @@
 # Unpack a tibblify specification
 
-Unpack a tibblify specification
+`tidyr::unpack()` makes data wider by expanding df-columns into
+individual columns. Analogously, unpacking a tibblify specification
+makes a specification which will result in a wider tibble by expanding
+[`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+specifications into their individual fields.
 
 ## Usage
 
@@ -16,14 +20,14 @@ unpack_tspec(
   names_clean = NULL
 )
 
-camel_case_to_snake_case(names)
+camel_case_to_snake_case(x)
 ```
 
 ## Arguments
 
 - spec:
 
-  A tibblify specification.
+  (`tspec`) A tibblify specification.
 
 - ...:
 
@@ -31,45 +35,44 @@ camel_case_to_snake_case(names)
 
 - fields:
 
-  A string of the fields to unpack.
+  (`character` or `NULL`) The fields to unpack. If `fields` is `NULL`
+  (default), all fields are unpacked.
 
 - recurse:
 
-  Should unpack recursively?
+  (`logical(1)`) Should fields inside other fields be unpacked?
 
 - names_sep:
 
-  If `NULL`, the default, the inner names of fields are used. If a
-  string, the outer and inner names are pasted together, separated by
-  `names_sep`.
+  (`character(1)` or `NULL`) If `NULL`, the default, the inner names of
+  fields are used. If a string, the outer and inner names are pasted
+  together, separated by `names_sep`.
 
 - names_repair:
 
-  Used to check that output data frame has valid names. Must be one of
+  (`character(1)` or `function`) Passed to the `repair` argument of
+  [`vctrs::vec_as_names()`](https://vctrs.r-lib.org/reference/vec_as_names.html)
+  to check that the output data frame has valid names. Must be one of
   the following options:
 
-  - `"unique"` or `"unique_quiet"`: (the default) make sure names are
+  - `"unique"` (the default) or `"unique_quiet"`: make sure names are
     unique and not empty,
 
-  - `"universal" or `"unique_quiet"\`: make the names unique and
+  - `"universal"` or `"universal_quiet"`: make the names unique and
     syntactic
 
   - `"check_unique"`: no name repair, but check they are unique,
 
   - a function: apply custom name repair.
 
-  See
-  [`vctrs::vec_as_names()`](https://vctrs.r-lib.org/reference/vec_as_names.html)
-  for more information.
-
 - names_clean:
 
-  A function to clean names after repairing. For example use
-  `camel_case_to_snake_case()`.
+  (`function`) A one-argument function to clean names after repairing.
+  For example use `camel_case_to_snake_case()`.
 
-- names:
+- x:
 
-  Names to clean
+  (`character`) CamelCase text to convert to snake_case.
 
 ## Value
 
@@ -83,7 +86,6 @@ spec <- tspec_df(
   tib_row("x", tib_int("b"), tib_chr("c")),
   tib_row("y", tib_row("z", tib_chr("d")))
 )
-
 unpack_tspec(spec)
 #> tspec_df(
 #>   tib_lgl("a"),
@@ -116,4 +118,6 @@ unpack_tspec(spec, recurse = FALSE)
 #>     tib_chr("d"),
 #>   ),
 #> )
+camel_case_to_snake_case(c("ExampleText", "otherTextToConvert"))
+#> [1] "_example_text"         "other_text_to_convert"
 ```

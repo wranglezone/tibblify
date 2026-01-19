@@ -5,53 +5,72 @@ to make them easier to import and to find.
 
 ## Arguments
 
+- .call:
+
+  (`environment`) The environment to use for error messages.
+
 - .children:
 
-  A string giving the name of the field that contains the children.
+  (`character(1)`) The name of the field that contains the children.
 
 - .children_to:
 
-  A string giving the column name in which to store the children.
+  (`character(1)`) The column name in which to store the children.
 
 - .elt_transform:
 
-  A function to apply to each element before casting to `.ptype_inner`.
+  (`function` or `NULL`) A function to apply to each element before
+  casting to `.ptype_inner`.
 
 - .fill:
 
-  Optionally, a value to use if the field does not exist.
+  (`vector` or `NULL`) Optionally, a value to use if the field does not
+  exist.
 
 - .format:
 
-  Optional, a string passed to the `format` argument of
+  (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
 
 - .key:
 
-  The path to the field in the object, as a character vector.
+  (`character`) The path of names to the field in the object.
+
+- name:
+
+  (`character(1)`) The name of the field.
 
 - .ptype:
 
-  A prototype of the desired output type of the field.
+  (`vector(0)`) A prototype of the desired output type of the field.
 
 - .ptype_inner:
 
-  A prototype of the field.
+  (`vector(0)`) A prototype of the input field.
 
 - .required:
 
-  Throw an error if the field does not exist?
+  (`logical(1)`) Throw an error if the field does not exist?
+
+- spec_list:
+
+  (`list`) A list of specifications.
+
+- tib_list:
+
+  (`list`) A list of tib fields.
 
 - .transform:
 
-  A function to apply to the whole vector after casting to
-  `.ptype_inner`.
+  (`function` or `NULL`) A function to apply to the whole vector after
+  casting to `.ptype_inner`.
 
 - .values_to:
 
-  Can be one of the following:
+  (`character(1)` or `NULL`) For `NULL` (the default), the field is
+  converted to a `.ptype` vector. If a string is provided, the field is
+  converted to a tibble and the values go into the specified column.
 
-  - `NULL`: the default. The field is converted to a `.ptype` vector.
+- x:
 
-  - A string: The field is converted to a tibble and the values go into
-    the specified column.
+  (`any`) The object to check.

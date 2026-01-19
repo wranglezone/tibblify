@@ -9,7 +9,7 @@ make them easier to import and to find."><meta name="robots" content="noindex"><
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,56 +50,77 @@ make them easier to import and to find.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg--children">.children<a class="anchor" aria-label="anchor" href="#arg--children"></a></dt>
-<dd><p>A string giving the name of the field that contains the
+<dl><dt id="arg--call">.call<a class="anchor" aria-label="anchor" href="#arg--call"></a></dt>
+<dd><p>(<code>environment</code>) The environment to use for error messages.</p></dd>
+
+
+<dt id="arg--children">.children<a class="anchor" aria-label="anchor" href="#arg--children"></a></dt>
+<dd><p>(<code>character(1)</code>) The name of the field that contains the
 children.</p></dd>
 
 
 <dt id="arg--children-to">.children_to<a class="anchor" aria-label="anchor" href="#arg--children-to"></a></dt>
-<dd><p>A string giving the column name in which to store the
+<dd><p>(<code>character(1)</code>) The column name in which to store the
 children.</p></dd>
 
 
 <dt id="arg--elt-transform">.elt_transform<a class="anchor" aria-label="anchor" href="#arg--elt-transform"></a></dt>
-<dd><p>A function to apply to each element before casting to
-<code>.ptype_inner</code>.</p></dd>
+<dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to each
+element before casting to <code>.ptype_inner</code>.</p></dd>
 
 
 <dt id="arg--fill">.fill<a class="anchor" aria-label="anchor" href="#arg--fill"></a></dt>
-<dd><p>Optionally, a value to use if the field does not exist.</p></dd>
+<dd><p>(<code>vector</code> or <code>NULL</code>) Optionally, a value to use if the field
+does not exist.</p></dd>
 
 
 <dt id="arg--format">.format<a class="anchor" aria-label="anchor" href="#arg--format"></a></dt>
-<dd><p>Optional, a string passed to the <code>format</code> argument of
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) Passed to the <code>format</code> argument of
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
 
 
 <dt id="arg--key">.key<a class="anchor" aria-label="anchor" href="#arg--key"></a></dt>
-<dd><p>The path to the field in the object, as a character vector.</p></dd>
+<dd><p>(<code>character</code>) The path of names to the field in the object.</p></dd>
+
+
+<dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
+<dd><p>(<code>character(1)</code>) The name of the field.</p></dd>
 
 
 <dt id="arg--ptype">.ptype<a class="anchor" aria-label="anchor" href="#arg--ptype"></a></dt>
-<dd><p>A prototype of the desired output type of the field.</p></dd>
+<dd><p>(<code>vector(0)</code>) A prototype of the desired output type of the
+field.</p></dd>
 
 
 <dt id="arg--ptype-inner">.ptype_inner<a class="anchor" aria-label="anchor" href="#arg--ptype-inner"></a></dt>
-<dd><p>A prototype of the field.</p></dd>
+<dd><p>(<code>vector(0)</code>) A prototype of the input field.</p></dd>
 
 
 <dt id="arg--required">.required<a class="anchor" aria-label="anchor" href="#arg--required"></a></dt>
-<dd><p>Throw an error if the field does not exist?</p></dd>
+<dd><p>(<code>logical(1)</code>) Throw an error if the field does not exist?</p></dd>
+
+
+<dt id="arg-spec-list">spec_list<a class="anchor" aria-label="anchor" href="#arg-spec-list"></a></dt>
+<dd><p>(<code>list</code>) A list of specifications.</p></dd>
+
+
+<dt id="arg-tib-list">tib_list<a class="anchor" aria-label="anchor" href="#arg-tib-list"></a></dt>
+<dd><p>(<code>list</code>) A list of tib fields.</p></dd>
 
 
 <dt id="arg--transform">.transform<a class="anchor" aria-label="anchor" href="#arg--transform"></a></dt>
-<dd><p>A function to apply to the whole vector after casting to
-<code>.ptype_inner</code>.</p></dd>
+<dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to the whole
+vector after casting to <code>.ptype_inner</code>.</p></dd>
 
 
 <dt id="arg--values-to">.values_to<a class="anchor" aria-label="anchor" href="#arg--values-to"></a></dt>
-<dd><p>Can be one of the following:</p><ul><li><p><code>NULL</code>: the default. The field is converted to a <code>.ptype</code> vector.</p></li>
-<li><p>A string: The field is converted to a tibble and the values go into the
-specified column.</p></li>
-</ul></dd>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) For <code>NULL</code> (the default), the
+field is converted to a <code>.ptype</code> vector. If a string is provided, the field
+is converted to a tibble and the values go into the specified column.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>(<code>any</code>) The object to check.</p></dd>
 
 </dl></div>
 

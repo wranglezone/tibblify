@@ -15,7 +15,7 @@ functions and other functions that use the same parameters."><meta name="robots"
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,19 +60,19 @@ functions and other functions that use the same parameters.</p>
 
 
 <dl><dt id="arg--input-form">.input_form<a class="anchor" aria-label="anchor" href="#arg--input-form"></a></dt>
-<dd><p>A string that describes the structure of the field. Can be
+<dd><p>(<code>character(1)</code>) The structure of the input field. Can be
 one of:</p><ul><li><p><code>"vector"</code>: The field is a vector, e.g. <code>c(1, 2, 3)</code>.</p></li>
 <li><p><code>"scalar_list"</code>: The field is a list of scalars, e.g. <code>list(1, 2, 3)</code>.</p></li>
-<li><p><code>"object"</code>: The field is a named list of scalars, e.g. <code>list(a = 1, b = 2, c = 3)</code>.</p></li>
+<li><p><code>"object"</code>: The field is a named list of scalars, e.g.
+<code>list(a = 1, b = 2, c = 3)</code>.</p></li>
 </ul></dd>
 
 
 <dt id="arg--names-to">.names_to<a class="anchor" aria-label="anchor" href="#arg--names-to"></a></dt>
-<dd><p>What to do with the inner names of the object. Can be one
-of:</p><ul><li><p><code>NULL</code>: the default. The inner names of the field are not used.</p></li>
-<li><p>A string: This can only be used if 1) the input form is <code>"object"</code>
-or <code>"vector"</code> and 2) <code>.values_to</code> is a string. The inner names of the field
-will populate the specified column in the field's tibble.</p></li>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>) What to do with the inner names
+of the object. Can be one of:</p><ul><li><p><code>NULL</code>: the default. The inner names of the field are not used.</p></li>
+<li><p>A string: Use only if the input form is <code>"object"</code> or <code>"vector"</code>, and <code>.values_to</code> is a string. The inner names of the field will populate the
+specified column in the field's tibble.</p></li>
 </ul></dd>
 
 </dl></div>

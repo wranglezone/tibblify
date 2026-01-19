@@ -10,7 +10,7 @@ are imported. This break-out is for parameters that differ between
 
 - .input_form:
 
-  A string that describes the structure of the field. Can be one of:
+  (`character(1)`) The structure of the input field. Can be one of:
 
   - `"vector"`: The field is a vector, e.g. `c(1, 2, 3)`.
 
@@ -22,10 +22,11 @@ are imported. This break-out is for parameters that differ between
 
 - .names_to:
 
-  What to do with the inner names of the object. Can be one of:
+  (`character(1)` or `NULL`) What to do with the inner names of the
+  object. Can be one of:
 
   - `NULL`: the default. The inner names of the field are not used.
 
-  - A string: This can only be used if 1) the input form is `"object"`
-    or `"vector"` and 2) `.values_to` is a string. The inner names of
-    the field will populate the specified column in the field's tibble.
+  - A string: Use only if the input form is `"object"` or `"vector"`,
+    and `.values_to` is a string. The inner names of the field will
+    populate the specified column in the field's tibble.
