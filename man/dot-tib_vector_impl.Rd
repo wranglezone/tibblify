@@ -26,7 +26,7 @@
 \item{.ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
 
-\item{.required}{(\verb{logical(1))} Throw an error if the field does not exist?}
+\item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
@@ -56,10 +56,7 @@ is converted to a tibble and the values go into the specified column.}
 of the object. Can be one of:
 \itemize{
 \item \code{NULL}: the default. The inner names of the field are not used.
-\item A string: Use only if 1) the input form is \code{"object"} or \code{"vector"} and
-}
-\enumerate{
-\item \code{.values_to} is a string. The inner names of the field will populate the
+\item A string: Use only if the input form is \code{"object"} or \code{"vector"}, and \code{.values_to} is a string. The inner names of the field will populate the
 specified column in the field's tibble.
 }}
 

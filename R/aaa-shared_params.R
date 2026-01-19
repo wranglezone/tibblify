@@ -19,7 +19,7 @@
 #' @param .ptype (`vector(0)`) A prototype of the desired output type of the
 #'   field.
 #' @param .ptype_inner (`vector(0)`) A prototype of the input field.
-#' @param .required (`logical(1))` Throw an error if the field does not exist?
+#' @param .required (`logical(1)`) Throw an error if the field does not exist?
 #' @param spec_list (`list`) A list of specifications.
 #' @param tib_list (`list`) A list of tib fields.
 #' @param .transform (`function` or `NULL`) A function to apply to the whole
@@ -50,8 +50,7 @@ NULL
 #' @param .names_to (`character(1)` or `NULL`) What to do with the inner names
 #'   of the object. Can be one of:
 #'   * `NULL`: the default. The inner names of the field are not used.
-#'   * A string: Use only if 1) the input form is `"object"` or `"vector"` and
-#'   2) `.values_to` is a string. The inner names of the field will populate the
+#'   * A string: Use only if the input form is `"object"` or `"vector"`, and `.values_to` is a string. The inner names of the field will populate the
 #'   specified column in the field's tibble.
 #'
 #' @name .shared-params-tib

@@ -22,7 +22,7 @@
 \item{.ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
 
-\item{.required}{(\verb{logical(1))} Throw an error if the field does not exist?}
+\item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}

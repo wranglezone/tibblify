@@ -20,7 +20,7 @@
 
 \item{.type}{(\code{character(1)}) The type of the collector.}
 
-\item{.required}{(\verb{logical(1))} Throw an error if the field does not exist?}
+\item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
 \item{.class}{(\code{character} or \code{NULL}) Additional classes for the collector.}
 

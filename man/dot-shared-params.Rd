@@ -30,7 +30,7 @@ field.}
 
 \item{.ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 
-\item{.required}{(\verb{logical(1))} Throw an error if the field does not exist?}
+\item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
 \item{spec_list}{(\code{list}) A list of specifications.}
 
