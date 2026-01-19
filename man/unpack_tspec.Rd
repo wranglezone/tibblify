@@ -16,42 +16,46 @@ unpack_tspec(
   names_clean = NULL
 )
 
-camel_case_to_snake_case(names)
+camel_case_to_snake_case(x)
 }
 \arguments{
-\item{spec}{A tibblify specification.}
+\item{spec}{(\code{tspec}) A tibblify specification.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{fields}{A string of the fields to unpack.}
+\item{fields}{(\code{character} or \code{NULL}) The fields to unpack. If \code{fields} is
+\code{NULL} (default), all fields are unpacked.}
 
-\item{recurse}{Should unpack recursively?}
+\item{recurse}{(\code{logical(1)}) Should fields inside other fields be unpacked?}
 
-\item{names_sep}{If \code{NULL}, the default, the inner names of fields are used.
-If a string, the outer and inner names are pasted together, separated by
-\code{names_sep}.}
+\item{names_sep}{(\code{character(1)} or \code{NULL}) If \code{NULL}, the default, the inner
+names of fields are used. If a string, the outer and inner names are pasted
+together, separated by \code{names_sep}.}
 
-\item{names_repair}{Used to check that output data frame has valid names.
-Must be one of the following options:
+\item{names_repair}{(\code{character(1)} or \code{function}) Passed to the \code{repair}
+argument of \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} to check that the output data frame has
+valid names. Must be one of the following options:
 \itemize{
-\item \code{"unique"} or \code{"unique_quiet"}: (the default) make sure names are unique and not empty,
-\item \verb{"universal" or }"unique_quiet"`: make the names unique and syntactic
+\item \code{"unique"} (the default) or \code{"unique_quiet"}: make sure names are unique
+and not empty,
+\item \code{"universal"} or \code{"universal_quiet"}: make the names unique and syntactic
 \item \code{"check_unique"}: no name repair, but check they are unique,
 \item a function: apply custom name repair.
-}
+}}
 
-See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for more information.}
+\item{names_clean}{(\code{function}) A one-argument function to clean names after
+repairing. For example use \code{\link[=camel_case_to_snake_case]{camel_case_to_snake_case()}}.}
 
-\item{names_clean}{A function to clean names after repairing. For example
-use \code{\link[=camel_case_to_snake_case]{camel_case_to_snake_case()}}.}
-
-\item{names}{Names to clean}
+\item{x}{(\code{character}) CamelCase text to convert to snake_case.}
 }
 \value{
 A tibblify spec.
 }
 \description{
-Unpack a tibblify specification
+\code{\link[tidyr:pack]{tidyr::unpack()}} makes data wider by expanding df-columns into individual
+columns. Analogously, unpacking a tibblify specification makes a
+specification which will result in a wider tibble by expanding \code{\link[=tib_row]{tib_row()}}
+specifications into their individual fields.
 }
 \examples{
 spec <- tspec_df(
@@ -59,10 +63,10 @@ spec <- tspec_df(
   tib_row("x", tib_int("b"), tib_chr("c")),
   tib_row("y", tib_row("z", tib_chr("d")))
 )
-
 unpack_tspec(spec)
 # only unpack `x`
 unpack_tspec(spec, fields = "x")
 # do not unpack the fields in `y`
 unpack_tspec(spec, recurse = FALSE)
+camel_case_to_snake_case(c("ExampleText", "otherTextToConvert"))
 }

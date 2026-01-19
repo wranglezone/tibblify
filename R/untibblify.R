@@ -23,7 +23,7 @@ untibblify <- function(x, spec = NULL) {
 
   if (is.data.frame(x)) {
     untibblify_df(x, spec, call)
-  } else if (vec_is_list(x)) {
+  } else if (vctrs::vec_is_list(x)) {
     untibblify_list(x, spec, call)
   } else {
     cls <- class(x)[[1]]
@@ -34,13 +34,16 @@ untibblify <- function(x, spec = NULL) {
 
 untibblify_df <- function(x, spec, call) {
   if (is.null(spec)) {
-    idx <- seq_len(vec_size(x))
-    out <- purrr::map(idx, ~ untibblify_row(vec_slice(x, .x), spec, call))
+    idx <- seq_len(vctrs::vec_size(x))
+    out <- purrr::map(
+      idx,
+      ~ untibblify_row(vctrs::vec_slice(x, .x), spec, call)
+    )
     return(out)
   }
 
-  idx <- seq_len(vec_size(x))
-  purrr::map(idx, ~ untibblify_row(vec_slice(x, .x), spec, call))
+  idx <- seq_len(vctrs::vec_size(x))
+  purrr::map(idx, ~ untibblify_row(vctrs::vec_slice(x, .x), spec, call))
 }
 
 untibblify_row <- function(x, spec, call) {
@@ -93,7 +96,7 @@ untibblify_list_elt <- function(x, field_spec, call) {
     }
 
     if (.is_tib_row(field_spec)) {
-      x <- new_data_frame(x, n = 1L)
+      x <- vctrs::new_data_frame(x, n = 1L)
       out <- untibblify_df(x, field_spec, call)
       return(out[[1]])
     }

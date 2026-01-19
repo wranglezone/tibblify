@@ -35,32 +35,32 @@ should_guess_object_list <- function(x) {
   }
 
   # TODO why is this here?
-  if (vec_size(x) <= 1 && is_object(x)) {
+  if (vctrs::vec_size(x) <= 1 && is_object(x)) {
     return(FALSE)
   }
 
   names_list <- lapply(x, names)
   names_list <- vctrs::list_drop_empty(names_list)
-  n <- vec_size(names_list)
+  n <- vctrs::vec_size(names_list)
 
   # TODO why is this here?
   if (n == 0) {
     return(FALSE)
   }
 
-  all_names <- list_unchop(
+  all_names <- vctrs::list_unchop(
     names_list,
     ptype = character(),
     name_spec = "{inner}"
   )
-  names_count <- vec_count(all_names, "location")
+  names_count <- vctrs::vec_count(all_names, "location")
 
   n_min <- floor(0.9 * n)
   any(names_count$count >= n_min) && mean(names_count$count >= 0.5)
 }
 
 get_overview <- function(x) {
-  classes <- compat_map_chr(x, ~ class(.x)[1])
+  classes <- .compat_map_chr(x, ~ class(.x)[1])
   paste0("  ", names(classes), ": ", classes, collapse = "\n")
 }
 
@@ -111,7 +111,7 @@ abort_not_tibblifiable <- function(
     "and has unique names."
   )
   object_bullets <- lgl_to_bullet(c(
-    vec_is_list(x),
+    vctrs::vec_is_list(x),
     is_named2(x),
     anyDuplicated(names(x)) == 0
   ))
@@ -125,7 +125,7 @@ abort_not_tibblifiable <- function(
   )
   object_list_bullets <- lgl_to_bullet(c(
     is.data.frame(x),
-    vec_is_list(x),
+    vctrs::vec_is_list(x),
     purrr::detect_index(x, ~ !is.null(.x) && !is_object(.x)) == 0
   ))
   ol_msg <- set_names(object_list_cnd, c("", object_list_bullets))
@@ -146,7 +146,7 @@ choose_type <- function(x, arg) {
   }
 
   # TODO nicer overview
-  overviews <- compat_map_chr(x, get_overview)
+  overviews <- .compat_map_chr(x, get_overview)
   x_overview <- paste0(names(x), "\n", overviews, collapse = "\n")
 
   msg <- c(

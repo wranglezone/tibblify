@@ -560,7 +560,7 @@ handle_all_of <- function(schema, name, openapi_spec) {
   # must satisfy all the schemas -> combine them
   out <- purrr::map(schema$allOf, ~ parse_schema(.x, name, openapi_spec))
   # TODO fix `call`
-  tib_combine(out, name, current_call())
+  .tib_combine(out, name, current_call())
 }
 
 handle_all_of_tspec <- function(schema, openapi_spec) {
@@ -584,12 +584,12 @@ handle_one_of <- function(schema, name, openapi_spec) {
   tryCatch(
     {
       # TODO fix `call`
-      tib_combine(out, name, current_call())
+      .tib_combine(out, name, current_call())
     },
     error = function(cnd) {
       types <- purrr::map_chr(out, "type")
       if ("row" %in% types) {
-        tib_combine(out[types == "row"], name, current_call())
+        .tib_combine(out[types == "row"], name, current_call())
       } else {
         tib_variant(name, .required = FALSE)
       }

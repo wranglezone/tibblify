@@ -7,21 +7,23 @@
 #' @details In column-major format, all fields are required, regardless of the
 #'   `.required` argument.
 #'
-#' @param ... Column specifications created by `tib_*()` or `tspec_*()`. If the
-#'   dots are named, the name will be used for the resulting column. Otherwise,
-#'   the name of the input will be used for the column name.
-#' @param .input_form The input form of data-frame-like lists. Can be one of:
+#' @param ... (`tib_collector` or `tspec`) Column specifications created by
+#'   `tib_*()` or `tspec_*()`. If the dots are named, the name will be used for
+#'   the resulting column. Otherwise, the name of the input will be used for the
+#'   column name.
+#' @param .input_form (`character(1)`) The input form of data-frame-like lists.
+#'   Can be one of:
 #'   * `"rowmajor"`: The default. The input is a named list of rows.
 #'   * `"colmajor"`: The input is a named list of columns.
-#' @param .names_to A string giving the name of the column in the output which
-#'   will contain the names of top-level elements of the input named list. If
-#'   `NULL`, the default, no name column is created.
-#' @param .vector_allows_empty_list,vector_allows_empty_list Should empty lists
-#'   for columns with `.input_form = "vector"` be accepted and treated as empty
-#'   vectors?
+#' @param .names_to (`character(1)` or `NULL`) The name of the column in the
+#'   output which will contain the names of top-level elements of the input
+#'   named list. If `NULL`, the default, no name column is created.
+#' @param .vector_allows_empty_list,vector_allows_empty_list (`logical(1)`)
+#'   Should empty lists for columns with `.input_form = "vector"` be accepted
+#'   and treated as empty vectors?
 #' @inheritParams .shared-params
 #'
-#' @return A tibblify specification.
+#' @returns A tibblify specification.
 #' @export
 #' @examples
 #' tspec_df(
@@ -233,10 +235,10 @@ tspec_recursive <- function(
 }
 
 .spec_auto_name_fields <- function(.fields, .error_call) {
-  field_nms <- names2(.fields)
-  unnamed <- !have_name(.fields)
-  auto_nms <- with_indexed_errors(
-    compat_map_chr(
+  field_nms <- rlang::names2(.fields)
+  unnamed <- !rlang::have_name(.fields)
+  auto_nms <- .with_indexed_errors(
+    .compat_map_chr(
       .fields[unnamed],
       function(field) {
         key <- field$key
@@ -255,7 +257,7 @@ tspec_recursive <- function(
     error_call = .error_call
   )
   field_nms[unnamed] <- auto_nms
-  field_nms_repaired <- vec_as_names(
+  field_nms_repaired <- vctrs::vec_as_names(
     field_nms,
     repair = "check_unique",
     call = .error_call

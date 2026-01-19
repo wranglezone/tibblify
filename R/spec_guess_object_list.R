@@ -107,7 +107,7 @@ guess_object_list_field_spec <- function(
   }
 
   # every element is a list or NULL at this point
-  if (all(list_sizes(value) == 0)) {
+  if (all(vctrs::list_sizes(value) == 0)) {
     return(tib_unspecified(name))
   }
 
@@ -130,7 +130,7 @@ guess_object_list_field_spec <- function(
     object <- FALSE
   }
 
-  value_flat <- vec_flatten(value, list(), name_spec = NULL)
+  value_flat <- .vec_flatten(value, list(), name_spec = NULL)
   if (object_list) {
     fields <- guess_object_list_spec(
       value_flat,
@@ -190,15 +190,15 @@ guess_object_list_vector_spec <- function(value, name, ptype, had_empty_lists) {
 }
 
 get_required <- function(x, sample_size = 10e3) {
-  n <- vec_size(x)
+  n <- vctrs::vec_size(x)
   x <- unname(x)
   if (n > sample_size) {
     n <- sample_size
-    x <- vec_slice(x, sample(n, sample_size))
+    x <- vctrs::vec_slice(x, sample(n, sample_size))
   }
 
-  all_names <- list_unchop(lapply(x, names), ptype = character())
-  names_count <- vec_count(all_names, "location")
+  all_names <- vctrs::list_unchop(lapply(x, names), ptype = character())
+  names_count <- vctrs::vec_count(all_names, "location")
 
   empty_loc <- lengths(x) == 0L
   if (any(empty_loc)) {
@@ -209,7 +209,7 @@ get_required <- function(x, sample_size = 10e3) {
 }
 
 is_field_scalar <- function(value) {
-  sizes <- list_sizes(value)
+  sizes <- vctrs::list_sizes(value)
   if (any(sizes > 1)) {
     return(FALSE)
   }
@@ -220,7 +220,7 @@ is_field_scalar <- function(value) {
   }
 
   # check that all elements are `NULL`
-  size_0_is_null <- vec_detect_missing(value[sizes == 0])
+  size_0_is_null <- vctrs::vec_detect_missing(value[sizes == 0])
   all(size_0_is_null)
 }
 

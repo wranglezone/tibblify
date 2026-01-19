@@ -4,37 +4,46 @@
 \alias{.shared-params}
 \title{Shared parameters}
 \arguments{
-\item{.children}{A string giving the name of the field that contains the
+\item{.call}{(\code{environment}) The environment to use for error messages.}
+
+\item{.children}{(\code{character(1)}) The name of the field that contains the
 children.}
 
-\item{.children_to}{A string giving the column name in which to store the
+\item{.children_to}{(\code{character(1)}) The column name in which to store the
 children.}
 
-\item{.elt_transform}{A function to apply to each element before casting to
-\code{.ptype_inner}.}
+\item{.elt_transform}{(\code{function} or \code{NULL}) A function to apply to each
+element before casting to \code{.ptype_inner}.}
 
-\item{.fill}{Optionally, a value to use if the field does not exist.}
+\item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
+does not exist.}
 
-\item{.format}{Optional, a string passed to the \code{format} argument of
-\code{as.Date()}.}
+\item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
+\code{\link[=as.Date]{as.Date()}}.}
 
-\item{.key}{The path to the field in the object, as a character vector.}
+\item{.key}{(\code{character}) The path of names to the field in the object.}
 
-\item{.ptype}{A prototype of the desired output type of the field.}
+\item{name}{(\code{character(1)}) The name of the field.}
 
-\item{.ptype_inner}{A prototype of the field.}
+\item{.ptype}{(\code{vector(0)}) A prototype of the desired output type of the
+field.}
 
-\item{.required}{Throw an error if the field does not exist?}
+\item{.ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 
-\item{.transform}{A function to apply to the whole vector after casting to
-\code{.ptype_inner}.}
+\item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
-\item{.values_to}{Can be one of the following:
-\itemize{
-\item \code{NULL}: the default. The field is converted to a \code{.ptype} vector.
-\item A string: The field is converted to a tibble and the values go into the
-specified column.
-}}
+\item{spec_list}{(\code{list}) A list of specifications.}
+
+\item{tib_list}{(\code{list}) A list of tib fields.}
+
+\item{.transform}{(\code{function} or \code{NULL}) A function to apply to the whole
+vector after casting to \code{.ptype_inner}.}
+
+\item{.values_to}{(\code{character(1)} or \code{NULL}) For \code{NULL} (the default), the
+field is converted to a \code{.ptype} vector. If a string is provided, the field
+is converted to a tibble and the values go into the specified column.}
+
+\item{x}{(\code{any}) The object to check.}
 }
 \description{
 These parameters are used in multiple functions. They are defined here to

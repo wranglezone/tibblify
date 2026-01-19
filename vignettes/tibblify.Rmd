@@ -151,7 +151,7 @@ tibblify(
   x,
   tspec_df(
     tib_int("id"),
-    tib_scalar("duration", ptype = vctrs::new_duration())
+    tib_scalar("duration", .ptype = vctrs::new_duration())
   )
 )
 ```
@@ -246,23 +246,23 @@ spec <- tspec_df(
 tibblify(x, spec)
 ```
 
-You can mark a field as optional with the argument `required = FALSE`.
+You can mark a field as optional with the argument `.required = FALSE`.
 
 ```{r}
 spec <- tspec_df(
   x = tib_int("x"),
-  y = tib_chr("y", required = FALSE)
+  y = tib_chr("y", .required = FALSE)
 )
 
 tibblify(x, spec)
 ```
 
-You can specify the value to use with the `fill` argument.
+You can specify the value to use with the `.fill` argument.
 
 ```{r}
 spec <- tspec_df(
   x = tib_int("x"),
-  y = tib_chr("y", required = FALSE, fill = "missing")
+  y = tib_chr("y", .required = FALSE, .fill = "missing")
 )
 
 tibblify(x, spec)

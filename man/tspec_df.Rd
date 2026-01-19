@@ -39,28 +39,30 @@ tspec_recursive(
 )
 }
 \arguments{
-\item{...}{Column specifications created by \verb{tib_*()} or \verb{tspec_*()}. If the
-dots are named, the name will be used for the resulting column. Otherwise,
-the name of the input will be used for the column name.}
+\item{...}{(\code{tib_collector} or \code{tspec}) Column specifications created by
+\verb{tib_*()} or \verb{tspec_*()}. If the dots are named, the name will be used for
+the resulting column. Otherwise, the name of the input will be used for the
+column name.}
 
-\item{.input_form}{The input form of data-frame-like lists. Can be one of:
+\item{.input_form}{(\code{character(1)}) The input form of data-frame-like lists.
+Can be one of:
 \itemize{
 \item \code{"rowmajor"}: The default. The input is a named list of rows.
 \item \code{"colmajor"}: The input is a named list of columns.
 }}
 
-\item{.names_to}{A string giving the name of the column in the output which
-will contain the names of top-level elements of the input named list. If
-\code{NULL}, the default, no name column is created.}
+\item{.names_to}{(\code{character(1)} or \code{NULL}) The name of the column in the
+output which will contain the names of top-level elements of the input
+named list. If \code{NULL}, the default, no name column is created.}
 
-\item{.vector_allows_empty_list, vector_allows_empty_list}{Should empty lists
-for columns with \code{.input_form = "vector"} be accepted and treated as empty
-vectors?}
+\item{.vector_allows_empty_list, vector_allows_empty_list}{(\code{logical(1)})
+Should empty lists for columns with \code{.input_form = "vector"} be accepted
+and treated as empty vectors?}
 
-\item{.children}{A string giving the name of the field that contains the
+\item{.children}{(\code{character(1)}) The name of the field that contains the
 children.}
 
-\item{.children_to}{A string giving the column name in which to store the
+\item{.children_to}{(\code{character(1)}) The column name in which to store the
 children.}
 }
 \value{

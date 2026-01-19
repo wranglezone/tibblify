@@ -9,8 +9,8 @@ test_that("can guess scalar elements", {
   )
 
   expect_equal(
-    guess_ol_field(list(new_datetime(1), new_datetime(2))),
-    tib_scalar("x", new_datetime())
+    guess_ol_field(list(vctrs::new_datetime(1), vctrs::new_datetime(2))),
+    tib_scalar("x", vctrs::new_datetime())
   )
 
   # also for record types
@@ -63,11 +63,11 @@ test_that("can guess vector elements", {
   expect_equal(
     guess_ol_field(
       list(
-        new_datetime(1),
-        c(new_datetime(2), new_datetime(3))
+        vctrs::new_datetime(1),
+        c(vctrs::new_datetime(2), vctrs::new_datetime(3))
       )
     ),
-    tib_vector("x", new_datetime())
+    tib_vector("x", vctrs::new_datetime())
   )
 
   expect_equal(

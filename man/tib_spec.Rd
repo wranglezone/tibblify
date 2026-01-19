@@ -303,55 +303,54 @@ tib_row(.key, ..., .required = TRUE)
 tib_df(.key, ..., .required = TRUE, .names_to = NULL)
 }
 \arguments{
-\item{.key, key}{The path to the field in the object, as a character vector.}
+\item{.key, key}{(\code{character}) The path of names to the field in the object.}
 
-\item{.ptype, ptype}{A prototype of the desired output type of the field.}
+\item{.ptype, ptype}{(\code{vector(0)}) A prototype of the desired output type of the
+field.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{.required, required}{Throw an error if the field does not exist?}
+\item{.required, required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
-\item{.fill, fill}{Optionally, a value to use if the field does not exist.}
+\item{.fill, fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
+does not exist.}
 
-\item{.ptype_inner, ptype_inner}{A prototype of the field.}
+\item{.ptype_inner, ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 
-\item{.transform, transform}{A function to apply to the whole vector after casting to
-\code{.ptype_inner}.}
+\item{.transform, transform}{(\code{function} or \code{NULL}) A function to apply to the whole
+vector after casting to \code{.ptype_inner}.}
 
-\item{.elt_transform, elt_transform}{A function to apply to each element before casting to
-\code{.ptype_inner}.}
+\item{.elt_transform, elt_transform}{(\code{function} or \code{NULL}) A function to apply to each
+element before casting to \code{.ptype_inner}.}
 
-\item{.input_form, input_form}{A string that describes the structure of the field. Can be
+\item{.input_form, input_form}{(\code{character(1)}) The structure of the input field. Can be
 one of:
 \itemize{
 \item \code{"vector"}: The field is a vector, e.g. \code{c(1, 2, 3)}.
 \item \code{"scalar_list"}: The field is a list of scalars, e.g. \code{list(1, 2, 3)}.
-\item \code{"object"}: The field is a named list of scalars, e.g. \code{list(a = 1, b = 2, c = 3)}.
+\item \code{"object"}: The field is a named list of scalars, e.g.
+\code{list(a = 1, b = 2, c = 3)}.
 }}
 
-\item{.values_to, values_to}{Can be one of the following:
-\itemize{
-\item \code{NULL}: the default. The field is converted to a \code{.ptype} vector.
-\item A string: The field is converted to a tibble and the values go into the
-specified column.
-}}
+\item{.values_to, values_to}{(\code{character(1)} or \code{NULL}) For \code{NULL} (the default), the
+field is converted to a \code{.ptype} vector. If a string is provided, the field
+is converted to a tibble and the values go into the specified column.}
 
-\item{.names_to, names_to}{What to do with the inner names of the object. Can be one
-of:
+\item{.names_to, names_to}{(\code{character(1)} or \code{NULL}) What to do with the inner names
+of the object. Can be one of:
 \itemize{
 \item \code{NULL}: the default. The inner names of the field are not used.
-\item A string: This can only be used if 1) the input form is \code{"object"}
-or \code{"vector"} and 2) \code{.values_to} is a string. The inner names of the field
-will populate the specified column in the field's tibble.
+\item A string: Use only if the input form is \code{"object"} or \code{"vector"}, and \code{.values_to} is a string. The inner names of the field will populate the
+specified column in the field's tibble.
 }}
 
-\item{.format, format}{Optional, a string passed to the \code{format} argument of
-\code{as.Date()}.}
+\item{.format, format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
+\code{\link[=as.Date]{as.Date()}}.}
 
-\item{.children}{A string giving the name of the field that contains the
+\item{.children}{(\code{character(1)}) The name of the field that contains the
 children.}
 
-\item{.children_to}{A string giving the column name in which to store the
+\item{.children_to}{(\code{character(1)}) The column name in which to store the
 children.}
 }
 \value{

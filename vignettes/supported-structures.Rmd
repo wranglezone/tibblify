@@ -132,7 +132,7 @@ tibblify(x, tspec_df(tib_int_vec("a")))
 Use `vector_allows_empty_list = TRUE` in `tspec_*()` so that they are converted to an empty vector instead.
 
 ```{r}
-tibblify(x, tspec_df(tib_int_vec("a"), vector_allows_empty_list = TRUE))$a
+tibblify(x, tspec_df(tib_int_vec("a"), .vector_allows_empty_list = TRUE))$a
 ```
 
 ### Homogeneous R lists of scalars
@@ -155,10 +155,10 @@ By default they cannot be parsed with `tib_vector()`.
 tibblify(x, tspec_df(tib_int_vec("a")))
 ```
 
-Use `input_form = "scalar_list"` in `tib_vector()` to parse them:
+Use `.input_form = "scalar_list"` in `tib_vector()` to parse them:
 
 ```{r}
-tibblify(x, tspec_df(tib_int_vec("a", input_form = "scalar_list")))$a
+tibblify(x, tspec_df(tib_int_vec("a", .input_form = "scalar_list")))$a
 ```
 
 
@@ -176,16 +176,16 @@ x <- jsonlite::fromJSON(x_json, simplifyVector = FALSE)
 str(x)
 ```
 
-Use `input_form = "object"` in `tib_vector()` to parse them. 
-To store the names use the `names_to` and `values_to` arguments.
+Use `.input_form = "object"` in `tib_vector()` to parse them. 
+To store the names use the `.names_to` and `.values_to` arguments.
 
 ```{r}
 spec <- tspec_df(
   tib_int_vec(
     "a",
-    input_form = "object",
-    names_to = "name",
-    values_to = "value"
+    .input_form = "object",
+    .names_to = "name",
+    .values_to = "value"
   )
 )
 
