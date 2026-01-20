@@ -7,10 +7,11 @@
 get_spec(x)
 }
 \arguments{
-\item{x}{The data frame object to extract from.}
+\item{x}{(\code{data.frame}) The data frame to extract a spec from.}
 }
 \value{
-A tibblify specification object.
+A tibblify specification as returned by \code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}},
+\code{\link[=tspec_object]{tspec_object()}}, or \code{\link[=tspec_recursive]{tspec_recursive()}}.
 }
 \description{
 Examine the column specification

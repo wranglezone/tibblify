@@ -7,18 +7,19 @@
 tibblify(x, spec = NULL, unspecified = NULL)
 }
 \arguments{
-\item{x}{A nested list.}
+\item{x}{(\code{list}) A nested list.}
 
-\item{spec}{A specification how to convert \code{x}. Generated with \code{tspec_row()}
-or \code{tspec_df()}.}
+\item{spec}{(\code{tspec}) A specification of how to convert \code{x}. Generated with
+\code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, \code{\link[=tspec_object]{tspec_object()}}, \code{\link[=tspec_recursive]{tspec_recursive()}}, or (if
+\code{NULL}, the default), \code{\link[=guess_tspec]{guess_tspec()}}.}
 
-\item{unspecified}{A string that describes what happens if the specification
-contains unspecified fields. Can be one of
+\item{unspecified}{(\code{character(1)}) What to do with unspecified fields. Can
+be one of
 \itemize{
 \item \code{"error"}: Throw an error.
-\item \code{"inform"}: Inform.
+\item \code{"inform"}: Inform the user.
 \item \code{"drop"}: Do not parse these fields.
-\item \code{"list"}: Parse an unspecified field into a list.
+\item \code{"list"}: Parse an unspecified field into a list as with \code{\link[=tib_variant]{tib_variant()}}.
 }}
 }
 \value{

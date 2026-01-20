@@ -19,6 +19,21 @@ test_that("informing about unspecified looks good", {
     )
   )
   expect_snapshot({
-    spec_inform_unspecified(spec)
+    .spec_inform_unspecified(spec)
+  })
+  expect_snapshot(
+    {
+      .spec_inform_unspecified(spec, "error")
+    },
+    error = TRUE
+  )
+})
+
+test_that(".spec_inform_unspecified is silent when nothing unspecified", {
+  spec <- tspec_df(
+    tib_int("1int")
+  )
+  expect_no_message({
+    expect_identical(.spec_inform_unspecified(spec), spec)
   })
 })

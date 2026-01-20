@@ -13,7 +13,7 @@ guess_tspec(
   empty_list_unspecified = FALSE,
   simplify_list = FALSE,
   inform_unspecified = should_inform_unspecified(),
-  call = rlang::current_call()
+  call = rlang::caller_env()
 )
 
 guess_tspec_df(
