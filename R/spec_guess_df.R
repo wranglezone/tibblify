@@ -42,7 +42,7 @@ guess_tspec_df <- function(
   }
 
   if (inform_unspecified) {
-    spec_inform_unspecified(spec)
+    .spec_inform_unspecified(spec)
   }
   spec
 }

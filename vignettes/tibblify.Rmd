@@ -31,8 +31,6 @@ Let's start with `gh_users`, which is a list containing information about four G
 We'll select a subset of columns to keep the example relatively simple.
 
 ```{r}
-library(tibblify)
-
 gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")])
 
 names(gh_users_small[[1]])

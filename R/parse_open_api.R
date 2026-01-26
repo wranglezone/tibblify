@@ -606,8 +606,6 @@ handle_one_of_tspec <- function(schema, openapi_spec) {
       tspec_combine(!!!out)
     },
     error = function(cnd) {
-      # browser()
-      # stop("Can't combine")
       tib_variant("dummy")
     }
   )

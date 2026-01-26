@@ -24,15 +24,3 @@ tib <- function(x, col) {
     tspec_df(x = col)
   )
 }
-
-tib_cm <- function(..., x, y = NULL) {
-  if (is.null(y)) {
-    object_list <- list(x = x)
-  } else {
-    object_list <- list(x = x, y = y)
-  }
-  tibblify(
-    object_list,
-    tspec_df(.input_form = "colmajor", ...)
-  )
-}

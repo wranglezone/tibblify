@@ -31,7 +31,7 @@ guess_tspec <- function(
   empty_list_unspecified = FALSE,
   simplify_list = FALSE,
   inform_unspecified = should_inform_unspecified(),
-  call = rlang::current_call()
+  call = rlang::caller_env()
 ) {
   check_dots_empty()
   check_bool(empty_list_unspecified, call = call)
@@ -105,7 +105,7 @@ guess_tspec_list <- function(
   }
 
   if (inform_unspecified) {
-    spec_inform_unspecified(spec)
+    .spec_inform_unspecified(spec)
   }
 
   spec

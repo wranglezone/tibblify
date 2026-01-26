@@ -1,31 +1,41 @@
-spec_inform_unspecified <- function(
+#' Inform about or error for unspecified fields
+#'
+#' @inheritParams tibblify
+#' @inheritParams .shared-params
+#' @returns The original spec, invisibly.
+#' @keywords internal
+.spec_inform_unspecified <- function(
   spec,
-  action = "inform",
+  unspecified = "inform",
   call = caller_env()
 ) {
-  unspecified_paths <- get_unspecfied_paths(spec)
-
-  lines <- format_unspecified_paths(unspecified_paths)
-  if (is_empty(lines)) {
-    return(spec)
+  if (unspecified %in% c("inform", "error")) {
+    unspecified_paths <- .get_unspecified_paths(spec)
+    lines <- .format_unspecified_paths(unspecified_paths)
+    if (length(lines)) {
+      msg <- c(
+        "The spec contains {length(lines)} unspecified field{?s}:",
+        rlang::set_names(lines, "*"),
+        "\n"
+      )
+      switch(
+        unspecified,
+        inform = cli::cli_inform(msg),
+        error = cli::cli_abort(msg, call = call)
+      )
+    }
   }
-
-  msg <- c(
-    "The spec contains {length(lines)} unspecified field{?s}:",
-    set_names(lines, "*"),
-    "\n"
-  )
-
-  switch(
-    action,
-    inform = cli::cli_inform(msg),
-    error = cli::cli_abort(msg, call = call)
-  )
-
   invisible(spec)
 }
 
-format_unspecified_paths <- function(path_list, path = character()) {
+#' Prep unspecified paths for messaging
+#'
+#' @param path_list (`list`) A list of [tib_unspecified()] objects and objects
+#'   containing [tib_unspecified()] objects.
+#' @param path (`character`) Current path prefix.
+#' @returns The formatted paths as `character`.
+#' @keywords internal
+.format_unspecified_paths <- function(path_list, path = character()) {
   nms <- names(path_list)
   lines <- character()
 
@@ -36,7 +46,7 @@ format_unspecified_paths <- function(path_list, path = character()) {
       new_lines <- paste0(path, cli::style_bold(nm))
     } else {
       new_path <- paste0(path, nm, "->")
-      new_lines <- format_unspecified_paths(elt, path = new_path)
+      new_lines <- .format_unspecified_paths(elt, path = new_path)
     }
 
     lines <- c(lines, new_lines)
@@ -45,7 +55,13 @@ format_unspecified_paths <- function(path_list, path = character()) {
   lines
 }
 
-get_unspecfied_paths <- function(spec) {
+#' Find unspecified fields
+#'
+#' @inheritParams tibblify
+#' @returns A list of [tib_unspecified()] objects and objects containing
+#'   [tib_unspecified()] objects.
+#' @keywords internal
+.get_unspecified_paths <- function(spec) {
   fields <- spec$fields
   unspecified_paths <- list()
 
@@ -55,7 +71,7 @@ get_unspecfied_paths <- function(spec) {
     if (field$type == "unspecified") {
       unspecified_paths[[nm]] <- nm
     } else if (field$type %in% c("df", "row")) {
-      sub_paths <- get_unspecfied_paths(field)
+      sub_paths <- .get_unspecified_paths(field)
       unspecified_paths[[nm]] <- sub_paths
     }
   }
