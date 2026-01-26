@@ -20,8 +20,6 @@ about four GitHub users. We’ll select a subset of columns to keep the
 example relatively simple.
 
 ``` r
-library(tibblify)
-
 gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")])
 
 names(gh_users_small[[1]])

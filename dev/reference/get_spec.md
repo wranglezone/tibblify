@@ -12,11 +12,16 @@ get_spec(x)
 
 - x:
 
-  The data frame object to extract from.
+  (`data.frame`) The data frame to extract a spec from.
 
 ## Value
 
-A tibblify specification object.
+A tibblify specification as returned by
+[`tspec_df()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+[`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+[`tspec_object()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+or
+[`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md).
 
 ## Examples
 
