@@ -16,15 +16,18 @@ Replace tib_unspecified fields in the specification
 
 - unspecified:
 
-  (`character(1)`) What to do with unspecified fields. Can be one of
+  (`character(1)`) What to do with
+  [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  fields. Can be one of
 
   - `"error"`: Throw an error.
 
-  - `"inform"`: Inform the user.
+  - `"inform"`: Inform the user then parse as with
+    [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
   - `"drop"`: Do not parse these fields.
 
-  - `"list"`: Parse an unspecified field into a list as with
+  - `"list"`: Parse unspecified fields into lists as with
     [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 ## Value

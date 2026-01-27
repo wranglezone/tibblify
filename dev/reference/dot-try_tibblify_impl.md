@@ -1,14 +1,18 @@
-# Inform about or error for unspecified fields
+# Tibblify implementation with error handling
 
-Inform about or error for unspecified fields
+Tibblify implementation with error handling
 
 ## Usage
 
 ``` r
-.spec_inform_unspecified(spec, unspecified = "inform", call = caller_env())
+.try_tibblify_impl(x, spec, call = caller_env())
 ```
 
 ## Arguments
+
+- x:
+
+  (`list`) A nested list.
 
 - spec:
 
@@ -23,26 +27,10 @@ Inform about or error for unspecified fields
   `guess_tspec(x, inform_unspecified = TRUE)` will be used to guess the
   `spec`.
 
-- unspecified:
-
-  (`character(1)`) What to do with
-  [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
-  fields. Can be one of
-
-  - `"error"`: Throw an error.
-
-  - `"inform"`: Inform the user then parse as with
-    [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
-
-  - `"drop"`: Do not parse these fields.
-
-  - `"list"`: Parse unspecified fields into lists as with
-    [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
-
 - call:
 
   (`environment`) The environment to use for error messages.
 
 ## Value
 
-The original spec, invisibly.
+Either a tibble or a list, depending on the specification.

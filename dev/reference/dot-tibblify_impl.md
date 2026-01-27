@@ -1,14 +1,18 @@
-# Find unspecified fields
+# Tibblify implementation
 
-Find unspecified fields
+Tibblify implementation
 
 ## Usage
 
 ``` r
-.get_unspecified_paths(spec)
+.tibblify_impl(x, spec, path)
 ```
 
 ## Arguments
+
+- x:
+
+  (`list`) A nested list.
 
 - spec:
 
@@ -23,10 +27,10 @@ Find unspecified fields
   `guess_tspec(x, inform_unspecified = TRUE)` will be used to guess the
   `spec`.
 
+- path:
+
+  (`list`) The current path in the data structure.
+
 ## Value
 
-A list of
-[`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
-objects and objects containing
-[`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
-objects.
+Either a tibble or a list, depending on the specification.

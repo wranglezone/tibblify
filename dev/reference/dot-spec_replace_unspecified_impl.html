@@ -56,11 +56,11 @@
 
 
 <dt id="arg-unspecified">unspecified<a class="anchor" aria-label="anchor" href="#arg-unspecified"></a></dt>
-<dd><p>(<code>character(1)</code>) What to do with unspecified fields. Can
-be one of</p><ul><li><p><code>"error"</code>: Throw an error.</p></li>
-<li><p><code>"inform"</code>: Inform the user.</p></li>
+<dd><p>(<code>character(1)</code>) What to do with <code><a href="tib_spec.html">tib_unspecified()</a></code>
+fields. Can be one of</p><ul><li><p><code>"error"</code>: Throw an error.</p></li>
+<li><p><code>"inform"</code>: Inform the user then parse as with <code><a href="tib_spec.html">tib_variant()</a></code>.</p></li>
 <li><p><code>"drop"</code>: Do not parse these fields.</p></li>
-<li><p><code>"list"</code>: Parse an unspecified field into a list as with <code><a href="tib_spec.html">tib_variant()</a></code>.</p></li>
+<li><p><code>"list"</code>: Parse unspecified fields into lists as with <code><a href="tib_spec.html">tib_variant()</a></code>.</p></li>
 </ul></dd>
 
 </dl></div>

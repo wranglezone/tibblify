@@ -17,20 +17,26 @@ Prepare unspecified fields
   [`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
   [`tspec_object()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
   [`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
-  or (if `NULL`, the default),
+  or
   [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md).
+  If `spec` is `NULL` (the default),
+  `guess_tspec(x, inform_unspecified = TRUE)` will be used to guess the
+  `spec`.
 
 - unspecified:
 
-  (`character(1)`) What to do with unspecified fields. Can be one of
+  (`character(1)`) What to do with
+  [`tib_unspecified()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  fields. Can be one of
 
   - `"error"`: Throw an error.
 
-  - `"inform"`: Inform the user.
+  - `"inform"`: Inform the user then parse as with
+    [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
   - `"drop"`: Do not parse these fields.
 
-  - `"list"`: Parse an unspecified field into a list as with
+  - `"list"`: Parse unspecified fields into lists as with
     [`tib_variant()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md).
 
 - call:
