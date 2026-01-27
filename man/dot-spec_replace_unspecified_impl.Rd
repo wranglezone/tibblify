@@ -9,13 +9,13 @@
 \arguments{
 \item{spec_fields}{(\code{list}) Fields from spec$fields (or a subset thereof).}
 
-\item{unspecified}{(\code{character(1)}) What to do with unspecified fields. Can
-be one of
+\item{unspecified}{(\code{character(1)}) What to do with \code{\link[=tib_unspecified]{tib_unspecified()}}
+fields. Can be one of
 \itemize{
 \item \code{"error"}: Throw an error.
-\item \code{"inform"}: Inform the user.
+\item \code{"inform"}: Inform the user then parse as with \code{\link[=tib_variant]{tib_variant()}}.
 \item \code{"drop"}: Do not parse these fields.
-\item \code{"list"}: Parse an unspecified field into a list as with \code{\link[=tib_variant]{tib_variant()}}.
+\item \code{"list"}: Parse unspecified fields into lists as with \code{\link[=tib_variant]{tib_variant()}}.
 }}
 }
 \value{

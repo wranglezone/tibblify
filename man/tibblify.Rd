@@ -10,23 +10,29 @@ tibblify(x, spec = NULL, unspecified = NULL)
 \item{x}{(\code{list}) A nested list.}
 
 \item{spec}{(\code{tspec}) A specification of how to convert \code{x}. Generated with
-\code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, \code{\link[=tspec_object]{tspec_object()}}, \code{\link[=tspec_recursive]{tspec_recursive()}}, or (if
-\code{NULL}, the default), \code{\link[=guess_tspec]{guess_tspec()}}.}
+\code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, \code{\link[=tspec_object]{tspec_object()}}, \code{\link[=tspec_recursive]{tspec_recursive()}}, or
+\code{\link[=guess_tspec]{guess_tspec()}}. If \code{spec} is \code{NULL} (the default), \code{guess_tspec(x, inform_unspecified = TRUE)} will be used to guess the \code{spec}.}
 
-\item{unspecified}{(\code{character(1)}) What to do with unspecified fields. Can
-be one of
+\item{unspecified}{(\code{character(1)}) What to do with \code{\link[=tib_unspecified]{tib_unspecified()}}
+fields. Can be one of
 \itemize{
 \item \code{"error"}: Throw an error.
-\item \code{"inform"}: Inform the user.
+\item \code{"inform"}: Inform the user then parse as with \code{\link[=tib_variant]{tib_variant()}}.
 \item \code{"drop"}: Do not parse these fields.
-\item \code{"list"}: Parse an unspecified field into a list as with \code{\link[=tib_variant]{tib_variant()}}.
+\item \code{"list"}: Parse unspecified fields into lists as with \code{\link[=tib_variant]{tib_variant()}}.
 }}
 }
 \value{
-Either a tibble or a list, depending on the specification
+Either a tibble or a list, depending on the specification.
 }
 \description{
-Rectangle a nested list
+Transform a nested list into a tibble or a list of objects according to a
+specification.
+}
+\details{
+Fields specifically tagged as \code{\link[=tib_unspecified]{tib_unspecified()}} in the \code{spec} (or guessed
+as such) will be handled according to the \code{unspecified} argument. Fields that
+are present in \code{x} but not mentioned in the \code{spec} are ignored.
 }
 \examples{
 # List of Objects -----------------------------------------------------------

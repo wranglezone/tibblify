@@ -8,8 +8,8 @@
 }
 \arguments{
 \item{spec}{(\code{tspec}) A specification of how to convert \code{x}. Generated with
-\code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, \code{\link[=tspec_object]{tspec_object()}}, \code{\link[=tspec_recursive]{tspec_recursive()}}, or (if
-\code{NULL}, the default), \code{\link[=guess_tspec]{guess_tspec()}}.}
+\code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, \code{\link[=tspec_object]{tspec_object()}}, \code{\link[=tspec_recursive]{tspec_recursive()}}, or
+\code{\link[=guess_tspec]{guess_tspec()}}. If \code{spec} is \code{NULL} (the default), \code{guess_tspec(x, inform_unspecified = TRUE)} will be used to guess the \code{spec}.}
 }
 \value{
 A prepared tibblify specification.
