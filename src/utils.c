@@ -34,8 +34,8 @@ r_obj* apply_transform(r_obj* value, r_obj* fn) {
   r_obj* call = KEEP(r_call2(syms_transform, syms_value));
 
   r_obj* mask = KEEP(r_alloc_environment(2, R_GlobalEnv));
-  r_env_poke(mask, syms_transform, fn);
-  r_env_poke(mask, syms_value, value);
+  r_env_bind(mask, syms_transform, fn);
+  r_env_bind(mask, syms_value, value);
   r_obj* out = KEEP(r_eval(call, mask));
 
   FREE(3);

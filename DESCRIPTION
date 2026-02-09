@@ -43,6 +43,7 @@ LinkingTo:
 VignetteBuilder:
     knitr
 Remotes:
+    r-lib/rlang,
     r-lib/vctrs
 Config/testthat/edition: 3
 Encoding: UTF-8

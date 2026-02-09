@@ -7,7 +7,6 @@
 #include "cnd.h"
 #include "globals.h"
 #include "obj.h"
-#include "rlang.h"
 #include "sym.h"
 
 #define RLANG_USE_R_EXISTS (R_VERSION < R_Version(4, 2, 0))
@@ -162,29 +161,6 @@ r_obj* r_env_clone(r_obj* env, r_obj* parent);
 
 void r_env_coalesce(r_obj* env, r_obj* from);
 
-
-// Silently ignores bindings that are not defined in `env`.
-static inline
-void r_env_unbind(r_obj* env, r_obj* sym) {
-  R_removeVarFromFrame(sym, env);
-}
-
-static inline
-void r_env_poke(r_obj* env, r_obj* sym, r_obj* value) {
-  KEEP(value);
-  Rf_defineVar(sym, value, env);
-  FREE(1);
-}
-
-void r_env_poke_lazy(r_obj* env, r_obj* sym, r_obj* expr, r_obj* eval_env);
-
-static inline
-void r_env_poke_active(r_obj* env, r_obj* sym, r_obj* fn) {
-  KEEP(fn);
-  r_env_unbind(env, sym);
-  R_MakeActiveBinding(sym, fn, env);
-  FREE(1);
-}
 
 bool r_env_inherits(r_obj* env, r_obj* ancestor, r_obj* top);
 
