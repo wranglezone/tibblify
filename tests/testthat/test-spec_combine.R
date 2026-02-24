@@ -1,11 +1,11 @@
-test_that("nice error when combining non-specs", {
+test_that("nice error when combining non-specs (#65)", {
   df_spec <- tspec_df(a = tib_int("a"))
   expect_snapshot({
     (expect_error(tspec_combine(df_spec, tib_int("a"))))
   })
 })
 
-test_that("nice error for unknown spec type", {
+test_that("nice error for unknown spec type (#65)", {
   df_spec <- tspec_df(a = tib_int("a"))
   df_spec$type <- "unknown_type"
   expect_snapshot({
@@ -13,7 +13,7 @@ test_that("nice error for unknown spec type", {
   })
 })
 
-test_that("cannot combine different types of spec", {
+test_that("cannot combine different types of spec (#65)", {
   df_spec <- tspec_df(a = tib_int("a"))
   row_spec <- tspec_row(a = tib_int("a"))
   obj_spec <- tspec_object(a = tib_int("a"))
@@ -33,7 +33,7 @@ test_that("cannot combine different keys", {
   })
 })
 
-test_that("can combine simple spec with itself", {
+test_that("can combine simple spec with itself (#65)", {
   df_spec <- tspec_df(a = tib_int("a"))
   row_spec <- tspec_row(a = tib_int("a"))
   obj_spec <- tspec_object(a = tib_int("a"))
@@ -42,19 +42,19 @@ test_that("can combine simple spec with itself", {
   expect_equal(tspec_combine(obj_spec, obj_spec), obj_spec)
 })
 
-test_that("can combine if fields are in different order", {
+test_that("can combine if fields are in different order (#65)", {
   spec_ab <- tspec_df(a = tib_int("a"), b = tib_chr("b"))
   spec_ba <- tspec_df(b = tib_chr("b"), a = tib_int("a"))
   expect_equal(tspec_combine(spec_ab, spec_ba), spec_ab)
   expect_equal(tspec_combine(spec_ba, spec_ab), spec_ba)
 })
 
-test_that("can combine empty spec", {
+test_that("can combine empty spec (#65)", {
   spec_empty <- tspec_df()
   expect_equal(tspec_combine(spec_empty, spec_empty), spec_empty)
 })
 
-test_that("can combine required", {
+test_that("can combine required (#65)", {
   spec_required <- tspec_df(a = tib_int("a"), b = tib_chr("b"))
   spec_optional <- tspec_df(
     a = tib_int("a", .required = FALSE),
@@ -69,7 +69,7 @@ test_that("can combine required", {
   expect_equal(tspec_combine(spec_required, spec_empty), spec_all_optional)
 })
 
-test_that("nice error for unknown tib type", {
+test_that("nice error for unknown tib type (#65)", {
   df_spec <- tspec_df(a = tib_int("a"))
   df_spec$fields$a$type <- "unknown_type"
   expect_snapshot({
@@ -77,7 +77,7 @@ test_that("nice error for unknown tib type", {
   })
 })
 
-test_that("can combine type", {
+test_that("can combine type (#65)", {
   spec_unspecified <- tspec_df(a = tib_unspecified("a"))
   spec_scalar <- tspec_df(a = tib_int("a"))
   spec_vec <- tspec_df(a = tib_int_vec("a"))
@@ -105,7 +105,7 @@ test_that("can combine type", {
   })
 })
 
-test_that("can combine ptype", {
+test_that("can combine ptype (#65)", {
   spec_unspecified <- tspec_df(a = tib_unspecified("a"))
   spec_lgl <- tspec_df(a = tib_lgl("a"))
   spec_int <- tspec_df(a = tib_int("a"))
@@ -117,7 +117,7 @@ test_that("can combine ptype", {
   })
 })
 
-test_that("can't combine different defaults", {
+test_that("can't combine different defaults (#65)", {
   spec_no_default <- tspec_df(a = tib_int("a"))
   spec_default1 <- tspec_df(a = tib_int("a", .fill = 1))
   spec_default2 <- tspec_df(a = tib_int("a", .fill = 2))
@@ -140,7 +140,7 @@ test_that("can't combine different defaults", {
   })
 })
 
-test_that("can't combine different transforms", {
+test_that("can't combine different transforms (#65)", {
   spec_no_f <- tspec_df(a = tib_int("a"))
   spec_f1 <- tspec_df(a = tib_int("a", .transform = ~.x))
   spec_f2 <- tspec_df(a = tib_int("a", .transform = ~ .x + 1))

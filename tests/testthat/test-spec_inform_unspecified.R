@@ -1,4 +1,4 @@
-test_that("informing about unspecified looks good", {
+test_that("informing about unspecified looks good (#38)", {
   spec <- tspec_df(
     tib_int("1int"),
     tib_unspecified("1un"),
@@ -29,7 +29,7 @@ test_that("informing about unspecified looks good", {
   )
 })
 
-test_that(".spec_inform_unspecified is silent when nothing unspecified", {
+test_that(".spec_inform_unspecified is silent when nothing unspecified (#38)", {
   spec <- tspec_df(
     tib_int("1int")
   )

@@ -20,3 +20,5 @@
 ^CODE_OF_CONDUCT\.md$
 ^update-vctrs\.sh$
 ^\.covrignore$
+^AGENTS\.md$
+^\.positai$

@@ -225,7 +225,7 @@
         tib_chr("default_branch"),
       )
 
-# can guess spec for got_chars
+# can guess spec for got_chars (#83)
 
     Code
       spec

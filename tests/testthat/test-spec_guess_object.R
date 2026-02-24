@@ -25,7 +25,7 @@ test_that("POSIXlt is converted to POSIXct", {
   )
 })
 
-test_that("can handle non-vector elements", {
+test_that("can handle non-vector elements (#76, #84)", {
   model <- lm(Sepal.Length ~ Sepal.Width, data = iris)
   expect_equal(
     guess_tspec_object(list(x = model)),
@@ -62,7 +62,7 @@ test_that("POSIXlt is converted to POSIXct for vector elements", {
   )
 })
 
-test_that("can guess tib_vector for a scalar list", {
+test_that("can guess tib_vector for a scalar list (#94)", {
   expect_equal(
     guess_tspec_object(list(x = list(TRUE, TRUE, NULL)), simplify_list = FALSE),
     tspec_object(x = tib_variant("x"))
@@ -95,7 +95,7 @@ test_that("can guess tib_vector for a scalar list", {
   )
 })
 
-test_that("can guess tib_vector for input form = object", {
+test_that("can guess tib_vector for input form = object (#94)", {
   expect_equal(
     guess_tspec_object(
       list(x = list(a = TRUE, b = TRUE)),
@@ -112,7 +112,7 @@ test_that("can guess mixed elements", {
   )
 })
 
-test_that("can handle non-vector elements in list", {
+test_that("can handle non-vector elements in list (#76, #84)", {
   model <- lm(Sepal.Length ~ Sepal.Width, data = iris)
   expect_equal(
     guess_tspec_object(list(x = list(model, model))),
@@ -120,7 +120,7 @@ test_that("can handle non-vector elements in list", {
   )
 })
 
-test_that("can guess df element", {
+test_that("can guess df element (#81)", {
   expect_equal(
     guess_tspec_object(list(x = tibble(a = 1L))),
     tspec_object(x = tib_df("x", a = tib_int("a")))
@@ -134,7 +134,7 @@ test_that("can guess tib_row", {
   )
 })
 
-test_that("can guess tib_row with a scalar list", {
+test_that("can guess tib_row with a scalar list (#94)", {
   expect_equal(
     guess_tspec_object(
       list(x = list(a = list(1L, 2L), b = "a")),
@@ -188,7 +188,7 @@ test_that("can guess tib_df", {
   )
 })
 
-test_that("respect empty_list_unspecified for list of object elements", {
+test_that("respect empty_list_unspecified for list of object elements (#83)", {
   x <- list(
     x = list(
       list(a = 1L, b = 1:2),
@@ -261,7 +261,7 @@ test_that("order of fields for tib_df does not matter", {
   )
 })
 
-test_that("can guess tib_unspecified for an object", {
+test_that("can guess tib_unspecified for an object (#83)", {
   # `NULL` is the missing element in lists
   expect_equal(
     guess_tspec_object(list(x = NULL)),

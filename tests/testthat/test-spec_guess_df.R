@@ -83,7 +83,7 @@ test_that("can guess vector NA columns", {
   )
 })
 
-test_that("respect empty_list_unspecified for vector columns", {
+test_that("respect empty_list_unspecified for vector columns (#95)", {
   expect_equal(
     col_to_spec(list(1:2, list()), "int_vec", FALSE),
     tib_variant("int_vec")
@@ -170,7 +170,7 @@ test_that("can guess tibble columns", {
   )
 })
 
-test_that("respect empty_list_unspecified in tibble columns", {
+test_that("respect empty_list_unspecified in tibble columns (#95)", {
   x <- tibble(x = tibble(int_vec = list(1:2, list())))
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = FALSE),
@@ -290,7 +290,7 @@ test_that("can guess list of tibble columns", {
   )
 })
 
-test_that("respect empty_list_unspecified for list of tibble columns", {
+test_that("respect empty_list_unspecified for list of tibble columns (#95)", {
   x <- tibble(x = list(tibble(int_vec = list(1:2, list()))))
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = FALSE),
@@ -411,7 +411,7 @@ test_that("can guess spec for nested list of df columns", {
 
 # edge cases --------------------------------------------------------------
 
-test_that("can guess 0 row tibbles", {
+test_that("can guess 0 row tibbles (#79, #80)", {
   expect_equal(
     guess_tspec_df(
       tibble(

@@ -200,7 +200,7 @@
     Output
       tib_date_vec("date")
 
-# format for tib_chr_date works
+# format for tib_chr_date works (#47)
 
     Code
       tib_chr_date("a")
@@ -364,7 +364,7 @@
         tib_chr("text"),
       )
 
-# format for tib_recursive works
+# format for tib_recursive works (#155)
 
     Code
       print(tib_recursive("data", .children = "children", tib_int("id"), tib_chr(
@@ -402,7 +402,7 @@
     Output
       [1] "tspec_df(\n  b = tib_int(c(\"a\", \"b\")),\n)"
 
-# can force to print canonical names
+# can force to print canonical names (#98)
 
     Code
       format(tspec_df(a = tib_int("a"), b = tib_df("b", x = tib_int("x"))))

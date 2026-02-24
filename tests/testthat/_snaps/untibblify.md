@@ -1,4 +1,4 @@
-# checks input
+# checks input (#49)
 
     Code
       (expect_error(untibblify(1:3)))

@@ -36,7 +36,7 @@ test_that("POSIXlt is converted to POSIXct", {
   )
 })
 
-test_that("respect empty_list_unspecified for scalar elements", {
+test_that("respect empty_list_unspecified for scalar elements (#83, #95)", {
   x <- list(x = 1L, list())
   expect_equal(
     guess_ol_field(x, empty_list_unspecified = FALSE),
@@ -76,7 +76,7 @@ test_that("can guess vector elements", {
   )
 })
 
-test_that("respect empty_list_unspecified for vector elements", {
+test_that("respect empty_list_unspecified for vector elements (#95)", {
   expect_equal(
     guess_ol_field(list(x = 1:2, list()), empty_list_unspecified = FALSE),
     tib_variant("x")
@@ -92,7 +92,7 @@ test_that("respect empty_list_unspecified for vector elements", {
   )
 })
 
-test_that("can guess vector input form", {
+test_that("can guess vector input form (#94)", {
   expect_equal(
     guess_ol_field(
       list(list(1, 2), list()),
@@ -122,7 +122,7 @@ test_that("can guess vector input form", {
   )
 })
 
-test_that("can guess object input form", {
+test_that("can guess object input form (#94)", {
   # there need to be enough different elements to be recognized as .input_form = "object"
   # TODO should ask the user?
   skip("improve guessing logic")
@@ -153,7 +153,7 @@ test_that("can guess tib_variant", {
   )
 })
 
-test_that("can handle non-vector elements", {
+test_that("can handle non-vector elements (#76, #84)", {
   model <- lm(Sepal.Length ~ Sepal.Width, data = iris)
   expect_equal(
     guess_ol_field(list(model, 1L)),
@@ -178,7 +178,7 @@ test_that("can guess object elements", {
   )
 })
 
-test_that("respect empty_list_unspecified for object elements", {
+test_that("respect empty_list_unspecified for object elements (#95)", {
   x <- list(list(x = list(y = 1:2)), list(x = list(y = list())))
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = FALSE),

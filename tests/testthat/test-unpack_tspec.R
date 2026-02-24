@@ -1,4 +1,4 @@
-test_that("can unpack spec", {
+test_that("can unpack spec (#165)", {
   spec <- tspec_df(
     tib_lgl("a"),
     tib_row("x", tib_int("b"), tib_chr("c"))
@@ -27,7 +27,7 @@ test_that("can unpack spec", {
   )
 })
 
-test_that("can use names_sep", {
+test_that("can use names_sep (#165)", {
   spec <- tspec_df(
     tib_lgl("a"),
     tib_row("x", tib_int("b"), tib_chr("c"))
@@ -43,7 +43,7 @@ test_that("can use names_sep", {
   )
 })
 
-test_that("can recursively unpack", {
+test_that("can recursively unpack (#165)", {
   spec <- tspec_df(
     tib_lgl("a"),
     tib_row(
@@ -75,7 +75,7 @@ test_that("can recursively unpack", {
   )
 })
 
-test_that("only unpack field in `fields`", {
+test_that("only unpack field in `fields` (#165)", {
   spec <- tspec_df(
     tib_lgl("a"),
     tib_row("x", tib_int("b")),
@@ -125,7 +125,7 @@ test_that("only unpack field in `fields`", {
   )
 })
 
-test_that("names are repaired", {
+test_that("names are repaired (#165)", {
   spec <- tspec_df(
     tib_lgl("a"),
     tib_row("x", tib_int("a")),
@@ -150,7 +150,7 @@ test_that("names are repaired", {
   })
 })
 
-test_that("names are cleaned", {
+test_that("names are cleaned (#165, #166)", {
   spec <- tspec_df(
     tib_int("someId"),
     tib_row("aRow", tib_int("subId"))

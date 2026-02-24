@@ -1,4 +1,4 @@
-# informing about unspecified looks good
+# informing about unspecified looks good (#38)
 
     Code
       .spec_inform_unspecified(spec)
