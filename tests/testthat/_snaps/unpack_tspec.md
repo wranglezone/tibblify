@@ -1,4 +1,4 @@
-# only unpack field in `fields`
+# only unpack field in `fields` (#165)
 
     Code
       (expect_error(unpack_tspec(spec, fields = "not-there")))
@@ -15,7 +15,7 @@
       ! Can't unpack fields that don't exist.
       Fields not-there and also-not-there don't exist.
 
-# names are repaired
+# names are repaired (#165)
 
     Code
       (expect_error(unpack_tspec(spec, names_repair = "minimal")))

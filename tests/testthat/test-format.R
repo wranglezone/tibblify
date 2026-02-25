@@ -104,7 +104,7 @@ test_that("format for tib_vector works", {
   })
 })
 
-test_that("format for tib_chr_date works", {
+test_that("format for tib_chr_date works (#47)", {
   expect_snapshot({
     tib_chr_date("a")
     tib_chr_date("a", .required = FALSE, .fill = "2022-01-01", .format = "%Y")
@@ -220,7 +220,7 @@ test_that("format for tib_df works", {
   )
 })
 
-test_that("format for tib_recursive works", {
+test_that("format for tib_recursive works (#155)", {
   local_options(cli.num_colors = 1)
   expect_snapshot(
     tib_recursive(
@@ -251,7 +251,7 @@ test_that("prints non-canonical names", {
   })
 })
 
-test_that("can force to print canonical names", {
+test_that("can force to print canonical names (#98)", {
   withr::local_options(list(tibblify.print_names = TRUE))
 
   expect_snapshot(format(
@@ -280,7 +280,7 @@ test_that("format for empty tib_df works", {
   expect_equal(format(tib_row("x")), "tib_row(\n  \"x\",\n)")
 })
 
-test_that("prints arguments of spec_*", {
+test_that("prints arguments of spec_* (#95)", {
   expect_equal(
     format(tspec_df(tib_int("a"), .input_form = "colmajor")),
     'tspec_df(\n  .input_form = "colmajor",\n  tib_int("a"),\n)'
@@ -297,7 +297,7 @@ test_that("prints arguments of spec_*", {
   )
 })
 
-test_that("prints arguments of tspec_recursive", {
+test_that("prints arguments of tspec_recursive (#155)", {
   expect_equal(
     format(tspec_recursive(tib_int("a"), .children = "children")),
     'tspec_recursive(\n  .children = "children",\n  tib_int("a"),\n)'

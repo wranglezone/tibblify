@@ -63,7 +63,7 @@
 #' out$children
 #' out$children[[1]]$children[[2]]
 tibblify <- function(x, spec = NULL, unspecified = NULL) {
-  withr::local_locale(c(LC_COLLATE = "C"))
+  withr::local_collate("C")
 
   if (is.null(spec)) {
     spec <- guess_tspec(x, inform_unspecified = TRUE)

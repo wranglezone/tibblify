@@ -16,7 +16,7 @@ test_that("can guess spec for gh_repos", {
   expect_snapshot(guess_tspec(gh_repos) |> print())
 })
 
-test_that("can guess spec for got_chars", {
+test_that("can guess spec for got_chars (#83)", {
   spec <- guess_tspec(got_chars)
   expect_snapshot(spec)
   expect_equal(spec$fields$aliases, tib_variant("aliases"))
