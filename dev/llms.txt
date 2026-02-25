@@ -80,10 +80,12 @@ Learn more in
   [`jsonlite::fromJSON()`](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)
   is excellent for parsing JSON, but `tibblify` allows for strict
   specifications and can be faster for complex nested lists.
-- [tidyr](https://tidyr.tidyverse.org/): `tidyr::hoist()` and
-  `tidyr::unnest_longer()` allow for step-by-step rectangling.
-  `tibblify` aims to rectangle the data in a single step based on a
-  schema.
+- [tidyr](https://tidyr.tidyverse.org/):
+  [`tidyr::hoist()`](https://tidyr.tidyverse.org/reference/hoist.html)
+  and
+  [`tidyr::unnest_longer()`](https://tidyr.tidyverse.org/reference/unnest_longer.html)
+  allow for step-by-step rectangling. `tibblify` aims to rectangle the
+  data in a single step based on a schema.
 - [rrapply](https://jorischau.github.io/rrapply/): Provides extended
   functionality for applying functions to nested lists, and can also be
   used to melt or prune lists.

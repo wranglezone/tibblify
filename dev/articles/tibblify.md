@@ -362,8 +362,9 @@ tibblify(gh_repos_small, spec)
 ```
 
 If you don’t like the tibble column you can unpack it with
-`tidyr::unpack()`. Alternatively, if you only want to extract some of
-the fields in `owner` you can use a character vector path.
+[`tidyr::unpack()`](https://tidyr.tidyverse.org/reference/pack.html).
+Alternatively, if you only want to extract some of the fields in `owner`
+you can use a character vector path.
 
 ``` r
 spec2 <- tspec_df(

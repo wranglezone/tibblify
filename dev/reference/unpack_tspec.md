@@ -1,8 +1,9 @@
 # Unpack a tibblify specification
 
-`tidyr::unpack()` makes data wider by expanding df-columns into
-individual columns. Analogously, unpacking a tibblify specification
-makes a specification which will result in a wider tibble by expanding
+[`tidyr::unpack()`](https://tidyr.tidyverse.org/reference/pack.html)
+makes data wider by expanding df-columns into individual columns.
+Analogously, unpacking a tibblify specification makes a specification
+which will result in a wider tibble by expanding
 [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
 specifications into their individual fields.
 
