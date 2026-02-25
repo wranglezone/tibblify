@@ -1124,13 +1124,13 @@ test_that("empty spec tibblifies", {
 
 test_that("tibblify does not confuse key order due to case (#96)", {
   skip_on_cran()
-  withr::local_locale(c(LC_COLLATE = "en_US.UTF-8"))
+  withr::local_collate("en_US.UTF-8")
   spec <- tspec_object(
     B = tib_int("B", .required = FALSE),
     a = tib_int("a", .required = FALSE),
   )
   expect_equal(
-    tibblify::tibblify(list(B = 1), spec),
+    tibblify(list(B = 1), spec),
     structure(list(B = 1, a = NA_integer_), class = "tibblify_object")
   )
 })
