@@ -22,4 +22,4 @@
 ^\.covrignore$
 ^AGENTS\.md$
 ^\.positai$
-conversation-export.*\.json
+^conversation-export.*\.json$

@@ -23,12 +23,9 @@ devtools::test(reporter = "check")
 
 # Single file
 devtools::test(filter = "name", reporter = "check")
-
-# Quick interactive check (testing functions load code automatically —
-# no need to call library() or devtools::load_all() separately)
-devtools::load_all()
-expect_equal(my_function(1), 1)
 ```
+
+Testing functions load code automatically. You do not need to call `library()` or `devtools::load_all()` separately.
 
 ## Coverage
 
@@ -92,7 +89,7 @@ test_that("errors if there are detached parts of the tree (#456)", {
   expect_snapshot({
     (expect_error(
       nest_tree(df, id, parent, children_to = "children"),
-      class = "tibblify-error-detached_tree_parts"
+      class = "tibblify_error-detached_tree_parts"
     ))
   })
 })
