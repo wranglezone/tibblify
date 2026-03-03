@@ -11,12 +11,6 @@ description: Document package functions. Use when asked to document functions.
 - Use sentence case for all headings.
 - Files matching `R/import-standalone-*.R` are imported from other packages and have their own conventions. Do not modify their documentation.
 
-## Parameter naming
-
-Dot-prefix parameter names (`.key`, `.ptype`, `.required`) to avoid collisions with column names passed through `...`. This convention is being standardized package-wide; use it for new or updated functions even if the function doesn't currently use `...`.
-
-Exceptions: common tidyverse-style parameters like `x`, `spec`, or `name` in contexts where collision is unlikely. When in doubt, use the dot prefix.
-
 ## Shared parameters
 
 **Parameters used in more than one function** go in `R/aaa-shared_params.R` under `@name .shared-params`. Functions inherit them with `@inheritParams .shared-params`. See @R/aaa-shared_params.R for current definitions.
