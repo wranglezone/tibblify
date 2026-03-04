@@ -4,9 +4,11 @@
 #include "utils.h"
 #include "r-vctrs.h"
 
+// See finalize.h for documentation.
 r_obj* finalize_atomic_scalar(struct collector* v_collector) {
   r_obj* data = v_collector->data;
-  if (v_collector->transform != r_null) data = apply_transform(data, v_collector->transform);
+  if (v_collector->transform != r_null)
+    data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
   data = rvctrs_vec_cast(data, v_collector->ptype);
@@ -14,17 +16,20 @@ r_obj* finalize_atomic_scalar(struct collector* v_collector) {
   return data;
 }
 
+// See finalize.h for documentation.
 r_obj* finalize_scalar(struct collector* v_collector) {
   r_obj* data = v_collector->data;
   // non-atomic scalars are collected in a list. Therefore, they need to be
   // flattened into a vector. In colmajor format the data is already in
   // vector form, so no need to flatten.
   if (v_collector->rowmajor) {
-    data = rvctrs_list_unchop(v_collector->data, v_collector->details.vec_coll.ptype_inner);
+    data = rvctrs_list_unchop(v_collector->data,
+                              v_collector->details.vec_coll.ptype_inner);
   }
   KEEP(data);
 
-  if (v_collector->transform != r_null) data = apply_transform(data, v_collector->transform);
+  if (v_collector->transform != r_null)
+    data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
   r_obj* value_cast = rvctrs_vec_cast(data, v_collector->ptype);
@@ -32,9 +37,11 @@ r_obj* finalize_scalar(struct collector* v_collector) {
   return value_cast;
 }
 
+// See finalize.h for documentation.
 r_obj* finalize_vector(struct collector* v_collector) {
   r_obj* data = v_collector->data;
-  if (v_collector->transform != r_null) data = apply_transform(data, v_collector->transform);
+  if (v_collector->transform != r_null)
+    data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
   r_poke_list_of(data, v_collector->details.vec_coll.list_of_ptype);
@@ -42,17 +49,21 @@ r_obj* finalize_vector(struct collector* v_collector) {
   return data;
 }
 
+// See finalize.h for documentation.
 r_obj* finalize_variant(struct collector* v_collector) {
   r_obj* data = v_collector->data;
-  if (v_collector->transform != r_null) data = apply_transform(data, v_collector->transform);
+  if (v_collector->transform != r_null)
+    data = apply_transform(data, v_collector->transform);
 
   return data;
 }
 
+// See finalize.h for documentation.
 r_obj* finalize_row(struct collector* v_collector) {
   struct multi_collector* p_multi_coll = &v_collector->details.multi_coll;
   r_ssize n_cols = p_multi_coll->n_cols;
-  r_obj* df = KEEP(alloc_df(p_multi_coll->n_rows, n_cols, p_multi_coll->col_names));
+  r_obj* df = KEEP(alloc_df(p_multi_coll->n_rows, n_cols,
+                            p_multi_coll->col_names));
 
   struct collector* v_collectors = p_multi_coll->collectors;
   for (r_ssize i = 0; i < p_multi_coll->n_keys; ++i) {
@@ -68,6 +79,7 @@ r_obj* finalize_row(struct collector* v_collector) {
   return df;
 }
 
+// See finalize.h for documentation.
 r_obj* finalize_df(struct collector* v_collector) {
   r_obj* data = v_collector->data;
 
@@ -78,6 +90,7 @@ r_obj* finalize_df(struct collector* v_collector) {
   return data;
 }
 
+// See finalize.h for documentation.
 r_obj* finalize_recursive(struct collector* v_collector) {
   return v_collector->data;
 }

@@ -23,3 +23,4 @@
 ^AGENTS\.md$
 ^\.positai$
 ^conversation-export.*\.json$
+^\.claude$
