@@ -1,6 +1,6 @@
 ---
 name: tdd-workflow
-description: Test-driven development workflow for tibblify. Use when writing any R code: writing new features, fixing bugs, refactoring, or reviewing tests.
+description: Test-driven development workflow for tibblify. Use when writing any R code (writing new features, fixing bugs, refactoring, or reviewing tests).
 ---
 
 # TDD workflow for tibblify
