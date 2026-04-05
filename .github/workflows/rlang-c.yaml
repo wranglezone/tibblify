@@ -67,8 +67,9 @@ jobs:
 
       - name: Update vendored rlang sources
         shell: Rscript {0}
+        env:
+          RLANG_LIB_NO_PROMPT: true
         run: |
-          unlink("src/rlang", recursive = TRUE)
           rlang:::use_rlang_c_library()
 
       - name: Check for changes
