@@ -21,7 +21,7 @@ If `gh` is not authenticated, stop and ask the user to authenticate before conti
 
 **B. Check/create the branch:**
 
-- If on `main`: `usethis::pr_init("fix-{number}-{description}")`
+- If on `main`: `git checkout -b fix-{number}-{description}` (run in the shell)
 - Branch format: `fix-{number}-{description}`
   - Parts separated by hyphens; `{description}` uses snake_case
   - Example: `fix-279-ai_infrastructure`
