@@ -21,6 +21,10 @@
 untibblify <- function(x, spec = NULL) {
   call <- current_call()
 
+  if (is.null(spec)) {
+    spec <- get_spec(x)
+  }
+
   if (is.data.frame(x)) {
     untibblify_df(x, spec, call)
   } else if (vctrs::vec_is_list(x)) {
@@ -33,15 +37,6 @@ untibblify <- function(x, spec = NULL) {
 }
 
 untibblify_df <- function(x, spec, call) {
-  if (is.null(spec)) {
-    idx <- seq_len(vctrs::vec_size(x))
-    out <- purrr::map(
-      idx,
-      ~ untibblify_row(vctrs::vec_slice(x, .x), spec, call)
-    )
-    return(out)
-  }
-
   idx <- seq_len(vctrs::vec_size(x))
   purrr::map(idx, ~ untibblify_row(vctrs::vec_slice(x, .x), spec, call))
 }
@@ -50,7 +45,6 @@ untibblify_row <- function(x, spec, call) {
   if (!is.null(spec)) {
     x <- apply_spec_renaming(x, spec)
   }
-  # browser()
 
   out <- as.list(x)
   fields <- spec$fields
