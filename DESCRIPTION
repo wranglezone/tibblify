@@ -25,11 +25,13 @@ Imports:
     lifecycle,
     purrr (>= 1.0.2),
     rlang (>= 1.1.0),
+    stbl,
     tibble (>= 3.2.1),
     tidyselect (>= 1.2.0),
     vctrs (>= 0.7.2),
     withr (>= 2.5.2)
 Suggests:
+    astgrepr,
     covr (>= 3.6.1),
     jsonlite (>= 1.8.0),
     knitr (>= 1.40),
