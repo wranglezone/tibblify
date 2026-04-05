@@ -1,5 +1,5 @@
 # Workflow derived from
-# https://github.com/Gilead-BioStats/qcthat/tree/v1.1.0/inst/workflows/qcthat.yaml.
+# https://github.com/Gilead-BioStats/qcthat/tree/v1.1.1/inst/workflows/qcthat.yaml.
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize, milestoned]
@@ -48,22 +48,21 @@ env:
 jobs:
   qcthat:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/api2r/pkgskills-ci:release
     if: >-
       (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'qcthat-uat')) ||
       github.event_name != 'issues'
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
-      - uses: r-lib/actions/setup-r@v2
+      - uses: ./.github/workflows/install
         with:
-          use-public-rspm: true
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: Gilead-BioStats/qcthat@dev
+          use-container: "true"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          extra-packages: Gilead-BioStats/qcthat@main local::.
 
       - name: Manage User Acceptance Testing
         if: >-
@@ -77,7 +76,6 @@ jobs:
       - name: Generate Issue-Test Matrix
         if: >-
           (env.qcthat_PR_REPORT == 'true' || env.qcthat_RELEASE_REPORT == 'true' || env.qcthat_FAIL_FOR_TEST_FAILURES == 'true') && (
-            github.event_name == 'push' ||
             github.event_name == 'pull_request' ||
             github.event_name == 'release' ||
             (github.event_name == 'workflow_dispatch' && inputs.issueNumber == '')
@@ -144,7 +142,6 @@ jobs:
       - name: Flag failure for completed
         if: >-
           env.qcthat_FAIL_FOR_TEST_FAILURES == 'true' && (
-            github.event_name == 'push' ||
             github.event_name == 'pull_request' ||
             github.event_name == 'release' ||
             (github.event_name == 'workflow_dispatch' && inputs.issueNumber == '')

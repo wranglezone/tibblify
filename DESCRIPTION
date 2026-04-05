@@ -30,6 +30,7 @@ Imports:
     vctrs (>= 0.7.2),
     withr (>= 2.5.2)
 Suggests:
+    astgrepr,
     covr (>= 3.6.1),
     jsonlite (>= 1.8.0),
     knitr (>= 1.40),

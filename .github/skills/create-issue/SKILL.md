@@ -1,5 +1,6 @@
 ---
 name: create-issue
+trigger: create GitHub issues
 description: Creates GitHub issues for the package repository. Use when asked to create, file, or open a GitHub issue, or when planning new features or functions that need to be tracked.
 compatibility: Requires the `gh` CLI and an authenticated GitHub session.
 ---
@@ -10,16 +11,29 @@ Use `gh api graphql` with the `createIssue` mutation to create issues. This sets
 
 If `gh` is not authenticated, stop and ask the user to authenticate before continuing.
 
+## Looking up IDs
+
+The hardcoded IDs below are correct for this repo as of 2026-04-05 18:08:30 UTC. If they ever change, or if you're working in a fork, re-run these queries to get fresh values:
+
+```bash
+# Repository node ID
+gh api graphql -f query='{ repository(owner: "wranglezone", name: "tibblify") { id } }'
+
+# Available issue type IDs
+gh api graphql -f query='{ repository(owner: "wranglezone", name: "tibblify") { issueTypes(first: 20) { nodes { id name description } } } }'
+```
+
 ## Issue type
 
 Choose the type that best fits the issue:
 
 | Type | ID | Use for |
 |---|---|---|
-| Feature | `IT_kwDODjbzj84BwJRW` | New exported functions or capabilities |
-| Bug | `IT_kwDODjbzj84BwJRV` | Something broken or incorrect |
-| Documentation | `IT_kwDODjbzj84BwprI` | Docs-only changes |
-| Task | `IT_kwDODjbzj84BwJRU` | Maintenance, refactoring, chores |
+| Task | `IT_kwDODjbzj84BwJRU` | A specific piece of work |
+| Bug | `IT_kwDODjbzj84BwJRV` | An unexpected problem or behavior |
+| Feature | `IT_kwDODjbzj84BwJRW` | A request, idea, or new functionality |
+| Documentation | `IT_kwDODjbzj84BwprI` | An update to help, vignettes, etc. |
+| Infrastructure | `IT_kwDODjbzj84B5OM3` | Infrastructure of a project, like GitHub Actions |
 
 ## Issue title
 
@@ -55,12 +69,12 @@ Example:
 ```markdown
 ## Summary
 
-> As a tibblify user, in order to handle optional fields gracefully, I would like `tib_chr()` to accept a `.default` argument.
+> As a package developer, in order to set up agent skills quickly, I would like to generate a skill template from a single function call.
 ```
 
 ### `## Details` (optional, all types)
 
-For information that's important to capture but doesn't fit naturally into any other section. Use sparingly — if the content belongs in `## Behavior`, `## Proposed signature`, or `## References`, put it there instead.
+For information that's important to capture but doesn't fit naturally into any other section, including implementation details such as packages to add to `Imports` in `DESCRIPTION` or files to add to `inst`. Use sparingly — if the content belongs in `## Behavior`, `## Proposed signature`, or `## References`, put it there instead.
 
 ### `## Proposed signature` (Feature only)
 
@@ -93,8 +107,6 @@ Only include when there are specific reference implementations, external URLs, o
 ## Creating the issue
 
 Use the `repoId` and the `typeId` for the chosen issue type from the table above.
-If the mutation fails with an ID-related error, load
-`@references/lookup-ids.md` to re-query the correct values.
 
 ```bash
 gh api graphql \

@@ -1,13 +1,13 @@
 ---
 name: implement-issue
+trigger: implement issue / work on #NNN
 description: Implements a GitHub issue end-to-end. Use when asked to implement, work on, or fix a specific issue number.
 compatibility: Requires the `gh` CLI and an authenticated GitHub session.
 ---
 
 # Implement a GitHub issue
 
-This skill wraps the Standard Workflow defined in `AGENTS.md`. Run the steps
-below before and after that workflow.
+This skill wraps the Standard Workflow defined in `AGENTS.md`. Run the steps below before and after that workflow.
 
 ## Before the standard workflow
 
@@ -21,10 +21,10 @@ If `gh` is not authenticated, stop and ask the user to authenticate before conti
 
 **B. Check/create the branch:**
 
-- If on `main`: `git checkout -b fix-{number}-{description}` (run in the shell)
+- If on `main`: `usethis::pr_init("fix-{number}-{description}")`
 - Branch format: `fix-{number}-{description}`
   - Parts separated by hyphens; `{description}` uses snake_case
-  - Example: `fix-279-ai_infrastructure`
+  - Example: `fix-42-validate_input`
 - If a branch already exists for this issue, check it out instead
 
 ## Run the Standard Workflow from AGENTS.md
@@ -35,8 +35,7 @@ Steps 1–9 of the Standard Workflow are the core development loop.
 
 **C. Commit and push:**
 
-1. Review commits already on this branch (not on `main`) — these are all part
-   of the same PR and should inform the PR description:
+1. Review commits already on this branch (not on `main`) — these are all part of the same PR and should inform the PR description:
    ```bash
    git log main..HEAD --oneline
    ```
@@ -49,9 +48,6 @@ Steps 1–9 of the Standard Workflow are the core development loop.
    ```bash
    gh pr create --fill
    ```
-   Use `--title` and `--body` explicitly if `--fill` produces an inadequate
-   description.
+   Use `--title` and `--body` explicitly if `--fill` produces an inadequate description.
 
-This step may be overridden — the user may ask you to stop before committing,
-handle the push themselves, or complete only part of the workflow. Always follow
-explicit user instructions over these defaults.
+This step may be overridden — the user may ask you to stop before committing, handle the push themselves, or complete only part of the workflow. Always follow explicit user instructions over these defaults.
