@@ -11,12 +11,13 @@
 #include <vctrs.h>
 
 /**
- * Allocate a shared (non-garbage-collected) R vector.
+ * Allocate a shared R vector.
  *
- * Used to create permanent R objects (e.g., class strings, symbols) that must
- * persist for the lifetime of the package. The returned object is not
- * protected by the R garbage collector and must be preserved with
- * `r_preserve_global()` or similar before use.
+ * Used to create R objects (e.g., class strings, symbols) that may need to
+ * persist for the lifetime of the package. The returned object is still
+ * managed by R's garbage collector, but it is not PROTECTed. Callers must
+ * `PROTECT()` it for local use or preserve it with `r_preserve_global()` for
+ * permanent retention.
  *
  * @param type The R type (`SEXPTYPE`) of the vector.
  * @param n The length of the vector.
