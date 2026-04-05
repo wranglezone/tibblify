@@ -57,17 +57,6 @@ r_obj* finalize_variant(struct collector* v_collector);
 r_obj* finalize_row(struct collector* v_collector);
 
 /**
- * Finalize a sub-collector.
- *
- * Alias for `finalize_row()`; sub-collectors unpack their columns into the
- * parent data frame rather than nesting them.
- *
- * @param v_collector The collector to finalize.
- * @return A tibble whose columns will be unpacked into the parent.
- */
-r_obj* finalize_sub(struct collector* v_collector);
-
-/**
  * Finalize a df collector into a `list_of` column.
  *
  * Attaches the row ptype as the `list_of` attribute so the column is typed.
