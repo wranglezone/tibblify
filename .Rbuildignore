@@ -24,3 +24,4 @@
 ^\.positai$
 ^conversation-export.*\.json$
 ^\.claude$
+^src/rlang/decl/\.clangd$
