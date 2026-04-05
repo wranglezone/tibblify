@@ -40,63 +40,70 @@
 <div id="agentsmd" class="section level1">
 
 <div class="section level2">
-<h2 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a></h2>
-<p>{tibblify} is an R package that rectangles nested lists. It converts deeply nested R lists (e.g., parsed JSON) into tibbles. Users provide a <em>spec</em> describing the expected structure (a <code><a href="reference/tspec_df.html">tspec_df()</a></code> containing <code>tib_*()</code> collectors); tibblify traverses the list and fills those collectors.</p>
-<p>Key architecture: - <strong>R layer</strong> (<code>R/</code>): spec construction, guessing (<code><a href="reference/guess_tspec.html">guess_tspec()</a></code>), and the user-facing API (<code><a href="reference/tibblify.html">tibblify()</a></code>, <code><a href="reference/untibblify.html">untibblify()</a></code>, etc.). - <strong>C layer</strong> (<code>src/</code>): high-performance parsing; called from R via <code><a href="https://rdrr.io/r/base/CallExternal.html" class="external-link">.Call()</a></code>. - <strong>Vendored rlang</strong> (<code>src/rlang/</code>): read-only C API; updated by the <code>rlang-c.yaml</code> workflow — do not edit directly. - <strong>Tests</strong> (<code>tests/testthat/</code>): 100% file-level coverage goal.</p>
+<h2 id="repository-overview">Repository overview<a class="anchor" aria-label="anchor" href="#repository-overview"></a></h2>
+<p><strong>tibblify</strong> — Rectangle Nested Lists</p>
+<p>A tool to rectangle a nested list, that is to convert it into a tibble. This is done automatically or according to a given specification. A common use case is for nested lists coming from parsing ‘JSON’ files, or the ‘JSON’ responses of ‘REST’ ‘APIs’. Rectangling uses the ‘vctrs’ package, and therefore offers a wide support of vector types.</p>
+<p>pkgdown site: <a href="https://tibblify.wrangle.zone" class="uri">https://tibblify.wrangle.zone</a> source repo: <a href="https://github.com/wranglezone/tibblify" class="external-link uri">https://github.com/wranglezone/tibblify</a></p>
+<div class="section level3">
+<h3 id="overall-structure">Overall structure<a class="anchor" aria-label="anchor" href="#overall-structure"></a></h3>
+<p>The project follows standard R package conventions with these key directories:</p>
+<p>tibblify/ ├── R/ # R source code │ ├── tibblify-package.R # Auto-generated package docs │ └── *.R # Function definitions, 1 file ~= 1 exported function ├── tests/testthat/ # Test suite ├── .github/ │ ├── ISSUE_TEMPLATE/ # GitHub issue templates │ ├── skills/ # Agent skill definitions │ └── workflows/ # CI/CD configurations ├── src/ # C source code │ └── rlang/ # Vendored helpers from the rlang package ├── man/ # Generated documentation ├── AGENTS.md # Main agent setup file ├── DESCRIPTION # Package metadata ├── NAMESPACE # Auto-generated export information ├── NEWS.md # Changelog └── Various config files # .gitignore, codecov.yml, etc.</p>
+<hr></div>
 </div>
 <div class="section level2">
 <h2 id="standard-workflow">Standard workflow<a class="anchor" aria-label="anchor" href="#standard-workflow"></a></h2>
 <p>For any feature, fix, or refactor:</p>
-<ol style="list-style-type: decimal"><li><p><strong>Update packages</strong>: <code><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak::pak()</a></code></p></li>
-<li><p><strong>Run existing tests</strong> — confirm everything passes before touching code: <code>devtools::test(reporter = "check")</code> If any tests fail, stop and ask the user how to proceed.</p></li>
-<li><p><strong>Plan</strong> — identify which R and C files are affected; check whether new exported functions are needed (→ r-code skill) or C changes are required (→ c-code skill)</p></li>
-<li><p><strong>Test first</strong> — write a failing test, then implement (→ tdd-workflow skill): <code>devtools::test(filter = "name", reporter = "check")</code> — should fail</p></li>
-<li><p><strong>Implement</strong> — minimal code to make the tests pass</p></li>
-<li><p><strong>Refactor</strong> — clean up while keeping all tests green</p></li>
-<li><p><strong>Document</strong> — for any new or changed exported functions, use the document skill</p></li>
-<li>
-<p><strong>Verify</strong>:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span>reporter <span class="op">=</span> <span class="st">"check"</span><span class="op">)</span></span>
-<span><span class="va">covr_res</span> <span class="op">&lt;-</span> <span class="fu">devtools</span><span class="fu">:::</span><span class="fu">test_coverage_active_file</span><span class="op">(</span><span class="st">"R/file_name.R"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_int</a></span><span class="op">(</span><span class="va">covr_res</span>, <span class="st">"value"</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p>Then run <code>air format .</code> Once, just before wrapping up: <code>devtools::check(error_on = "warning")</code>. Warnings and errors must be resolved. NOTEs should be resolved too, with one exception: “Compiled code should not call non-API entry points in R” is a known issue being addressed progressively (primarily via rlang’s efforts) — leave it alone.</p>
+<ol style="list-style-type: decimal"><li>
+<strong>Update packages</strong>: <code><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak::pak()</a></code>
 </li>
 <li>
-<p><strong>News</strong> — add a bullet at the top of <code>NEWS.md</code> (under the development version heading). Rules:</p>
-<ul><li>Only for user-facing changes; skip purely internal changes.</li>
-<li>One line per bullet; end with a full stop.</li>
-<li>Write for users, not developers. Frame positively, present tense: <code>* \</code>tib_chr()` now accepts …<code>not</code>* Fixed a bug where …`</li>
-<li>Put the function name (in backticks with <code>()</code>) near the start.</li>
-<li>Issue number and contributor go in parentheses before the final period: <code>* \</code>tib_chr()` now accepts … (@{username}, #{issue_number}).`</li>
-<li>Get username: <code>gh api user --jq .login</code>
+<strong>Run tests</strong> — confirm passing before changes: <code>devtools::test(reporter = "check")</code>. If any fail, stop and ask.</li>
+<li>
+<strong>Plan</strong> — identify affected R files; check if new exports are needed.</li>
+<li>
+<strong>Test first</strong> — write failing test, then implement: <code>devtools::test(filter = "name", reporter = "check")</code>.</li>
+<li>
+<strong>Implement</strong> — minimal code to pass tests.</li>
+<li>
+<strong>Refactor</strong> — clean up, keep tests green.</li>
+<li>
+<strong>Document</strong> — document any new or changed exports.</li>
+<li>
+<strong>Verify</strong>: Run <code>devtools::test(reporter = "check")</code>, then <code>devtools::check(error_on = "warning")</code>. Resolve warnings, errors, and NOTEs.</li>
+<li>
+<strong>News</strong> — add bullet at top of <code>NEWS.md</code> (under dev heading):
+<ul><li>User-facing changes only. 1 line, end with <code>.</code>
 </li>
+<li>Present tense, positive framing, function names (backticks + <code>()</code>) near start: <code>* `fn()` now accepts ...</code> not <code>* Fixed ...</code>
+</li>
+<li>Issue/contributor before final period: <code>* `fn()` now accepts ... (@user, #N).</code> where <code>#N</code> is the GitHub issue number being implemented (e.g. <code>#42</code>).</li>
+<li>Get username: <code>gh api user --jq .login</code>; get issue number from the user’s prompt, the branch name (<code>git branch --show-current</code>), or <code>gh issue list</code>.</li>
+<li>
+<strong>Never guess or invent an issue number.</strong> Before writing it, verify: (1) you received it from the user or the branch name, OR (2) you looked it up with <code>gh</code>. If you cannot trace the number to a concrete source, use <code>#noissue</code>.</li>
 </ul></li>
-</ol></div>
+</ol><hr></div>
 <div class="section level2">
 <h2 id="general">General<a class="anchor" aria-label="anchor" href="#general"></a></h2>
-<ul><li>When running R from the console, use <code>--quiet --vanilla</code>.</li>
+<ul><li>R console: use <code>--quiet --vanilla</code>.</li>
 <li>Always run <code>air format .</code> after generating R code.</li>
-<li>Code comments should explain <em>why</em>, not <em>what</em>. Omit comments that restate the code.</li>
-<li>When writing or reviewing any code, load the relevant skills (usually <code>r-code</code>, <code>tdd-workflow</code>, and <code>document</code>).</li>
+<li>Comments explain <em>why</em>, not <em>what</em>.</li>
 </ul></div>
 <div class="section level2">
 <h2 id="skills">Skills<a class="anchor" aria-label="anchor" href="#skills"></a></h2>
-<p>Load skills from @.github/skills when the user triggers them.</p>
-<table class="table"><colgroup><col width="51%"><col width="48%"></colgroup><thead><tr class="header"><th>Trigger</th>
+<table class="table"><colgroup><col width="62%"><col width="37%"></colgroup><thead><tr class="header"><th>Triggers</th>
 <th>Path</th>
-</tr></thead><tbody><tr class="odd"><td>tag tests with issues</td>
-<td>@.github/skills/tag-tests-with-issues/SKILL.md</td>
+</tr></thead><tbody><tr class="odd"><td>create GitHub issues</td>
+<td>@.github/skills/create-issue/SKILL.md</td>
 </tr><tr class="even"><td>document functions</td>
 <td>@.github/skills/document/SKILL.md</td>
-</tr><tr class="odd"><td>create a GitHub issue</td>
-<td>@.github/skills/create-issue/SKILL.md</td>
+</tr><tr class="odd"><td>from github</td>
+<td>@.github/skills/github/SKILL.md</td>
 </tr><tr class="even"><td>implement issue / work on #NNN</td>
 <td>@.github/skills/implement-issue/SKILL.md</td>
-</tr><tr class="odd"><td>edit files in src/ / C code</td>
-<td>@.github/skills/c-code/SKILL.md</td>
-</tr><tr class="even"><td>writing R functions / API design / error handling</td>
+</tr><tr class="odd"><td>writing R functions / API design / error handling</td>
 <td>@.github/skills/r-code/SKILL.md</td>
+</tr><tr class="even"><td>search / rewrite code</td>
+<td>@.github/skills/search-code/SKILL.md</td>
 </tr><tr class="odd"><td>writing or reviewing tests</td>
 <td>@.github/skills/tdd-workflow/SKILL.md</td>
 </tr></tbody></table></div>

@@ -1,24 +1,35 @@
 # AGENTS.md
 
-## Package overview
+## Repository overview
 
-{tibblify} is an R package that rectangles nested lists. It converts
-deeply nested R lists (e.g., parsed JSON) into tibbles. Users provide a
-*spec* describing the expected structure (a
-[`tspec_df()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
-containing `tib_*()` collectors); tibblify traverses the list and fills
-those collectors.
+**tibblify** — Rectangle Nested Lists
 
-Key architecture: - **R layer** (`R/`): spec construction, guessing
-([`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)),
-and the user-facing API
-([`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md),
-[`untibblify()`](https://tibblify.wrangle.zone/dev/reference/untibblify.md),
-etc.). - **C layer** (`src/`): high-performance parsing; called from R
-via [`.Call()`](https://rdrr.io/r/base/CallExternal.html). - **Vendored
-rlang** (`src/rlang/`): read-only C API; updated by the `rlang-c.yaml`
-workflow — do not edit directly. - **Tests** (`tests/testthat/`): 100%
-file-level coverage goal.
+A tool to rectangle a nested list, that is to convert it into a tibble.
+This is done automatically or according to a given specification. A
+common use case is for nested lists coming from parsing ‘JSON’ files, or
+the ‘JSON’ responses of ‘REST’ ‘APIs’. Rectangling uses the ‘vctrs’
+package, and therefore offers a wide support of vector types.
+
+pkgdown site: <https://tibblify.wrangle.zone> source repo:
+<https://github.com/wranglezone/tibblify>
+
+### Overall structure
+
+The project follows standard R package conventions with these key
+directories:
+
+tibblify/ ├── R/ \# R source code │ ├── tibblify-package.R \#
+Auto-generated package docs │ └── \*.R \# Function definitions, 1 file
+~= 1 exported function ├── tests/testthat/ \# Test suite ├── .github/ │
+├── ISSUE_TEMPLATE/ \# GitHub issue templates │ ├── skills/ \# Agent
+skill definitions │ └── workflows/ \# CI/CD configurations ├── src/ \# C
+source code │ └── rlang/ \# Vendored helpers from the rlang package ├──
+man/ \# Generated documentation ├── AGENTS.md \# Main agent setup file
+├── DESCRIPTION \# Package metadata ├── NAMESPACE \# Auto-generated
+export information ├── NEWS.md \# Changelog └── Various config files \#
+.gitignore, codecov.yml, etc.
+
+------------------------------------------------------------------------
 
 ## Standard workflow
 
@@ -26,73 +37,49 @@ For any feature, fix, or refactor:
 
 1.  **Update packages**:
     [`pak::pak()`](https://pak.r-lib.org/reference/pak.html)
+2.  **Run tests** — confirm passing before changes:
+    `devtools::test(reporter = "check")`. If any fail, stop and ask.
+3.  **Plan** — identify affected R files; check if new exports are
+    needed.
+4.  **Test first** — write failing test, then implement:
+    `devtools::test(filter = "name", reporter = "check")`.
+5.  **Implement** — minimal code to pass tests.
+6.  **Refactor** — clean up, keep tests green.
+7.  **Document** — document any new or changed exports.
+8.  **Verify**: Run `devtools::test(reporter = "check")`, then
+    `devtools::check(error_on = "warning")`. Resolve warnings, errors,
+    and NOTEs.
+9.  **News** — add bullet at top of `NEWS.md` (under dev heading):
+    - User-facing changes only. 1 line, end with `.`
+    - Present tense, positive framing, function names (backticks + `()`)
+      near start: `` * `fn()` now accepts ... `` not `* Fixed ...`
+    - Issue/contributor before final period:
+      `` * `fn()` now accepts ... (@user, #N). `` where `#N` is the
+      GitHub issue number being implemented (e.g. `#42`).
+    - Get username: `gh api user --jq .login`; get issue number from the
+      user’s prompt, the branch name (`git branch --show-current`), or
+      `gh issue list`.
+    - **Never guess or invent an issue number.** Before writing it,
+      verify: (1) you received it from the user or the branch name,
+      OR (2) you looked it up with `gh`. If you cannot trace the number
+      to a concrete source, use `#noissue`.
 
-2.  **Run existing tests** — confirm everything passes before touching
-    code: `devtools::test(reporter = "check")` If any tests fail, stop
-    and ask the user how to proceed.
-
-3.  **Plan** — identify which R and C files are affected; check whether
-    new exported functions are needed (→ r-code skill) or C changes are
-    required (→ c-code skill)
-
-4.  **Test first** — write a failing test, then implement (→
-    tdd-workflow skill):
-    `devtools::test(filter = "name", reporter = "check")` — should fail
-
-5.  **Implement** — minimal code to make the tests pass
-
-6.  **Refactor** — clean up while keeping all tests green
-
-7.  **Document** — for any new or changed exported functions, use the
-    document skill
-
-8.  **Verify**:
-
-    ``` r
-    devtools::test(reporter = "check")
-    covr_res <- devtools:::test_coverage_active_file("R/file_name.R")
-    which(purrr::map_int(covr_res, "value") == 0)
-    ```
-
-    Then run `air format .` Once, just before wrapping up:
-    `devtools::check(error_on = "warning")`. Warnings and errors must be
-    resolved. NOTEs should be resolved too, with one exception:
-    “Compiled code should not call non-API entry points in R” is a known
-    issue being addressed progressively (primarily via rlang’s efforts)
-    — leave it alone.
-
-9.  **News** — add a bullet at the top of `NEWS.md` (under the
-    development version heading). Rules:
-
-    - Only for user-facing changes; skip purely internal changes.
-    - One line per bullet; end with a full stop.
-    - Write for users, not developers. Frame positively, present tense:
-      `* \`tib_chr()\` now accepts …`not`\* Fixed a bug where …\`
-    - Put the function name (in backticks with `()`) near the start.
-    - Issue number and contributor go in parentheses before the final
-      period: `* \`tib_chr()\` now accepts … (@{username},
-      \#{issue_number}).\`
-    - Get username: `gh api user --jq .login`
+------------------------------------------------------------------------
 
 ## General
 
-- When running R from the console, use `--quiet --vanilla`.
+- R console: use `--quiet --vanilla`.
 - Always run `air format .` after generating R code.
-- Code comments should explain *why*, not *what*. Omit comments that
-  restate the code.
-- When writing or reviewing any code, load the relevant skills (usually
-  `r-code`, `tdd-workflow`, and `document`).
+- Comments explain *why*, not *what*.
 
 ## Skills
 
-Load skills from @.github/skills when the user triggers them.
-
-| Trigger                                           | Path                                           |
-|---------------------------------------------------|------------------------------------------------|
-| tag tests with issues                             | @.github/skills/tag-tests-with-issues/SKILL.md |
-| document functions                                | @.github/skills/document/SKILL.md              |
-| create a GitHub issue                             | @.github/skills/create-issue/SKILL.md          |
-| implement issue / work on \#NNN                   | @.github/skills/implement-issue/SKILL.md       |
-| edit files in src/ / C code                       | @.github/skills/c-code/SKILL.md                |
-| writing R functions / API design / error handling | @.github/skills/r-code/SKILL.md                |
-| writing or reviewing tests                        | @.github/skills/tdd-workflow/SKILL.md          |
+| Triggers                                          | Path                                     |
+|---------------------------------------------------|------------------------------------------|
+| create GitHub issues                              | @.github/skills/create-issue/SKILL.md    |
+| document functions                                | @.github/skills/document/SKILL.md        |
+| from github                                       | @.github/skills/github/SKILL.md          |
+| implement issue / work on \#NNN                   | @.github/skills/implement-issue/SKILL.md |
+| writing R functions / API design / error handling | @.github/skills/r-code/SKILL.md          |
+| search / rewrite code                             | @.github/skills/search-code/SKILL.md     |
+| writing or reviewing tests                        | @.github/skills/tdd-workflow/SKILL.md    |
