@@ -56,7 +56,7 @@ For any feature, fix, or refactor:
 ## General
 
 - When running R from the console, use `--quiet --vanilla`.
-- Always run `air format .` after generating code.
+- Always run `air format .` after generating R code.
 - Code comments should explain *why*, not *what*. Omit comments that restate the code.
 - When writing or reviewing any code, load the relevant skills (usually `r-code`, `tdd-workflow`, and `document`).
 

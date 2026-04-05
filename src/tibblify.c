@@ -9,6 +9,23 @@ struct r_string_input_form_struct r_string_input_form;
 struct r_string_types_struct r_string_types;
 struct r_vector_form_struct r_vector_form;
 
+/**
+ * Parse a nested R list into a tibble according to a spec.
+ *
+ * This is the `.Call()` entry point for `tibblify()`. It builds a parser from
+ * `spec`, then dispatches to the appropriate parse path:
+ * - Row-major df/recursive specs call `parse()` directly.
+ * - Row-major scalar/vector specs allocate a single-row collector and call
+ *   `add_value_row()` + `finalize_row()`.
+ * - Col-major specs call `parse_colmajor()`.
+ *
+ * @param data     The R list (or data frame) to rectangularize.
+ * @param spec     An R list describing the expected structure (a `tspec_*()`).
+ * @param ffi_path A length-2 list used as a mutable path tracker for error
+ *                 reporting; slot 0 holds the depth integer, slot 1 the
+ *                 path elements list.
+ * @return A tibble (or scalar value) matching the shape described by `spec`.
+ */
 r_obj* ffi_tibblify(r_obj* data, r_obj* spec, r_obj* ffi_path) {
   struct collector* coll_parser = create_parser(spec);
   KEEP(coll_parser->shelter);
