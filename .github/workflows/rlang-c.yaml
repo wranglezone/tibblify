@@ -7,40 +7,72 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write      # To push the branch
-  issues: write        # To create/comment on issues
+  contents: write        # To push the branch
+  pull-requests: write   # To create/update PRs
 
 jobs:
   update-rlang:
     runs-on: ubuntu-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GH_PAT_WORKFLOWS }}
 
     steps:
-      - name: Checkout Tibblify
-        uses: actions/checkout@v4
-        with:
-          path: tibblify
-
-      - name: Checkout rlang
-        uses: actions/checkout@v4
-        with:
-          repository: r-lib/rlang
-          path: rlang-source
-
-      - name: Update Vendored Files
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT_WORKFLOWS }}
         run: |
-          cd tibblify
-          
-          # 1. Clear old directory
-          rm -rf src/rlang/*
-          
-          # 2. Copy new source from rlang repo
-          cp -r ../rlang-source/src/rlang/* src/rlang/
+          PR_INFO=$(gh pr list \
+            --repo "${{ github.repository }}" \
+            --state open \
+            --json number,headRefName,title \
+            --jq '.[] | select(.title == "chore: update vendored rlang sources") | "\(.number) \(.headRefName)"')
+          if [ -n "$PR_INFO" ]; then
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+            echo "pr_number=$(echo "$PR_INFO" | awk '{print $1}')" >> $GITHUB_OUTPUT
+            echo "pr_branch=$(echo "$PR_INFO" | awk '{print $2}')" >> $GITHUB_OUTPUT
+          else
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+            echo "pr_branch=vendor/rlang-update" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout PR branch
+        if: steps.check_pr.outputs.pr_exists == 'true'
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.check_pr.outputs.pr_branch }}
+          token: ${{ secrets.GH_PAT_WORKFLOWS }}
+
+      - name: Checkout main
+        if: steps.check_pr.outputs.pr_exists == 'false'
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_PAT_WORKFLOWS }}
+
+      - name: Create new branch
+        if: steps.check_pr.outputs.pr_exists == 'false'
+        run: git checkout -b ${{ steps.check_pr.outputs.pr_branch }}
+
+      - uses: ./.github/workflows/install
+        with:
+          token: ${{ secrets.GH_PAT_WORKFLOWS }}
+
+      - name: Install dev rlang
+        shell: Rscript {0}
+        run: pak::pak("r-lib/rlang")
+
+      - name: Install helpers
+        shell: Rscript {0}
+        run: pak::pak(c("usethis", "fs", "desc"))
+
+      - name: Update vendored rlang sources
+        shell: Rscript {0}
+        run: |
+          unlink("src/rlang", recursive = TRUE)
+          rlang:::use_rlang_c_library()
 
       - name: Check for changes
         id: check_changes
-        working-directory: tibblify
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             echo "changes_detected=true" >> $GITHUB_OUTPUT
@@ -50,96 +82,39 @@ jobs:
             echo "No changes detected."
           fi
 
-      - name: Ensure Tracking Issue Exists
+      - name: Update DESCRIPTION
         if: steps.check_changes.outputs.changes_detected == 'true'
-        working-directory: tibblify
+        shell: Rscript {0}
+        run: |
+          desc::desc_set(
+            Remotes = sort(union(desc::desc_get_field("Remotes", default = character()), "r-lib/rlang")),
+            normalize = TRUE
+          )
+
+      - name: Commit and push
+        if: steps.check_changes.outputs.changes_detected == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: update vendored rlang sources"
+          git push -u origin ${{ steps.check_pr.outputs.pr_branch }}
+
+      - name: Open PR
+        if: steps.check_changes.outputs.changes_detected == 'true' && steps.check_pr.outputs.pr_exists == 'false'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT_WORKFLOWS }}
         run: |
-          TITLE="Update vendored rlang C code"
-          
-          # 1. Search for existing issue
-          ISSUE_JSON=$(gh issue list --search "$TITLE" --json number,state,title --limit 1)
-          ISSUE_NUM=$(echo "$ISSUE_JSON" | jq -r '.[0].number')
-          ISSUE_STATE=$(echo "$ISSUE_JSON" | jq -r '.[0].state')
-          
-          # 2. Create or Reopen
-          if [ "$ISSUE_NUM" == "null" ]; then
-            echo "Creating new issue..."
-            # Capture the URL output
-            NEW_URL=$(gh issue create \
-              --title "$TITLE" \
-              --body "The automated workflow detected changes in \`r-lib/rlang\`. This issue tracks the validation and integration of those changes.<br><br>Current Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
-            
-            # Extract number from the URL (e.g., https://.../issues/123 -> 123)
-            ISSUE_NUM=$(echo "$NEW_URL" | grep -o '[0-9]*$')
-            echo "Created issue #$ISSUE_NUM"
-          else
-            if [ "$ISSUE_STATE" == "CLOSED" ]; then
-              echo "Reopening issue #$ISSUE_NUM"
-              gh issue reopen "$ISSUE_NUM"
-              gh issue comment "$ISSUE_NUM" --body "Reopening: New changes detected in upstream rlang. Validation run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            else
-              echo "Issue #$ISSUE_NUM is already open."
-              gh issue comment "$ISSUE_NUM" --body "New changes detected. Starting validation run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            fi
-          fi
-          
-          # 3. Save Issue Number for later steps
-          echo "TRACKING_ISSUE_NUM=$ISSUE_NUM" >> $GITHUB_ENV
+          gh pr create \
+            --title "chore: update vendored rlang sources" \
+            --body "Automated update of vendored \`rlang\` C sources from \`r-lib/rlang\`." \
+            --head ${{ steps.check_pr.outputs.pr_branch }} \
+            --base main \
+            --assignee jonthegeek
 
-      - name: Setup R
-        if: steps.check_changes.outputs.changes_detected == 'true'
-        uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-
-      - name: Setup dependencies
-        if: steps.check_changes.outputs.changes_detected == 'true'
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          working-directory: tibblify
-          extra-packages: any::rcmdcheck
-          needs: check
-
-      - name: Check Package (Build & Test)
-        if: steps.check_changes.outputs.changes_detected == 'true'
-        id: r_check
-        uses: r-lib/actions/check-r-package@v2
-        with:
-          working-directory: "tibblify"
-
-      - name: Report Failure
-        if: failure() && steps.check_changes.outputs.changes_detected == 'true'
-        working-directory: tibblify
+      - name: Assign existing PR
+        if: steps.check_changes.outputs.changes_detected == 'true' && steps.check_pr.outputs.pr_exists == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -n "$TRACKING_ISSUE_NUM" ]; then
-             gh issue comment "$TRACKING_ISSUE_NUM" --body $'❌ **Validation Failed**\n\nThe updated rlang code caused build or test failures (or warnings). Manual intervention required.\n\nSee logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-          fi
-      
-      - name: Cleanup Check Artifacts
-        if: success() && steps.check_changes.outputs.changes_detected == 'true'
-        working-directory: tibblify
-        run: |
-          # Remove artifacts generated by R CMD check so they aren't committed
-          rm -rf check/ *.Rcheck/ *.tar.gz
-
-      - name: Create Pull Request (On Success)
-        if: success() && steps.check_changes.outputs.changes_detected == 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          path: tibblify
-          token: ${{ secrets.GH_PAT_WORKFLOWS }} 
-          commit-message: "chore: update vendored rlang sources"
-          branch: "vendor/rlang-update"
-          delete-branch: true
-          title: "chore: update vendored rlang sources"
-          body: |
-            Automated update of vendored `rlang` C sources from `r-lib/rlang`.
-            
-            This PR updates the contents of `src/rlang/` to match the latest upstream source.
-            
-            Closes #${{ env.TRACKING_ISSUE_NUM }}
+          GH_TOKEN: ${{ secrets.GH_PAT_WORKFLOWS }}
+        run: gh pr edit ${{ steps.check_pr.outputs.pr_number }} --add-assignee jonthegeek
 
