@@ -4,12 +4,13 @@
 \alias{untibblify}
 \title{Convert a data frame or object into a nested list}
 \usage{
-untibblify(x, spec = NULL)
+untibblify(x, spec = get_spec(x))
 }
 \arguments{
 \item{x}{A data frame or an object.}
 
-\item{spec}{Optional. A spec object which was used to create \code{x}.}
+\item{spec}{Optional. A spec object which was used to create \code{x}. Defaults
+to the spec stored as the \code{tib_spec} attribute of \code{x}, if present.}
 }
 \value{
 A nested list.
