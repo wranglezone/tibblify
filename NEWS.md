@@ -1,5 +1,6 @@
 # tibblify (development version)
 
+* `untibblify()` now automatically uses the `tib_spec` attribute when present, so tibblified objects can be round-tripped without explicitly passing the spec (#235).
 * `parse_openapi_spec()` supports many more fields and works for many more APIs (#190, #200, @jonthegeek and @mgirlich).
 * The underlying C implementation has been updated to better comply with R's C API. We also fixed various bugs during this update (#203, #204, #222).
 * Documentation of all functions has been updated for clarity (#228, #245, #246).

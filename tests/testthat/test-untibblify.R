@@ -186,6 +186,17 @@ test_that("can rename according to spec (#49)", {
   )
 })
 
+test_that("uses tib_spec attribute when no spec provided (#235)", {
+  input <- list(
+    list(x = 1, y = "a"),
+    list(x = 2, y = "b")
+  )
+  spec <- tspec_df(x2 = tib_int("x"), y2 = tib_chr("y"))
+  tibbed <- tibblify(input, spec)
+
+  expect_equal(untibblify(tibbed), input)
+})
+
 test_that("checks input (#49)", {
   expect_snapshot({
     (expect_error(untibblify(1:3)))
