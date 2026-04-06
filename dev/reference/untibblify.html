@@ -47,7 +47,7 @@ into a nested list.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">untibblify</span><span class="op">(</span><span class="va">x</span>, spec <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">untibblify</span><span class="op">(</span><span class="va">x</span>, spec <span class="op">=</span> <span class="fu"><a href="get_spec.html">get_spec</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -59,7 +59,8 @@ into a nested list.</p>
 
 
 <dt id="arg-spec">spec<a class="anchor" aria-label="anchor" href="#arg-spec"></a></dt>
-<dd><p>Optional. A spec object which was used to create <code>x</code>.</p></dd>
+<dd><p>Optional. A spec object which was used to create <code>x</code>. Defaults
+to the spec stored as the <code>tib_spec</code> attribute of <code>x</code>, if present.</p></dd>
 
 </dl></div>
     <div class="section level2">

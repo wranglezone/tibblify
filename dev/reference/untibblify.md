@@ -7,7 +7,7 @@ It converts a data frame or an object into a nested list.
 ## Usage
 
 ``` r
-untibblify(x, spec = NULL)
+untibblify(x, spec = get_spec(x))
 ```
 
 ## Arguments
@@ -18,7 +18,8 @@ untibblify(x, spec = NULL)
 
 - spec:
 
-  Optional. A spec object which was used to create `x`.
+  Optional. A spec object which was used to create `x`. Defaults to the
+  spec stored as the `tib_spec` attribute of `x`, if present.
 
 ## Value
 

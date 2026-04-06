@@ -2,6 +2,10 @@
 
 ## tibblify (development version)
 
+- [`untibblify()`](https://tibblify.wrangle.zone/dev/reference/untibblify.md)
+  now automatically uses the `tib_spec` attribute when present, so
+  tibblified objects can be round-tripped without explicitly passing the
+  spec ([\#235](https://github.com/wranglezone/tibblify/issues/235)).
 - [`parse_openapi_spec()`](https://tibblify.wrangle.zone/dev/reference/parse_openapi_spec.md)
   supports many more fields and works for many more APIs
   ([\#190](https://github.com/wranglezone/tibblify/issues/190),
