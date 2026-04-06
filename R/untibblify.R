@@ -4,7 +4,8 @@
 #' into a nested list.
 #'
 #' @param x A data frame or an object.
-#' @param spec Optional. A spec object which was used to create `x`.
+#' @param spec Optional. A spec object which was used to create `x`. Defaults
+#'   to the spec stored as the `tib_spec` attribute of `x`, if present.
 #'
 #' @return A nested list.
 #' @export
@@ -18,12 +19,8 @@
 #'   )
 #' )
 #' untibblify(x)
-untibblify <- function(x, spec = NULL) {
+untibblify <- function(x, spec = get_spec(x)) {
   call <- current_call()
-
-  if (is.null(spec)) {
-    spec <- get_spec(x)
-  }
 
   if (is.data.frame(x)) {
     untibblify_df(x, spec, call)
