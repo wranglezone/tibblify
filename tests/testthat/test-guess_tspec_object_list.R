@@ -1,6 +1,26 @@
-# get_required() ----------------------------------------------------------
+# .get_required() ----------------------------------------------------------
 
-# guess_object_list_field_spec() ------------------------------------------
+test_that(".get_required subsamples when x is larger than sample_size", {
+  x <- list(
+    list(a = 1, b = 2),
+    list(a = 3, b = 4),
+    list(a = 5, b = 6)
+  )
+  result <- .get_required(x, sample_size = 2)
+  expect_named(result, c("a", "b"), ignore.order = TRUE)
+  expect_type(result, "logical")
+})
+
+test_that(".get_required returns all FALSE when any record is empty", {
+  x <- list(
+    list(a = 1, b = 2),
+    list()
+  )
+  result <- .get_required(x)
+  expect_equal(result, c(a = FALSE, b = FALSE))
+})
+
+# .guess_object_list_field_spec() ------------------------------------------
 
 test_that("can guess scalar elements", {
   expect_equal(
@@ -122,10 +142,7 @@ test_that("can guess vector input form (#94)", {
   )
 })
 
-test_that("can guess object input form (#94)", {
-  # there need to be enough different elements to be recognized as .input_form = "object"
-  # TODO should ask the user?
-  skip("improve guessing logic")
+test_that("can guess object input form", {
   x <- list(
     list(x = list(a = 1, b = 2)),
     list(x = list(c = 1, d = 1, e = 1, f = 1)),
@@ -216,6 +233,7 @@ test_that("can guess tib_df", {
 })
 
 test_that("can guess tib_unspecified", {
+  withr::local_options(tibblify.show_unspecified = FALSE)
   expect_equal(
     guess_tspec_object_list(list(list(x = NULL), list(x = NULL))),
     tspec_df(x = tib_unspecified("x"))
@@ -285,10 +303,44 @@ test_that("order of fields does not matter", {
 
 test_that("can guess object_list of length one (#50)", {
   expect_equal(
-    guess_tspec(list(list(x = 1, y = 2))),
+    guess_tspec_object_list(list(list(x = 1, y = 2))),
     tspec_df(
       x = tib_dbl("x"),
       y = tib_dbl("y"),
     )
   )
+})
+
+test_that("guess_tspec_object_list errors informatively for list of tibbles of dfs", {
+  expect_error(
+    {
+      guess_tspec_object_list(
+        list(
+          a = tibble::tibble(
+            b = data.frame(w = 1:3),
+            c = data.frame(w = 4:6),
+            d = data.frame(w = 7:9)
+          )
+        )
+      )
+    },
+    "list of dataframes is not yet supported",
+    class = "purrr_error_indexed"
+  )
+})
+
+# specific cases ----
+
+test_that("guess_tspec_object_list can guess spec for discog", {
+  expect_snapshot(guess_tspec_object_list(discog))
+})
+
+test_that("guess_tspec_object_list can guess spec for gh_users", {
+  expect_snapshot(guess_tspec_object_list(gh_users))
+})
+
+test_that("guess_tspec_object_list can guess spec for gsoc-2018", {
+  read_sample_json("gsoc-2018.json") |>
+    guess_tspec_object_list() |>
+    expect_snapshot()
 })

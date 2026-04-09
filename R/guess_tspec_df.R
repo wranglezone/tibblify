@@ -26,9 +26,9 @@ guess_tspec_df <- function(
       ))
     )
   } else {
-    check_list(x, arg = arg)
+    .check_list(x, arg = arg)
 
-    if (!is_object_list(x)) {
+    if (!.is_object_list(x)) {
       msg <- "Not every element of {.arg {arg}} is an object."
       cli::cli_abort(msg, call = call)
     }
@@ -48,38 +48,30 @@ guess_tspec_df <- function(
 }
 
 col_to_spec <- function(col, name, empty_list_unspecified) {
-  col_type <- tib_type_of(col, name, other = FALSE)
+  col_type <- .tib_type_of(col, name, other = FALSE)
 
+  # Can only be df, vector, or list
   if (col_type == "df") {
     fields_spec <- purrr::imap(col, col_to_spec, empty_list_unspecified)
     return(tib_row(name, !!!fields_spec))
   }
-
   if (col_type == "vector") {
-    ptype <- tib_ptype(col)
-    if (is_unspecified(ptype)) {
+    ptype <- .tib_ptype(col)
+    if (.is_unspecified(ptype)) {
       return(tib_unspecified(name))
     }
-
     return(tib_scalar(name, ptype))
-  }
-
-  if (col_type != "list") {
-    cli::cli_abort(
-      "{.fn tib_type_of} returned an unexpected type",
-      .internal = TRUE
-    )
   }
 
   # `col` must be a list, so we need to check what its elements are
   list_of_col <- vctrs::is_list_of(col)
   if (list_of_col) {
-    ptype <- col %@% ptype
-    ptype_type <- tib_type_of(ptype, name, other = FALSE)
+    ptype <- col %@% "ptype"
+    ptype_type <- .tib_type_of(ptype, name, other = FALSE)
     used_empty_list_argument <- FALSE
   } else {
     # TODO this could use sampling for performance
-    ptype_common <- get_ptype_common(col, empty_list_unspecified)
+    ptype_common <- .get_ptype_common(col, empty_list_unspecified)
     # no common ptype can be one of two reasons:
     # * it contains non-vector elements
     # * it contains incompatible types
@@ -94,7 +86,7 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
       return(tib_unspecified(name))
     }
 
-    ptype_type <- tib_type_of(ptype, name, other = FALSE)
+    ptype_type <- .tib_type_of(ptype, name, other = FALSE)
     used_empty_list_argument <- ptype_common$had_empty_lists
   }
 
@@ -102,7 +94,7 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
   # TODO should this care about names?
   if (ptype_type == "vector") {
     # TODO why?
-    mark_empty_list_argument(used_empty_list_argument)
+    .mark_empty_list_argument(used_empty_list_argument)
     return(tib_vector(name, ptype))
   }
 
@@ -118,16 +110,8 @@ col_to_spec <- function(col, name, empty_list_unspecified) {
   }
 
   if (ptype_type == "list") {
-    # TODO this could share code with other guessers
     cli::cli_abort(
       "List columns that only consists of lists are not supported yet."
-    )
-  }
-
-  if (col_type != "list") {
-    cli::cli_abort(
-      "{.fn get_col_type} returned an unexpected type",
-      .internal = TRUE
     )
   }
 }
@@ -143,7 +127,7 @@ col_to_spec_df <- function(
     col_required <- TRUE
     has_non_vec_cols <- purrr::detect_index(
       ptype,
-      ~ !is_vec(.x) || is.data.frame(.x)
+      ~ !.is_vec(.x)
     ) >
       0
     if (has_non_vec_cols) {
@@ -178,5 +162,3 @@ df_guess_required <- function(df_list, all_cols) {
 
   col_required
 }
-
-globalVariables("had_empty_lists")

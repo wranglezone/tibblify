@@ -1,21 +1,27 @@
 #' Guess the `tibblify()` specification
 #'
-#' Use `guess_tspec()` if you don't know the input type.
-#' Use `guess_tspec_df()` if the input is a data frame or an object list.
-#' Use `guess_tspec_objecte()` is the input is an object.
+#' @description
 #'
-#' @param x A nested list.
+#' `guess_tspec()` automatically dispatches to the other `guess_tspec_*()`
+#' functions based on the shape of the input. If you are unhappy with its
+#' output, calling a specific `guess_tspec_*()` function may yield better
+#' results, or at least clearer error messages about why that type isn't
+#' supported.
+#'
+#' - Use `guess_tspec_df()` if the input is a data frame.
+#' - Use `guess_tspec_object()` if the input is an object (such as a JSON
+#' object that has been read into R as a named list).
+#' - Use `guess_tspec_object_list()` if the input is a list of objects (such as
+#' a JSON object that has been read into R as a list of named lists).
+#' - Use `guess_tspec_list()` if the input object is a list but you aren't sure
+#' how it should be processed.
+#'
+#' See `vignette("supported-structures)` for a discussion of the input types
+#' supported by tibblify.
+#'
+#' @param x (`list`) A nested list.
 #' @param ... These dots are for future extensions and must be empty.
-#' @param empty_list_unspecified Treat empty lists as unspecified?
-#' @param simplify_list Should scalar lists be simplified to vectors?
-#' @param inform_unspecified Inform about fields whose type could not be
-#'   determined?
-#' @param call The execution environment of a currently running function, e.g.
-#'   `caller_env()`. The function will be mentioned in error messages as the
-#'   source of the error. See the `call` argument of [`rlang::abort()`] for more
-#'   information.
-#' @param arg An argument name as a string. This argument will be mentioned in
-#'   error messages as the input that is at the origin of a problem.
+#' @inheritParams .shared-params
 #'
 #' @return A specification object that can used in `tibblify()`.
 #' @export

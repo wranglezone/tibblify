@@ -6,7 +6,7 @@ guess_ol_field <- function(
   empty_list_unspecified = FALSE,
   simplify_list = FALSE
 ) {
-  guess_object_list_field_spec(
+  .guess_object_list_field_spec(
     value = value,
     name = name,
     empty_list_unspecified = empty_list_unspecified,

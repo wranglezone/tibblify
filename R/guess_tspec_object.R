@@ -5,9 +5,13 @@ guess_tspec_object <- function(
   ...,
   empty_list_unspecified = FALSE,
   simplify_list = FALSE,
+  inform_unspecified = should_inform_unspecified(),
   call = rlang::current_call()
 ) {
   check_dots_empty()
+  check_bool(empty_list_unspecified, call = call)
+  check_bool(simplify_list, call = call)
+  check_bool(inform_unspecified, call = call)
   withr::local_options(list(tibblify.used_empty_list_arg = NULL))
   if (is.data.frame(x)) {
     msg <- c(
@@ -16,11 +20,11 @@ guess_tspec_object <- function(
     )
     cli::cli_abort(msg, call = call)
   }
-  check_list(x)
+  .check_list(x)
 
   check_object_names(x, call)
 
-  if (is_empty(x)) {
+  if (rlang::is_empty(x)) {
     return(tspec_object())
   }
 
@@ -36,12 +40,16 @@ guess_tspec_object <- function(
     }
   )
 
-  tspec_object(
+  spec <- tspec_object(
     .vector_allows_empty_list = is_true(getOption(
       "tibblify.used_empty_list_arg"
     )),
     !!!fields
   )
+  if (inform_unspecified) {
+    .spec_inform_unspecified(spec)
+  }
+  return(spec)
 }
 
 guess_object_field_spec <- function(
@@ -54,15 +62,15 @@ guess_object_field_spec <- function(
     return(tib_unspecified(name))
   }
 
-  value_type <- tib_type_of(value, name, other = TRUE)
+  value_type <- .tib_type_of(value, name, other = TRUE)
 
   if (value_type == "other") {
     return(tib_variant(name))
   }
 
   if (value_type == "vector") {
-    ptype <- tib_ptype(value)
-    if (is_unspecified(ptype)) {
+    ptype <- .tib_ptype(value)
+    if (.is_unspecified(ptype)) {
       return(tib_unspecified(name))
     }
 
@@ -79,29 +87,31 @@ guess_object_field_spec <- function(
   }
 
   if (value_type != "list") {
+    # nocov start
     cli::cli_abort(
-      "{.fn tib_type_of} returned an unexpected type",
+      "{.fn .tib_type_of} returned an unexpected type",
       .internal = TRUE
-    ) # nocov
+    )
+    # nocov end
   }
 
-  if (is_list_of_null(value)) {
+  if (.is_list_of_null(value)) {
     return(tib_unspecified(name))
   }
 
-  object_list <- is_object_list(value)
-  object <- is_object(value)
+  object_list <- .is_object_list(value)
+  object <- .is_object(value)
   if (object_list && object) {
     # TODO should ask user what to do
   }
 
   if (object_list) {
-    fields <- guess_object_list_spec(
+    fields <- .guess_object_list_spec(
       value,
       empty_list_unspecified,
       simplify_list
     )
-    names_to <- if (is_named(value) && !is_empty(value)) ".names"
+    names_to <- if (rlang::is_named(value) && !is_empty(value)) ".names"
 
     spec <- tib_df(name, !!!fields, .names_to = names_to)
     return(spec)
@@ -128,7 +138,7 @@ guess_object_field_spec <- function(
 }
 
 check_object_names <- function(x, call) {
-  if (!is_named2(x)) {
+  if (!rlang::is_named2(x)) {
     msg <- "{.arg x} must be fully named."
     cli::cli_abort(msg, call = call)
   }
@@ -141,14 +151,14 @@ check_object_names <- function(x, call) {
 }
 
 guess_vector_input_form <- function(value, name) {
-  ptype_result <- get_ptype_common(value, empty_list_unspecified = FALSE)
+  ptype_result <- .get_ptype_common(value, empty_list_unspecified = FALSE)
   if (!ptype_result$has_common_ptype) {
     return(list(can_simplify = FALSE))
   }
 
   ptype <- ptype_result$ptype
   if (is.null(ptype)) {
-    if (is_named(value)) {
+    if (rlang::is_named(value)) {
       return(list(can_simplify = FALSE))
     }
 
@@ -156,12 +166,12 @@ guess_vector_input_form <- function(value, name) {
     return(list(can_simplify = TRUE, tib_spec = tib_spec))
   }
 
-  if (!is_vec(ptype)) {
+  if (!.is_vec(ptype)) {
     return(list(can_simplify = FALSE))
   }
 
-  if (is_field_scalar(value)) {
-    if (is_named(value)) {
+  if (.is_field_scalar(value)) {
+    if (rlang::is_named(value)) {
       tib_spec <- tib_vector(
         name,
         ptype,

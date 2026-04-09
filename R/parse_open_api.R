@@ -611,7 +611,7 @@ handle_one_of_tspec <- function(schema, openapi_spec) {
   )
 }
 
-if (is_installed("memoise")) {
+if (rlang::is_installed("memoise")) {
   parse_schema_memoised <- memoise::memoise(
     parse_schema,
     omit_args = "openapi_spec"

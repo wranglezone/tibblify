@@ -4,6 +4,9 @@
 \alias{.shared-params}
 \title{Shared parameters}
 \arguments{
+\item{arg}{(\code{character(1)}) An argument name. This name will be mentioned
+in error messages as the input that is at the origin of a problem.}
+
 \item{.call}{(\code{environment}) The environment to use for error messages.}
 
 \item{.children}{(\code{character(1)}) The name of the field that contains the
@@ -15,11 +18,17 @@ children.}
 \item{.elt_transform}{(\code{function} or \code{NULL}) A function to apply to each
 element before casting to \code{.ptype_inner}.}
 
+\item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
+unspecified?}
+
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
 
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}
+
+\item{inform_unspecified}{(\code{logical(1)}) Inform about fields whose type could
+not be determined?}
 
 \item{.key}{(\code{character}) The path of names to the field in the object.}
 
@@ -31,6 +40,9 @@ field.}
 \item{.ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 
 \item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
+
+\item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
+vectors?}
 
 \item{spec_list}{(\code{list}) A list of specifications.}
 

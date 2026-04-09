@@ -2,9 +2,11 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+## Full rlang import required by R/import-standalone-*.R
 #' @import rlang
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
+#' @importFrom rlang %@%
 #' @importFrom rlang arg_match0
 #' @importFrom rlang as_function
 #' @importFrom rlang caller_arg
@@ -15,7 +17,6 @@
 #' @importFrom rlang current_call
 #' @importFrom rlang current_env
 #' @importFrom rlang is_empty
-#' @importFrom rlang is_named
 #' @importFrom rlang is_true
 #' @importFrom rlang list2
 #' @importFrom vctrs list_unchop

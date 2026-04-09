@@ -1,4 +1,4 @@
-check_list <- function(
+.check_list <- function(
   x,
   ...,
   allow_null = FALSE,

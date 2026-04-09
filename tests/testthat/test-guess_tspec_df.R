@@ -434,6 +434,13 @@ test_that("can guess 0 row tibbles (#79, #80)", {
   )
 })
 
+test_that("errors on list columns that only consist of lists", {
+  expect_error(
+    guess_tspec_df(tibble(x = list(list(1, 2), list(3, 4)))),
+    "not supported yet"
+  )
+})
+
 test_that("gives nice errors", {
   expect_snapshot({
     (expect_error(guess_tspec_df(list(a = 1))))
@@ -445,4 +452,18 @@ test_that("inform about unspecified elements", {
   expect_snapshot({
     guess_tspec_df(tibble(lgl = NA), inform_unspecified = TRUE)
   })
+})
+
+test_that("guess_tspec_df dispatches properly for object lists", {
+  local_mocked_bindings(
+    guess_tspec_object_list = function(
+      x,
+      empty_list_unspecified,
+      simplify_list,
+      call
+    ) {
+      cli::cli_inform("guess_tspec_object_list called")
+    }
+  )
+  expect_message(guess_tspec_df(discog), "guess_tspec_object_list called")
 })
