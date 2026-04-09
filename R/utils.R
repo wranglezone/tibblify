@@ -6,7 +6,7 @@ check_list <- function(
   call = caller_env()
 ) {
   if (!missing(x)) {
-    if (vctrs::vec_is_list(x)) {
+    if (vctrs::obj_is_list(x)) {
       return(invisible(NULL))
     }
     if (allow_null && is.null(x)) {

@@ -24,7 +24,7 @@ untibblify <- function(x, spec = get_spec(x)) {
 
   if (is.data.frame(x)) {
     untibblify_df(x, spec, call)
-  } else if (vctrs::vec_is_list(x)) {
+  } else if (vctrs::obj_is_list(x)) {
     untibblify_list(x, spec, call)
   } else {
     cls <- class(x)[[1]]

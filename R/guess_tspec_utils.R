@@ -1,6 +1,6 @@
 is_vec <- function(x) {
   # `vec_is()` considers `list()` to be a vector but we don't
-  if (vctrs::vec_is_list(x)) {
+  if (vctrs::obj_is_list(x)) {
     return(FALSE)
   }
 
@@ -58,7 +58,7 @@ special_ptype_handling <- function(ptype) {
 tib_type_of <- function(x, name, other) {
   if (is.data.frame(x)) {
     "df"
-  } else if (vctrs::vec_is_list(x)) {
+  } else if (vctrs::obj_is_list(x)) {
     "list"
   } else if (vctrs::vec_is(x)) {
     "vector"

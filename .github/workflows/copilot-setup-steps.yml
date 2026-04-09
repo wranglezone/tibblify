@@ -41,10 +41,10 @@ jobs:
             any::rcmdcheck
             any::rlang
             any::roxygen2
+            any::stbl
             any::testthat
             any::usethis
             any::withr
-            wranglezone/stbl
             local::.
 
       - name: Install air

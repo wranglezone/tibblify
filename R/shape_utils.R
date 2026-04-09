@@ -111,7 +111,7 @@ abort_not_tibblifiable <- function(
     "and has unique names."
   )
   object_bullets <- lgl_to_bullet(c(
-    vctrs::vec_is_list(x),
+    vctrs::obj_is_list(x),
     is_named2(x),
     anyDuplicated(names(x)) == 0
   ))
@@ -125,7 +125,7 @@ abort_not_tibblifiable <- function(
   )
   object_list_bullets <- lgl_to_bullet(c(
     is.data.frame(x),
-    vctrs::vec_is_list(x),
+    vctrs::obj_is_list(x),
     purrr::detect_index(x, ~ !is.null(.x) && !is_object(.x)) == 0
   ))
   ol_msg <- set_names(object_list_cnd, c("", object_list_bullets))
