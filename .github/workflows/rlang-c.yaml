@@ -1,9 +1,9 @@
 name: Update Vendored rlang
 
 on:
-  # schedule:
+  schedule:
     # Run daily at 3am UTC
-    # - cron: '0 3 * * *'
+    - cron: '0 3 * * *'
   workflow_dispatch:
 
 permissions:
