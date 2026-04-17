@@ -4,23 +4,19 @@
 
 #if !RLANG_HAS_R_DOTS_API
 
-static
-bool is_promise(r_obj* x) {
+static bool is_promise(r_obj* x) {
     return r_typeof(x) == R_TYPE_promise;
 }
 
-static
-r_obj* promise_expr(r_obj* x) {
+static r_obj* promise_expr(r_obj* x) {
     return PREXPR(x);
 }
 
-static
-r_obj* promise_env(r_obj* x) {
+static r_obj* promise_env(r_obj* x) {
     return PRENV(x);
 }
 
-static
-r_obj* env_dot_find(r_obj* env, r_ssize i) {
+static r_obj* env_dot_find(r_obj* env, r_ssize i) {
     if (i < 0) {
         r_abort("indexing '...' with negative index %d", (int) i);
     }
@@ -38,7 +34,10 @@ r_obj* env_dot_find(r_obj* env, r_ssize i) {
     for (r_ssize j = 0; j < i; ++j) {
         dots = r_node_cdr(dots);
         if (dots == r_null) {
-            r_abort("the ... list contains fewer than %d elements", (int) i + 1);
+            r_abort(
+                "the ... list contains fewer than %d elements",
+                (int) i + 1
+            );
         }
     }
 
@@ -47,10 +46,8 @@ r_obj* env_dot_find(r_obj* env, r_ssize i) {
 
 #endif
 
-
 // Dots API - mirrors R-devel PR #209 ---
 // See https://github.com/r-devel/r-svn/pull/209
-
 
 // R API: R_DotsExist
 bool r_env_dots_exist(r_obj* env) {
@@ -58,7 +55,8 @@ bool r_env_dots_exist(r_obj* env) {
     return R_DotsExist(env);
 #else
     r_obj* dots = Rf_findVarInFrame(env, r_syms.dots);
-    return dots != R_UnboundValue && (dots == r_syms.missing || r_typeof(dots) == R_TYPE_dots);
+    return dots != R_UnboundValue &&
+        (dots == r_syms.missing || r_typeof(dots) == R_TYPE_dots);
 #endif
 }
 
@@ -103,7 +101,9 @@ r_obj* r_env_dots_names(r_obj* env) {
         r_abort("incorrect context: the current call has no '...' to look in");
     }
 
-    r_ssize n = (dots == r_syms.missing || r_typeof(dots) != R_TYPE_dots) ? 0 : r_length(dots);
+    r_ssize n = (dots == r_syms.missing || r_typeof(dots) != R_TYPE_dots)
+        ? 0
+        : r_length(dots);
 
     r_obj* out = r_null;
 
@@ -134,7 +134,7 @@ r_obj* r_env_dot_get(r_obj* env, r_ssize i) {
     }
 
 #if RLANG_HAS_R_DOTS_API
-    return R_DotsElt((int)(i + 1), env);
+    return R_DotsElt((int) (i + 1), env);
 #else
     r_obj* elt = env_dot_find(env, i);
     return r_eval(elt, env);
@@ -144,7 +144,7 @@ r_obj* r_env_dot_get(r_obj* env, r_ssize i) {
 // R API: R_GetDotType
 r_dot_type_t r_env_dot_type(r_obj* env, r_ssize i) {
 #if RLANG_HAS_R_DOTS_API
-    return (r_dot_type_t) R_GetDotType((int)(i + 1), env);
+    return (r_dot_type_t) R_GetDotType((int) (i + 1), env);
 #else
     r_obj* elt = env_dot_find(env, i);
 
@@ -169,7 +169,7 @@ r_dot_type_t r_env_dot_type(r_obj* env, r_ssize i) {
 // R API: R_DotDelayedExpression
 r_obj* r_env_dot_delayed_expr(r_obj* env, r_ssize i) {
 #if RLANG_HAS_R_DOTS_API
-    return R_DotDelayedExpression((int)(i + 1), env);
+    return R_DotDelayedExpression((int) (i + 1), env);
 #else
     r_obj* elt = env_dot_find(env, i);
 
@@ -190,7 +190,7 @@ r_obj* r_env_dot_delayed_expr(r_obj* env, r_ssize i) {
 // R API: R_DotDelayedEnvironment
 r_obj* r_env_dot_delayed_env(r_obj* env, r_ssize i) {
 #if RLANG_HAS_R_DOTS_API
-    return R_DotDelayedEnvironment((int)(i + 1), env);
+    return R_DotDelayedEnvironment((int) (i + 1), env);
 #else
     r_obj* elt = env_dot_find(env, i);
 
@@ -211,7 +211,7 @@ r_obj* r_env_dot_delayed_env(r_obj* env, r_ssize i) {
 // R API: R_DotForcedExpression
 r_obj* r_env_dot_forced_expr(r_obj* env, r_ssize i) {
 #if RLANG_HAS_R_DOTS_API
-    return R_DotForcedExpression((int)(i + 1), env);
+    return R_DotForcedExpression((int) (i + 1), env);
 #else
     r_obj* elt = env_dot_find(env, i);
 
