@@ -339,15 +339,15 @@ test_that("guess_tspec_object returns an empty spec for an empty list", {
   )
 })
 
-test_that("guess_vector_input_form can guess input form for a list of NULLs", {
+test_that(".guess_vector_input_form can guess input form for a list of NULLs", {
   # This path is likely unreachable, but this way it still works if this helper
   # is used in another context.
   expect_equal(
-    guess_vector_input_form(list(a = NULL, b = NULL), name = NULL),
+    .guess_vector_input_form(list(a = NULL, b = NULL), name = NULL),
     list(can_simplify = FALSE)
   )
   expect_equal(
-    guess_vector_input_form(list(NULL, NULL), name = "c"),
+    .guess_vector_input_form(list(NULL, NULL), name = "c"),
     list(
       can_simplify = TRUE,
       tib_spec = tib_unspecified("c", .required = TRUE)

@@ -30,7 +30,7 @@ test_that("tibblify checks object names", {
     (expect_error(tibblify(list(z = 1, y = 2, 3, a = 4), spec)))
 
     # `NA` name
-    (expect_error(tibblify(set_names(list(1, 2), c("x", NA)), spec)))
+    (expect_error(tibblify(rlang::set_names(list(1, 2), c("x", NA)), spec)))
 
     # duplicate name
     (expect_error(tibblify(list(x = 1, x = 2), spec)))
@@ -51,7 +51,7 @@ test_that("tibblify checks object names", {
 
     # `NA` name
     (expect_error(tibblify(
-      list(row = set_names(list(1, 2), c("x", NA))),
+      list(row = rlang::set_names(list(1, 2), c("x", NA))),
       spec2
     )))
 

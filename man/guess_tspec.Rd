@@ -73,11 +73,11 @@ not be determined?}
 
 \item{call}{(\code{environment}) The environment to use for error messages.}
 
-\item{arg}{(\code{character(1)}) An argument name. This name will be mentioned
-in error messages as the input that is at the origin of a problem.}
+\item{arg}{(\code{character(1)}) An argument name. This name will be mentioned in
+error messages as the input that is at the origin of a problem.}
 }
 \value{
-A specification object that can used in \code{tibblify()}.
+A specification object that can be used in \code{\link[=tibblify]{tibblify()}}.
 }
 \description{
 \code{guess_tspec()} automatically dispatches to the other \verb{guess_tspec_*()}

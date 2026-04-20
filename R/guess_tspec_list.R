@@ -9,15 +9,16 @@ guess_tspec_list <- function(
   arg = caller_arg(x),
   call = current_call()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .check_list(x)
   if (is_empty(x)) {
     msg <- "{.arg {arg}} must not be empty."
     cli::cli_abort(msg, call = call)
   }
 
-  # if `x` is both an object list and an object, it should be very rare that it
-  # should be parsed as an object.
+  # if `x` is both an object list and an object, we default to treating it as
+  # and object_list. Users can manually choose in the very rare case that we're
+  # wrong.
   if (.is_object_list(x)) {
     return(guess_tspec_object_list(
       x,
@@ -26,7 +27,8 @@ guess_tspec_list <- function(
       inform_unspecified = inform_unspecified,
       call = call
     ))
-  } else if (.is_object(x)) {
+  }
+  if (.is_object(x)) {
     return(guess_tspec_object(
       x,
       empty_list_unspecified = empty_list_unspecified,
@@ -34,7 +36,6 @@ guess_tspec_list <- function(
       inform_unspecified = inform_unspecified,
       call = call
     ))
-  } else {
-    .abort_not_tibblifiable(x, arg, call)
   }
+  .abort_not_tibblifiable(x, arg, call)
 }

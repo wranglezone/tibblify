@@ -44,7 +44,7 @@
       ! The names of an object can't be empty.
       x `x` has an empty name at location 3.
     Code
-      (expect_error(tibblify(set_names(list(1, 2), c("x", NA)), spec)))
+      (expect_error(tibblify(rlang::set_names(list(1, 2), c("x", NA)), spec)))
     Output
       <error/tibblify_error>
       Error in `tibblify()`:
@@ -89,7 +89,8 @@
       ! The names of an object can't be empty.
       x `x$row` has an empty name at location 3.
     Code
-      (expect_error(tibblify(list(row = set_names(list(1, 2), c("x", NA))), spec2)))
+      (expect_error(tibblify(list(row = rlang::set_names(list(1, 2), c("x", NA))),
+      spec2)))
     Output
       <error/tibblify_error>
       Error in `tibblify()`:

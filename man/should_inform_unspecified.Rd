@@ -7,13 +7,9 @@
 should_inform_unspecified()
 }
 \value{
-\code{TRUE} or \code{FALSE}.
+\code{FALSE} if the option is set to \code{FALSE}, \code{TRUE} otherwise.
 }
 \description{
-Wrapper around \code{getOption("tibblify.show_unspecified")} that implements some
-fall back logic if the option is unset. This returns:
-\itemize{
-\item \code{FALSE} if the option is set to \code{FALSE}
-\item \code{TRUE} otherwise
-}
+Wrapper around \code{getOption("tibblify.show_unspecified")} to return \code{TRUE}
+unless the option is explicitly set to \code{FALSE}.
 }

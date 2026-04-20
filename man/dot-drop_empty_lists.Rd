@@ -7,7 +7,7 @@
 .drop_empty_lists(x)
 }
 \arguments{
-\item{x}{(\code{list}) An object which might contain empty lists.}
+\item{x}{(\code{any}) The object to check.}
 }
 \value{
 The input object with empty lists removed. If any were removed, the

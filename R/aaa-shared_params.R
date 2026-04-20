@@ -3,13 +3,15 @@
 #' These parameters are used in multiple functions. They are defined here to
 #' make them easier to import and to find.
 #'
-#' @param arg (`character(1)`) An argument name. This name will be mentioned
-#'   in error messages as the input that is at the origin of a problem.
+#' @param arg (`character(1)`) An argument name. This name will be mentioned in
+#'   error messages as the input that is at the origin of a problem.
 #' @param .call (`environment`) The environment to use for error messages.
 #' @param .children (`character(1)`) The name of the field that contains the
 #'   children.
 #' @param .children_to (`character(1)`) The column name in which to store the
 #'   children.
+#' @param col (`any`) A column from a data frame, which may be a vector, a
+#'   list, or a nested data frame.
 #' @param .elt_transform (`function` or `NULL`) A function to apply to each
 #'   element before casting to `.ptype_inner`.
 #' @param empty_list_unspecified (`logical(1)`) Treat empty lists as
@@ -21,6 +23,8 @@
 #' @param inform_unspecified (`logical(1)`) Inform about fields whose type could
 #'   not be determined?
 #' @param .key (`character`) The path of names to the field in the object.
+#' @param local_env (`environment`) A local environment used to track state
+#'   across recursive calls, such as whether empty lists were encountered.
 #' @param name (`character(1)`) The name of the field.
 #' @param .ptype (`vector(0)`) A prototype of the desired output type of the
 #'   field.
@@ -32,6 +36,7 @@
 #' @param tib_list (`list`) A list of tib fields.
 #' @param .transform (`function` or `NULL`) A function to apply to the whole
 #'   vector after casting to `.ptype_inner`.
+#' @param value (`list`) An object list whose fields will be guessed.
 #' @param .values_to (`character(1)` or `NULL`) For `NULL` (the default), the
 #'   field is converted to a `.ptype` vector. If a string is provided, the field
 #'   is converted to a tibble and the values go into the specified column.

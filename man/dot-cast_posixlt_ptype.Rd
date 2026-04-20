@@ -2,13 +2,12 @@
 % Please edit documentation in R/guess_tspec_utils.R
 \name{.cast_posixlt_ptype}
 \alias{.cast_posixlt_ptype}
-\title{Conver POSIXlt to POSIXct}
+\title{Convert POSIXlt to POSIXct}
 \usage{
-.cast_posixlt_ptype(ptype)
+.cast_posixlt_ptype(x)
 }
 \arguments{
-\item{ptype}{(\code{any}) An object which might be a \code{POSIXlt} or have \code{POSIXlt}
-in its class hierarchy.}
+\item{x}{(\code{any}) The object to check.}
 }
 \value{
 An object of class \code{POSIXct} if the input is \code{POSIXlt} (to be in
@@ -16,6 +15,6 @@ line with \url{https://github.com/r-lib/vctrs/issues/1576}), otherwise the
 input unchanged.
 }
 \description{
-Conver POSIXlt to POSIXct
+Convert POSIXlt to POSIXct
 }
 \keyword{internal}

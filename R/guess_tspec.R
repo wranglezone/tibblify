@@ -23,7 +23,7 @@
 #' @param ... These dots are for future extensions and must be empty.
 #' @inheritParams .shared-params
 #'
-#' @return A specification object that can used in `tibblify()`.
+#' @returns A specification object that can be used in [tibblify()].
 #' @export
 #'
 #' @examples
@@ -39,7 +39,7 @@ guess_tspec <- function(
   inform_unspecified = should_inform_unspecified(),
   call = rlang::caller_env()
 ) {
-  check_dots_empty(call = call)
+  rlang::check_dots_empty(call = call)
   if (is.data.frame(x)) {
     return(guess_tspec_df(
       x,

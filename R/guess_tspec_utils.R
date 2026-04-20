@@ -1,34 +1,34 @@
-#' Conver POSIXlt to POSIXct
+#' Convert POSIXlt to POSIXct
 #'
-#' @param ptype (`any`) An object which might be a `POSIXlt` or have `POSIXlt`
-#'   in its class hierarchy.
+#' @inheritParams .shared-params
 #' @returns An object of class `POSIXct` if the input is `POSIXlt` (to be in
 #'   line with <https://github.com/r-lib/vctrs/issues/1576>), otherwise the
 #'   input unchanged.
 #' @keywords internal
-.cast_posixlt_ptype <- function(ptype) {
-  if (inherits(ptype, "POSIXlt")) {
-    return(vctrs::vec_cast(ptype, vctrs::new_datetime()))
+.cast_posixlt_ptype <- function(x) {
+  if (inherits(x, "POSIXlt")) {
+    return(vctrs::vec_cast(x, vctrs::new_datetime()))
   }
-  ptype
+  x
 }
 
 #' Remove empty lists from an object
 #'
-#' @param x (`list`) An object which might contain empty lists.
+#' @inheritParams .shared-params
 #' @returns The input object with empty lists removed. If any were removed, the
 #'   returned object has an attribute `had_empty_lists` set to `TRUE`.
 #' @keywords internal
 .drop_empty_lists <- function(x) {
   # TODO this could be implement in C for performance
-  # for performance reasons don't check for every single element if it is
-  # an empty list. Instead, only look at the ones with vec size 0.
+  #
+  # For performance reasons don't check for every single element if it is an
+  # empty list. Instead, only look at the ones with vec size 0.
   empty_flag <- vctrs::list_sizes(x) == 0
   empty_list_flag <- purrr::map_lgl(x[empty_flag], ~ identical(.x, list()))
   empty_flag[empty_flag] <- empty_list_flag
   if (any(empty_flag)) {
     x <- x[!empty_flag]
-    x %@% "had_empty_lists" <- TRUE
+    attr(x, "had_empty_lists") <- TRUE
   }
   x
 }
@@ -55,7 +55,6 @@
 
 #' Find the common ptype of a list of objects
 #'
-#' @param x (`list`) Objects which might have a common `ptype`.
 #' @inheritParams .shared-params
 #' @returns A list with component `has_common_ptype` (`TRUE` if so, `FALSE`
 #'   otherwise) and optional components `ptype` (an object representing the
@@ -72,7 +71,7 @@
       list(
         has_common_ptype = TRUE,
         ptype = .cast_posixlt_ptype(ptype),
-        had_empty_lists = x %@% "had_empty_lists"
+        had_empty_lists = attr(x, "had_empty_lists", exact = TRUE)
       )
     },
     vctrs_error_incompatible_type = function(cnd) {
@@ -84,113 +83,36 @@
   )
 }
 
-# Aspects of this can only be reached via guess_tspec_object(), so its
-# definition doesn't really belong in guess_tspec_object_list.R
-.guess_object_list_field_spec <- function(
-  value,
-  name,
-  empty_list_unspecified,
-  simplify_list
-) {
-  ptype_result <- .get_ptype_common(value, empty_list_unspecified)
-
-  # no common ptype can be one of two reasons:
-  # * it contains non-vector elements
-  # * it contains incompatible types
-  # in both cases `tib_variant()` is used
-  if (!ptype_result$has_common_ptype) {
-    return(tib_variant(name))
-  }
-
-  # now we know that every element essentially has type `ptype`
-  ptype <- ptype_result$ptype
-  if (is.null(ptype)) {
-    return(tib_unspecified(name))
-  }
-
-  ptype_type <- .tib_type_of(ptype, name, other = FALSE)
-  if (ptype_type == "vector") {
-    return(.guess_object_list_vector_spec(
-      value,
-      name,
-      ptype,
-      ptype_result$had_empty_lists
-    ))
-  }
-
-  if (ptype_type == "df") {
-    # TODO should this actually be supported?
-    #
-    # TODO fix error call? It's nested in purrr so will take some work to
-    # matter.
-    cli::cli_abort("A list of dataframes is not yet supported.")
-  }
-
-  # every element is a list or NULL at this point
-  if (all(vctrs::list_sizes(value) == 0) || .list_is_list_of_null(value)) {
-    return(tib_unspecified(name))
-  }
-
-  object <- .is_object_list(value)
-  object_list <- .is_list_of_object_lists(value)
-
-  value_flat <- .vec_flatten(value, list(), name_spec = NULL)
-  if (object_list) {
-    fields <- .guess_object_list_spec(
-      value_flat,
-      empty_list_unspecified,
-      simplify_list
-    )
-    names_to <- if (rlang::is_named(value_flat) && !is_empty(value_flat)) {
-      ".names"
-    }
-    spec <- tib_df(name, !!!fields, .names_to = names_to)
-    return(spec)
-  }
-
-  if (!simplify_list) {
-    if (object) {
-      fields <- .guess_object_list_spec(
-        value,
-        empty_list_unspecified = empty_list_unspecified,
-        simplify_list = simplify_list
-      )
-      return(tib_row(name, !!!fields))
-    }
-
-    return(tib_variant(name))
-  }
-
-  ptype_result <- .get_ptype_common(value_flat, empty_list_unspecified)
-  could_be_vector <- ptype_result$has_common_ptype &&
-    .is_field_scalar(value_flat)
-
-  if (could_be_vector) {
-    if (rlang::is_named(value_flat)) {
-      return(tib_vector(name, ptype_result$ptype, .input_form = "object"))
-    } else {
-      return(tib_vector(name, ptype_result$ptype, .input_form = "scalar_list"))
-    }
-  }
-
-  if (object) {
-    fields <- .guess_object_list_spec(
-      value,
-      empty_list_unspecified = empty_list_unspecified,
-      simplify_list = simplify_list
-    )
-    return(tib_row(name, !!!fields))
-  }
-
-  tib_variant(name)
-}
-
-.mark_empty_list_argument <- function(used_empty_list_arg) {
+#' Mark that the empty list argument was used
+#'
+#' @param used_empty_list_arg (`logical(1)`) Whether any empty lists were
+#'   dropped during ptype detection due to `empty_list_unspecified`.
+#' @inheritParams .shared-params
+#' @returns Called for its side effect of setting `local_env$empty_list_used` to
+#'   `TRUE` when `used_empty_list_arg` is `TRUE`.
+#' @keywords internal
+.mark_empty_list_argument <- function(used_empty_list_arg, local_env) {
   if (is_true(used_empty_list_arg)) {
-    options(tibblify.used_empty_list_arg = TRUE)
+    local_env$empty_list_used <- TRUE
   }
 }
 
+#' Read whether the empty list argument was used
+#'
+#' @inheritParams .shared-params
+#' @returns `TRUE` if `local_env$empty_list_used` is `TRUE`, `FALSE` otherwise.
+#' @keywords internal
+.read_empty_list_argument <- function(local_env) {
+  rlang::is_true(local_env$empty_list_used)
+}
+
+#' Determine the tib type of an object
+#'
+#' @param other (`logical(1)`) If `TRUE`, return `"other"` for unrecognized
+#'   types rather than throwing an error.
+#' @inheritParams .shared-params
+#' @returns One of `"df"`, `"list"`, `"vector"`, or `"other"`.
+#' @keywords internal
 .tib_type_of <- function(x, name, other) {
   if (is.data.frame(x)) {
     "df"
@@ -210,6 +132,11 @@
   }
 }
 
+#' Get the ptype of an object
+#'
+#' @inheritParams .shared-params
+#' @returns The ptype of `x`, with `POSIXlt` coerced to `POSIXct`.
+#' @keywords internal
 .tib_ptype <- function(x) {
   ptype <- vctrs::vec_ptype(x)
   .cast_posixlt_ptype(ptype)

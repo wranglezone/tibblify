@@ -4,8 +4,8 @@
 \alias{.shared-params}
 \title{Shared parameters}
 \arguments{
-\item{arg}{(\code{character(1)}) An argument name. This name will be mentioned
-in error messages as the input that is at the origin of a problem.}
+\item{arg}{(\code{character(1)}) An argument name. This name will be mentioned in
+error messages as the input that is at the origin of a problem.}
 
 \item{.call}{(\code{environment}) The environment to use for error messages.}
 
@@ -14,6 +14,9 @@ children.}
 
 \item{.children_to}{(\code{character(1)}) The column name in which to store the
 children.}
+
+\item{col}{(\code{any}) A column from a data frame, which may be a vector, a
+list, or a nested data frame.}
 
 \item{.elt_transform}{(\code{function} or \code{NULL}) A function to apply to each
 element before casting to \code{.ptype_inner}.}
@@ -31,6 +34,9 @@ does not exist.}
 not be determined?}
 
 \item{.key}{(\code{character}) The path of names to the field in the object.}
+
+\item{local_env}{(\code{environment}) A local environment used to track state
+across recursive calls, such as whether empty lists were encountered.}
 
 \item{name}{(\code{character(1)}) The name of the field.}
 
@@ -50,6 +56,8 @@ vectors?}
 
 \item{.transform}{(\code{function} or \code{NULL}) A function to apply to the whole
 vector after casting to \code{.ptype_inner}.}
+
+\item{value}{(\code{list}) An object list whose fields will be guessed.}
 
 \item{.values_to}{(\code{character(1)} or \code{NULL}) For \code{NULL} (the default), the
 field is converted to a \code{.ptype} vector. If a string is provided, the field

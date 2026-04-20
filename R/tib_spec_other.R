@@ -15,7 +15,7 @@ tib_variant <- function(
   transform = deprecated(),
   elt_transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)

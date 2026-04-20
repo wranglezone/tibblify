@@ -30,10 +30,18 @@ test_that("informing about unspecified looks good (#38)", {
 })
 
 test_that(".spec_inform_unspecified is silent when nothing unspecified (#38)", {
-  spec <- tspec_df(
-    tib_int("1int")
-  )
-  expect_no_message({
-    expect_identical(.spec_inform_unspecified(spec), spec)
-  })
+  spec <- tspec_df(tib_int("1int"))
+  .spec_inform_unspecified(spec) |>
+    expect_identical(spec) |>
+    expect_no_message()
+})
+
+test_that(".maybe_inform_unspecified handles informing", {
+  spec <- tspec_df(tib_int("1int"), tib_unspecified("1un"))
+  .maybe_inform_unspecified(spec, FALSE) |>
+    expect_identical(spec) |>
+    expect_no_message()
+  .maybe_inform_unspecified(spec, TRUE) |>
+    expect_identical(spec) |>
+    expect_message("1 unspecified")
 })

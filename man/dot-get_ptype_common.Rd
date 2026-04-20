@@ -7,7 +7,7 @@
 .get_ptype_common(x, empty_list_unspecified)
 }
 \arguments{
-\item{x}{(\code{list}) Objects which might have a common \code{ptype}.}
+\item{x}{(\code{any}) The object to check.}
 
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}

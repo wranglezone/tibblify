@@ -8,11 +8,37 @@ guess_tspec_object <- function(
   inform_unspecified = should_inform_unspecified(),
   call = rlang::current_call()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   check_bool(empty_list_unspecified, call = call)
   check_bool(simplify_list, call = call)
   check_bool(inform_unspecified, call = call)
-  withr::local_options(list(tibblify.used_empty_list_arg = NULL))
+  .check_not_df(x, call)
+  .check_list(x)
+  .check_object_names(x, call)
+  if (rlang::is_empty(x)) {
+    return(tspec_object())
+  }
+
+  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
+  fields <- .imap_guess_object_field_spec(
+    x,
+    empty_list_unspecified,
+    simplify_list,
+    local_env
+  )
+  spec <- tspec_object(
+    .vector_allows_empty_list = .read_empty_list_argument(local_env),
+    !!!fields
+  )
+  return(.maybe_inform_unspecified(spec, inform_unspecified, call = call))
+}
+
+#' Abort if `x` is a data frame
+#'
+#' @inheritParams .shared-params
+#' @returns `x` (invisibly).
+#' @keywords internal
+.check_not_df <- function(x, call) {
   if (is.data.frame(x)) {
     msg <- c(
       "{.arg x} must not be a dataframe.",
@@ -20,70 +46,40 @@ guess_tspec_object <- function(
     )
     cli::cli_abort(msg, call = call)
   }
-  .check_list(x)
-
-  check_object_names(x, call)
-
-  if (rlang::is_empty(x)) {
-    return(tspec_object())
-  }
-
-  fields <- purrr::imap(
-    x,
-    function(value, name) {
-      guess_object_field_spec(
-        value,
-        name,
-        empty_list_unspecified = empty_list_unspecified,
-        simplify_list = simplify_list
-      )
-    }
-  )
-
-  spec <- tspec_object(
-    .vector_allows_empty_list = is_true(getOption(
-      "tibblify.used_empty_list_arg"
-    )),
-    !!!fields
-  )
-  if (inform_unspecified) {
-    .spec_inform_unspecified(spec)
-  }
-  return(spec)
+  return(invisible(x))
 }
 
-guess_object_field_spec <- function(
+#' Guess the field spec for a single object field
+#'
+#' Dispatches to the appropriate helper based on the detected type of `value`.
+#'
+#' @inheritParams .shared-params
+#' @returns A tib field specification.
+#' @keywords internal
+.guess_object_field_spec <- function(
   value,
   name,
   empty_list_unspecified,
-  simplify_list
+  simplify_list,
+  local_env
 ) {
   if (is.null(value) || identical(unname(value), list())) {
     return(tib_unspecified(name))
   }
-
   value_type <- .tib_type_of(value, name, other = TRUE)
-
   if (value_type == "other") {
     return(tib_variant(name))
   }
-
   if (value_type == "vector") {
-    ptype <- .tib_ptype(value)
-    if (.is_unspecified(ptype)) {
-      return(tib_unspecified(name))
-    }
-
-    if (vctrs::vec_size(value) == 1) {
-      return(tib_scalar(name, ptype))
-    } else {
-      return(tib_vector(name, ptype))
-    }
+    return(.guess_object_field_spec_vector(value, name))
   }
-
   if (value_type == "df") {
-    field_spec <- purrr::imap(value, col_to_spec, empty_list_unspecified)
-    return(tib_df(name, !!!field_spec))
+    return(.guess_object_field_spec_df(
+      value,
+      name,
+      empty_list_unspecified,
+      local_env
+    ))
   }
 
   if (value_type != "list") {
@@ -98,97 +94,204 @@ guess_object_field_spec <- function(
   if (.is_list_of_null(value)) {
     return(tib_unspecified(name))
   }
-
-  object_list <- .is_object_list(value)
-  object <- .is_object(value)
-  if (object_list && object) {
-    # TODO should ask user what to do
-  }
-
-  if (object_list) {
-    fields <- .guess_object_list_spec(
+  if (.is_object_list(value)) {
+    return(.guess_object_field_spec_object_list(
       value,
+      name,
       empty_list_unspecified,
-      simplify_list
-    )
-    names_to <- if (rlang::is_named(value) && !is_empty(value)) ".names"
-
-    spec <- tib_df(name, !!!fields, .names_to = names_to)
-    return(spec)
+      simplify_list,
+      local_env
+    ))
   }
-
   if (simplify_list) {
-    input_form_result <- guess_vector_input_form(value, name)
+    input_form_result <- .guess_vector_input_form(value, name)
     if (input_form_result$can_simplify) {
       return(input_form_result$tib_spec)
     }
   }
-
-  if (object) {
-    fields <- purrr::imap(
+  if (.is_object(value)) {
+    return(.guess_object_field_spec_object(
       value,
-      guess_object_field_spec,
-      empty_list_unspecified = empty_list_unspecified,
-      simplify_list = simplify_list
-    )
-    return(tib_row(name, !!!fields))
+      name,
+      empty_list_unspecified,
+      simplify_list,
+      local_env
+    ))
   }
 
-  tib_variant(name)
+  return(tib_variant(name))
 }
 
-check_object_names <- function(x, call) {
+#' Guess the field spec for a vector-typed field
+#'
+#' @inheritParams .shared-params
+#' @returns A tib field specification.
+#' @keywords internal
+.guess_object_field_spec_vector <- function(value, name) {
+  ptype <- .tib_ptype(value)
+  if (.is_unspecified(ptype)) {
+    return(tib_unspecified(name))
+  }
+  .tib_scalar_or_vector_spec(name, ptype, vctrs::vec_size(value) == 1)
+}
+
+#' Guess the field spec for a data-frame-typed field
+#'
+#' @inheritParams .shared-params
+#' @returns A `tib_df` field specification.
+#' @keywords internal
+.guess_object_field_spec_df <- function(
+  value,
+  name,
+  empty_list_unspecified,
+  local_env
+) {
+  field_spec <- .imap_col_to_spec(value, empty_list_unspecified, local_env)
+  return(tib_df(name, !!!field_spec))
+}
+
+#' Guess the field spec for a nested object field
+#'
+#' @inheritParams .shared-params
+#' @returns A `tib_row` field specification.
+#' @keywords internal
+.guess_object_field_spec_object <- function(
+  value,
+  name,
+  empty_list_unspecified,
+  simplify_list,
+  local_env
+) {
+  .guess_object_field_spec_expand_fields(
+    value,
+    empty_list_unspecified,
+    simplify_list,
+    local_env,
+    .key = name,
+    tib_fn = tib_row,
+    fields_fn = .imap_guess_object_field_spec
+  )
+}
+
+#' Map `.guess_object_field_spec` over a named list
+#'
+#' @inheritParams .shared-params
+#' @returns A named list of tib field specifications, one per element of `x`.
+#' @keywords internal
+.imap_guess_object_field_spec <- function(
+  x,
+  empty_list_unspecified,
+  simplify_list,
+  local_env
+) {
+  purrr::imap(
+    x,
+    function(value, name) {
+      .guess_object_field_spec(
+        value,
+        name,
+        empty_list_unspecified,
+        simplify_list,
+        local_env
+      )
+    }
+  )
+}
+
+#' Abort for missing or duplicate names
+#'
+#' @inheritParams .shared-params
+#' @returns `NULL` (invisibly).
+#' @keywords internal
+.check_object_names <- function(x, call) {
+  .check_named(x, call = call) |>
+    .check_names_not_duplicated(call = call)
+}
+
+#' Abort for missing names
+#'
+#' @inheritParams .shared-params
+#' @returns `NULL` (invisibly).
+#' @keywords internal
+.check_named <- function(x, call) {
   if (!rlang::is_named2(x)) {
     msg <- "{.arg x} must be fully named."
     cli::cli_abort(msg, call = call)
   }
+  return(invisible(x))
+}
 
-  x_nms <- names(x)
-  if (vctrs::vec_duplicate_any(x_nms)) {
+#' Abort for duplicate names
+#'
+#' @inheritParams .shared-params
+#' @returns `NULL` (invisibly).
+#' @keywords internal
+.check_names_not_duplicated <- function(x, call) {
+  if (vctrs::vec_duplicate_any(names(x))) {
     msg <- "Names of {.arg x} must be unique."
     cli::cli_abort(msg, call = call)
   }
+  return(invisible(x))
 }
 
-guess_vector_input_form <- function(value, name) {
+#' Guess whether a list field can be simplified to a vector spec
+#'
+#' @inheritParams .shared-params
+#' @returns A list with:
+#'   - `can_simplify` (`logical(1)`): Whether the field can be simplified.
+#'   - `tib_spec`: A tib field specification (present only when `can_simplify`
+#'   is `TRUE`).
+#' @keywords internal
+.guess_vector_input_form <- function(value, name) {
   ptype_result <- .get_ptype_common(value, empty_list_unspecified = FALSE)
   if (!ptype_result$has_common_ptype) {
     return(list(can_simplify = FALSE))
   }
-
   ptype <- ptype_result$ptype
   if (is.null(ptype)) {
-    if (rlang::is_named(value)) {
-      return(list(can_simplify = FALSE))
-    }
-
-    tib_spec <- tib_unspecified(name, .required = TRUE)
-    return(list(can_simplify = TRUE, tib_spec = tib_spec))
+    return(.guess_vector_input_form_null(value, name))
   }
-
   if (!.is_vec(ptype)) {
     return(list(can_simplify = FALSE))
   }
-
   if (.is_field_scalar(value)) {
-    if (rlang::is_named(value)) {
-      tib_spec <- tib_vector(
-        name,
-        ptype,
-        .required = TRUE,
-        .input_form = "object"
-      )
-    } else {
-      tib_spec <- tib_vector(
-        name,
-        ptype,
-        .required = TRUE,
-        .input_form = "scalar_list"
-      )
-    }
-
-    return(list(can_simplify = TRUE, tib_spec = tib_spec))
+    return(.guess_vector_input_form_field_scalar(value, name, ptype))
   }
+  return(
+    list(can_simplify = TRUE, tib_spec = tib_variant(name, .required = TRUE))
+  )
+}
 
-  list(can_simplify = TRUE, tib_spec = tib_variant(name, .required = TRUE))
+#' Guess input form for a list field whose common ptype is `NULL`
+#'
+#' @inheritParams .shared-params
+#' @returns A list with:
+#'   - `can_simplify` (`logical(1)`): Whether the field can be simplified.
+#'   - `tib_spec`: A tib field specification (present only when `can_simplify`
+#'   is `TRUE`).
+#' @keywords internal
+.guess_vector_input_form_null <- function(value, name) {
+  if (rlang::is_named(value)) {
+    return(list(can_simplify = FALSE))
+  }
+  tib_spec <- tib_unspecified(name, .required = TRUE)
+  return(list(can_simplify = TRUE, tib_spec = tib_spec))
+}
+
+#' Build a tib spec for a field-scalar input form
+#'
+#' @inheritParams .shared-params
+#' @returns A list with `can_simplify = TRUE` and `tib_spec`, a `tib_vector`
+#'   field specification.
+#' @keywords internal
+.guess_vector_input_form_field_scalar <- function(value, name, ptype) {
+  return(list(
+    can_simplify = TRUE,
+    tib_spec = tib_vector(
+      name,
+      ptype,
+      .required = TRUE,
+      .input_form = .tib_vector_input_form(value)
+    )
+  ))
 }
