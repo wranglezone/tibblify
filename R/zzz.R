@@ -5,7 +5,7 @@
   vctrs_ns <- loadNamespace("vctrs")
 
   # Pass BOTH namespaces to the C initializer
-  .Call(tibblify_initialize, ns_env("tibblify"), vctrs_ns)
+  .Call(tibblify_initialize, rlang::ns_env("tibblify"), vctrs_ns)
 }
 
 # nocov end

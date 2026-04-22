@@ -15,7 +15,7 @@ tib_lgl <- function(
   ptype_inner = deprecated(),
   transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -46,7 +46,7 @@ tib_int <- function(
   ptype_inner = deprecated(),
   transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -77,7 +77,7 @@ tib_dbl <- function(
   ptype_inner = deprecated(),
   transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -108,7 +108,7 @@ tib_chr <- function(
   ptype_inner = deprecated(),
   transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -139,7 +139,7 @@ tib_date <- function(
   ptype_inner = deprecated(),
   transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -168,7 +168,7 @@ tib_chr_date <- function(
   fill = deprecated(),
   format = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -210,7 +210,7 @@ tib_lgl_vec <- function(
   values_to = deprecated(),
   names_to = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -257,7 +257,7 @@ tib_int_vec <- function(
   values_to = deprecated(),
   names_to = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -304,7 +304,7 @@ tib_dbl_vec <- function(
   values_to = deprecated(),
   names_to = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -351,7 +351,7 @@ tib_chr_vec <- function(
   values_to = deprecated(),
   names_to = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)
@@ -398,7 +398,7 @@ tib_date_vec <- function(
   values_to = deprecated(),
   names_to = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .fill <- .deprecate_arg(.fill, fill)

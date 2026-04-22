@@ -8,22 +8,21 @@ description: Document package functions. Use when asked to document functions.
 
 *All* R functions in `R/` should be documented in roxygen2 `#'` style, including internal/unexported functions.
 
-- Run `air format .` then `devtools::document()` after changing any roxygen2 docs.
+- Run `air format .` then `devtools::document()` after changing any roxygen2 docs. If it says "Could not resolve link to topic" for a function we updated, run `devtools::document()` again to make sure the error was transient.
 - Use sentence case for all headings.
 - Wrap roxygen comments at 80 characters.
 - Files matching `R/import-standalone-*.R` are imported from other packages and have their own conventions. Do not modify their documentation.
-- After documenting functions, run `devtools::document(roclets = c('rd', 'collate', 'namespace'))`.
 - If `_pkgdown.yml` exists and contains a `reference` section:
   - Whenever you add a new (non-internal) documentation topic, also add the topic to `_pkgdown.yml`.
   - Use `pkgdown::check_pkgdown()` to check that all topics are included in the reference index.
 
 ## Shared parameters
 
-**Parameters used in more than one function** go in `R/aaa-shared_params.R` under `@name .shared-params`. Functions inherit them with `@inheritParams .shared-params`. See `R/aaa-shared_params.R` for current definitions (if it exists).
+**Parameters used in more than one function** go in `R/aaa-shared_params.R` under `@name .shared-params`. Functions inherit them with `@inheritParams .shared-params`. See `R/aaa-shared_params.R` for current definitions. Note: definitions of dot-prefixed parameters (e.g. `#' @param .call`) are also imported by roxygen for their dot-less equivalent (e.g. `#' @param call`); if we use both versions, we only need to document the dot-prefixed version in `.shared-params`.
 
-Shared params blocks: alphabetize parameters, use `@name .shared-params` (with leading dot), include `@keywords internal`, end with `NULL`.
+Shared params blocks: alphabetize parameters (ignoring dot prefixes), use `@name .shared-params` (with leading dot), include `@keywords internal`, end with `NULL`.
 
-Multiple shared-params groups (e.g. `.shared-params-io`, `.shared-params-parsing`) are appropriate when parameters are only shared within a file and closely related files.
+Multiple shared-params groups (e.g. `#' @name .shared-params-io`, `#' @name .shared-params-parsing`) are appropriate when parameters are only shared within a file and closely related files.
 
 ## Parameter documentation format
 

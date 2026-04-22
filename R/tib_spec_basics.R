@@ -209,7 +209,7 @@ tib_scalar <- function(
   ptype_inner = deprecated(),
   transform = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   # Previously ptype_inner would have been auto-filled from ptype, so resolve
   # that.
@@ -322,7 +322,7 @@ tib_vector <- function(
   values_to = deprecated(),
   names_to = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .ptype <- .deprecate_arg(.ptype, ptype)
   .required <- .deprecate_arg(.required, required)
@@ -461,7 +461,7 @@ tib_unspecified <- function(
   key = deprecated(),
   required = deprecated()
 ) {
-  check_dots_empty()
+  rlang::check_dots_empty()
   .key <- .deprecate_arg(.key, key)
   .required <- .deprecate_arg(.required, required)
   .tib_collector(

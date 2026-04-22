@@ -1,121 +1,101 @@
-is_object <- function(x) {
+#' Is x an object?
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is an object (a fully named list with
+#'   unique names), `FALSE` otherwise.
+#' @keywords internal
+.is_object <- function(x) {
   .Call(ffi_is_object, x)
 }
 
-should_guess_object <- function(x) {
-  # TODO upper limit on width of object?
-  .Call(ffi_is_object, x)
-}
-
-is_object_list <- function(x) {
+#' Is x a list of objects?
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a list of objects, `FALSE`
+#'   otherwise.
+#' @keywords internal
+.is_object_list <- function(x) {
   .Call(ffi_is_object_list, x)
 }
 
-is_list_of_object_lists <- function(x) {
+#' bort if `x` is not a list of objects
+#'
+#' @inheritParams .shared-params
+#' @returns `x` (invisibly). Called for side effect.
+#' @keywords internal
+.check_object_list <- function(x, arg = caller_arg(x), call = caller_env()) {
+  if (!.is_object_list(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a list of objects.",
+      class = c(
+        "tibblify-error-not_object_list",
+        "tibblify-error",
+        "tibblify-condition"
+      ),
+      call = call
+    )
+  }
+  invisible(x)
+}
+
+#' Is x a list of object lists?
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if every non-`NULL` element of `x` is a list
+#'   of objects, `FALSE` otherwise.
+#' @keywords internal
+.is_list_of_object_lists <- function(x) {
   for (x_i in x) {
-    if (!is_object_list(x_i) && !is.null(x_i)) {
+    if (!.is_object_list(x_i) && !is.null(x_i)) {
       return(FALSE)
     }
   }
-
   TRUE
 }
 
-is_list_of_null <- function(x) {
+#' Is x a list of NULLs?
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if every element of `x` is `NULL`, `FALSE`
+#'   otherwise.
+#' @keywords internal
+.is_list_of_null <- function(x) {
   .Call(ffi_is_null_list, x)
 }
 
-list_is_list_of_null <- function(x) {
+#' For each element, is it a list of NULLs?
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical`) A logical vector the same length as `x`, where each
+#'   element is `TRUE` if the corresponding element of `x` is itself a list of
+#'   `NULL`s.
+#' @keywords internal
+.list_is_list_of_null <- function(x) {
   .Call(ffi_list_is_list_null, x)
 }
 
-should_guess_object_list <- function(x) {
-  if (!.Call(ffi_is_object_list, x)) {
-    return(FALSE)
-  }
-
-  # TODO why is this here?
-  if (vctrs::vec_size(x) <= 1 && is_object(x)) {
-    return(FALSE)
-  }
-
-  names_list <- lapply(x, names)
-  names_list <- vctrs::list_drop_empty(names_list)
-  n <- vctrs::vec_size(names_list)
-
-  # TODO why is this here?
-  if (n == 0) {
-    return(FALSE)
-  }
-
-  all_names <- vctrs::list_unchop(
-    names_list,
-    ptype = character(),
-    name_spec = "{inner}"
-  )
-  names_count <- vctrs::vec_count(all_names, "location")
-
-  n_min <- floor(0.9 * n)
-  any(names_count$count >= n_min) && mean(names_count$count >= 0.5)
-}
-
-get_overview <- function(x) {
-  classes <- .compat_map_chr(x, ~ class(.x)[1])
-  paste0("  ", names(classes), ": ", classes, collapse = "\n")
-}
-
-guess_type <- function(x, arg = caller_arg(x), error_call = caller_env()) {
-  object <- is_object(x)
-  object_list <- is_object_list(x)
-
-  if (object && object_list) {
-    if (!is_interactive()) {
-      # TODO should show name
-      msg <- c(
-        "Can't guess type of {.arg {arg}}.",
-        x = "It is both an object and a named list of objects.",
-        i = "Provide a spec to {.fn tibblify} or use {.fn guess_spec} interactively."
-      )
-      cli::cli_abort(msg, call = error_call)
-    }
-
-    return(choose_type(x, arg))
-  }
-
-  if (is_object(x)) {
-    return("object")
-  }
-
-  if (is_object_list(x)) {
-    return("object list")
-  }
-
-  abort_not_tibblifiable(x, arg, error_call)
-}
-
-abort_not_tibblifiable <- function(
+#' Abort when x is neither an object nor a list of objects
+#'
+#' @inheritParams .shared-params
+#' @returns Nothing. Called for its side effect of throwing an error.
+#' @keywords internal
+.abort_not_tibblifiable <- function(
   x,
   arg = caller_arg(x),
-  error_call = caller_env()
+  call = caller_env()
 ) {
-  lgl_to_bullet <- function(x) {
-    bullets <- c("x", "v")
-    x2 <- as.integer(x) + 1L
-    bullets[x2]
-  }
-
   object_cnd <- c(
     "An object",
     "is a list,",
     "is fully named,",
     "and has unique names."
   )
-  object_bullets <- lgl_to_bullet(c(
-    vctrs::vec_is_list(x),
-    is_named2(x),
+  object_bullets <- .lgl_to_bullet(c(
+    vctrs::obj_is_list(x),
+    rlang::is_named2(x),
     anyDuplicated(names(x)) == 0
   ))
-  o_msg <- set_names(object_cnd, c("", object_bullets))
+  o_msg <- rlang::set_names(object_cnd, c("", object_bullets))
 
   object_list_cnd <- c(
     "A list of objects is",
@@ -123,12 +103,12 @@ abort_not_tibblifiable <- function(
     "a list and",
     "each element is {.code NULL} or an object."
   )
-  object_list_bullets <- lgl_to_bullet(c(
+  object_list_bullets <- .lgl_to_bullet(c(
     is.data.frame(x),
-    vctrs::vec_is_list(x),
-    purrr::detect_index(x, ~ !is.null(.x) && !is_object(.x)) == 0
+    vctrs::obj_is_list(x),
+    purrr::detect_index(x, ~ !is.null(.x) && !.is_object(.x)) == 0
   ))
-  ol_msg <- set_names(object_list_cnd, c("", object_list_bullets))
+  ol_msg <- rlang::set_names(object_list_cnd, c("", object_list_bullets))
 
   msg <- c(
     "{.arg {arg}} is neither an object nor a list of objects.",
@@ -136,27 +116,26 @@ abort_not_tibblifiable <- function(
     ol_msg
   )
 
-  cli::cli_abort(msg, call = error_call)
+  cli::cli_abort(
+    msg,
+    class = c(
+      "tibblify-error-untibblifiable_object",
+      "tibblify-error",
+      "tibblify-condition"
+    ),
+    call = call
+  )
 }
 
-choose_type <- function(x, arg) {
-  n <- length(x)
-  if (n > 3) {
-    x <- x[1:3]
-  }
-
-  # TODO nicer overview
-  overviews <- .compat_map_chr(x, get_overview)
-  x_overview <- paste0(names(x), "\n", overviews, collapse = "\n")
-
-  msg <- c(
-    "{.arg {arg}} is an object and a named object list.",
-    "The structure of {.arg {arg}} is:"
-  )
-  cli::cli_alert_info(msg)
-  inform(x_overview)
-
-  title <- cli::format_message("How do you want to parse {.arg {arg}}?")
-  choice <- utils::menu(c("object", "object list"), title = title)
-  return(choice)
+#' Convert a logical vector to cli bullet symbols
+#'
+#' @param x (`logical`) A logical vector where `TRUE` maps to a check mark
+#'   bullet and `FALSE` to a cross bullet.
+#' @returns (`character`) A character vector of cli bullet names (`"v"` or
+#'   `"x"`) the same length as `x`.
+#' @keywords internal
+.lgl_to_bullet <- function(x) {
+  bullets <- c("x", "v")
+  x2 <- as.integer(x) + 1L
+  bullets[x2]
 }

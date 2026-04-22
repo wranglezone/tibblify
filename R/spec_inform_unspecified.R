@@ -78,3 +78,20 @@
 
   unspecified_paths
 }
+
+#' Potentially inform users about unspecified fields
+#'
+#' @inheritParams tibblify
+#' @inheritParams .shared-params
+#' @returns The `spec` object.
+#' @keywords internal
+.maybe_inform_unspecified <- function(
+  spec,
+  inform_unspecified,
+  call = caller_env()
+) {
+  if (inform_unspecified) {
+    .spec_inform_unspecified(spec, call = call)
+  }
+  spec
+}
