@@ -50,7 +50,12 @@ make them easier to import and to find.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg--call">.call<a class="anchor" aria-label="anchor" href="#arg--call"></a></dt>
+<dl><dt id="arg-arg">arg<a class="anchor" aria-label="anchor" href="#arg-arg"></a></dt>
+<dd><p>(<code>character(1)</code>) An argument name. This name will be mentioned in
+error messages as the input that is at the origin of a problem.</p></dd>
+
+
+<dt id="arg--call">.call<a class="anchor" aria-label="anchor" href="#arg--call"></a></dt>
 <dd><p>(<code>environment</code>) The environment to use for error messages.</p></dd>
 
 
@@ -64,9 +69,19 @@ children.</p></dd>
 children.</p></dd>
 
 
+<dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
+<dd><p>(<code>any</code>) A column from a data frame, which may be a vector, a
+list, or a nested data frame.</p></dd>
+
+
 <dt id="arg--elt-transform">.elt_transform<a class="anchor" aria-label="anchor" href="#arg--elt-transform"></a></dt>
 <dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to each
 element before casting to <code>.ptype_inner</code>.</p></dd>
+
+
+<dt id="arg-empty-list-unspecified">empty_list_unspecified<a class="anchor" aria-label="anchor" href="#arg-empty-list-unspecified"></a></dt>
+<dd><p>(<code>logical(1)</code>) Treat empty lists as
+unspecified?</p></dd>
 
 
 <dt id="arg--fill">.fill<a class="anchor" aria-label="anchor" href="#arg--fill"></a></dt>
@@ -79,8 +94,18 @@ does not exist.</p></dd>
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
 
 
+<dt id="arg-inform-unspecified">inform_unspecified<a class="anchor" aria-label="anchor" href="#arg-inform-unspecified"></a></dt>
+<dd><p>(<code>logical(1)</code>) Inform about fields whose type could
+not be determined?</p></dd>
+
+
 <dt id="arg--key">.key<a class="anchor" aria-label="anchor" href="#arg--key"></a></dt>
 <dd><p>(<code>character</code>) The path of names to the field in the object.</p></dd>
+
+
+<dt id="arg-local-env">local_env<a class="anchor" aria-label="anchor" href="#arg-local-env"></a></dt>
+<dd><p>(<code>environment</code>) A local environment used to track state
+across recursive calls, such as whether empty lists were encountered.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
@@ -100,6 +125,11 @@ field.</p></dd>
 <dd><p>(<code>logical(1)</code>) Throw an error if the field does not exist?</p></dd>
 
 
+<dt id="arg-simplify-list">simplify_list<a class="anchor" aria-label="anchor" href="#arg-simplify-list"></a></dt>
+<dd><p>(<code>logical(1)</code>) Should scalar lists be simplified to
+vectors?</p></dd>
+
+
 <dt id="arg-spec-list">spec_list<a class="anchor" aria-label="anchor" href="#arg-spec-list"></a></dt>
 <dd><p>(<code>list</code>) A list of specifications.</p></dd>
 
@@ -111,6 +141,10 @@ field.</p></dd>
 <dt id="arg--transform">.transform<a class="anchor" aria-label="anchor" href="#arg--transform"></a></dt>
 <dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to the whole
 vector after casting to <code>.ptype_inner</code>.</p></dd>
+
+
+<dt id="arg-value">value<a class="anchor" aria-label="anchor" href="#arg-value"></a></dt>
+<dd><p>(<code>list</code>) An object list whose fields will be guessed.</p></dd>
 
 
 <dt id="arg--values-to">.values_to<a class="anchor" aria-label="anchor" href="#arg--values-to"></a></dt>

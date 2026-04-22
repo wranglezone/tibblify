@@ -120,7 +120,9 @@ contributing to this project, you agree to abide by its terms.
 
 - [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
   [`guess_tspec_df()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  [`guess_tspec_list()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
   [`guess_tspec_object()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  [`guess_tspec_object_list()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
   :
 
   Guess the

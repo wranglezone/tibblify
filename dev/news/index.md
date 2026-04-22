@@ -2,6 +2,38 @@
 
 ## tibblify (development version)
 
+- All arguments of functions that accept meaningful named `...` are now
+  prefixed with `.` to minimize conflicts with column and object names
+  in `...`. The un-dotted versions of the arguments are still accepted,
+  but calling functions directly with un-dotted arguments will produce a
+  warning once per session (see `?lifecycle::deprecate_soft()`).
+  Un-dotted arguments will be phased out in a future version of this
+  package, so we recommend switching to the dot-prefixed versions. See
+  [`?tspec_df`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
+  and `?tib_scalar()` for details.
+- All code has been refactored for maintainability. While we were
+  careful to ensure that output is unchanged, it is possible that a
+  corner case is no longer handled how it was in version 0.3.0. Please
+  notify us (<https://github.com/wranglezone/tibblify/issues>) if
+  something has changed for the worse in an unexpected way
+  ([\#243](https://github.com/wranglezone/tibblify/issues/243)).
+- The
+  [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  variants
+  [`guess_tspec_list()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  and
+  [`guess_tspec_object_list()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  are now exported (along with
+  [`guess_tspec_df()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  and
+  [`guess_tspec_object()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md),
+  which were already exported).
+  [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  should correctly guess the format in most cases, but you can call the
+  variant directly if you think
+  [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
+  is dispatching incorrectly
+  ([\#249](https://github.com/wranglezone/tibblify/issues/249)).
 - [`untibblify()`](https://tibblify.wrangle.zone/dev/reference/untibblify.md)
   now automatically uses the `tib_spec` attribute when present, so
   tibblified objects can be round-tripped without explicitly passing the
@@ -17,10 +49,14 @@
   ([\#203](https://github.com/wranglezone/tibblify/issues/203),
   [\#204](https://github.com/wranglezone/tibblify/issues/204),
   [\#222](https://github.com/wranglezone/tibblify/issues/222)).
-- Documentation of all functions has been updated for clarity
-  ([\#228](https://github.com/wranglezone/tibblify/issues/228),
-  [\#245](https://github.com/wranglezone/tibblify/issues/245),
-  [\#246](https://github.com/wranglezone/tibblify/issues/246)).
+- All vignettes and the documentation of all functions has been updated
+  for clarity
+  ([\#243](https://github.com/wranglezone/tibblify/issues/243)).
+
+(roughly sorted into “Breaking changes”, “Potential breaking changes”,
+“New features”, “Bug fixes”, and “Documentation” as of 2026-04-10, but I
+left out the headers to make it easier to add more bullets during
+development)
 
 ## tibblify 0.3.1
 
