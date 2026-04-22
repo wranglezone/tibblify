@@ -16,10 +16,10 @@
 #' - Use `guess_tspec_list()` if the input object is a list but you aren't sure
 #' how it should be processed.
 #'
-#' See `vignette("supported-structures)` for a discussion of the input types
+#' See `vignette("supported-structures")` for a discussion of the input types
 #' supported by tibblify.
 #'
-#' @param x (`list`) A nested list.
+#' @param x (`list` or `data.frame`) A nested list or a data frame.
 #' @param ... These dots are for future extensions and must be empty.
 #' @inheritParams .shared-params
 #'

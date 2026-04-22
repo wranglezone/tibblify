@@ -43,6 +43,28 @@ test_that(".is_object_list() works", {
   expect_true(.is_object_list(list(list(x = 1), NULL)))
 })
 
+test_that(".check_object_list() checks that x is a list of objects", {
+  expect_error(
+    .check_object_list(structure(list(x = 1), class = "dummy")),
+    "must be a list of objects",
+    class = "tibblify-error-not_object_list"
+  )
+  expect_error(
+    .check_object_list(list(structure(list(x = 1), class = "dummy"))),
+    "must be a list of objects",
+    class = "tibblify-error-not_object_list"
+  )
+  expect_error(
+    .check_object_list(list(x = 1)),
+    "must be a list of objects",
+    class = "tibblify-error-not_object_list"
+  )
+  expect_equal(
+    .check_object_list(list(list(x = 1), NULL)),
+    list(list(x = 1), NULL)
+  )
+})
+
 test_that("detect lists of length 1 (#50)", {
   expect_true(.is_object_list(list(list(x = 1, y = 2))))
 })

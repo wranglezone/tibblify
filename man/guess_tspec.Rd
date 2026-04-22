@@ -58,7 +58,7 @@ guess_tspec_object_list(
 )
 }
 \arguments{
-\item{x}{(\code{list}) A nested list.}
+\item{x}{(\code{list} or \code{data.frame}) A nested list or a data frame.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
@@ -95,7 +95,7 @@ a JSON object that has been read into R as a list of named lists).
 how it should be processed.
 }
 
-See \verb{vignette("supported-structures)} for a discussion of the input types
+See \code{vignette("supported-structures")} for a discussion of the input types
 supported by tibblify.
 }
 \examples{

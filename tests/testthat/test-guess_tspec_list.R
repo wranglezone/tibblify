@@ -22,7 +22,7 @@ test_that("guess_tspec_list dispatches appropriately", {
       cli::cli_inform("object", class = "object")
     }
   )
-  # guess_tpsec_object()
+  # guess_tspec_object()
   read_sample_json("citm_catalog.json") |>
     guess_tspec_list() |>
     expect_message(class = "object")

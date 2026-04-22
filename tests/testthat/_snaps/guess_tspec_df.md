@@ -3,9 +3,9 @@
     Code
       (expect_error(guess_tspec_df(list(a = 1))))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-not_object_list>
       Error in `guess_tspec_df()`:
-      ! Not every element of `list(a = 1)` is an object.
+      ! `list(a = 1)` must be a list of objects.
     Code
       (expect_error(guess_tspec_df(1:3)))
     Output

@@ -10,6 +10,9 @@
 \item{fields_spec}{(\code{list}) A named list of tib field specifications.}
 
 \item{col}{(\code{list}) A list column whose elements are data frames.}
+
+\item{ptype}{(\code{vector(0)}) A prototype of the desired output type of the
+field.}
 }
 \value{
 \code{fields_spec} with \verb{$required} updated for each field.

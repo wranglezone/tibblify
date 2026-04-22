@@ -114,21 +114,14 @@ test_that("can guess object_list of length one (#50)", {
   )
 })
 
-test_that("guess_tspec_object_list errors informatively for list of tibbles of dfs", {
+test_that("guess_tspec_object_list errors informatively list of non-objects", {
   expect_error(
     {
       guess_tspec_object_list(
-        list(
-          a = tibble::tibble(
-            b = data.frame(w = 1:3),
-            c = data.frame(w = 4:6),
-            d = data.frame(w = 7:9)
-          )
-        )
+        list(letters)
       )
     },
-    "list of dataframes is not yet supported",
-    class = "purrr_error_indexed"
+    class = "tibblify-error-not_object_list"
   )
 })
 

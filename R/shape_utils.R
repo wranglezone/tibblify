@@ -18,6 +18,26 @@
   .Call(ffi_is_object_list, x)
 }
 
+#' bort if `x` is not a list of objects
+#'
+#' @inheritParams .shared-params
+#' @returns `x` (invisibly). Called for side effect.
+#' @keywords internal
+.check_object_list <- function(x, arg = caller_arg(x), call = caller_env()) {
+  if (!.is_object_list(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a list of objects.",
+      class = c(
+        "tibblify-error-not_object_list",
+        "tibblify-error",
+        "tibblify-condition"
+      ),
+      call = call
+    )
+  }
+  invisible(x)
+}
+
 #' Is x a list of object lists?
 #'
 #' @inheritParams .shared-params

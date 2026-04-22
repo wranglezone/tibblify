@@ -24,12 +24,7 @@ guess_tspec_df <- function(
     )
   } else {
     .check_list(x, arg = arg)
-
-    if (!.is_object_list(x)) {
-      msg <- "Not every element of {.arg {arg}} is an object."
-      cli::cli_abort(msg, call = call)
-    }
-
+    .check_object_list(x, arg = arg, call = call)
     spec <- guess_tspec_object_list(
       x,
       empty_list_unspecified = empty_list_unspecified,
@@ -230,6 +225,7 @@ guess_tspec_df <- function(
 #'
 #' @param fields_spec (`list`) A named list of tib field specifications.
 #' @param col (`list`) A list column whose elements are data frames.
+#' @inheritParams .shared-params
 #' @returns `fields_spec` with `$required` updated for each field.
 #' @keywords internal
 .df_guess_required <- function(fields_spec, col, ptype) {
