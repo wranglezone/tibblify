@@ -22,6 +22,11 @@ to make them easier to import and to find.
 
   (`character(1)`) The column name in which to store the children.
 
+- col:
+
+  (`any`) A column from a data frame, which may be a vector, a list, or
+  a nested data frame.
+
 - .elt_transform:
 
   (`function` or `NULL`) A function to apply to each element before
@@ -48,6 +53,11 @@ to make them easier to import and to find.
 - .key:
 
   (`character`) The path of names to the field in the object.
+
+- local_env:
+
+  (`environment`) A local environment used to track state across
+  recursive calls, such as whether empty lists were encountered.
 
 - name:
 
@@ -81,6 +91,10 @@ to make them easier to import and to find.
 
   (`function` or `NULL`) A function to apply to the whole vector after
   casting to `.ptype_inner`.
+
+- value:
+
+  (`list`) An object list whose fields will be guessed.
 
 - .values_to:
 

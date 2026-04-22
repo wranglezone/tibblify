@@ -12,7 +12,7 @@ Find the common ptype of a list of objects
 
 - x:
 
-  (`list`) Objects which might have a common `ptype`.
+  (`any`) The object to check.
 
 - empty_list_unspecified:
 

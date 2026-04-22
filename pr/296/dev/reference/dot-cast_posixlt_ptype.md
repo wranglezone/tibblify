@@ -1,19 +1,18 @@
-# Conver POSIXlt to POSIXct
+# Convert POSIXlt to POSIXct
 
-Conver POSIXlt to POSIXct
+Convert POSIXlt to POSIXct
 
 ## Usage
 
 ``` r
-.cast_posixlt_ptype(ptype)
+.cast_posixlt_ptype(x)
 ```
 
 ## Arguments
 
-- ptype:
+- x:
 
-  (`any`) An object which might be a `POSIXlt` or have `POSIXlt` in its
-  class hierarchy.
+  (`any`) The object to check.
 
 ## Value
 

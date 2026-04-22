@@ -106,7 +106,7 @@ guess_tspec_object_list(
 
 ## Value
 
-A specification object that can used in
+A specification object that can be used in
 [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md).
 
 ## Examples

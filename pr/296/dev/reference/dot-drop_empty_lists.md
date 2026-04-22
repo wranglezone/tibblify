@@ -12,7 +12,7 @@ Remove empty lists from an object
 
 - x:
 
-  (`list`) An object which might contain empty lists.
+  (`any`) The object to check.
 
 ## Value
 
