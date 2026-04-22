@@ -145,7 +145,7 @@ check_parent_col <- function(data, parent_col, id_col, call = caller_env()) {
   id_col_name <- colnames(data)[[id_col]]
   parent_col_name <- colnames(data)[[parent_col]]
 
-  check_arg_different(parent_col, id_col)
+  .check_arg_different(parent_col, id_col)
 
   ids <- data[[id_col]]
   parent_ids <- data[[parent_col]]
@@ -198,7 +198,7 @@ check_children_to <- function(
 ) {
   children_to <- vctrs::vec_cast(children_to, character(), call = call)
   vctrs::vec_check_size(children_to, size = 1L, call = call)
-  check_arg_different(
+  .check_arg_different(
     children_to,
     id_col = names(id_col),
     parent_col = names(parent_col),

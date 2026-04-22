@@ -143,7 +143,7 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
     }
   )
 
-  args <- list_drop_null(args)
+  args <- .list_drop_null(args)
   if (is_empty(args)) {
     parts <- fields_formatted
   } else {
@@ -210,7 +210,7 @@ format.tib_scalar <- function(
     transform = if (!is_zap(transform)) x$transform,
     ...
   )
-  parts <- list_drop_null(parts)
+  parts <- .list_drop_null(parts)
 
   f_name <- format_tib_f(x)
   nchar_prefix <- nchar_indent + cli::ansi_nchar(f_name) + 2

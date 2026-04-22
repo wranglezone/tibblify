@@ -59,7 +59,7 @@ unnest_tree <- function(
 
   id_col <- names(eval_pull(data, enquo(id_col), "id_col"))
   child_col <- names(eval_pull(data, enquo(child_col), "child_col"))
-  check_arg_different(child_col, id_col)
+  .check_arg_different(child_col, id_col)
 
   level_to <- check_unnest_level_to(level_to, data)
   parent_to <- check_unnest_parent_to(parent_to, data, level_to)
@@ -198,7 +198,7 @@ check_unnest_parent_to <- function(
     parent_to <- vctrs::vec_cast(parent_to, character(), call = call)
     vctrs::obj_check_vector(parent_to, call = call)
     vctrs::vec_check_size(parent_to, size = 1L, call = call)
-    check_arg_different(parent_to, level_to, call = call)
+    .check_arg_different(parent_to, level_to, call = call)
     check_col_new(data, parent_to, call = call)
   }
 
@@ -216,7 +216,7 @@ check_unnest_ancestors_to <- function(
     ancestors_to <- vctrs::vec_cast(ancestors_to, character(), call = call)
     vctrs::obj_check_vector(ancestors_to, call = call)
     vctrs::vec_check_size(ancestors_to, size = 1L, call = call)
-    check_arg_different(ancestors_to, level_to, parent_to, call = call)
+    .check_arg_different(ancestors_to, level_to, parent_to, call = call)
     check_col_new(data, ancestors_to, call = call)
   }
 

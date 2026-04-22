@@ -69,3 +69,28 @@ NULL
 #' @name .shared-params-tib
 #' @keywords internal
 NULL
+
+#' Shared utils parameters
+#'
+#' These parameters are shared by internal helper functions in `R/utils.R`.
+#'
+#' @param env (`environment`) The environment used to evaluate glue fields in
+#'   `message`.
+#' @param error_call (`environment`) The call passed to [cli::cli_abort()] when
+#'   rethrowing indexed errors.
+#' @param expr (`any`) An expression to evaluate and return, with indexed errors
+#'   wrapped.
+#' @param index (`integer(1)`) A zero-based location in a path.
+#' @param input_form (`character(1)`) The input form string used in error
+#'   messages.
+#' @param message (`character`) A cli message template.
+#' @param path (`list`) A path object encoded as a depth and a list of path
+#'   elements.
+#' @param path_exp (`list`) The path of the field used as the reference in size
+#'   mismatch errors.
+#' @param size_act (`integer(1)`) The observed size of a field.
+#' @param size_exp (`integer(1)`) The expected size of a field.
+#'
+#' @name .shared-params-utils
+#' @keywords internal
+NULL

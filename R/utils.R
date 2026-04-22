@@ -1,3 +1,10 @@
+#' Validate that an input is a list
+#'
+#' @param allow_null (`logical(1)`) Whether `NULL` is accepted.
+#' @param ... Additional arguments passed to [stop_input_type()].
+#' @inheritParams .shared-params
+#' @returns `NULL` (invisibly) if valid; otherwise throws an error.
+#' @keywords internal
 .check_list <- function(
   x,
   ...,
@@ -25,7 +32,14 @@
   )
 }
 
-check_arg_different <- function(
+#' Validate that arguments are different
+#'
+#' @param ... Other arguments that `arg` must differ from.
+#' @param arg_name (`character(1)`) The argument name shown in error messages.
+#' @inheritParams .shared-params
+#' @returns `NULL` (invisibly). Throws an error if any values are identical.
+#' @keywords internal
+.check_arg_different <- function(
   arg,
   ...,
   arg_name = caller_arg(arg),
@@ -46,6 +60,11 @@ check_arg_different <- function(
   }
 }
 
+#' Convert a path object to a printable string
+#'
+#' @inheritParams .shared-params-utils
+#' @returns (`character(1)`) A string path such as `"x$a[[1]]"`.
+#' @keywords internal
 .path_to_string <- function(path) {
   depth <- path[[1]] + 1L
   path_elts <- path[[2]]
@@ -68,11 +87,22 @@ check_arg_different <- function(
   paste0("x", paste0(path_elements, collapse = ""))
 }
 
+#' Throw a tibblify internal error
+#'
+#' @param .envir (`environment`) The environment used to evaluate cli fields.
+#' @param ... Arguments passed to [cli::cli_abort()].
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
 .tibblify_abort <- function(..., .envir = caller_env()) {
   cli::cli_abort(..., class = "tibblify_error", .envir = .envir)
 }
 
-stop_required <- function(path) {
+#' Error for missing required field
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_required <- function(path) {
   n <- path[[1]] + 1L
   path_elts <- path[[2]]
   path[[1]] <- path[[1]] - 1L
@@ -84,7 +114,12 @@ stop_required <- function(path) {
   .tibblify_abort(msg)
 }
 
-stop_scalar <- function(path, size_act) {
+#' Error for non-scalar field
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_scalar <- function(path, size_act) {
   path_str <- .path_to_string(path)
   msg <- c(
     "{.arg {path_str}} must have size {.val {1}}, not size {.val {size_act}}.",
@@ -94,7 +129,13 @@ stop_scalar <- function(path, size_act) {
   .tibblify_abort(msg)
 }
 
-stop_duplicate_name <- function(path, name) {
+#' Error for duplicate names
+#'
+#' @inheritParams .shared-params
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_duplicate_name <- function(path, name) {
   path_str <- .path_to_string(path)
   msg <- c(
     "The names of an object must be unique.",
@@ -103,7 +144,12 @@ stop_duplicate_name <- function(path, name) {
   .tibblify_abort(msg)
 }
 
-stop_empty_name <- function(path, index) {
+#' Error for empty names
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_empty_name <- function(path, index) {
   path_str <- .path_to_string(path)
   msg <- c(
     "The names of an object can't be empty.",
@@ -112,7 +158,12 @@ stop_empty_name <- function(path, index) {
   .tibblify_abort(msg)
 }
 
-stop_names_is_null <- function(path) {
+#' Error for unnamed object
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_names_is_null <- function(path) {
   path_str <- .path_to_string(path)
   msg <- c(
     "An object must be named.",
@@ -121,7 +172,12 @@ stop_names_is_null <- function(path) {
   .tibblify_abort(msg)
 }
 
-stop_object_vector_names_is_null <- function(path) {
+#' Error for unnamed object vector
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_object_vector_names_is_null <- function(path) {
   path_str <- .path_to_string(path)
   msg <- c(
     'A vector must be a named list for {.code input_form = "object."}',
@@ -130,7 +186,13 @@ stop_object_vector_names_is_null <- function(path) {
   .tibblify_abort(msg)
 }
 
-stop_vector_non_list_element <- function(path, input_form, x) {
+#' Error for non-list vector element
+#'
+#' @inheritParams .shared-params
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_vector_non_list_element <- function(path, input_form, x) {
   path_str <- .path_to_string(path)
   msg <- c(
     "{.arg {path_str}} must be a list, not {obj_type_friendly(x)}.",
@@ -140,7 +202,13 @@ stop_vector_non_list_element <- function(path, input_form, x) {
   .tibblify_abort(msg)
 }
 
-stop_vector_wrong_size_element <- function(path, input_form, x) {
+#' Error for wrong-sized vector element
+#'
+#' @inheritParams .shared-params
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_vector_wrong_size_element <- function(path, input_form, x) {
   path_str <- .path_to_string(path)
   sizes <- vctrs::list_sizes(x)
   idx <- which(sizes != 1 & !vctrs::vec_detect_missing(x))
@@ -156,7 +224,12 @@ stop_vector_wrong_size_element <- function(path, input_form, x) {
   .tibblify_abort(msg)
 }
 
-stop_colmajor_null <- function(path) {
+#' Error for NULL in colmajor fields
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_colmajor_null <- function(path) {
   path_str <- .path_to_string(path)
   msg <- c(
     "Field {.field {path_str}} must not be {.val NULL}."
@@ -164,7 +237,12 @@ stop_colmajor_null <- function(path) {
   .tibblify_abort(msg)
 }
 
-stop_colmajor_wrong_size_element <- function(
+#' Error for inconsistent colmajor field sizes
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_colmajor_wrong_size_element <- function(
   path,
   size_act,
   path_exp,
@@ -180,7 +258,12 @@ stop_colmajor_wrong_size_element <- function(
   .tibblify_abort(msg)
 }
 
-stop_required_colmajor <- function(path) {
+#' Error for missing required colmajor field
+#'
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_required_colmajor <- function(path) {
   n <- path[[1]] + 1L
   path_elts <- path[[2]]
   path[[1]] <- path[[1]] - 1L
@@ -192,7 +275,13 @@ stop_required_colmajor <- function(path) {
   .tibblify_abort(msg)
 }
 
-stop_non_list_element <- function(path, x) {
+#' Error for non-list element
+#'
+#' @inheritParams .shared-params
+#' @inheritParams .shared-params-utils
+#' @returns Never returns; called for its side effect of throwing an error.
+#' @keywords internal
+.stop_non_list_element <- function(path, x) {
   path_str <- .path_to_string(path)
   msg <- c(
     "{.arg {path_str}} must be a list, not {obj_type_friendly(x)}."
@@ -200,11 +289,24 @@ stop_non_list_element <- function(path, x) {
   .tibblify_abort(msg)
 }
 
+#' Flatten a list to a vector
+#'
+#' @param name_spec (`character(1)`, `function`, or `NULL`) Name specification
+#'   passed to [vctrs::list_unchop()].
+#' @param ptype (`vector(0)`) Prototype for the flattened output.
+#' @inheritParams .shared-params
+#' @returns A vector with elements from `x`.
+#' @keywords internal
 .vec_flatten <- function(x, ptype, name_spec = zap()) {
   vctrs::list_unchop(x, ptype = ptype, name_spec = name_spec)
 }
 
-list_drop_null <- function(x) {
+#' Drop NULL elements from a list
+#'
+#' @inheritParams .shared-params
+#' @returns `x` with `NULL` elements removed.
+#' @keywords internal
+.list_drop_null <- function(x) {
   null_flag <- vctrs::vec_detect_missing(x)
   if (any(null_flag)) {
     x <- x[!null_flag]
@@ -213,10 +315,22 @@ list_drop_null <- function(x) {
   x
 }
 
+#' Map to a character vector
+#'
+#' @param .f (`function`) Function to apply to each element of `x`.
+#' @param ... Additional arguments passed to `.f`.
+#' @inheritParams .shared-params
+#' @returns (`character`) The mapped character vector.
+#' @keywords internal
 .compat_map_chr <- function(x, .f, ...) {
   purrr::map_vec(x, .f, ..., .ptype = character())
 }
 
+#' Wrap indexed purrr errors with context
+#'
+#' @inheritParams .shared-params-utils
+#' @returns The evaluated result of `expr`, or an error with added context.
+#' @keywords internal
 .with_indexed_errors <- function(
   expr,
   message,
@@ -237,6 +351,12 @@ list_drop_null <- function(x) {
   )
 }
 
-is_url_string <- function(x, arg = caller_arg(x), call = caller_env()) {
+#' Check whether input is an HTTP(S) URL string
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` for scalar strings starting with `http://` or
+#'   `https://`, `FALSE` otherwise.
+#' @keywords internal
+.is_url_string <- function(x, arg = caller_arg(x), call = caller_env()) {
   rlang::is_scalar_character(x) && grepl("^https?://", x)
 }
