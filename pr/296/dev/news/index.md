@@ -8,7 +8,7 @@
   but calling functions directly with un-dotted arguments will produce a
   warning once per session (see `?lifecycle::deprecate_soft()`).
   Un-dotted arguments will be phased out in a future version of this
-  package, so we recommend switching to the dot-prefexed versions. See
+  package, so we recommend switching to the dot-prefixed versions. See
   [`?tspec_df`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
   and `?tib_scalar()` for details.
 - All code has been refactored for maintainability. While we were

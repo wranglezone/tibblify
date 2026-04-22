@@ -18,6 +18,10 @@ Guess whether each field is required in a df-typed list column
 
   (`list`) A list column whose elements are data frames.
 
+- ptype:
+
+  (`vector(0)`) A prototype of the desired output type of the field.
+
 ## Value
 
 `fields_spec` with `$required` updated for each field.
