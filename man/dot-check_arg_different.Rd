@@ -7,8 +7,7 @@
 .check_arg_different(arg, ..., arg_name = caller_arg(arg), call = caller_env())
 }
 \arguments{
-\item{arg}{(\code{character(1)}) An argument name. This name will be mentioned in
-error messages as the input that is at the origin of a problem.}
+\item{arg}{(\code{any}) The value to compare against \code{...}.}
 
 \item{...}{Other arguments that \code{arg} must differ from.}
 

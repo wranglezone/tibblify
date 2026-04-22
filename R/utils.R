@@ -1,7 +1,7 @@
 #' Validate that an input is a list
 #'
 #' @param allow_null (`logical(1)`) Whether `NULL` is accepted.
-#' @param ... Additional arguments passed to [stop_input_type()].
+#' @param ... Additional arguments passed to [rlang::stop_input_type()].
 #' @inheritParams .shared-params
 #' @returns `NULL` (invisibly) if valid; otherwise throws an error.
 #' @keywords internal
@@ -34,6 +34,7 @@
 
 #' Validate that arguments are different
 #'
+#' @param arg (`any`) The value to compare against `...`.
 #' @param ... Other arguments that `arg` must differ from.
 #' @param arg_name (`character(1)`) The argument name shown in error messages.
 #' @inheritParams .shared-params
