@@ -18,6 +18,9 @@
 
 /**
  * Raise the "required field is absent" error for a collector field.
+ *
+ * @param v_collector Collector whose required field is missing.
+ * @param path Path context used for error reporting.
  */
 void add_stop_required(struct collector* v_collector, struct Path* path);
 
@@ -26,6 +29,9 @@ void add_stop_required(struct collector* v_collector, struct Path* path);
  *
  * If `required` is true, absent fields error via `add_stop_required()`;
  * otherwise they fall back to the collector's regular default handler.
+ *
+ * @param v_collector Collector whose `add_default_absent` callback is updated.
+ * @param required Whether absent values should error instead of defaulting.
  */
 static inline
 void assign_f_absent(struct collector* v_collector, bool required) {
@@ -115,12 +121,22 @@ r_obj* vec_prep_values_names(r_obj* value_casted, r_obj* names, r_obj* col_names
 
 /**
  * Parse a row-major data payload with a row collector parser.
+ *
+ * @param v_collector Parser/collector configured from the spec.
+ * @param value Row-major payload (list or data frame) to parse.
+ * @param v_path Mutable path tracker used for diagnostics.
+ * @return Parsed row-major result after finalization.
  */
 r_obj* parse(struct collector* v_collector, r_obj* value, struct Path* v_path);
 
 /**
  * Parse a col-major payload by determining row count, allocating output, and
  * delegating to col-major add-value handlers.
+ *
+ * @param v_collector Parser/collector configured from the spec.
+ * @param value Col-major payload to parse.
+ * @param v_path Mutable path tracker used for diagnostics.
+ * @return Parsed col-major result after finalization.
  */
 r_obj* parse_colmajor(struct collector* v_collector, r_obj* value, struct Path* v_path);
 

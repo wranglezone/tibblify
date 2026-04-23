@@ -225,12 +225,19 @@ void add_value_scalar_colmajor(struct collector* v_collector, r_obj* value, stru
  *
  * For vector collectors in `scalar_list`/`object` input forms, elements must
  * each be size 1. `NULL` elements are replaced with `na` to preserve size.
+ *
+ * @param value List input to normalize before unchopping.
+ * @param input_form Declared vector input form used for validation errors.
+ * @param ptype Prototype passed to `vec_unchop()`.
+ * @param na Replacement element used for `NULL` entries.
+ * @param v_path Mutable path tracker used for diagnostics.
+ * @return Unchopped vector/list-casted output matching `ptype`.
  */
 r_obj* list_unchop_value(r_obj* value,
                          enum vector_form input_form,
                          r_obj* ptype,
                          r_obj* na,
-                        struct Path* v_path) {
+                         struct Path* v_path) {
   // FIXME if `vec_assign()` gets exported this should use
   // `vec_init()` + `vec_assign()`
   r_ssize n = r_length(value);
@@ -362,6 +369,11 @@ void add_value_variant_colmajor(struct collector* v_collector, r_obj* value, str
  *
  * This computes the key match indices and field order only when field names
  * differ from the previous row.
+ *
+ * @param v_collector Multi collector whose field match cache is updated.
+ * @param field_names Field names from the current row/object.
+ * @param n_fields Number of fields in `field_names`.
+ * @param v_path Mutable path tracker used for duplicate-name diagnostics.
  */
 void update_fields(struct collector* v_collector,
                    r_obj* field_names,
@@ -533,6 +545,11 @@ void add_value_recursive_colmajor(struct collector* v_collector, r_obj* value, s
  *
  * For data-frame inputs, columns are processed through col-major row handlers.
  * For list inputs, rows are iterated while updating the path with row indices.
+ *
+ * @param v_collector Parser/collector configured from the spec.
+ * @param value Row-major payload (list or data frame) to parse.
+ * @param v_path Mutable path tracker used for diagnostics.
+ * @return Parsed row-major result after finalization.
  */
 r_obj* parse(struct collector* v_collector,
              r_obj* value,
@@ -569,6 +586,11 @@ r_obj* parse(struct collector* v_collector,
  *
  * Row count is inferred from child collectors, storage is allocated once, then
  * col-major add-value handlers populate data before row finalization.
+ *
+ * @param v_collector Parser/collector configured from the spec.
+ * @param value Col-major payload to parse.
+ * @param v_path Mutable path tracker used for diagnostics.
+ * @return Parsed col-major result after finalization.
  */
 r_obj* parse_colmajor(struct collector* v_collector,
                       r_obj* value,
