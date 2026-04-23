@@ -9,9 +9,9 @@ test_that(".check_list() errors for non-lists and missing input (#noissue)", {
 })
 
 test_that(".check_arg_different() validates argument values (#noissue)", {
-  expect_no_error(.check_arg_different(1, a = 2, b = 3))
+  expect_no_error(.check_arg_different(arg = 1, a = 2, b = 3))
   expect_error(
-    .check_arg_different(1, a = 1),
+    .check_arg_different(arg = 1, a = 1),
     "must be different",
     class = "tibblify-error-args_same_value"
   )

@@ -22,7 +22,7 @@
   }
 
   stop_input_type(
-    x,
+    rlang::maybe_missing(x),
     c("a list"),
     ...,
     allow_na = FALSE,
