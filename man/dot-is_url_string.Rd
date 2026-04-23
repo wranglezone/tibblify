@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{.is_url_string}
 \alias{.is_url_string}
-\title{Check whether input is an HTTP(S) URL string}
+\title{Check whether input is an http(s) URL string}
 \usage{
 .is_url_string(x, arg = caller_arg(x), call = caller_env())
 }
@@ -19,6 +19,6 @@ error messages as the input that is at the origin of a problem.}
 \verb{https://}, \code{FALSE} otherwise.
 }
 \description{
-Check whether input is an HTTP(S) URL string
+Check whether input is an http(s) URL string
 }
 \keyword{internal}

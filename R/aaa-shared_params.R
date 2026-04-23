@@ -3,6 +3,7 @@
 #' These parameters are used in multiple functions. They are defined here to
 #' make them easier to import and to find.
 #'
+#' @param allow_null (`logical(1)`) Whether `NULL` is accepted.
 #' @param arg (`character(1)`) An argument name. This name will be mentioned in
 #'   error messages as the input that is at the origin of a problem.
 #' @param .call (`environment`) The environment to use for error messages.
@@ -12,6 +13,7 @@
 #'   children.
 #' @param col (`any`) A column from a data frame, which may be a vector, a
 #'   list, or a nested data frame.
+#' @param elt (`character` or `integer`) An element of a path.
 #' @param .elt_transform (`function` or `NULL`) A function to apply to each
 #'   element before casting to `.ptype_inner`.
 #' @param empty_list_unspecified (`logical(1)`) Treat empty lists as
@@ -35,6 +37,8 @@
 #'   across recursive calls, such as whether empty lists were encountered.
 #' @param message (`character`) A cli message template.
 #' @param name (`character(1)`) The name of the field.
+#' @param name_spec (`character(1)`, `function`, or `NULL`) Name specification
+#'   passed to [vctrs::list_unchop()].
 #' @param path (`list`) A path object encoded as a depth and a list of path
 #'   elements.
 #' @param path_exp (`list`) The path of the field used as the reference in size

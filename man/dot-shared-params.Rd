@@ -4,6 +4,8 @@
 \alias{.shared-params}
 \title{Shared parameters}
 \arguments{
+\item{allow_null}{(\code{logical(1)}) Whether \code{NULL} is accepted.}
+
 \item{arg}{(\code{character(1)}) An argument name. This name will be mentioned in
 error messages as the input that is at the origin of a problem.}
 
@@ -17,6 +19,8 @@ children.}
 
 \item{col}{(\code{any}) A column from a data frame, which may be a vector, a
 list, or a nested data frame.}
+
+\item{elt}{(\code{character} or \code{integer}) An element of a path.}
 
 \item{.elt_transform}{(\code{function} or \code{NULL}) A function to apply to each
 element before casting to \code{.ptype_inner}.}
@@ -54,6 +58,9 @@ across recursive calls, such as whether empty lists were encountered.}
 \item{message}{(\code{character}) A cli message template.}
 
 \item{name}{(\code{character(1)}) The name of the field.}
+
+\item{name_spec}{(\code{character(1)}, \code{function}, or \code{NULL}) Name specification
+passed to \code{\link[vctrs:list_unchop]{vctrs::list_unchop()}}.}
 
 \item{path}{(\code{list}) A path object encoded as a depth and a list of path
 elements.}

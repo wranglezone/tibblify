@@ -13,7 +13,7 @@ elements.}
 \item{size_act}{(\code{integer(1)}) The observed size of a field.}
 }
 \value{
-Never returns; called for its side effect of throwing an error.
+\code{NULL} (invisibly). Called for its side effect of throwing an error.
 }
 \description{
 Error for non-scalar field

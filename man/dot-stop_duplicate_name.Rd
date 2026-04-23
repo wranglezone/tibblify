@@ -13,7 +13,7 @@ elements.}
 \item{name}{(\code{character(1)}) The name of the field.}
 }
 \value{
-Never returns; called for its side effect of throwing an error.
+\code{NULL} (invisibly). Called for its side effect of throwing an error.
 }
 \description{
 Error for duplicate names

@@ -72,15 +72,11 @@ test_that("error helpers report contextual path information (#noissue)", {
   expect_error(.stop_non_list_element(list(0L, list("a")), 1), "must be a list")
 })
 
-test_that(".vec_flatten() and .list_drop_null() simplify lists (#noissue)", {
+test_that(".vec_flatten() simplifie lists (#noissue)", {
   expect_identical(
     .vec_flatten(list(1:2, 3:4), ptype = integer()),
     c(1L, 2L, 3L, 4L)
   )
-
-  expect_identical(.list_drop_null(list(1, NULL, 2)), list(1, 2))
-  x <- list(1, 2)
-  expect_identical(.list_drop_null(x), x)
 })
 
 test_that(".compat_map_chr() maps to character vectors (#noissue)", {

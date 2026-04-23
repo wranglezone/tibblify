@@ -13,7 +13,7 @@ elements.}
 \item{x}{(\code{any}) The object to check.}
 }
 \value{
-Never returns; called for its side effect of throwing an error.
+\code{NULL} (invisibly). Called for its side effect of throwing an error.
 }
 \description{
 Error for non-list element

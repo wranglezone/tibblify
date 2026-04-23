@@ -9,7 +9,8 @@
 \arguments{
 \item{x}{(\code{any}) The object to check.}
 
-\item{ptype}{(\code{vector(0)}) Prototype for the flattened output.}
+\item{ptype}{(\code{vector(0)}) A prototype of the desired output type of the
+field.}
 
 \item{name_spec}{(\code{character(1)}, \code{function}, or \code{NULL}) Name specification
 passed to \code{\link[vctrs:list_unchop]{vctrs::list_unchop()}}.}

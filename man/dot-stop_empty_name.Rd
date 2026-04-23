@@ -13,7 +13,7 @@ elements.}
 \item{index}{(\code{integer(1)}) A zero-based location in a path.}
 }
 \value{
-Never returns; called for its side effect of throwing an error.
+\code{NULL} (invisibly). Called for its side effect of throwing an error.
 }
 \description{
 Error for empty names
