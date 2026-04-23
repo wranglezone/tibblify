@@ -21,4 +21,4 @@ Throw a tibblify internal error
 
 ## Value
 
-Never returns; called for its side effect of throwing an error.
+`NULL` (invisibly). Called for its side effect of throwing an error.

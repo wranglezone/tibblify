@@ -1,6 +1,6 @@
-# Check whether input is an HTTP(S) URL string
+# Check whether input is an http(s) URL string
 
-Check whether input is an HTTP(S) URL string
+Check whether input is an http(s) URL string
 
 ## Usage
 

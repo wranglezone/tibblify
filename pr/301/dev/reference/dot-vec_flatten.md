@@ -16,7 +16,7 @@ Flatten a list to a vector
 
 - ptype:
 
-  (`vector(0)`) Prototype for the flattened output.
+  (`vector(0)`) A prototype of the desired output type of the field.
 
 - name_spec:
 

@@ -34,6 +34,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_col_to_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_guess_required.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-drop_empty_lists.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-element_subset_string.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-finalize_tspec_object.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_unspecified_paths.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_ptype_common.html</loc></url>
@@ -73,7 +74,6 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-is_vec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-lgl_to_bullet.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_col_to_spec.html</loc></url>
-<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_drop_null.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_is_list_of_null.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_of_col_to_spec_df.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-loc_name_helper.html</loc></url>
@@ -96,7 +96,6 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-set_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-shared-params-spec_prep.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-shared-params-tib.html</loc></url>
-<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-shared-params-utils.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-shared-params.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-sort_spec_by_first_key.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-spec_inform_unspecified.html</loc></url>

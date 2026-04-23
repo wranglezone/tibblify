@@ -20,4 +20,4 @@ Error for non-scalar field
 
 ## Value
 
-Never returns; called for its side effect of throwing an error.
+`NULL` (invisibly). Called for its side effect of throwing an error.

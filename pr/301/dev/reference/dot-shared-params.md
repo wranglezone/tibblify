@@ -5,6 +5,10 @@ to make them easier to import and to find.
 
 ## Arguments
 
+- allow_null:
+
+  (`logical(1)`) Whether `NULL` is accepted.
+
 - arg:
 
   (`character(1)`) An argument name. This name will be mentioned in
@@ -27,6 +31,10 @@ to make them easier to import and to find.
   (`any`) A column from a data frame, which may be a vector, a list, or
   a nested data frame.
 
+- elt:
+
+  (`character` or `integer`) An element of a path.
+
 - .elt_transform:
 
   (`function` or `NULL`) A function to apply to each element before
@@ -35,6 +43,20 @@ to make them easier to import and to find.
 - empty_list_unspecified:
 
   (`logical(1)`) Treat empty lists as unspecified?
+
+- env:
+
+  (`environment`) The environment used to evaluate glue fields in
+  `message`.
+
+- .error_call:
+
+  (`environment`) The environment to use for error messages.
+
+- expr:
+
+  (`any`) An expression to evaluate and return, with indexed errors
+  wrapped.
 
 - .fill:
 
@@ -46,9 +68,17 @@ to make them easier to import and to find.
   (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
 
+- index:
+
+  (`integer(1)`) A zero-based location in a path.
+
 - inform_unspecified:
 
   (`logical(1)`) Inform about fields whose type could not be determined?
+
+- input_form:
+
+  (`character(1)`) The input form string used in error messages.
 
 - .key:
 
@@ -59,9 +89,27 @@ to make them easier to import and to find.
   (`environment`) A local environment used to track state across
   recursive calls, such as whether empty lists were encountered.
 
+- message:
+
+  (`character`) A cli message template.
+
 - name:
 
   (`character(1)`) The name of the field.
+
+- name_spec:
+
+  (`character(1)`, `function`, or `NULL`) Name specification passed to
+  [`vctrs::list_unchop()`](https://vctrs.r-lib.org/reference/list_unchop.html).
+
+- path:
+
+  (`list`) A path object encoded as a depth and a list of path elements.
+
+- path_exp:
+
+  (`list`) The path of the field used as the reference in size mismatch
+  errors.
 
 - .ptype:
 
@@ -78,6 +126,14 @@ to make them easier to import and to find.
 - simplify_list:
 
   (`logical(1)`) Should scalar lists be simplified to vectors?
+
+- size_act:
+
+  (`integer(1)`) The observed size of a field.
+
+- size_exp:
+
+  (`integer(1)`) The expected size of a field.
 
 - spec_list:
 

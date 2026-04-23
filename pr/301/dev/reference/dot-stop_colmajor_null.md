@@ -16,4 +16,4 @@ Error for NULL in colmajor fields
 
 ## Value
 
-Never returns; called for its side effect of throwing an error.
+`NULL` (invisibly). Called for its side effect of throwing an error.

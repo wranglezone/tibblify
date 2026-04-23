@@ -26,9 +26,7 @@ Wrap indexed purrr errors with context
 
 - error_call:
 
-  (`environment`) The call passed to
-  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html)
-  when rethrowing indexed errors.
+  (`environment`) The environment to use for error messages.
 
 - env:
 
