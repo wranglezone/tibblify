@@ -50,7 +50,11 @@ make them easier to import and to find.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-arg">arg<a class="anchor" aria-label="anchor" href="#arg-arg"></a></dt>
+<dl><dt id="arg-allow-null">allow_null<a class="anchor" aria-label="anchor" href="#arg-allow-null"></a></dt>
+<dd><p>(<code>logical(1)</code>) Whether <code>NULL</code> is accepted.</p></dd>
+
+
+<dt id="arg-arg">arg<a class="anchor" aria-label="anchor" href="#arg-arg"></a></dt>
 <dd><p>(<code>character(1)</code>) An argument name. This name will be mentioned in
 error messages as the input that is at the origin of a problem.</p></dd>
 
@@ -74,6 +78,10 @@ children.</p></dd>
 list, or a nested data frame.</p></dd>
 
 
+<dt id="arg-elt">elt<a class="anchor" aria-label="anchor" href="#arg-elt"></a></dt>
+<dd><p>(<code>character</code> or <code>integer</code>) An element of a path.</p></dd>
+
+
 <dt id="arg--elt-transform">.elt_transform<a class="anchor" aria-label="anchor" href="#arg--elt-transform"></a></dt>
 <dd><p>(<code>function</code> or <code>NULL</code>) A function to apply to each
 element before casting to <code>.ptype_inner</code>.</p></dd>
@@ -82,6 +90,20 @@ element before casting to <code>.ptype_inner</code>.</p></dd>
 <dt id="arg-empty-list-unspecified">empty_list_unspecified<a class="anchor" aria-label="anchor" href="#arg-empty-list-unspecified"></a></dt>
 <dd><p>(<code>logical(1)</code>) Treat empty lists as
 unspecified?</p></dd>
+
+
+<dt id="arg-env">env<a class="anchor" aria-label="anchor" href="#arg-env"></a></dt>
+<dd><p>(<code>environment</code>) The environment used to evaluate glue fields in
+<code>message</code>.</p></dd>
+
+
+<dt id="arg--error-call">.error_call<a class="anchor" aria-label="anchor" href="#arg--error-call"></a></dt>
+<dd><p>(<code>environment</code>) The environment to use for error messages.</p></dd>
+
+
+<dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
+<dd><p>(<code>any</code>) An expression to evaluate and return, with indexed errors
+wrapped.</p></dd>
 
 
 <dt id="arg--fill">.fill<a class="anchor" aria-label="anchor" href="#arg--fill"></a></dt>
@@ -94,9 +116,18 @@ does not exist.</p></dd>
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
 
 
+<dt id="arg-index">index<a class="anchor" aria-label="anchor" href="#arg-index"></a></dt>
+<dd><p>(<code>integer(1)</code>) A zero-based location in a path.</p></dd>
+
+
 <dt id="arg-inform-unspecified">inform_unspecified<a class="anchor" aria-label="anchor" href="#arg-inform-unspecified"></a></dt>
 <dd><p>(<code>logical(1)</code>) Inform about fields whose type could
 not be determined?</p></dd>
+
+
+<dt id="arg-input-form">input_form<a class="anchor" aria-label="anchor" href="#arg-input-form"></a></dt>
+<dd><p>(<code>character(1)</code>) The input form string used in error
+messages.</p></dd>
 
 
 <dt id="arg--key">.key<a class="anchor" aria-label="anchor" href="#arg--key"></a></dt>
@@ -108,8 +139,27 @@ not be determined?</p></dd>
 across recursive calls, such as whether empty lists were encountered.</p></dd>
 
 
+<dt id="arg-message">message<a class="anchor" aria-label="anchor" href="#arg-message"></a></dt>
+<dd><p>(<code>character</code>) A cli message template.</p></dd>
+
+
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
 <dd><p>(<code>character(1)</code>) The name of the field.</p></dd>
+
+
+<dt id="arg-name-spec">name_spec<a class="anchor" aria-label="anchor" href="#arg-name-spec"></a></dt>
+<dd><p>(<code>character(1)</code>, <code>function</code>, or <code>NULL</code>) Name specification
+passed to <code><a href="https://vctrs.r-lib.org/reference/list_unchop.html" class="external-link">vctrs::list_unchop()</a></code>.</p></dd>
+
+
+<dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
+<dd><p>(<code>list</code>) A path object encoded as a depth and a list of path
+elements.</p></dd>
+
+
+<dt id="arg-path-exp">path_exp<a class="anchor" aria-label="anchor" href="#arg-path-exp"></a></dt>
+<dd><p>(<code>list</code>) The path of the field used as the reference in size
+mismatch errors.</p></dd>
 
 
 <dt id="arg--ptype">.ptype<a class="anchor" aria-label="anchor" href="#arg--ptype"></a></dt>
@@ -128,6 +178,14 @@ field.</p></dd>
 <dt id="arg-simplify-list">simplify_list<a class="anchor" aria-label="anchor" href="#arg-simplify-list"></a></dt>
 <dd><p>(<code>logical(1)</code>) Should scalar lists be simplified to
 vectors?</p></dd>
+
+
+<dt id="arg-size-act">size_act<a class="anchor" aria-label="anchor" href="#arg-size-act"></a></dt>
+<dd><p>(<code>integer(1)</code>) The observed size of a field.</p></dd>
+
+
+<dt id="arg-size-exp">size_exp<a class="anchor" aria-label="anchor" href="#arg-size-exp"></a></dt>
+<dd><p>(<code>integer(1)</code>) The expected size of a field.</p></dd>
 
 
 <dt id="arg-spec-list">spec_list<a class="anchor" aria-label="anchor" href="#arg-spec-list"></a></dt>

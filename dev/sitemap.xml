@@ -14,7 +14,9 @@
 <url><loc>https://tibblify.wrangle.zone/dev/news/index.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-abort_not_tibblifiable.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-cast_posixlt_ptype.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_arg_different.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_key.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_list.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_named.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_names_not_duplicated.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_not_df.html</loc></url>
@@ -27,10 +29,12 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-col_to_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-col_to_spec_df.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-combine_processed_fields.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-compat_map_chr.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-deprecate_arg.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_col_to_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_guess_required.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-drop_empty_lists.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-element_subset_string.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-finalize_tspec_object.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_unspecified_paths.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_ptype_common.html</loc></url>
@@ -66,6 +70,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-is_tib_variant.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-is_tib_vector.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-is_unspecified.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-is_url_string.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-is_vec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-lgl_to_bullet.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_col_to_spec.html</loc></url>
@@ -75,6 +80,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-mark_empty_list_argument.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-maybe_inform_unspecified.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-non_list_of_col_to_spec_df.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-path_to_string.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-prep_complex_field.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-prep_nested_keys.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-prep_simple_field.html</loc></url>
@@ -103,6 +109,18 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stabilize_names_to.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stabilize_unpack_cols.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stabilize_values_to.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_colmajor_null.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_colmajor_wrong_size_element.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_duplicate_name.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_empty_name.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_names_is_null.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_non_list_element.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_object_vector_names_is_null.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_required.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_required_colmajor.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_scalar.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_vector_non_list_element.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-stop_vector_wrong_size_element.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_collector.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_combine.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_combine_df.html</loc></url>
@@ -122,6 +140,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_type_of.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_vector_impl.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_vector_input_form.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_abort.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_impl.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-try_tibblify_impl.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tspec_combine_field_list.html</loc></url>
@@ -133,7 +152,9 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-unpack_fields_impl.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-unpack_key.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-update_required_fields.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-vec_flatten.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-vector_col_to_spec.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-with_indexed_errors.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/formatting.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/get_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/gh_repos.html</loc></url>
