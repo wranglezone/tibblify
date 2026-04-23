@@ -7,17 +7,18 @@
 untibblify(x, spec = get_spec(x))
 }
 \arguments{
-\item{x}{A data frame or an object.}
+\item{x}{(\code{data.frame} or \code{object}) An object to convert into a nested list.}
 
-\item{spec}{Optional. A spec object which was used to create \code{x}. Defaults
-to the spec stored as the \code{tib_spec} attribute of \code{x}, if present.}
+\item{spec}{(\code{tspec}) Optional. A spec object which was used to create \code{x}.
+Defaults to the spec stored as the \code{tib_spec} attribute of \code{x}, if present.}
 }
 \value{
 A nested list.
 }
 \description{
-The inverse operation to \code{tibblify()}. It converts a data frame or an object
-into a nested list.
+Convert a data frame or an object into a nested list. This is the inverse
+operation of \code{tibblify()}. See \code{vignette("supported-structures")} for a
+description of objects recognized by tibblify.
 }
 \examples{
 x <- tibble(

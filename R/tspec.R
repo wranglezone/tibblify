@@ -207,9 +207,10 @@ tspec_recursive <- function(
       name <- paste0("..", i)
     }
     friendly_type <- obj_type_friendly(.fields[[i]])
-
-    msg <- "{.field {name}} must be a tib collector, not {friendly_type}."
-    cli::cli_abort(msg, call = .error_call)
+    cli::cli_abort(
+      "{.field {name}} must be a tib collector, not {friendly_type}.",
+      call = .error_call
+    )
   }
 
   .spec_auto_name_fields(.fields, .error_call)

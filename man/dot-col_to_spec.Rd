@@ -7,8 +7,8 @@
 .col_to_spec(col, name, empty_list_unspecified, local_env)
 }
 \arguments{
-\item{col}{(\code{any}) A column from a data frame, which may be a vector, a
-list, or a nested data frame.}
+\item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
+or a nested data frame.}
 
 \item{name}{(\code{character(1)}) The name of the field.}
 

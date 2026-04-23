@@ -7,8 +7,8 @@
 .list_of_col_to_spec_df(col, ptype, empty_list_unspecified, local_env)
 }
 \arguments{
-\item{col}{(\code{any}) A column from a data frame, which may be a vector, a
-list, or a nested data frame.}
+\item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
+or a nested data frame.}
 
 \item{ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
