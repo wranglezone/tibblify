@@ -417,7 +417,7 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
     schema$allOf[[1]]$`$ref` <- NULL
   }
   if (!is.null(ref)) {
-    if (is_url_string(ref)) {
+    if (.is_url_string(ref)) {
       other_parts <- schema[setdiff(names(schema), "$ref")]
       return(c(yaml::read_yaml(ref, readLines.warn = FALSE), other_parts))
     }
