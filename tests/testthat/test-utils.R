@@ -3,9 +3,13 @@ test_that(".check_list() accepts lists and NULL when allowed (#noissue)", {
   expect_null(.check_list(NULL, allow_null = TRUE))
 })
 
-test_that(".check_list() errors for non-lists and missing input (#noissue)", {
+test_that(".check_list() errors for non-lists (#noissue)", {
   expect_error(.check_list(1), "must be a list")
-  expect_error(.check_list(), class = "missingArgError")
+})
+
+test_that(".check_list() errors for missing input (#noissue)", {
+  expect_error(.check_list(1), "must be a list")
+  expect_error(.check_list(), "with no default")
 })
 
 test_that(".check_arg_different() validates argument values (#noissue)", {

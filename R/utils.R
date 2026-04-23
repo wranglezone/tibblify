@@ -18,15 +18,23 @@
     if (allow_null && is.null(x)) {
       return(invisible(NULL))
     }
+    stop_input_type(
+      x,
+      c("a list"),
+      ...,
+      allow_na = FALSE,
+      allow_null = allow_null,
+      arg = arg,
+      call = call
+    )
   }
-
-  stop_input_type(
-    rlang::maybe_missing(x),
-    c("a list"),
-    ...,
-    allow_na = FALSE,
-    allow_null = allow_null,
-    arg = arg,
+  arg <- tryCatch(force(x), error = function(e) "x")
+  .tibblify_abort(
+    c(
+      "Argument {.arg {arg}} is missing, with no default.",
+      i = "Did you forget to provide a value for {.arg {arg}}?",
+      i = "Since this argument is missing, we may have lost the name of the arg."
+    ),
     call = call
   )
 }
