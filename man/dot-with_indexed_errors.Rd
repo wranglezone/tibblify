@@ -17,8 +17,7 @@ wrapped.}
 
 \item{message}{(\code{character}) A cli message template.}
 
-\item{error_call}{(\code{environment}) The call passed to \code{\link[cli:cli_abort]{cli::cli_abort()}} when
-rethrowing indexed errors.}
+\item{error_call}{(\code{environment}) The environment to use for error messages.}
 
 \item{env}{(\code{environment}) The environment used to evaluate glue fields in
 \code{message}.}

@@ -16,22 +16,37 @@
 #'   element before casting to `.ptype_inner`.
 #' @param empty_list_unspecified (`logical(1)`) Treat empty lists as
 #'   unspecified?
+#' @param env (`environment`) The environment used to evaluate glue fields in
+#'   `message`.
+#' @param .error_call (`environment`) The environment to use for error messages.
+#' @param expr (`any`) An expression to evaluate and return, with indexed errors
+#'   wrapped.
 #' @param .fill (`vector` or `NULL`) Optionally, a value to use if the field
 #'   does not exist.
 #' @param .format (`character(1)` or `NULL`) Passed to the `format` argument of
 #'   [as.Date()].
+#' @param index (`integer(1)`) A zero-based location in a path.
 #' @param inform_unspecified (`logical(1)`) Inform about fields whose type could
 #'   not be determined?
+#' @param input_form (`character(1)`) The input form string used in error
+#'   messages.
 #' @param .key (`character`) The path of names to the field in the object.
 #' @param local_env (`environment`) A local environment used to track state
 #'   across recursive calls, such as whether empty lists were encountered.
+#' @param message (`character`) A cli message template.
 #' @param name (`character(1)`) The name of the field.
+#' @param path (`list`) A path object encoded as a depth and a list of path
+#'   elements.
+#' @param path_exp (`list`) The path of the field used as the reference in size
+#'   mismatch errors.
 #' @param .ptype (`vector(0)`) A prototype of the desired output type of the
 #'   field.
 #' @param .ptype_inner (`vector(0)`) A prototype of the input field.
 #' @param .required (`logical(1)`) Throw an error if the field does not exist?
 #' @param simplify_list (`logical(1)`) Should scalar lists be simplified to
 #'   vectors?
+#' @param size_act (`integer(1)`) The observed size of a field.
+#' @param size_exp (`integer(1)`) The expected size of a field.
 #' @param spec_list (`list`) A list of specifications.
 #' @param tib_list (`list`) A list of tib fields.
 #' @param .transform (`function` or `NULL`) A function to apply to the whole
@@ -67,30 +82,5 @@ NULL
 #'   specified column in the field's tibble.
 #'
 #' @name .shared-params-tib
-#' @keywords internal
-NULL
-
-#' Shared utils parameters
-#'
-#' These parameters are shared by internal helper functions in `R/utils.R`.
-#'
-#' @param env (`environment`) The environment used to evaluate glue fields in
-#'   `message`.
-#' @param error_call (`environment`) The call passed to [cli::cli_abort()] when
-#'   rethrowing indexed errors.
-#' @param expr (`any`) An expression to evaluate and return, with indexed errors
-#'   wrapped.
-#' @param index (`integer(1)`) A zero-based location in a path.
-#' @param input_form (`character(1)`) The input form string used in error
-#'   messages.
-#' @param message (`character`) A cli message template.
-#' @param path (`list`) A path object encoded as a depth and a list of path
-#'   elements.
-#' @param path_exp (`list`) The path of the field used as the reference in size
-#'   mismatch errors.
-#' @param size_act (`integer(1)`) The observed size of a field.
-#' @param size_exp (`integer(1)`) The expected size of a field.
-#'
-#' @name .shared-params-utils
 #' @keywords internal
 NULL

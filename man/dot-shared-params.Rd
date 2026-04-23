@@ -24,21 +24,42 @@ element before casting to \code{.ptype_inner}.}
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}
 
+\item{env}{(\code{environment}) The environment used to evaluate glue fields in
+\code{message}.}
+
+\item{.error_call}{(\code{environment}) The environment to use for error messages.}
+
+\item{expr}{(\code{any}) An expression to evaluate and return, with indexed errors
+wrapped.}
+
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
 
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}
 
+\item{index}{(\code{integer(1)}) A zero-based location in a path.}
+
 \item{inform_unspecified}{(\code{logical(1)}) Inform about fields whose type could
 not be determined?}
+
+\item{input_form}{(\code{character(1)}) The input form string used in error
+messages.}
 
 \item{.key}{(\code{character}) The path of names to the field in the object.}
 
 \item{local_env}{(\code{environment}) A local environment used to track state
 across recursive calls, such as whether empty lists were encountered.}
 
+\item{message}{(\code{character}) A cli message template.}
+
 \item{name}{(\code{character(1)}) The name of the field.}
+
+\item{path}{(\code{list}) A path object encoded as a depth and a list of path
+elements.}
+
+\item{path_exp}{(\code{list}) The path of the field used as the reference in size
+mismatch errors.}
 
 \item{.ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
@@ -49,6 +70,10 @@ field.}
 
 \item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
 vectors?}
+
+\item{size_act}{(\code{integer(1)}) The observed size of a field.}
+
+\item{size_exp}{(\code{integer(1)}) The expected size of a field.}
 
 \item{spec_list}{(\code{list}) A list of specifications.}
 

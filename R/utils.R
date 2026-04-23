@@ -63,7 +63,7 @@
 
 #' Convert a path object to a printable string
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns (`character(1)`) A string path such as `"x$a[[1]]"`.
 #' @keywords internal
 .path_to_string <- function(path) {
@@ -100,7 +100,7 @@
 
 #' Error for missing required field
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_required <- function(path) {
@@ -117,7 +117,7 @@
 
 #' Error for non-scalar field
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_scalar <- function(path, size_act) {
@@ -133,7 +133,6 @@
 #' Error for duplicate names
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-utils
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_duplicate_name <- function(path, name) {
@@ -147,7 +146,7 @@
 
 #' Error for empty names
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_empty_name <- function(path, index) {
@@ -161,7 +160,7 @@
 
 #' Error for unnamed object
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_names_is_null <- function(path) {
@@ -175,7 +174,7 @@
 
 #' Error for unnamed object vector
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_object_vector_names_is_null <- function(path) {
@@ -190,7 +189,6 @@
 #' Error for non-list vector element
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-utils
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_vector_non_list_element <- function(path, input_form, x) {
@@ -206,7 +204,6 @@
 #' Error for wrong-sized vector element
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-utils
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_vector_wrong_size_element <- function(path, input_form, x) {
@@ -227,7 +224,7 @@
 
 #' Error for NULL in colmajor fields
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_colmajor_null <- function(path) {
@@ -240,7 +237,7 @@
 
 #' Error for inconsistent colmajor field sizes
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_colmajor_wrong_size_element <- function(
@@ -261,7 +258,7 @@
 
 #' Error for missing required colmajor field
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_required_colmajor <- function(path) {
@@ -279,7 +276,6 @@
 #' Error for non-list element
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-utils
 #' @returns Never returns; called for its side effect of throwing an error.
 #' @keywords internal
 .stop_non_list_element <- function(path, x) {
@@ -329,7 +325,7 @@
 
 #' Wrap indexed purrr errors with context
 #'
-#' @inheritParams .shared-params-utils
+#' @inheritParams .shared-params
 #' @returns The evaluated result of `expr`, or an error with added context.
 #' @keywords internal
 .with_indexed_errors <- function(
