@@ -114,7 +114,7 @@ read_spec <- function(file, arg = caller_arg(file), call = caller_env()) {
   }
 
   if (is_character(file)) {
-    check_string(file)
+    rlang::check_string(file)
 
     if (grepl("\n", file)) {
       out <- yaml::yaml.load(file)
@@ -467,7 +467,7 @@ get_openapi_type <- function(schema) {
     }
   }
 
-  check_string(type, allow_null = TRUE)
+  rlang::check_string(type, allow_null = TRUE)
   type %||% "variant"
 }
 

@@ -90,7 +90,7 @@ NULL
   .call = caller_env()
 ) {
   .check_key(.key, .call)
-  check_bool(.required, call = .call)
+  rlang::check_bool(.required, call = .call)
 
   out <- list(
     type = .type,
@@ -411,7 +411,7 @@ tib_vector <- function(
 #' @keywords internal
 .stabilize_values_to <- function(.values_to, .call) {
   if (!is.null(.values_to)) {
-    check_string(.values_to, call = .call)
+    rlang::check_string(.values_to, call = .call)
   }
   .values_to
 }
@@ -432,7 +432,7 @@ tib_vector <- function(
       msg <- '{.arg .names_to} can\'t be used for {.code .input_form = "scalar_list"}.'
       cli::cli_abort(msg, call = .call)
     }
-    check_string(.names_to, call = .call)
+    rlang::check_string(.names_to, call = .call)
     if (.names_to == .values_to) {
       msg <- "{.arg .names_to} must be different from {.arg .values_to}."
       cli::cli_abort(msg, call = .call)

@@ -37,9 +37,17 @@
 #' @param local_env (`environment`) A local environment used to track state
 #'   across recursive calls, such as whether empty lists were encountered.
 #' @param message (`character`) A cli message template.
+#' @param multi_line (`logical(1)`) Should the output be formatted across
+#'   multiple lines? For example, should each element of even a short list be
+#'   displayed on its own line?
 #' @param name (`character(1)`) The name of the field.
 #' @param name_spec (`character(1)`, `function`, or `NULL`) Name specification
 #'   passed to [vctrs::list_unchop()].
+#' @param names (`logical(1)`) Should names be printed even if they can be
+#'   deduced from the spec?
+#' @param nchar_indent (`integer(1)`) The number of (additional) characters that
+#'   will be used to indent the output when `multi_line = TRUE`. Primarily for
+#'   internal use when formatting is applied recursively.
 #' @param path (`list`) A path object encoded as a depth and a list of path
 #'   elements.
 #' @param path_exp (`list`) The path of the field used as the reference in size
@@ -62,6 +70,8 @@
 #' @param .values_to (`character(1)` or `NULL`) For `NULL` (the default), the
 #'   field is converted to a `.ptype` vector. If a string is provided, the field
 #'   is converted to a tibble and the values go into the specified column.
+#' @param width (`integer(1)`) The width (in number of characers) of text output
+#'   to generate.
 #' @param x (`any`) The object to check.
 #'
 #' @name .shared-params

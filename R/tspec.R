@@ -139,8 +139,8 @@ tspec_recursive <- function(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
-  check_string(.children)
-  check_string(.children_to)
+  rlang::check_string(.children)
+  rlang::check_string(.children_to)
   # TODO check that key is unique
 
   .tspec(
@@ -161,7 +161,7 @@ tspec_recursive <- function(
       msg <- 'Can\'t use {.arg .names_to} with {.code .input_form = "colmajor"}.'
       cli::cli_abort(msg, call = .call)
     }
-    check_string(.names_to, allow_null = TRUE, call = .call)
+    rlang::check_string(.names_to, allow_null = TRUE, call = .call)
   }
 }
 
@@ -172,7 +172,7 @@ tspec_recursive <- function(
   .vector_allows_empty_list = FALSE,
   .error_call = caller_env()
 ) {
-  check_bool(.vector_allows_empty_list, call = .error_call)
+  rlang::check_bool(.vector_allows_empty_list, call = .error_call)
 
   out <- list2(
     type = .type,

@@ -51,8 +51,8 @@ tib_recursive <- function(
   .children_to = .children,
   .required = TRUE
 ) {
-  check_string(.children)
-  check_string(.children_to)
+  rlang::check_string(.children)
+  rlang::check_string(.children_to)
 
   .tib_collector(
     .key = .key,
@@ -92,7 +92,7 @@ tib_row <- function(.key, ..., .required = TRUE) {
 #' @export
 tib_df <- function(.key, ..., .required = TRUE, .names_to = NULL) {
   if (!is.null(.names_to)) {
-    check_string(.names_to)
+    rlang::check_string(.names_to)
   }
 
   .tib_collector(

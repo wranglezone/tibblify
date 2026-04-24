@@ -114,8 +114,8 @@ unpack_tspec <- function(
   names_clean,
   .call = caller_env()
 ) {
-  check_bool(recurse, call = .call)
-  check_string(names_sep, allow_null = TRUE, call = .call)
+  rlang::check_bool(recurse, call = .call)
+  rlang::check_string(names_sep, allow_null = TRUE, call = .call)
   fields_to_unpack <- .stabilize_unpack_cols(fields, spec, .call)
   .with_indexed_errors(
     purrr::imap(
