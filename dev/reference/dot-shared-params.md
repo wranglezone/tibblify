@@ -58,6 +58,10 @@ to make them easier to import and to find.
   (`any`) An expression to evaluate and return, with indexed errors
   wrapped.
 
+- field_spec:
+
+  (`tib_collector`) A tibblify field collector.
+
 - .fill:
 
   (`vector` or `NULL`) Optionally, a value to use if the field does not
@@ -134,6 +138,10 @@ to make them easier to import and to find.
 - size_exp:
 
   (`integer(1)`) The expected size of a field.
+
+- spec:
+
+  (`tspec` or `NULL`) A spec object describing the structure of `x`.
 
 - spec_list:
 

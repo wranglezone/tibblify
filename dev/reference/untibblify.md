@@ -1,8 +1,11 @@
 # Convert a data frame or object into a nested list
 
-The inverse operation to
+Convert a data frame or an object into a nested list. This is the
+inverse operation of
 [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md).
-It converts a data frame or an object into a nested list.
+See
+[`vignette("supported-structures")`](https://tibblify.wrangle.zone/dev/articles/supported-structures.md)
+for a description of objects recognized by tibblify.
 
 ## Usage
 
@@ -14,12 +17,13 @@ untibblify(x, spec = get_spec(x))
 
 - x:
 
-  A data frame or an object.
+  (`data.frame` or `object`) An object to convert into a nested list.
 
 - spec:
 
-  Optional. A spec object which was used to create `x`. Defaults to the
-  spec stored as the `tib_spec` attribute of `x`, if present.
+  (`tspec`) Optional. A spec object which was used to create `x`.
+  Defaults to the spec stored as the `tib_spec` attribute of `x`, if
+  present.
 
 ## Value
 
