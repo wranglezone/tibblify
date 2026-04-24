@@ -17,8 +17,8 @@ children.}
 \item{.children_to}{(\code{character(1)}) The column name in which to store the
 children.}
 
-\item{col}{(\code{any}) A column from a data frame, which may be a vector, a
-list, or a nested data frame.}
+\item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
+or a nested data frame.}
 
 \item{elt}{(\code{character} or \code{integer}) An element of a path.}
 
@@ -35,6 +35,8 @@ unspecified?}
 
 \item{expr}{(\code{any}) An expression to evaluate and return, with indexed errors
 wrapped.}
+
+\item{field_spec}{(\code{tib_collector}) A tibblify field collector.}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
@@ -81,6 +83,9 @@ vectors?}
 \item{size_act}{(\code{integer(1)}) The observed size of a field.}
 
 \item{size_exp}{(\code{integer(1)}) The expected size of a field.}
+
+\item{spec}{(\code{tspec} or \code{NULL}) A spec object describing the structure of
+\code{x}.}
 
 \item{spec_list}{(\code{list}) A list of specifications.}
 

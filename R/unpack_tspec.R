@@ -165,7 +165,6 @@ unpack_tspec <- function(
 
 #' Unpack a single field
 #'
-#' @param field_spec (`tib_collector`) A tibblify field collector.
 #' @param name (`character(1)`) The name of the field.
 #' @inheritParams unpack_tspec
 #' @inheritParams .shared-params

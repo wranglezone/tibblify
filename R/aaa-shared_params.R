@@ -11,8 +11,8 @@
 #'   children.
 #' @param .children_to (`character(1)`) The column name in which to store the
 #'   children.
-#' @param col (`any`) A column from a data frame, which may be a vector, a
-#'   list, or a nested data frame.
+#' @param col (`any`) A column from a data frame, which may be a vector, a list,
+#'   or a nested data frame.
 #' @param elt (`character` or `integer`) An element of a path.
 #' @param .elt_transform (`function` or `NULL`) A function to apply to each
 #'   element before casting to `.ptype_inner`.
@@ -23,6 +23,7 @@
 #' @param .error_call (`environment`) The environment to use for error messages.
 #' @param expr (`any`) An expression to evaluate and return, with indexed errors
 #'   wrapped.
+#' @param field_spec (`tib_collector`) A tibblify field collector.
 #' @param .fill (`vector` or `NULL`) Optionally, a value to use if the field
 #'   does not exist.
 #' @param .format (`character(1)` or `NULL`) Passed to the `format` argument of
@@ -51,6 +52,8 @@
 #'   vectors?
 #' @param size_act (`integer(1)`) The observed size of a field.
 #' @param size_exp (`integer(1)`) The expected size of a field.
+#' @param spec (`tspec` or `NULL`) A spec object describing the structure of
+#'   `x`.
 #' @param spec_list (`list`) A list of specifications.
 #' @param tib_list (`list`) A list of tib fields.
 #' @param .transform (`function` or `NULL`) A function to apply to the whole

@@ -17,8 +17,8 @@
 \item{ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
 
-\item{col}{(\code{any}) A column from a data frame, which may be a vector, a
-list, or a nested data frame.}
+\item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
+or a nested data frame.}
 
 \item{name}{(\code{character(1)}) The name of the field.}
 

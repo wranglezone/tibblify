@@ -72,8 +72,7 @@ tibblify <- function(x, spec = NULL, unspecified = NULL) {
 
   if (!.is_tspec(spec)) {
     friendly_type <- obj_type_friendly(spec)
-    msg <- "{.arg spec} must be a tibblify spec, not {friendly_type}."
-    cli::cli_abort(msg)
+    cli::cli_abort("{.arg spec} must be a tibblify spec, not {friendly_type}.")
   }
 
   spec_org <- spec <- .spec_prep_unspecified(spec, unspecified)
