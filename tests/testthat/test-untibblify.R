@@ -188,3 +188,9 @@ test_that("untibblify checks input (#49)", {
     (expect_error(untibblify(new_rational(1, 1:3))))
   })
 })
+
+test_that(".check_key_length_1() errors on zero-length key", {
+  expect_snapshot({
+    (expect_error(.check_key_length_1(key = character(0))))
+  })
+})

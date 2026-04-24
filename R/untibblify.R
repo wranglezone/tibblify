@@ -121,7 +121,6 @@ untibblify <- function(x, spec = get_spec(x)) {
   }
   out <- list()
   fields <- spec$fields
-  nms_map_inverted <- rlang::set_names(names(fields))
   for (i in seq_along(fields)) {
     key <- .check_key_can_untibblify(fields[[i]]$key, call = call)
     nm <- names(fields)[[i]]
@@ -154,6 +153,12 @@ untibblify <- function(x, spec = get_spec(x)) {
   if (length(key) > 1) {
     .tibblify_abort(
       "{.fn untibblify} does not support specs with nested keys",
+      call = call
+    )
+  }
+  if (!length(key)) {
+    .tibblify_abort(
+      "{.fn untibblify} does not support specs with empty keys",
       call = call
     )
   }

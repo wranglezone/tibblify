@@ -35,3 +35,12 @@
       Error in `untibblify()`:
       ! `x` must be a list. Instead, it is a <vctrs_rational> object.
 
+# .check_key_length_1() errors on zero-length key
+
+    Code
+      (expect_error(.check_key_length_1(key = character(0))))
+    Output
+      <error/tibblify_error>
+      Error:
+      ! `untibblify()` does not support specs with empty keys
+
