@@ -36,10 +36,15 @@ unspecified?}
 \item{expr}{(\code{any}) An expression to evaluate and return, with indexed errors
 wrapped.}
 
+\item{f_name}{(\code{character(1)}) The (possibly ANSI-colored) function name.}
+
 \item{field_spec}{(\code{tib_collector}) A tibblify field collector.}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
+
+\item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
+deduced from the spec?}
 
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}

@@ -19,7 +19,7 @@ format.tspec_df <- function(x, width = NULL, ..., names = NULL) {
       .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
-      .input_form = if (x$input_form != "rowmajor") .double_tick(x$input_form)
+      .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
     force_names = names
   )
@@ -37,7 +37,7 @@ format.tspec_row <- function(x, width = NULL, ..., names = NULL) {
       .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
-      .input_form = if (x$input_form != "rowmajor") .double_tick(x$input_form)
+      .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
     force_names = names
   )
@@ -52,12 +52,12 @@ format.tspec_recursive <- function(x, width = NULL, ..., names = NULL) {
     fields = x$fields,
     width = width,
     args = list(
-      .children = .double_tick(x$child),
-      .children_to = if (x$child != x$children_to) .double_tick(x$children_to),
+      .children = .double_quote(x$child),
+      .children_to = if (x$child != x$children_to) .double_quote(x$children_to),
       .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
-      .input_form = if (x$input_form != "rowmajor") .double_tick(x$input_form)
+      .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
     force_names = names
   )
@@ -75,7 +75,7 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
       .vector_allows_empty_list = if (x$vector_allows_empty_list) {
         x$vector_allows_empty_list
       },
-      .input_form = if (x$input_form != "rowmajor") .double_tick(x$input_form)
+      .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
     force_names = names
   )

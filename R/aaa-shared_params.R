@@ -23,9 +23,12 @@
 #' @param .error_call (`environment`) The environment to use for error messages.
 #' @param expr (`any`) An expression to evaluate and return, with indexed errors
 #'   wrapped.
+#' @param f_name (`character(1)`) The (possibly ANSI-colored) function name.
 #' @param field_spec (`tib_collector`) A tibblify field collector.
 #' @param .fill (`vector` or `NULL`) Optionally, a value to use if the field
 #'   does not exist.
+#' @param force_names (`logical(1)`) Should names be printed even if they can be
+#'   deduced from the spec?
 #' @param .format (`character(1)` or `NULL`) Passed to the `format` argument of
 #'   [as.Date()].
 #' @param index (`integer(1)`) A zero-based location in a path.

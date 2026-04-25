@@ -18,8 +18,7 @@
 )
 }
 \arguments{
-\item{f_name}{(\code{character(1)}) The (possibly ANSI-colored) function name, as
-returned by \code{.format_tib_f()}. Used only to calculate indentation.}
+\item{f_name}{(\code{character(1)}) The (possibly ANSI-colored) function name.}
 
 \item{x}{A tibblify collector object.}
 

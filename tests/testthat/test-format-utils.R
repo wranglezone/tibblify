@@ -1,12 +1,25 @@
 # .format_fields -------------------------------------------------------------
 
 test_that(".format_fields returns 'f_name()' for empty fields and no args", {
-  expect_equal(.format_fields("tspec_df", fields = list(), width = NULL, force_names = FALSE), "tspec_df()")
+  expect_equal(
+    .format_fields(
+      "tspec_df",
+      fields = list(),
+      width = NULL,
+      force_names = FALSE
+    ),
+    "tspec_df()"
+  )
 })
 
 test_that(".format_fields formats non-empty fields without args", {
   fields <- list(a = tib_int("a"))
-  result <- .format_fields("tspec_df", fields = fields, width = NULL, force_names = FALSE)
+  result <- .format_fields(
+    "tspec_df",
+    fields = fields,
+    width = NULL,
+    force_names = FALSE
+  )
   expect_equal(result, 'tspec_df(\n  tib_int("a"),\n)')
 })
 
@@ -19,18 +32,31 @@ test_that(".format_fields prepends args before fields", {
     args = list(.input_form = '"colmajor"'),
     force_names = FALSE
   )
-  expect_equal(result, 'tspec_df(\n  .input_form = "colmajor",\n  tib_int("a"),\n)')
+  expect_equal(
+    result,
+    'tspec_df(\n  .input_form = "colmajor",\n  tib_int("a"),\n)'
+  )
 })
 
 test_that(".format_fields shows all names when force_names = TRUE", {
   fields <- list(a = tib_int("a"))
-  result <- .format_fields("tspec_df", fields = fields, width = NULL, force_names = TRUE)
+  result <- .format_fields(
+    "tspec_df",
+    fields = fields,
+    width = NULL,
+    force_names = TRUE
+  )
   expect_equal(result, 'tspec_df(\n  a = tib_int("a"),\n)')
 })
 
 test_that(".format_fields hides canonical names when force_names = FALSE", {
   fields <- list(a = tib_int("a"))
-  result <- .format_fields("tspec_df", fields = fields, width = NULL, force_names = FALSE)
+  result <- .format_fields(
+    "tspec_df",
+    fields = fields,
+    width = NULL,
+    force_names = FALSE
+  )
   # canonical name ("a" == key "a") should be suppressed
   expect_false(grepl("a =", result))
 })
@@ -38,7 +64,12 @@ test_that(".format_fields hides canonical names when force_names = FALSE", {
 test_that(".format_fields shows non-canonical names when force_names = FALSE", {
   # Field name "b" != key "a" → non-canonical, must be shown
   fields <- list(b = tib_int("a"))
-  result <- .format_fields("tspec_df", fields = fields, width = NULL, force_names = FALSE)
+  result <- .format_fields(
+    "tspec_df",
+    fields = fields,
+    width = NULL,
+    force_names = FALSE
+  )
   expect_true(grepl("b =", result))
 })
 
@@ -78,14 +109,14 @@ test_that(".is_tib_name_canonical returns FALSE for non-character key", {
 })
 
 
-# .double_tick ----------------------------------------------------------------
+# .double_quote ----------------------------------------------------------------
 
-test_that(".double_tick wraps string in double quotes", {
-  expect_equal(.double_tick("foo"), '"foo"')
+test_that(".double_quote wraps string in double quotes", {
+  expect_equal(.double_quote("foo"), '"foo"')
 })
 
-test_that(".double_tick returns NULL for NULL input", {
-  expect_null(.double_tick(NULL))
+test_that(".double_quote returns NULL for NULL input", {
+  expect_null(.double_quote(NULL))
 })
 
 
@@ -98,19 +129,6 @@ test_that(".tibblify_width returns width argument when supplied", {
 test_that(".tibblify_width falls back to getOption('width') when NULL", {
   withr::local_options(width = 77)
   expect_equal(.tibblify_width(NULL), 77)
-})
-
-
-# .is_syntactic ---------------------------------------------------------------
-
-test_that(".is_syntactic identifies syntactic names", {
-  expect_true(.is_syntactic("valid_name"))
-  expect_true(.is_syntactic(".valid"))
-})
-
-test_that(".is_syntactic rejects non-syntactic names", {
-  expect_false(.is_syntactic("not-valid"))
-  expect_false(.is_syntactic("1starts_with_digit"))
 })
 
 

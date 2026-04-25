@@ -90,10 +90,10 @@ format.tib_vector <- function(
     x = x,
     .elt_transform = x$elt_transform,
     .input_form = if (!identical(x$input_form, "vector")) {
-      .double_tick(x$input_form)
+      .double_quote(x$input_form)
     },
-    .values_to = .double_tick(x$values_to),
-    .names_to = .double_tick(x$names_to),
+    .values_to = .double_quote(x$values_to),
+    .names_to = .double_quote(x$names_to),
     multi_line = multi_line,
     nchar_indent = nchar_indent,
     width = width
@@ -117,7 +117,7 @@ format.tib_scalar_chr_date <- function(
     x = x,
     .fill = if (identical(x$fill, NA_character_)) zap(),
     .ptype_inner = zap(),
-    .format = if (x$format != "%Y-%m-%d") .double_tick(x$format),
+    .format = if (x$format != "%Y-%m-%d") .double_quote(x$format),
     .transform = zap(),
     multi_line = multi_line,
     nchar_indent = nchar_indent,
@@ -156,7 +156,7 @@ format.tib_df <- function(x, ..., width = NULL, names = NULL) {
     args = list(
       deparse(x$key),
       `.required` = if (!x$required) FALSE,
-      .names_to = .double_tick(x$names_col)
+      .names_to = .double_quote(x$names_col)
     ),
     force_names = names
   )
@@ -172,8 +172,8 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
     width = width,
     args = list(
       deparse(x$key),
-      `.children` = .double_tick(x$child),
-      .children_to = if (x$child != x$children_to) .double_tick(x$children_to),
+      `.children` = .double_quote(x$child),
+      .children_to = if (x$child != x$children_to) .double_quote(x$children_to),
       `.required` = if (!x$required) FALSE
     ),
     force_names = names
@@ -283,8 +283,6 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
 
 #' Build the formatted argument string for a collector call
 #'
-#' @param f_name (`character(1)`) The (possibly ANSI-colored) function name, as
-#'   returned by `.format_tib_f()`. Used only to calculate indentation.
 #' @param x A tibblify collector object.
 #' @param ... Additional named arguments to include verbatim in the output,
 #'   forwarded from the calling `format.*` method.
@@ -331,10 +329,7 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
 #'   if the argument should be omitted.
 #' @keywords internal
 .format_ptype_inner <- function(x, .ptype_inner) {
-  if (rlang::is_zap(.ptype_inner)) {
-    return(NULL)
-  }
-  if (is.null(x$ptype_inner)) {
+  if (rlang::is_zap(.ptype_inner) || is.null(x$ptype_inner)) {
     return(NULL)
   }
   if (!identical(x$ptype, x$ptype_inner)) .format_ptype(x$ptype_inner)
@@ -418,9 +413,10 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
     )
     # nocov end
   }
-  canonical <- vctrs::vec_size(x$fill) == 1 &&
-    vctrs::vec_equal(x$fill, canonical_default, na_equal = TRUE)
-  if (canonical) {
+  if (
+    vctrs::vec_size(x$fill) == 1 &&
+      vctrs::vec_equal(x$fill, canonical_default, na_equal = TRUE)
+  ) {
     return(NULL)
   }
   .format_fill(x$fill)
@@ -442,5 +438,5 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
 
 #' @export
 .format_fill.Date <- function(x) {
-  paste0("as.Date(", .double_tick(format(x, format = "%Y-%m-%d")), ")")
+  paste0("as.Date(", .double_quote(format(x, format = "%Y-%m-%d")), ")")
 }
