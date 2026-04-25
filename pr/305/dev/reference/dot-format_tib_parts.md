@@ -23,10 +23,7 @@ Build the formatted argument string for a collector call
 
 - f_name:
 
-  (`character(1)`) The (possibly ANSI-colored) function name, as
-  returned by
-  [`.format_tib_f()`](https://tibblify.wrangle.zone/dev/reference/dot-format_tib_f.md).
-  Used only to calculate indentation.
+  (`character(1)`) The (possibly ANSI-colored) function name.
 
 - x:
 

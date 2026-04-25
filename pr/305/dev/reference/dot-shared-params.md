@@ -58,6 +58,10 @@ to make them easier to import and to find.
   (`any`) An expression to evaluate and return, with indexed errors
   wrapped.
 
+- f_name:
+
+  (`character(1)`) The (possibly ANSI-colored) function name.
+
 - field_spec:
 
   (`tib_collector`) A tibblify field collector.
@@ -66,6 +70,11 @@ to make them easier to import and to find.
 
   (`vector` or `NULL`) Optionally, a value to use if the field does not
   exist.
+
+- force_names:
+
+  (`logical(1)`) Should names be printed even if they can be deduced
+  from the spec?
 
 - .format:
 
