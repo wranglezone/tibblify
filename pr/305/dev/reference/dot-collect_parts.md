@@ -12,11 +12,11 @@ Collect formatted field parts
 
 - fields:
 
-  (`list`) Fields to format.
+  (`list` or `NULL`) Fields to format.
 
 - width:
 
-  (`integer(1)`) The width (in number of characers) of text output to
+  (`integer(1)`) The width (in number of characters) of text output to
   generate.
 
 - force_names:
@@ -26,7 +26,8 @@ Collect formatted field parts
 
 - args:
 
-  (`list`) Additional arguments to format and prepend before fields.
+  (`list` or `NULL`) Additional arguments to format and display before
+  fields.
 
 ## Value
 

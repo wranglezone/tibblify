@@ -12,7 +12,7 @@ Calculate the number of characters in a field's name part
 
 - fields:
 
-  (`list`) Fields to format.
+  (`list` or `NULL`) Fields to format.
 
 ## Value
 

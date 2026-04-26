@@ -86,7 +86,7 @@ format(x, width = NULL, ..., names = NULL)
 
 - width:
 
-  (`integer(1)`) The width (in number of characers) of text output to
+  (`integer(1)`) The width (in number of characters) of text output to
   generate.
 
 - ...:

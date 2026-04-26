@@ -12,11 +12,11 @@ Format field parts with canonical names
 
 - fields:
 
-  (`list`) Fields to format.
+  (`list` or `NULL`) Fields to format.
 
 - width:
 
-  (`integer(1)`) The width (in number of characers) of text output to
+  (`integer(1)`) The width (in number of characters) of text output to
   generate.
 
 - force_names:
