@@ -93,3 +93,37 @@ test_that("colmajor works", {
     )
   )
 })
+
+test_that("colmajor errors when a field value is NULL (#noissue)", {
+  spec <- tspec_df(.input_form = "colmajor", tib_int("x"), tib_int("y"))
+  expect_error(
+    tibblify(list(x = NULL, y = 1:2), spec),
+    "must not be"
+  )
+})
+
+test_that("colmajor errors when fields have different sizes (#noissue)", {
+  spec <- tspec_df(.input_form = "colmajor", tib_int("x"), tib_int("y"))
+  expect_error(
+    tibblify(list(x = 1:2, y = 1:3), spec),
+    "same size"
+  )
+})
+
+test_that("colmajor errors when a required nested field is absent (#noissue)", {
+  spec <- tspec_df(.input_form = "colmajor", tib_row("row", tib_int("a")))
+  expect_error(
+    tibblify(list(row = list(b = 1:2)), spec),
+    "every field is required"
+  )
+})
+
+test_that("colmajor errors when a list-typed field is not a list (#noissue)", {
+  expect_error(
+    tibblify(
+      list(x = 1L),
+      tspec_df(.input_form = "colmajor", tib_int_vec("x"))
+    ),
+    "must be a list"
+  )
+})
