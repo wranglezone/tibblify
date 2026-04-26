@@ -243,13 +243,6 @@ r_ssize get_collector_vec_rows(struct collector* v_collector,
                                struct Path* nrow_path) {
   check_list(object_list, v_path);
 
-  const r_ssize n_fields = short_vec_size(object_list);
-  if (n_fields == 0) {
-    // TODO check if this makes sense...
-    *n_rows = 0;
-    return *n_rows;
-  }
-
   r_obj* field_names = check_names_not_null(object_list, v_path);
 
   struct multi_collector* v_multi_coll = &v_collector->details.multi_coll;
