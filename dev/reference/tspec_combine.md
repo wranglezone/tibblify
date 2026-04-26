@@ -40,8 +40,8 @@ tspec_combine(
   tspec_df(tib_chr("b"))
 )
 #> tspec_df(
-#>   tib_int("a", required = FALSE),
-#>   tib_chr("b", required = FALSE),
+#>   tib_int("a", .required = FALSE),
+#>   tib_chr("b", .required = FALSE),
 #> )
 
 # unspecified + x -> x

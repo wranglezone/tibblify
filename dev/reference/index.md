@@ -2,8 +2,22 @@
 
 ## All functions
 
-- [`print(`*`<tspec>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+- [`print(`*`<tib_collector>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_scalar>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_variant>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_vector>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_unspecified>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_scalar_chr_date>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_vector_chr_date>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_row>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_df>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tib_recursive>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`print(`*`<tibblify_object>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`print(`*`<tspec>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
   [`format(`*`<tspec_df>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tspec_row>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tspec_recursive>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
+  [`format(`*`<tspec_object>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
   : Printing tibblify specifications
 
 - [`get_spec()`](https://tibblify.wrangle.zone/dev/reference/get_spec.md)

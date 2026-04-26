@@ -76,7 +76,7 @@ parse_openapi_schema(file)
 #> tspec_row(
 #>   tib_chr("name"),
 #>   tib_chr("model"),
-#>   tib_chr("url", required = FALSE),
+#>   tib_chr("url", .required = FALSE),
 #>   tib_chr("edited"),
 #> )
 ```

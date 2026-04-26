@@ -106,6 +106,10 @@ unspecified?</p></dd>
 wrapped.</p></dd>
 
 
+<dt id="arg-f-name">f_name<a class="anchor" aria-label="anchor" href="#arg-f-name"></a></dt>
+<dd><p>(<code>character(1)</code>) The (possibly ANSI-colored) function name.</p></dd>
+
+
 <dt id="arg-field-spec">field_spec<a class="anchor" aria-label="anchor" href="#arg-field-spec"></a></dt>
 <dd><p>(<code>tib_collector</code>) A tibblify field collector.</p></dd>
 
@@ -113,6 +117,11 @@ wrapped.</p></dd>
 <dt id="arg--fill">.fill<a class="anchor" aria-label="anchor" href="#arg--fill"></a></dt>
 <dd><p>(<code>vector</code> or <code>NULL</code>) Optionally, a value to use if the field
 does not exist.</p></dd>
+
+
+<dt id="arg-force-names">force_names<a class="anchor" aria-label="anchor" href="#arg-force-names"></a></dt>
+<dd><p>(<code>logical(1)</code>) Should names be printed even if they can be
+deduced from the spec?</p></dd>
 
 
 <dt id="arg--format">.format<a class="anchor" aria-label="anchor" href="#arg--format"></a></dt>
@@ -147,6 +156,12 @@ across recursive calls, such as whether empty lists were encountered.</p></dd>
 <dd><p>(<code>character</code>) A cli message template.</p></dd>
 
 
+<dt id="arg-multi-line">multi_line<a class="anchor" aria-label="anchor" href="#arg-multi-line"></a></dt>
+<dd><p>(<code>logical(1)</code>) Should the output be formatted across
+multiple lines? For example, should each element of even a short list be
+displayed on its own line?</p></dd>
+
+
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
 <dd><p>(<code>character(1)</code>) The name of the field.</p></dd>
 
@@ -154,6 +169,17 @@ across recursive calls, such as whether empty lists were encountered.</p></dd>
 <dt id="arg-name-spec">name_spec<a class="anchor" aria-label="anchor" href="#arg-name-spec"></a></dt>
 <dd><p>(<code>character(1)</code>, <code>function</code>, or <code>NULL</code>) Name specification
 passed to <code><a href="https://vctrs.r-lib.org/reference/list_unchop.html" class="external-link">vctrs::list_unchop()</a></code>.</p></dd>
+
+
+<dt id="arg-names">names<a class="anchor" aria-label="anchor" href="#arg-names"></a></dt>
+<dd><p>(<code>logical(1)</code>) Should names be printed even if they can be
+deduced from the spec?</p></dd>
+
+
+<dt id="arg-nchar-indent">nchar_indent<a class="anchor" aria-label="anchor" href="#arg-nchar-indent"></a></dt>
+<dd><p>(<code>integer(1)</code>) The number of (additional) characters that
+will be used to indent the output when <code>multi_line = TRUE</code>. Primarily for
+internal use when formatting is applied recursively.</p></dd>
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
@@ -218,6 +244,11 @@ vector after casting to <code>.ptype_inner</code>.</p></dd>
 <dd><p>(<code>character(1)</code> or <code>NULL</code>) For <code>NULL</code> (the default), the
 field is converted to a <code>.ptype</code> vector. If a string is provided, the field
 is converted to a tibble and the values go into the specified column.</p></dd>
+
+
+<dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
+<dd><p>(<code>integer(1)</code>) The width (in number of characters) of text
+output to generate.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>

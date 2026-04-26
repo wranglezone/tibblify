@@ -58,6 +58,10 @@ to make them easier to import and to find.
   (`any`) An expression to evaluate and return, with indexed errors
   wrapped.
 
+- f_name:
+
+  (`character(1)`) The (possibly ANSI-colored) function name.
+
 - field_spec:
 
   (`tib_collector`) A tibblify field collector.
@@ -66,6 +70,11 @@ to make them easier to import and to find.
 
   (`vector` or `NULL`) Optionally, a value to use if the field does not
   exist.
+
+- force_names:
+
+  (`logical(1)`) Should names be printed even if they can be deduced
+  from the spec?
 
 - .format:
 
@@ -97,6 +106,12 @@ to make them easier to import and to find.
 
   (`character`) A cli message template.
 
+- multi_line:
+
+  (`logical(1)`) Should the output be formatted across multiple lines?
+  For example, should each element of even a short list be displayed on
+  its own line?
+
 - name:
 
   (`character(1)`) The name of the field.
@@ -105,6 +120,17 @@ to make them easier to import and to find.
 
   (`character(1)`, `function`, or `NULL`) Name specification passed to
   [`vctrs::list_unchop()`](https://vctrs.r-lib.org/reference/list_unchop.html).
+
+- names:
+
+  (`logical(1)`) Should names be printed even if they can be deduced
+  from the spec?
+
+- nchar_indent:
+
+  (`integer(1)`) The number of (additional) characters that will be used
+  to indent the output when `multi_line = TRUE`. Primarily for internal
+  use when formatting is applied recursively.
 
 - path:
 
@@ -165,6 +191,11 @@ to make them easier to import and to find.
   (`character(1)` or `NULL`) For `NULL` (the default), the field is
   converted to a `.ptype` vector. If a string is provided, the field is
   converted to a tibble and the values go into the specified column.
+
+- width:
+
+  (`integer(1)`) The width (in number of characters) of text output to
+  generate.
 
 - x:
 
