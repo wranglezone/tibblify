@@ -125,7 +125,7 @@ test_that("tibblify errors if colmajor list-typed field is not a list (#noissue)
   )
 })
 
-test_that("tibblify errors if colmajor input is not a list (#309)", {
+test_that("tibblify errors if colmajor input is not a list (#noissue)", {
   spec <- tspec_df(.input_form = "colmajor", tib_int("x"))
   expect_error(
     tibblify(1L, spec),
@@ -133,7 +133,7 @@ test_that("tibblify errors if colmajor input is not a list (#309)", {
   )
 })
 
-test_that("tibblify errors if colmajor input is unnamed (#309)", {
+test_that("tibblify errors if colmajor input is unnamed (#noissue)", {
   spec <- tspec_df(.input_form = "colmajor", tib_int("x"))
   expect_error(
     tibblify(list(1:2), spec),
