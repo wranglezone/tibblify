@@ -456,7 +456,7 @@ tspec_combine <- function(...) {
 
   names_col_locs <- names_col_locs[!names_col_locs %in% na_locs]
 
-  if (is_empty(names_col_locs)) {
+  if (rlang::is_empty(names_col_locs)) {
     return(NULL)
   }
 

@@ -11,7 +11,7 @@ guess_tspec_list <- function(
 ) {
   rlang::check_dots_empty()
   .check_list(x)
-  if (is_empty(x)) {
+  if (rlang::is_empty(x)) {
     msg <- "{.arg {arg}} must not be empty."
     cli::cli_abort(msg, call = call)
   }

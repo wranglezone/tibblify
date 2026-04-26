@@ -34,8 +34,8 @@
           tib_chr("title"),
           tib_df(
             "formats",
-            tib_variant("descriptions", required = FALSE),
-            tib_chr("text", required = FALSE),
+            tib_variant("descriptions", .required = FALSE),
+            tib_chr("text", .required = FALSE),
             tib_chr("name"),
             tib_chr("qty"),
           ),

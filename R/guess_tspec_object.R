@@ -9,9 +9,9 @@ guess_tspec_object <- function(
   call = rlang::current_call()
 ) {
   rlang::check_dots_empty()
-  check_bool(empty_list_unspecified, call = call)
-  check_bool(simplify_list, call = call)
-  check_bool(inform_unspecified, call = call)
+  rlang::check_bool(empty_list_unspecified, call = call)
+  rlang::check_bool(simplify_list, call = call)
+  rlang::check_bool(inform_unspecified, call = call)
   .check_not_df(x, call)
   .check_list(x)
   .check_object_names(x, call)

@@ -114,8 +114,8 @@ unpack_tspec <- function(
   names_clean,
   .call = caller_env()
 ) {
-  check_bool(recurse, call = .call)
-  check_string(names_sep, allow_null = TRUE, call = .call)
+  rlang::check_bool(recurse, call = .call)
+  rlang::check_string(names_sep, allow_null = TRUE, call = .call)
   fields_to_unpack <- .stabilize_unpack_cols(fields, spec, .call)
   .with_indexed_errors(
     purrr::imap(
@@ -151,7 +151,7 @@ unpack_tspec <- function(
   known_fields <- names(spec$fields)
   fields <- fields %||% known_fields
   missing_fields <- setdiff(fields, known_fields)
-  if (is_empty(missing_fields)) {
+  if (rlang::is_empty(missing_fields)) {
     return(fields)
   }
   cli_abort(

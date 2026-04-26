@@ -76,7 +76,7 @@
     simplify_list,
     local_env,
     tib_fn = tib_fn,
-    .names_to = if (rlang::is_named(value) && !is_empty(value)) ".names",
+    .names_to = if (rlang::is_named(value) && !rlang::is_empty(value)) ".names",
     ...
   )
 }

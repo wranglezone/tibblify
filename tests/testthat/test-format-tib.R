@@ -1,31 +1,28 @@
 test_that("can format tib_unspecified()", {
-  local_options(cli.num_colors = 1)
-
-  expect_snapshot(tib_unspecified("a") |> print())
+  withr::local_options(cli.num_colors = 1)
+  expect_snapshot(tib_unspecified("a"))
 })
 
 test_that("format for scalars works", {
-  local_options(cli.num_colors = 1)
+  withr::local_options(cli.num_colors = 1)
+  expect_snapshot(tib_chr("a"))
+  expect_snapshot(tib_date("a"))
+  expect_snapshot(tib_dbl("a"))
+  expect_snapshot(tib_int("a"))
+  expect_snapshot(tib_lgl("a"))
 
-  expect_snapshot(tib_chr("a") |> print())
-  expect_snapshot(tib_date("a") |> print())
-  expect_snapshot(tib_dbl("a") |> print())
-  # expect_snapshot(tib_dtt("a") |> print())
-  expect_snapshot(tib_int("a") |> print())
-  expect_snapshot(tib_lgl("a") |> print())
+  expect_snapshot(tib_variant("a"))
 
-  expect_snapshot(tib_variant("a") |> print())
+  expect_snapshot(tib_int("a", .fill = NA_integer_))
+  expect_snapshot(tib_int("a", .fill = 1))
 
-  expect_snapshot(tib_int("a", .fill = NA_integer_) |> print())
-  expect_snapshot(tib_int("a", .fill = 1) |> print())
-
-  expect_snapshot(tib_int("a", .transform = as.integer) |> print())
+  expect_snapshot(tib_int("a", .transform = as.integer))
   expect_snapshot(
-    tib_int("a", .fill = NA_integer_, .transform = as.integer) |> print()
+    tib_int("a", .fill = NA_integer_, .transform = as.integer)
   )
 
   expect_snapshot(
-    tib_scalar("a", .ptype = new_difftime(units = "mins")) |> print()
+    tib_scalar("a", .ptype = new_difftime(units = "mins"))
   )
 
   expect_snapshot(
@@ -34,8 +31,7 @@ test_that("format for scalars works", {
       x = tib_int("x"),
       y = tib_dbl("y", .fill = NA_real_),
       z = tib_chr("z", .fill = "abc")
-    ) |>
-      print()
+    )
   )
 
   expect_snapshot(
@@ -70,8 +66,8 @@ test_that("format breaks long lines", {
 
 test_that("format for tib_vector works", {
   local_options(cli.num_colors = 1)
-  expect_snapshot(tib_chr_vec("a") |> print())
-  expect_snapshot(tib_vector("a", .ptype = vctrs::new_duration()) |> print())
+  expect_snapshot(tib_chr_vec("a"))
+  expect_snapshot(tib_vector("a", .ptype = vctrs::new_duration()))
 
   expect_snapshot(
     tib_vector(
@@ -80,12 +76,11 @@ test_that("format for tib_vector works", {
       .input_form = "object",
       .values_to = "vals",
       .names_to = "names"
-    ) |>
-      print()
+    )
   )
 
   # multi value default
-  expect_snapshot(tib_int_vec("a", .fill = 1:2) |> print())
+  expect_snapshot(tib_int_vec("a", .fill = 1:2))
 
   expect_snapshot(
     tib_int_vec(
@@ -127,8 +122,7 @@ test_that("format for tib_row works", {
     tib_row(
       "formats",
       text = tib_chr("text", .fill = NA_character_)
-    ) |>
-      print()
+    )
   )
 
   expect_snapshot(
@@ -136,8 +130,7 @@ test_that("format for tib_row works", {
       "formats",
       text = tib_chr("text"),
       .required = FALSE
-    ) |>
-      print()
+    )
   )
 
   expect_snapshot(
@@ -180,8 +173,7 @@ test_that("format for tib_row works", {
       cover_image = tib_chr("cover_image"),
       resource_url = tib_chr("resource_url"),
       master_id = tib_int("master_id")
-    ) |>
-      print()
+    )
   )
 })
 
@@ -194,29 +186,15 @@ test_that("format for tib_variant works", {
 test_that("format for tib_df works", {
   local_options(cli.num_colors = 1)
   expect_snapshot(
-    tib_df(
-      "formats",
-      text = tib_chr("text", .fill = NA_character_)
-    ) |>
-      print()
+    tib_df("formats", text = tib_chr("text", .fill = NA_character_))
   )
 
   expect_snapshot(
-    tib_df(
-      "formats",
-      text = tib_chr("text"),
-      .required = FALSE
-    ) |>
-      print()
+    tib_df("formats", text = tib_chr("text"), .required = FALSE)
   )
 
   expect_snapshot(
-    tib_df(
-      "formats",
-      .names_to = "nms",
-      text = tib_chr("text")
-    ) |>
-      print()
+    tib_df("formats", .names_to = "nms", text = tib_chr("text"))
   )
 })
 
@@ -227,9 +205,8 @@ test_that("format for tib_recursive works (#155)", {
       "data",
       .children = "children",
       tib_int("id"),
-      tib_chr("name"),
-    ) |>
-      print()
+      tib_chr("name")
+    )
   )
 
   expect_snapshot(
@@ -239,69 +216,13 @@ test_that("format for tib_recursive works (#155)", {
       tib_int("id"),
       tib_chr("name"),
       .required = FALSE
-    ) |>
-      print()
+    )
   )
 })
 
-test_that("prints non-canonical names", {
-  expect_snapshot({
-    tspec_df(b = tib_int("a")) |> format()
-    tspec_df(b = tib_int(c("a", "b"))) |> format()
-  })
-})
-
-test_that("can force to print canonical names (#98)", {
-  withr::local_options(list(tibblify.print_names = TRUE))
-
-  expect_snapshot(format(
-    tspec_df(
-      a = tib_int("a"),
-      b = tib_df(
-        "b",
-        x = tib_int("x")
-      )
-    )
-  ))
-})
-
-test_that("special ptypes correctly formatted", {
-  expect_snapshot({
-    tib_scalar("a", .ptype = character(), .ptype_inner = Sys.Date()) |> format()
-    tib_scalar("a", .ptype = character(), .ptype_inner = Sys.time()) |> format()
-  })
-})
-
-test_that("format for empty tib_df works", {
-  expect_equal(format(tspec_df()), "tspec_df()")
-  expect_equal(format(tspec_row()), "tspec_row()")
-  expect_equal(format(tspec_object()), "tspec_object()")
+test_that("format for empty tib_* works", {
   expect_equal(format(tib_df("x")), "tib_df(\n  \"x\",\n)")
   expect_equal(format(tib_row("x")), "tib_row(\n  \"x\",\n)")
-})
-
-test_that("prints arguments of spec_* (#95)", {
-  expect_equal(
-    format(tspec_df(tib_int("a"), .input_form = "colmajor")),
-    'tspec_df(\n  .input_form = "colmajor",\n  tib_int("a"),\n)'
-  )
-
-  expect_equal(
-    format(tspec_df(tib_int("a"), .names_to = "nms")),
-    'tspec_df(\n  .names_to = "nms",\n  tib_int("a"),\n)'
-  )
-
-  expect_equal(
-    format(tspec_df(tib_int("a"), .vector_allows_empty_list = TRUE)),
-    'tspec_df(\n  .vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
-  )
-})
-
-test_that("prints arguments of tspec_recursive (#155)", {
-  expect_equal(
-    format(tspec_recursive(tib_int("a"), .children = "children")),
-    'tspec_recursive(\n  .children = "children",\n  tib_int("a"),\n)'
-  )
 })
 
 test_that("format uses trailing comma", {
@@ -311,14 +232,21 @@ test_that("format uses trailing comma", {
   )
 })
 
+test_that("special ptypes correctly formatted", {
+  expect_snapshot({
+    tib_scalar("a", .ptype = character(), .ptype_inner = Sys.Date()) |> format()
+    tib_scalar("a", .ptype = character(), .ptype_inner = Sys.time()) |> format()
+  })
+})
+
 test_that("special ptypes are correctly formatted", {
   check_native <- function(ptype, ctr) {
     # native
-    expect_equal(format_ptype(ptype), ctr)
+    expect_equal(.format_ptype(ptype), ctr)
 
     # non-native
     class(ptype) <- c("a", class(ptype))
-    expect_equal(format_ptype(ptype), deparse(ptype))
+    expect_equal(.format_ptype(ptype), deparse(ptype))
   }
 
   check_native(logical(), "logical(0)")
@@ -329,12 +257,7 @@ test_that("special ptypes are correctly formatted", {
   check_native(vctrs::new_duration(), "vctrs::new_duration()")
 })
 
-test_that("correctly print results of tspec_object()", {
-  expect_snapshot({
-    tibblify(
-      list(a = 1L),
-      tspec_object(tib_int("a"))
-    ) |>
-      print()
-  })
+test_that(".format_tib_f.default returns first class name", {
+  obj <- structure(list(), class = c("tib_custom", "tib_collector"))
+  expect_equal(.format_tib_f(obj), "tib_custom")
 })

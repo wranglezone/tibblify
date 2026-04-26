@@ -114,7 +114,7 @@ read_spec <- function(file, arg = caller_arg(file), call = caller_env()) {
   }
 
   if (is_character(file)) {
-    check_string(file)
+    rlang::check_string(file)
 
     if (grepl("\n", file)) {
       out <- yaml::yaml.load(file)
@@ -277,14 +277,14 @@ parse_response_object <- function(response_object, openapi_spec) {
   )
   parsed_response <- tibblify(response_object, spec)
 
-  if (!is_empty(parsed_response$headers)) {
+  if (!rlang::is_empty(parsed_response$headers)) {
     parsed_response$headers <- parse_header_objects(
       parsed_response$headers,
       openapi_spec
     )
   }
   # FIXME links
-  if (!is_empty(parsed_response$links)) {
+  if (!rlang::is_empty(parsed_response$links)) {
     cli_abort(
       "We do not yet support {.field links} in OpenAPI response objects."
     )
@@ -467,7 +467,7 @@ get_openapi_type <- function(schema) {
     }
   }
 
-  check_string(type, allow_null = TRUE)
+  rlang::check_string(type, allow_null = TRUE)
   type %||% "variant"
 }
 
@@ -494,7 +494,7 @@ parse_schema <- function(schema, name, openapi_spec) {
   # TODO description, example
   # TODO format?!
 
-  if (is_empty(type)) {} else if (type == "object") {
+  if (rlang::is_empty(type)) {} else if (type == "object") {
     if (!is.null(schema$additionalProperties)) {
       # FIXME hack required for asana which somehow has `additionalProperties = TRUE`
       # openapi_spec$components$schemas$RuleTriggerRequest$properties$action_data$additionalProperties

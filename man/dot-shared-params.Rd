@@ -36,10 +36,15 @@ unspecified?}
 \item{expr}{(\code{any}) An expression to evaluate and return, with indexed errors
 wrapped.}
 
+\item{f_name}{(\code{character(1)}) The (possibly ANSI-colored) function name.}
+
 \item{field_spec}{(\code{tib_collector}) A tibblify field collector.}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
+
+\item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
+deduced from the spec?}
 
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}
@@ -59,10 +64,21 @@ across recursive calls, such as whether empty lists were encountered.}
 
 \item{message}{(\code{character}) A cli message template.}
 
+\item{multi_line}{(\code{logical(1)}) Should the output be formatted across
+multiple lines? For example, should each element of even a short list be
+displayed on its own line?}
+
 \item{name}{(\code{character(1)}) The name of the field.}
 
 \item{name_spec}{(\code{character(1)}, \code{function}, or \code{NULL}) Name specification
 passed to \code{\link[vctrs:list_unchop]{vctrs::list_unchop()}}.}
+
+\item{names}{(\code{logical(1)}) Should names be printed even if they can be
+deduced from the spec?}
+
+\item{nchar_indent}{(\code{integer(1)}) The number of (additional) characters that
+will be used to indent the output when \code{multi_line = TRUE}. Primarily for
+internal use when formatting is applied recursively.}
 
 \item{path}{(\code{list}) A path object encoded as a depth and a list of path
 elements.}
@@ -99,6 +115,9 @@ vector after casting to \code{.ptype_inner}.}
 \item{.values_to}{(\code{character(1)} or \code{NULL}) For \code{NULL} (the default), the
 field is converted to a \code{.ptype} vector. If a string is provided, the field
 is converted to a tibble and the values go into the specified column.}
+
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 
 \item{x}{(\code{any}) The object to check.}
 }
