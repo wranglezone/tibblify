@@ -20,6 +20,8 @@ children.}
 \item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
 or a nested data frame.}
 
+\item{col_name}{(\code{character(1)}) The name of the column.}
+
 \item{elt}{(\code{character} or \code{integer}) An element of a path.}
 
 \item{.elt_transform}{(\code{function} or \code{NULL}) A function to apply to each
@@ -48,6 +50,12 @@ deduced from the spec?}
 
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}
+
+\item{id_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
+uniquely identifies each observation.}
+
+\item{id_col_name}{(\code{character(1)}) The name of the column that uniquely
+identifies each observation.}
 
 \item{index}{(\code{integer(1)}) A zero-based location in a path.}
 
@@ -79,6 +87,10 @@ deduced from the spec?}
 \item{nchar_indent}{(\code{integer(1)}) The number of (additional) characters that
 will be used to indent the output when \code{multi_line = TRUE}. Primarily for
 internal use when formatting is applied recursively.}
+
+\item{parent_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
+identifies the parent id of each observation. Each value must either be
+missing (for the root elements) or appear in the \code{id_col} column.}
 
 \item{path}{(\code{list}) A path object encoded as a depth and a list of path
 elements.}

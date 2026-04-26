@@ -53,19 +53,21 @@
   arg_name = caller_arg(arg),
   call = caller_env()
 ) {
-  other_args <- dots_list(..., .named = TRUE)
-
-  for (i in seq_along(other_args)) {
-    if (identical(arg, other_args[[i]])) {
-      other_arg_nm <- names(other_args)[[i]]
-      msg <- "{.arg {arg_name}} must be different from {.arg {other_arg_nm}}."
-      cli_abort(
-        msg,
-        call = call,
-        class = c("tibblify-error-args_same_value", "tibblify-error")
-      )
+  if (!is.null(arg)) {
+    other_args <- rlang::dots_list(..., .named = TRUE)
+    for (i in seq_along(other_args)) {
+      if (identical(arg, other_args[[i]])) {
+        other_arg_nm <- names(other_args)[[i]]
+        msg <- "{.arg {arg_name}} must be different from {.arg {other_arg_nm}}."
+        cli::cli_abort(
+          msg,
+          call = call,
+          class = c("tibblify-error-args_same_value", "tibblify-error")
+        )
+      }
     }
   }
+  return(arg)
 }
 
 #' Map to a character vector

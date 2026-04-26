@@ -8,7 +8,7 @@
 #' @param spec (`tspec`) Optional. A spec object which was used to create `x`.
 #'   Defaults to the spec stored as the `tib_spec` attribute of `x`, if present.
 #'
-#' @return A nested list.
+#' @returns A nested list.
 #' @export
 #'
 #' @examples

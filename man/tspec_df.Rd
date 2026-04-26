@@ -94,8 +94,8 @@ tspec_df(
 # To create multiple columns of the same type use the bang-bang-bang (`!!!`)
 # operator together with `purrr::map()`
 tspec_df(
-  !!!purrr::map(purrr::set_names(c("id", "age")), tib_int),
-  !!!purrr::map(purrr::set_names(c("name", "title")), tib_chr)
+  !!!purrr::map(rlang::set_names(c("id", "age")), tib_int),
+  !!!purrr::map(rlang::set_names(c("name", "title")), tib_chr)
 )
 
 # The `tspec_*()` functions can also be nested

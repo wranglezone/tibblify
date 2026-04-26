@@ -4,23 +4,30 @@
 \alias{nest_tree}
 \title{Convert a data frame to a tree}
 \usage{
-nest_tree(data, id_col, parent_col, children_to)
+nest_tree(x, id_col, parent_col, children_to)
 }
 \arguments{
-\item{data}{A data frame.}
+\item{x}{(\code{data.frame}) The data frame to nest.}
 
-\item{id_col}{Id column. The values must be unique and non-missing.}
+\item{id_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
+uniquely identifies each observation.}
 
-\item{parent_col}{Parent column. Each value must either be missing (for the
-root elements) or appear in the \code{id_col} column.}
+\item{parent_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
+identifies the parent id of each observation. Each value must either be
+missing (for the root elements) or appear in the \code{id_col} column.}
 
-\item{children_to}{Name of the column the children should be put.}
+\item{children_to}{(\code{character(1)}) The column name in which to store the
+children.}
 }
 \value{
-A tree like data frame.
+A tree-like, recursively nested data frame.
 }
 \description{
-Convert a data frame to a tree
+Recursively nest data frame rows based on parent-child relationships, defined
+by an id column and a parent column. Children become sub-tibbles of their
+parent rows. This structure is intended for representing tree-like data, such
+as organizational charts, file systems, category trees, or any other
+hierarchical relationships.
 }
 \examples{
 df <- tibble::tibble(
@@ -28,9 +35,16 @@ df <- tibble::tibble(
   x = letters[1:5],
   parent = c(NA, NA, 1L, 2L, 4L)
 )
+df
+
+# Only the root elements are in the top-level tibble.
 out <- nest_tree(df, id, parent, "children")
 out
 
+# The children of each element are stored in the "children" column.
 out$children
+
+# "d" (id 4) is a child of "b" (id 2), and "e" (id 5) is a child of "d"
+# (id 4).
 out$children[[2]]$children
 }

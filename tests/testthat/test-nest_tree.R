@@ -1,4 +1,4 @@
-test_that("checks arguments", {
+test_that("nest_tree checks arguments", {
   df <- tibble::tibble(
     id = 1:3,
     x = c("a", "b", "c"),
@@ -49,7 +49,7 @@ test_that("checks arguments", {
   })
 })
 
-test_that("checks that ids are valid", {
+test_that("nest_tree checks that ids are valid", {
   # missing ids
   df <- tibble::tibble(
     id = c(1, NA),
@@ -73,7 +73,7 @@ test_that("checks that ids are valid", {
   })
 })
 
-test_that("checks column ids and parents have compatible types", {
+test_that("nest_tree checks column ids and parents have compatible types", {
   df <- tibble::tibble(
     id = 1:3,
     x = c("a", "b", "c"),
@@ -85,7 +85,7 @@ test_that("checks column ids and parents have compatible types", {
   })
 })
 
-test_that("errors if not all parent ids found", {
+test_that("nest_tree errors if not all parent ids found", {
   df <- tibble::tibble(
     id = 1:3,
     x = c("a", "b", "c"),
@@ -98,7 +98,7 @@ test_that("errors if not all parent ids found", {
   })
 })
 
-test_that("errors if parent references to itself", {
+test_that("nest_tree errors if parent references to itself", {
   df <- tibble::tibble(
     id = c(1, 2),
     x = c("a", "b"),
@@ -110,7 +110,7 @@ test_that("errors if parent references to itself", {
   })
 })
 
-test_that("errors if there are no root elements", {
+test_that("nest_tree errors if there are no root elements", {
   df <- tibble::tibble(
     id = c(1, 2),
     x = c("a", "b"),
@@ -122,7 +122,7 @@ test_that("errors if there are no root elements", {
   })
 })
 
-test_that("errors if there are detached parts of the tree", {
+test_that("nest_tree errors if there are detached parts of the tree", {
   df <- tibble::tibble(
     id = c(1, 2, 3),
     x = c("a", "b", "c"),
@@ -137,7 +137,7 @@ test_that("errors if there are detached parts of the tree", {
   })
 })
 
-test_that("can nest", {
+test_that("nest_tree can nest", {
   # simple case
   df <- tibble::tibble(
     id = 1:3,
@@ -223,7 +223,7 @@ test_that("can nest", {
   )
 })
 
-test_that("can handle 0 row data", {
+test_that("nest_tree can handle 0 row data", {
   df <- tibble::tibble(
     id = integer(),
     x = character(),

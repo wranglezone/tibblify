@@ -340,7 +340,8 @@ is converted to a tibble and the values go into the specified column.}
 of the object. Can be one of:
 \itemize{
 \item \code{NULL}: the default. The inner names of the field are not used.
-\item A string: Use only if the input form is \code{"object"} or \code{"vector"}, and \code{.values_to} is a string. The inner names of the field will populate the
+\item A string: Use only if the input form is \code{"object"} or \code{"vector"}, and
+\code{.values_to} is a string. The inner names of the field will populate the
 specified column in the field's tibble.
 }}
 

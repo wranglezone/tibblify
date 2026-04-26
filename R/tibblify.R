@@ -18,7 +18,7 @@
 #'   * `"inform"`: Inform the user then parse as with [tib_variant()].
 #'   * `"drop"`: Do not parse these fields.
 #'   * `"list"`: Parse unspecified fields into lists as with [tib_variant()].
-#' @return Either a tibble or a list, depending on the specification.
+#' @returns Either a tibble or a list, depending on the specification.
 #' @seealso Use [`untibblify()`] to undo the result of `tibblify()`.
 #' @export
 #'
@@ -95,7 +95,7 @@ tibblify <- function(x, spec = NULL, unspecified = NULL) {
 #'
 #' @inheritParams tibblify
 #' @inheritParams .shared-params
-#' @return Either a tibble or a list, depending on the specification.
+#' @returns Either a tibble or a list, depending on the specification.
 #' @keywords internal
 .try_tibblify_impl <- function(x, spec, call = caller_env()) {
   path <- list(depth = 0, path_elts = list())
@@ -121,7 +121,7 @@ tibblify <- function(x, spec = NULL, unspecified = NULL) {
 #'
 #' @inheritParams tibblify
 #' @param path (`list`) The current path in the data structure.
-#' @return Either a tibble or a list, depending on the specification.
+#' @returns Either a tibble or a list, depending on the specification.
 #' @keywords internal
 .tibblify_impl <- function(x, spec, path) {
   .Call(ffi_tibblify, x, spec, path)
@@ -132,7 +132,7 @@ tibblify <- function(x, spec = NULL, unspecified = NULL) {
 #' @param x (`data.frame`) The data frame to extract a spec from.
 #'
 #' @export
-#' @return A tibblify specification as returned by [tspec_df()], [tspec_row()],
+#' @returns A tibblify specification as returned by [tspec_df()], [tspec_row()],
 #'   [tspec_object()], or [tspec_recursive()].
 #' @examples
 #' df <- tibblify(list(list(x = 1, y = "a"), list(x = 2)))

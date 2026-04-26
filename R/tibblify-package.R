@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @importFrom cli qty
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
 #' @importFrom rlang %&&%
