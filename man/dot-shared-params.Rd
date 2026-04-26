@@ -116,8 +116,8 @@ vector after casting to \code{.ptype_inner}.}
 field is converted to a \code{.ptype} vector. If a string is provided, the field
 is converted to a tibble and the values go into the specified column.}
 
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 
 \item{x}{(\code{any}) The object to check.}
 }

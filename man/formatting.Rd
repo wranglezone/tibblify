@@ -76,8 +76,8 @@
 \arguments{
 \item{x}{(\code{any}) The spec to format or print.}
 
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 

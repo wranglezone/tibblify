@@ -1,14 +1,14 @@
-#' Title
+#' Format fields to print a function call
 #'
-#' @param fields (`list`) Fields to format.
-#' @param args (`list`) Additional arguments to format and prepend before
-#'   fields.
+#' @param fields (`list` or `NULL`) Fields to format.
+#' @param args (`list` or `NULL`) Additional arguments to format and display
+#'   before fields.
 #' @inheritParams .shared-params
 #' @returns A single string with the formatted fields.
 #' @keywords internal
 .format_fields <- function(f_name, fields, width, force_names, args = NULL) {
   parts <- .collect_parts(fields, width, force_names, args)
-  if (is_empty(parts)) {
+  if (rlang::is_empty(parts)) {
     return(paste0(f_name, "()"))
   }
   inner <- .collapse_with_pad(parts, multi_line = TRUE, width = width)
@@ -33,12 +33,11 @@
 #'   potentially suppressed.
 #' @keywords internal
 .format_field_canonical_names <- function(fields, width, force_names) {
-  if (force_names) {
-    nchar_indent_vector <- 0L
-  } else {
+  nchar_indent_vector <- .nchar_field_names(fields)
+  if (!force_names) {
     canonical <- purrr::map2_lgl(fields, names2(fields), .is_tib_name_canonical)
     names2(fields)[canonical] <- ""
-    nchar_indent_vector <- ifelse(canonical, 0L, .nchar_field_names(fields))
+    nchar_indent_vector <- ifelse(canonical, 0L, nchar_indent_vector)
   }
   purrr::map2(
     fields,

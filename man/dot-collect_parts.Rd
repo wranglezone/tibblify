@@ -7,16 +7,16 @@
 .collect_parts(fields, width, force_names, args)
 }
 \arguments{
-\item{fields}{(\code{list}) Fields to format.}
+\item{fields}{(\code{list} or \code{NULL}) Fields to format.}
 
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 
 \item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
 
-\item{args}{(\code{list}) Additional arguments to format and prepend before
-fields.}
+\item{args}{(\code{list} or \code{NULL}) Additional arguments to format and display
+before fields.}
 }
 \value{
 A character vector of formatted field parts.

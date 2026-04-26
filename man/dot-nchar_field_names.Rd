@@ -7,7 +7,7 @@
 .nchar_field_names(fields)
 }
 \arguments{
-\item{fields}{(\code{list}) Fields to format.}
+\item{fields}{(\code{list} or \code{NULL}) Fields to format.}
 }
 \value{
 An integer vector of the number of characters in the name part of

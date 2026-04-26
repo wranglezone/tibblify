@@ -18,8 +18,8 @@ up" by any prefix portions of the output. Used to determine whether the
 output will fit on a single line or if it should be wrapped across multiple
 lines.}
 
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 }
 \value{
 A single string with the expressions collapsed, either on a single

@@ -7,8 +7,8 @@
 .tibblify_width(width = NULL)
 }
 \arguments{
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 }
 \value{
 The width to use for tibblifying, either the provided \code{width} or the

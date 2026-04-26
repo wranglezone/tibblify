@@ -151,7 +151,7 @@ unpack_tspec <- function(
   known_fields <- names(spec$fields)
   fields <- fields %||% known_fields
   missing_fields <- setdiff(fields, known_fields)
-  if (is_empty(missing_fields)) {
+  if (rlang::is_empty(missing_fields)) {
     return(fields)
   }
   cli_abort(

@@ -73,8 +73,8 @@
 #' @param .values_to (`character(1)` or `NULL`) For `NULL` (the default), the
 #'   field is converted to a `.ptype` vector. If a string is provided, the field
 #'   is converted to a tibble and the values go into the specified column.
-#' @param width (`integer(1)`) The width (in number of characers) of text output
-#'   to generate.
+#' @param width (`integer(1)`) The width (in number of characters) of text
+#'   output to generate.
 #' @param x (`any`) The object to check.
 #'
 #' @name .shared-params

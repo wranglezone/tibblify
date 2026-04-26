@@ -7,10 +7,10 @@
 .format_field_canonical_names(fields, width, force_names)
 }
 \arguments{
-\item{fields}{(\code{list}) Fields to format.}
+\item{fields}{(\code{list} or \code{NULL}) Fields to format.}
 
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 
 \item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}

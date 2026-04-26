@@ -12,7 +12,6 @@
 #' @importFrom rlang caller_env
 #' @importFrom rlang current_call
 #' @importFrom rlang current_env
-#' @importFrom rlang is_empty
 #' @importFrom rlang is_true
 #' @importFrom rlang list2
 #' @importFrom vctrs list_unchop

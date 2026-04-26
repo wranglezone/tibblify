@@ -41,8 +41,8 @@ displayed on its own line?}
 will be used to indent the output when \code{multi_line = TRUE}. Primarily for
 internal use when formatting is applied recursively.}
 
-\item{width}{(\code{integer(1)}) The width (in number of characers) of text output
-to generate.}
+\item{width}{(\code{integer(1)}) The width (in number of characters) of text
+output to generate.}
 
 \item{names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
