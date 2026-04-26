@@ -18,7 +18,7 @@
 
 void add_stop_required(struct collector* v_collector, struct Path* v_path) {
   stop_required(v_path->data);
-}
+} // # nocov
 
 /**
  * Write a collector's configured default value for primitive collectors whose

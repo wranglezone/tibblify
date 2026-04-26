@@ -8,14 +8,14 @@ void stop_scalar(r_ssize size_act, r_obj* path) {
                              path,
                              KEEP(r_int(size_act))));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_required(r_obj* path) {
   r_obj* call = KEEP(r_call2(r_sym(".stop_required"),
                              path));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_duplicate_name(r_obj* path, r_obj* field_nm_str) {
@@ -26,7 +26,7 @@ void stop_duplicate_name(r_obj* path, r_obj* field_nm_str) {
                              path,
                              field_nm_chr));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_empty_name(r_obj* path, const int index) {
@@ -34,14 +34,14 @@ void stop_empty_name(r_obj* path, const int index) {
                              path,
                              KEEP(r_int(index))));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_names_is_null(r_obj* path) {
   r_obj* call = KEEP(r_call2(r_sym(".stop_names_is_null"),
                              path));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 r_obj* check_names_not_null(r_obj* x, struct Path* v_path) {
@@ -58,7 +58,7 @@ void stop_object_vector_names_is_null(r_obj* path) {
   SEXP call = KEEP(r_call2(r_sym(".stop_object_vector_names_is_null"),
                                path));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_vector_non_list_element(r_obj* path, enum vector_form input_form, r_obj* x) {
@@ -68,7 +68,7 @@ void stop_vector_non_list_element(r_obj* path, enum vector_form input_form, r_ob
                              input_form_string,
                              x));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_vector_wrong_size_element(r_obj* path, enum vector_form input_form, r_obj* x) {
@@ -77,14 +77,14 @@ void stop_vector_wrong_size_element(r_obj* path, enum vector_form input_form, r_
                              KEEP(vector_input_form_to_sexp(input_form)),
                              x));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_colmajor_null(r_obj* path) {
   r_obj* call = KEEP(r_call2(r_sym(".stop_colmajor_null"),
                              path));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_colmajor_wrong_size_element(r_obj* path, r_ssize size_act, r_obj* nrow_path, r_ssize size_exp) {
@@ -94,7 +94,7 @@ void stop_colmajor_wrong_size_element(r_obj* path, r_ssize size_act, r_obj* nrow
                              nrow_path,
                              KEEP(r_int(size_exp))));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void check_colmajor_size(r_ssize n_value, r_ssize* n_rows, struct Path* path, struct Path* nrow_path) {
@@ -122,7 +122,7 @@ void stop_required_colmajor(r_obj* path) {
   r_obj* call = KEEP(r_call2(r_sym(".stop_required_colmajor"),
                              path));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void stop_non_list_element(r_obj* path, r_obj* x) {
@@ -130,7 +130,7 @@ void stop_non_list_element(r_obj* path, r_obj* x) {
                              path,
                              x));
   r_eval(call, tibblify_ns_env);
-}
+} // # nocov
 
 static inline
 void check_list(r_obj* x, struct Path* v_path) {
