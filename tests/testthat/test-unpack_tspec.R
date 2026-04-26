@@ -142,7 +142,6 @@ test_that("names are repaired (#165)", {
     )
   )
 
-  skip_if(paste0(version$major, ".", version$minor) <= '4.0')
   expect_snapshot({
     # `minimal` isn't supported
     (expect_error(unpack_tspec(spec, names_repair = "minimal")))
