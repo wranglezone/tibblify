@@ -1,3 +1,5 @@
+# .shared-params ----
+
 #' Shared parameters
 #'
 #' These parameters are used in multiple functions. They are defined here to
@@ -13,6 +15,7 @@
 #'   children.
 #' @param col (`any`) A column from a data frame, which may be a vector, a list,
 #'   or a nested data frame.
+#' @param col_name (`character(1)`) The name of the column.
 #' @param elt (`character` or `integer`) An element of a path.
 #' @param .elt_transform (`function` or `NULL`) A function to apply to each
 #'   element before casting to `.ptype_inner`.
@@ -31,6 +34,10 @@
 #'   deduced from the spec?
 #' @param .format (`character(1)` or `NULL`) Passed to the `format` argument of
 #'   [as.Date()].
+#' @param id_col (`character(1)`, `integer(1)`, or `symbol`) The column that
+#'   uniquely identifies each observation.
+#' @param id_col_name (`character(1)`) The name of the column that uniquely
+#'   identifies each observation.
 #' @param index (`integer(1)`) A zero-based location in a path.
 #' @param inform_unspecified (`logical(1)`) Inform about fields whose type could
 #'   not be determined?
@@ -51,6 +58,9 @@
 #' @param nchar_indent (`integer(1)`) The number of (additional) characters that
 #'   will be used to indent the output when `multi_line = TRUE`. Primarily for
 #'   internal use when formatting is applied recursively.
+#' @param parent_col (`character(1)`, `integer(1)`, or `symbol`) The column that
+#'   identifies the parent id of each observation. Each value must either be
+#'   missing (for the root elements) or appear in the `id_col` column.
 #' @param path (`list`) A path object encoded as a depth and a list of path
 #'   elements.
 #' @param path_exp (`list`) The path of the field used as the reference in size
@@ -76,10 +86,15 @@
 #' @param width (`integer(1)`) The width (in number of characters) of text
 #'   output to generate.
 #' @param x (`any`) The object to check.
+#' @param x_arg (`character(1)`) The name of the x argument. This name will be
+#'   mentioned in error messages as the input that is at the origin of a
+#'   problem.
 #'
 #' @name .shared-params
 #' @keywords internal
 NULL
+
+# .shared-params-tib ----
 
 #' Shared tib_spec parameters
 #'
@@ -98,9 +113,31 @@ NULL
 #' @param .names_to (`character(1)` or `NULL`) What to do with the inner names
 #'   of the object. Can be one of:
 #'   * `NULL`: the default. The inner names of the field are not used.
-#'   * A string: Use only if the input form is `"object"` or `"vector"`, and `.values_to` is a string. The inner names of the field will populate the
+#'   * A string: Use only if the input form is `"object"` or `"vector"`, and
+#'   `.values_to` is a string. The inner names of the field will populate the
 #'   specified column in the field's tibble.
 #'
 #' @name .shared-params-tib
+#' @keywords internal
+NULL
+
+# .shared-params-tree ----
+
+#' Shared (un)nest_tree parameters
+#'
+#' These parameters are used in multiple `nest_tree()` or `unnest_tree()`
+#' helpers. They are defined here to make them easier to import and to find.
+#' This break-out is for parameters that differ between `(un)nest_tree()`
+#' helpers and other functions that might use the same parameters.
+#'
+#' @param col (`character`, `integer`, or `symbol`) Defused R code describing a
+#'   selection according to the tidyselect syntax.
+#' @param col_arg (`character(1)`) The name of the `col` argument, used for
+#'   error messages.
+#' @param ids (`character` or `integer`) The potential child ids to compare
+#'   against.
+#' @param parent_ids (`character` or `integer`) The parent ids to check.
+#'
+#' @name .shared-params-tree
 #' @keywords internal
 NULL

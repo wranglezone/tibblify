@@ -16,7 +16,7 @@
 \item{call}{(\code{environment}) The environment to use for error messages.}
 }
 \value{
-\code{NULL} (invisibly). Throws an error if any values are identical.
+\code{arg} (invisibly). Throws an error if any values are identical.
 }
 \description{
 Validate that arguments are different

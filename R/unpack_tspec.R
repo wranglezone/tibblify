@@ -25,7 +25,7 @@
 #' @param names_clean (`function`) A one-argument function to clean names after
 #'   repairing. For example use [camel_case_to_snake_case()].
 #'
-#' @return A tibblify spec.
+#' @returns A tibblify spec.
 #' @export
 #'
 #' @examples
@@ -154,7 +154,7 @@ unpack_tspec <- function(
   if (rlang::is_empty(missing_fields)) {
     return(fields)
   }
-  cli_abort(
+  cli::cli_abort(
     c(
       "Can't unpack fields that don't exist.",
       "Field{?s} {.field {missing_fields}} {?doesn/don}'t exist."

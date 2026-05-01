@@ -1,23 +1,23 @@
-# checks arguments
+# unnest_tree checks arguments (#163)
 
     Code
       (expect_error(unnest_tree(1L)))
     Output
-      <error/rlang_error>
+      <error/tibblify-error-invalid_data_frame>
       Error in `unnest_tree()`:
-      ! `data` must be a data frame.
+      ! `x` must be a data frame.
     Code
       (expect_error(unnest_tree(df, id_col = "not-there")))
     Output
       <error/vctrs_error_subscript_oob>
-      Error in `eval_pull()`:
+      Error in `unnest_tree()`:
       ! Can't select columns that don't exist.
       x Column `not-there` doesn't exist.
     Code
       (expect_error(unnest_tree(df, id_col = 1:2)))
     Output
       <error/tibblify-error-invalid_column_selection>
-      Error in `eval_pull()`:
+      Error in `unnest_tree()`:
       ! `id_col` must select 1 column, not 2.
     Code
       (expect_error(unnest_tree(df, id_col, children = "not-there")))
@@ -44,7 +44,7 @@
     Output
       <error/rlang_error>
       Error in `unnest_tree()`:
-      ! `level_to` must not be a column in `data`.
+      ! `level_to` must not be a column in `x`.
     Code
       (expect_error(unnest_tree(df, id, children, level_to = c("a", "b"))))
     Output
@@ -68,7 +68,7 @@
     Output
       <error/rlang_error>
       Error in `unnest_tree()`:
-      ! `parent_to` must not be a column in `data`.
+      ! `parent_to` must not be a column in `x`.
     Code
       (expect_error(unnest_tree(df, id, children, parent_to = c("a", "b"))))
     Output
@@ -98,7 +98,7 @@
     Output
       <error/rlang_error>
       Error in `unnest_tree()`:
-      ! `ancestors_to` must not be a column in `data`.
+      ! `ancestors_to` must not be a column in `x`.
     Code
       (expect_error(unnest_tree(df, id, children, ancestors_to = c("a", "b"))))
     Output
@@ -106,7 +106,7 @@
       Error in `unnest_tree()`:
       ! `ancestors_to` must have size 1, not size 2.
 
-# child col type is checked
+# unnest_tree checks child col type (#163)
 
     Code
       (expect_error(unnest_tree(df, id, children)))
@@ -134,16 +134,16 @@
       Caused by error:
       ! `Each child` must be a data frame or `NULL`, not the number 1.
 
-# can handle children of differen types
+# unnest_tree can handle children of different types (#163)
 
     Code
       (expect_error(unnest_tree(df, id, children)))
     Output
       <error/vctrs_error_ptype2>
       Error in `unnest_tree()`:
-      ! Can't combine `out_ptype$id` <integer> and `data$id` <character>.
+      ! Can't combine `out_ptype$id` <integer> and `x$id` <character>.
 
-# checks ids
+# unnest_tree checks ids (#163)
 
     Code
       (expect_error(unnest_tree(df_duplicated, id, children)))

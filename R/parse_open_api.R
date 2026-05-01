@@ -61,7 +61,7 @@ parse_openapi_spec <- function(file) {
 
   version <- openapi_spec$openapi
   if (is.null(version) || version < "3") {
-    cli_abort("OpenAPI versions before 3 are not supported.")
+    cli::cli_abort("OpenAPI versions before 3 are not supported.")
   }
   # cannot use `openapi_spec` for memoising, as hashing it takes much more time
   # than everything else. To still make sure the result is correct simply forget
@@ -285,7 +285,7 @@ parse_response_object <- function(response_object, openapi_spec) {
   }
   # FIXME links
   if (!rlang::is_empty(parsed_response$links)) {
-    cli_abort(
+    cli::cli_abort(
       "We do not yet support {.field links} in OpenAPI response objects."
     )
   }
@@ -425,7 +425,10 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
     ref_parts <- gsub("~1", "/", ref_parts)
     ref_parts <- utils::URLdecode(ref_parts)
     if (ref_parts[[1]] != "#") {
-      cli_abort("{.field ref} does not start with {.value #}", .internal = TRUE)
+      cli::cli_abort(
+        "{.field ref} does not start with {.value #}",
+        .internal = TRUE
+      )
     }
     # If any parts of the path are pure numbers (other than status codes), we
     # need to explicitly make them pure numbers.
@@ -444,7 +447,7 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
     schema <- purrr::chuck(openapi_spec, !!!ref_parts[-1])
 
     if (is.null(schema)) {
-      cli_abort("No schema found for reference {.value {ref}}")
+      cli::cli_abort("No schema found for reference {.value {ref}}")
     }
     schema <- openapi_resolve_reference(schema, openapi_spec)
   }
@@ -550,7 +553,7 @@ parse_schema <- function(schema, name, openapi_spec) {
   } else if (type == "variant") {
     tib_variant(name, .required = FALSE)
   } else {
-    cli_abort("Unsupported type")
+    cli::cli_abort("Unsupported type")
   }
 }
 
