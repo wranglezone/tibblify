@@ -78,6 +78,10 @@ children.</p></dd>
 or a nested data frame.</p></dd>
 
 
+<dt id="arg-col-name">col_name<a class="anchor" aria-label="anchor" href="#arg-col-name"></a></dt>
+<dd><p>(<code>character(1)</code>) The name of the column.</p></dd>
+
+
 <dt id="arg-elt">elt<a class="anchor" aria-label="anchor" href="#arg-elt"></a></dt>
 <dd><p>(<code>character</code> or <code>integer</code>) An element of a path.</p></dd>
 
@@ -127,6 +131,16 @@ deduced from the spec?</p></dd>
 <dt id="arg--format">.format<a class="anchor" aria-label="anchor" href="#arg--format"></a></dt>
 <dd><p>(<code>character(1)</code> or <code>NULL</code>) Passed to the <code>format</code> argument of
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
+
+
+<dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>
+<dd><p>(<code>character(1)</code>, <code>integer(1)</code>, or <code>symbol</code>) The column that
+uniquely identifies each observation.</p></dd>
+
+
+<dt id="arg-id-col-name">id_col_name<a class="anchor" aria-label="anchor" href="#arg-id-col-name"></a></dt>
+<dd><p>(<code>character(1)</code>) The name of the column that uniquely
+identifies each observation.</p></dd>
 
 
 <dt id="arg-index">index<a class="anchor" aria-label="anchor" href="#arg-index"></a></dt>
@@ -180,6 +194,12 @@ deduced from the spec?</p></dd>
 <dd><p>(<code>integer(1)</code>) The number of (additional) characters that
 will be used to indent the output when <code>multi_line = TRUE</code>. Primarily for
 internal use when formatting is applied recursively.</p></dd>
+
+
+<dt id="arg-parent-col">parent_col<a class="anchor" aria-label="anchor" href="#arg-parent-col"></a></dt>
+<dd><p>(<code>character(1)</code>, <code>integer(1)</code>, or <code>symbol</code>) The column that
+identifies the parent id of each observation. Each value must either be
+missing (for the root elements) or appear in the <code>id_col</code> column.</p></dd>
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
@@ -253,6 +273,12 @@ output to generate.</p></dd>
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>(<code>any</code>) The object to check.</p></dd>
+
+
+<dt id="arg-x-arg">x_arg<a class="anchor" aria-label="anchor" href="#arg-x-arg"></a></dt>
+<dd><p>(<code>character(1)</code>) The name of the x argument. This name will be
+mentioned in error messages as the input that is at the origin of a
+problem.</p></dd>
 
 </dl></div>
 

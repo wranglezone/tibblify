@@ -31,6 +31,10 @@ to make them easier to import and to find.
   (`any`) A column from a data frame, which may be a vector, a list, or
   a nested data frame.
 
+- col_name:
+
+  (`character(1)`) The name of the column.
+
 - elt:
 
   (`character` or `integer`) An element of a path.
@@ -80,6 +84,16 @@ to make them easier to import and to find.
 
   (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
+
+- id_col:
+
+  (`character(1)`, `integer(1)`, or `symbol`) The column that uniquely
+  identifies each observation.
+
+- id_col_name:
+
+  (`character(1)`) The name of the column that uniquely identifies each
+  observation.
 
 - index:
 
@@ -131,6 +145,12 @@ to make them easier to import and to find.
   (`integer(1)`) The number of (additional) characters that will be used
   to indent the output when `multi_line = TRUE`. Primarily for internal
   use when formatting is applied recursively.
+
+- parent_col:
+
+  (`character(1)`, `integer(1)`, or `symbol`) The column that identifies
+  the parent id of each observation. Each value must either be missing
+  (for the root elements) or appear in the `id_col` column.
 
 - path:
 
@@ -200,3 +220,9 @@ to make them easier to import and to find.
 - x:
 
   (`any`) The object to check.
+
+- x_arg:
+
+  (`character(1)`) The name of the x argument. This name will be
+  mentioned in error messages as the input that is at the origin of a
+  problem.

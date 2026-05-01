@@ -45,7 +45,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">unnest_tree</span><span class="op">(</span></span>
-<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">x</span>,</span>
 <span>  <span class="va">id_col</span>,</span>
 <span>  <span class="va">child_col</span>,</span>
 <span>  level_to <span class="op">=</span> <span class="st">"level"</span>,</span>
@@ -58,41 +58,42 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A data frame.</p></dd>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>(<code>data.frame</code>) The data frame to unnest.</p></dd>
 
 
 <dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>
-<dd><p>A column that uniquely identifies each observation.</p></dd>
+<dd><p>(<code>character(1)</code>, <code>integer(1)</code>, or <code>symbol</code>) The column that
+uniquely identifies each observation.</p></dd>
 
 
 <dt id="arg-child-col">child_col<a class="anchor" aria-label="anchor" href="#arg-child-col"></a></dt>
-<dd><p>Column containing the children of an observation. This must
-be a list where each element is either <code>NULL</code> or a data frame with the same
-columns as <code>data</code>.</p></dd>
+<dd><p>(<code>character(1)</code>, <code>integer(1)</code>, or <code>symbol</code>) The column that
+contains the children of an observation. This column must be a list where
+each element is either <code>NULL</code> or a data frame with the same columns as <code>x</code>.</p></dd>
 
 
 <dt id="arg-level-to">level_to<a class="anchor" aria-label="anchor" href="#arg-level-to"></a></dt>
-<dd><p>A string (<code>"level"</code> by default) specifying the new column to
-store the level of an observation. Use <code>NULL</code> if you don't need this
-information.</p></dd>
+<dd><p>(<code>character(1)</code>) The column name (<code>"level"</code> by default) in
+which to store the level of an observation. Use <code>NULL</code> if you don't need
+this information.</p></dd>
 
 
 <dt id="arg-parent-to">parent_to<a class="anchor" aria-label="anchor" href="#arg-parent-to"></a></dt>
-<dd><p>A string (<code>"parent"</code> by default) specifying the new column
-storing the parent id of an observation. Use <code>NULL</code> if you don't need this
-information.</p></dd>
+<dd><p>(<code>character(1)</code>) The column name (<code>"parent"</code> by default) in
+which to store the parent id of an observation. Use <code>NULL</code> if you don't
+need this information.</p></dd>
 
 
 <dt id="arg-ancestors-to">ancestors_to<a class="anchor" aria-label="anchor" href="#arg-ancestors-to"></a></dt>
-<dd><p>A string (<code>NULL</code> by default) specifying the new column
-storing the ids of its ancestors. Use <code>NULL</code> if you don't need this
-information.</p></dd>
+<dd><p>(<code>character(1)</code>) The column name (<code>NULL</code> by default) in
+which to store the ids of the ancestors of a deeply nested child. Use
+<code>NULL</code> if you don't need this information.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame.</p>
+    <p>A "flat" data frame.</p>
     </div>
 
     <div class="section level2">
@@ -114,6 +115,11 @@ information.</p></dd>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id name  children        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 a     <span style="color: #949494;">&lt;tibble [2 × 3]&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">unnest_tree</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span>,</span></span>
