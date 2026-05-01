@@ -20,3 +20,11 @@ parameters.
 
   (`character(1)`) The name of the `col` argument, used for error
   messages.
+
+- ids:
+
+  (`character` or `integer`) The potential child ids to compare against.
+
+- parent_ids:
+
+  (`character` or `integer`) The parent ids to check.

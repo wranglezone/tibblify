@@ -18,7 +18,7 @@ Accumulate ancestor chains for a single snapshot level
 - snapshot:
 
   (`list`) A single snapshot object with elements `data`, `ns`,
-  `parent_ids`,
+  `parent_ids`, and `child_sizes`.
 
 - id_col:
 

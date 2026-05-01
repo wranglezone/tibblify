@@ -10,6 +10,14 @@ Compute tree level for each element based on id and parent relationships
 
 ## Arguments
 
+- ids:
+
+  (`character` or `integer`) The potential child ids to compare against.
+
+- parent_ids:
+
+  (`character` or `integer`) The parent ids to check.
+
 - id_col_name:
 
   (`character(1)`) The name of the column that uniquely identifies each

@@ -28,4 +28,4 @@ Validate that arguments are different
 
 ## Value
 
-`NULL` (invisibly). Throws an error if any values are identical.
+`arg` (invisibly). Throws an error if any values are identical.
