@@ -1,4 +1,4 @@
-test_that("checks arguments", {
+test_that("unnest_tree checks arguments (#163)", {
   df <- tibble::tibble(
     id = 1,
     x = "a",
@@ -32,7 +32,7 @@ test_that("checks arguments", {
   })
 })
 
-test_that("child col type is checked", {
+test_that("unnest_tree checks child col type (#163)", {
   df <- tibble::tibble(
     id = 1,
     x = "a",
@@ -58,7 +58,7 @@ test_that("child col type is checked", {
   })
 })
 
-test_that("can unnest", {
+test_that("unnest_tree can unnest (#163)", {
   # simple case
   df <- tibble::tibble(
     id = 1L,
@@ -157,7 +157,7 @@ test_that("can unnest", {
   )
 })
 
-test_that("can handle list_of children", {
+test_that("unnest_tree can handle list_of children (#163)", {
   df <- tibble::tibble(
     id = 1L,
     x = "a",
@@ -185,7 +185,7 @@ test_that("can handle list_of children", {
   )
 })
 
-test_that("can handle children of differen types", {
+test_that("unnest_tree can handle children of differen types (#163)", {
   df <- tibble::tibble(
     id = 1:2,
     x = c("a", "b"),
@@ -221,7 +221,7 @@ test_that("can handle children of differen types", {
   })
 })
 
-test_that("can handle if all childre have no children column", {
+test_that("unnest_tree can handle if all childre have no children column (#163)", {
   df <- tibble::tibble(
     id = 1,
     x = "a",
@@ -233,7 +233,7 @@ test_that("can handle if all childre have no children column", {
   )
 })
 
-test_that("can handle 0 row data", {
+test_that("unnest_tree can handle 0-row data (#163)", {
   df <- tibble::tibble(
     id = integer(),
     x = character(),
@@ -252,7 +252,7 @@ test_that("can handle 0 row data", {
   )
 })
 
-test_that("checks ids", {
+test_that("unnest_tree checks ids (#163)", {
   df_duplicated <- tibble::tibble(
     id = 1L,
     x = "a",

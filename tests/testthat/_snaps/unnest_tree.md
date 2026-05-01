@@ -1,4 +1,4 @@
-# checks arguments
+# unnest_tree checks arguments (#163)
 
     Code
       (expect_error(unnest_tree(1L)))
@@ -106,7 +106,7 @@
       Error in `unnest_tree()`:
       ! `ancestors_to` must have size 1, not size 2.
 
-# child col type is checked
+# unnest_tree checks child col type (#163)
 
     Code
       (expect_error(unnest_tree(df, id, children)))
@@ -134,7 +134,7 @@
       Caused by error:
       ! `Each child` must be a data frame or `NULL`, not the number 1.
 
-# can handle children of differen types
+# unnest_tree can handle children of differen types (#163)
 
     Code
       (expect_error(unnest_tree(df, id, children)))
@@ -143,7 +143,7 @@
       Error in `unnest_tree()`:
       ! Can't combine `out_ptype$id` <integer> and `x$id` <character>.
 
-# checks ids
+# unnest_tree checks ids (#163)
 
     Code
       (expect_error(unnest_tree(df_duplicated, id, children)))

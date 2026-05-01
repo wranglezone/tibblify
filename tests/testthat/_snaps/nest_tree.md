@@ -1,4 +1,4 @@
-# nest_tree checks arguments
+# nest_tree checks arguments (#163)
 
     Code
       (expect_error(nest_tree(1L), class = "tibblify-error-invalid_data_frame"))
@@ -71,7 +71,7 @@
       Error in `nest_tree()`:
       ! `children_to` must be different from `parent_col`.
 
-# nest_tree checks that ids are valid
+# nest_tree checks that ids are valid (#163)
 
     Code
       (expect_error(nest_tree(df, id, parent, children_to = "children")))
@@ -91,7 +91,7 @@
       ! Each value of column id must be unique.
       i The elements at locations 1 and 2 are duplicated.
 
-# nest_tree checks column ids and parents have compatible types
+# nest_tree checks column ids and parents have compatible types (#163)
 
     Code
       (expect_error(nest_tree(df, id, parent, children_to = "children")))
@@ -100,7 +100,7 @@
       Error in `nest_tree()`:
       ! Can't convert `x$parent` <character> to match type of `x$id` <integer>.
 
-# nest_tree errors if not all parent ids found
+# nest_tree errors if not all parent ids found (#163)
 
     Code
       (expect_error(nest_tree(df, id, parent, children_to = "children")))
@@ -117,7 +117,7 @@
       ! The parent of each element must be found.
       i The parent id 4 is not found.
 
-# nest_tree errors if parent references to itself
+# nest_tree errors if parent references to itself (#163)
 
     Code
       (expect_error(nest_tree(df, id, parent, children_to = "children")))
@@ -127,7 +127,7 @@
       ! An element must not be its own parent
       i Element 2 refers to itself as parent.
 
-# nest_tree errors if there are no root elements
+# nest_tree errors if there are no root elements (#163)
 
     Code
       (expect_error(nest_tree(df, id, parent, children_to = "children")))
@@ -137,7 +137,7 @@
       ! There must be root elements.
       i A root element is an elements whose parent id is missing.
 
-# nest_tree errors if there are detached parts of the tree
+# nest_tree errors if there are detached parts of the tree (#163)
 
     Code
       (expect_error(nest_tree(df, id, parent, children_to = "children"), class = "tibblify-error-detached_tree_parts")
