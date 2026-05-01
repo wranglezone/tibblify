@@ -11,7 +11,7 @@
 level, one per row.}
 
 \item{snapshot}{(\code{list}) A single snapshot object with elements \code{data}, \code{ns},
-\code{parent_ids},}
+\code{parent_ids}, and \code{child_sizes}.}
 
 \item{id_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
 uniquely identifies each observation.}

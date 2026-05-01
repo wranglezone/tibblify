@@ -86,6 +86,9 @@
 #' @param width (`integer(1)`) The width (in number of characters) of text
 #'   output to generate.
 #' @param x (`any`) The object to check.
+#' @param x_arg (`character(1)`) The name of the x argument. This name will be
+#'   mentioned in error messages as the input that is at the origin of a
+#'   problem.
 #'
 #' @name .shared-params
 #' @keywords internal
@@ -131,6 +134,9 @@ NULL
 #'   selection according to the tidyselect syntax.
 #' @param col_arg (`character(1)`) The name of the `col` argument, used for
 #'   error messages.
+#' @param ids (`character` or `integer`) The potential child ids to compare
+#'   against.
+#' @param parent_ids (`character` or `integer`) The parent ids to check.
 #'
 #' @name .shared-params-tree
 #' @keywords internal

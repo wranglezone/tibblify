@@ -134,7 +134,7 @@
       Caused by error:
       ! `Each child` must be a data frame or `NULL`, not the number 1.
 
-# unnest_tree can handle children of differen types (#163)
+# unnest_tree can handle children of different types (#163)
 
     Code
       (expect_error(unnest_tree(df, id, children)))

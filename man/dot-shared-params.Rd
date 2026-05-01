@@ -132,6 +132,10 @@ is converted to a tibble and the values go into the specified column.}
 output to generate.}
 
 \item{x}{(\code{any}) The object to check.}
+
+\item{x_arg}{(\code{character(1)}) The name of the x argument. This name will be
+mentioned in error messages as the input that is at the origin of a
+problem.}
 }
 \description{
 These parameters are used in multiple functions. They are defined here to

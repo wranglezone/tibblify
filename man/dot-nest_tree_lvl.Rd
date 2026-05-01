@@ -7,6 +7,11 @@
 .nest_tree_lvl(ids, parent_ids, id_col_name, call = caller_env())
 }
 \arguments{
+\item{ids}{(\code{character} or \code{integer}) The potential child ids to compare
+against.}
+
+\item{parent_ids}{(\code{character} or \code{integer}) The parent ids to check.}
+
 \item{id_col_name}{(\code{character(1)}) The name of the column that uniquely
 identifies each observation.}
 

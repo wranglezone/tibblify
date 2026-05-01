@@ -9,6 +9,11 @@ selection according to the tidyselect syntax.}
 
 \item{col_arg}{(\code{character(1)}) The name of the \code{col} argument, used for
 error messages.}
+
+\item{ids}{(\code{character} or \code{integer}) The potential child ids to compare
+against.}
+
+\item{parent_ids}{(\code{character} or \code{integer}) The parent ids to check.}
 }
 \description{
 These parameters are used in multiple \code{nest_tree()} or \code{unnest_tree()}

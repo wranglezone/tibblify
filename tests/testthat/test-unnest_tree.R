@@ -185,7 +185,7 @@ test_that("unnest_tree can handle list_of children (#163)", {
   )
 })
 
-test_that("unnest_tree can handle children of differen types (#163)", {
+test_that("unnest_tree can handle children of different types (#163)", {
   df <- tibble::tibble(
     id = 1:2,
     x = c("a", "b"),
@@ -221,7 +221,7 @@ test_that("unnest_tree can handle children of differen types (#163)", {
   })
 })
 
-test_that("unnest_tree can handle if all childre have no children column (#163)", {
+test_that("unnest_tree can handle if all children have no children column (#163)", {
   df <- tibble::tibble(
     id = 1,
     x = "a",

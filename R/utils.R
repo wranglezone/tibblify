@@ -45,7 +45,7 @@
 #' @param ... Other arguments that `arg` must differ from.
 #' @param arg_name (`character(1)`) The argument name shown in error messages.
 #' @inheritParams .shared-params
-#' @returns `NULL` (invisibly). Throws an error if any values are identical.
+#' @returns `arg` (invisibly). Throws an error if any values are identical.
 #' @keywords internal
 .check_arg_different <- function(
   arg,

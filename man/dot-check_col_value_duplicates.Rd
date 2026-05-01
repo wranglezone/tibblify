@@ -9,6 +9,10 @@
 \arguments{
 \item{x}{(\code{any}) The object to check.}
 
+\item{x_arg}{(\code{character(1)}) The name of the x argument. This name will be
+mentioned in error messages as the input that is at the origin of a
+problem.}
+
 \item{call}{(\code{environment}) The environment to use for error messages.}
 }
 \value{

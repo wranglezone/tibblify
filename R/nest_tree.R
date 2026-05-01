@@ -186,9 +186,7 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
 
 #' Check that no element is its own parent
 #'
-#' @param parent_ids (`character` or `integer`) The parent ids to check.
-#' @param ids (`character` or `integer`) The potential child ids to compare
-#'   against.
+#' @inheritParams .shared-params-tree
 #' @inheritParams .shared-params
 #' @returns The input `parent_ids`.
 #' @keywords internal
@@ -358,7 +356,7 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
       cur_lvl,
       children,
       parent_col,
-      id_col_name,
+      id_col,
       children_to
     )
     children <- x
@@ -395,6 +393,7 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
 
 #' Compute tree level for each element based on id and parent relationships
 #'
+#' @inheritParams .shared-params-tree
 #' @inheritParams .shared-params
 #' @returns A list with `lvls` (integer vector of levels) and `max_lvl` (maximum
 #'   level).

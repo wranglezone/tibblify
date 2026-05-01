@@ -197,8 +197,9 @@ unnest_tree <- function(
     level_data = purrr::map(snapshots, "data"),
     out_ptype = .reduce_ptype(snapshots, call),
     level_sizes = purrr::map(snapshots, "ns"),
-    level_parent_ids = purrr::map(snapshots, "parent_ids"),
-    level_ancestors = .build_level_ancestors(snapshots, id_col, call)
+    level_parent_ids = parent_to %&&% purrr::map(snapshots, "parent_ids"),
+    level_ancestors = ancestors_to %&&%
+      .build_level_ancestors(snapshots, id_col, call)
   )
 }
 
@@ -215,14 +216,11 @@ unnest_tree <- function(
   repeat {
     children <- .extract_children(x, child_col, call = call)
     child_sizes <- vctrs::list_sizes(children)
-    snapshots <- c(
-      snapshots,
-      list(list(
-        data = x[, setdiff(names(x), child_col)],
-        ns = ns,
-        parent_ids = parent_ids,
-        child_sizes = child_sizes
-      ))
+    snapshots[[length(snapshots) + 1]] <- list(
+      data = x[, setdiff(names(x), child_col)],
+      ns = ns,
+      parent_ids = parent_ids,
+      child_sizes = child_sizes
     )
     if (all(child_sizes == 0)) {
       break
@@ -272,7 +270,7 @@ unnest_tree <- function(
 #' @param cur_ancestors (`list`) A list of ancestor vectors for the current
 #'   level, one per row.
 #' @param snapshot (`list`) A single snapshot object with elements `data`, `ns`,
-#'   `parent_ids`,
+#'   `parent_ids`, and `child_sizes`.
 #' @inheritParams .build_level_ancestors
 #' @returns A list of ancestor vectors for the next level, where each vector is
 #'   the ancestor vector of the parent row with the parent id appended.
