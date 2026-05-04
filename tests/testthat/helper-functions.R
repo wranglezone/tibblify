@@ -14,7 +14,7 @@ new_rational <- function(n = integer(), d = integer()) {
 }
 
 read_sample_json <- function(x) {
-  path <- system.file("jsonexamples", x, package = "tibblify")
+  path <- system.file("examples", "json", x, package = "tibblify")
   jsonlite::fromJSON(path, simplifyDataFrame = FALSE)
 }
 

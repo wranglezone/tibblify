@@ -2,23 +2,21 @@
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Use `parse_openapi_spec()` to parse a [OpenAPI spec](https://swagger.io/specification/)
-#' or use `parse_openapi_schema()` to parse a OpenAPI schema.
+#' Use `parse_openapi_spec()` to parse an
+#' [OpenAPI spec](https://spec.openapis.org/oas/latest.html) or use
+#' `parse_openapi_schema()` to parse an OpenAPI schema.
 #'
-#' @param file Either a path to a file, a connection, or literal data (a
-#'   single string).
+#' @inheritParams .shared-params
 #'
-#' @return For `parse_openapi_spec()` a data frame with the columns
+#' @return For `parse_openapi_spec()`, a nested data frame with the columns
 #'
-#'   * `endpoint` `<character>` Name of the endpoint.
-#'   * `operation` `<character>` The http operation; one of `"get"`, `"put"`,
-#'       `"post"`, `"delete"`, `"options"`, `"head"`, `"patch"`, or `"trace"`.
-#'   * `status_code` `<character>` The http status code. May contain wildcards like
-#'       `2xx` for all response codes between `200` and `299`.
-#'   * `media_type` `<character>` The media type.
-#'   * `spec` `<list>` A list of tibblify specifications.
+#'   * `endpoint` (`character`) Name of the endpoint.
+#'   * `operations` (`list`) A list of data frames describing that endpoint.
+#'   See the [Paths Object in the OpenAPI
+#'   spec](https://spec.openapis.org/oas/latest.html#paths-object) for details.
+#'   All references (`$ref`) in the spec are resolved.
 #'
-#'   For `parse_openapi_schema()` a tibblify spec.
+#'   For `parse_openapi_schema()`, a tibblify spec.
 #' @export
 #'
 #' @examples
@@ -53,8 +51,14 @@
 #'     "edited"
 #'   ]
 #' }'
-#'
 #' parse_openapi_schema(file)
+#'
+#' # Spec example from https://swagger.io/docs/specification/v3_0/basic-structure/
+#' spec_path <- system.file(
+#'   "examples", "openapi", "sample_api.yaml", package = "tibblify"
+#' )
+#' spec <- parse_openapi_spec(spec_path)
+#' spec
 parse_openapi_spec <- function(file) {
   # https://spec.openapis.org/oas/v3.1.0#openapi-object2
   openapi_spec <- read_spec(file)
@@ -66,17 +70,14 @@ parse_openapi_spec <- function(file) {
   # cannot use `openapi_spec` for memoising, as hashing it takes much more time
   # than everything else. To still make sure the result is correct simply forget
   # previous results.
-  if (is_installed("memoise")) {
+  if (rlang::is_installed("memoise")) {
     memoise::forget(parse_schema_memoised)
   }
 
   out <- purrr::map(
     openapi_spec$paths,
-    ~ {
-      parse_path_item_object(
-        path_item_object = .x,
-        openapi_spec = openapi_spec
-      )
+    \(x) {
+      parse_path_item_object(path_item_object = x, openapi_spec = openapi_spec)
     }
   )
 
@@ -110,7 +111,7 @@ read_spec <- function(file, arg = caller_arg(file), call = caller_env()) {
 
   rlang::check_installed("yaml")
   if (inherits(file, "connection")) {
-    return(yaml::read_yaml(file))
+    return(yaml::read_yaml(file)) # nocov
   }
 
   if (is_character(file)) {
@@ -161,7 +162,7 @@ parse_path_item_object <- function(path_item_object, openapi_spec) {
   operations <- path_item_object[intersect(names(path_item_object), ops)]
   parsed_operations <- purrr::map(
     operations,
-    ~ parse_operation_object(.x, openapi_spec)
+    \(x) parse_operation_object(x, openapi_spec)
   )
   out <- vctrs::vec_rbind(!!!parsed_operations, .names_to = "operation")
   if (nrow(out) > 0) {
@@ -230,7 +231,7 @@ parse_parameters <- function(parameters, openapi_spec) {
 
   parameters <- purrr::map(
     parameters,
-    ~ openapi_resolve_reference(.x, openapi_spec)
+    \(x) openapi_resolve_reference(x, openapi_spec)
   )
 
   spec <- tspec_df(
@@ -262,9 +263,11 @@ parse_responses_object <- function(responses_object, openapi_spec) {
   # https://spec.openapis.org/oas/v3.1.0#responsesObject
   responses_object <- purrr::map(
     responses_object,
-    ~ openapi_resolve_reference(.x, openapi_spec)
+    \(x) openapi_resolve_reference(x, openapi_spec)
   )
-  out <- purrr::map(responses_object, ~ parse_response_object(.x, openapi_spec))
+  out <- purrr::map(responses_object, \(x) {
+    parse_response_object(x, openapi_spec)
+  })
   vctrs::vec_rbind(!!!out, .names_to = "status_code")
 }
 
@@ -304,7 +307,7 @@ parse_response_object <- function(response_object, openapi_spec) {
 parse_media_type_objects <- function(media_type_objects, openapi_spec) {
   out <- purrr::map(
     media_type_objects,
-    ~ parse_media_type_object(.x, openapi_spec)
+    \(x) parse_media_type_object(x, openapi_spec)
   )
   fast_tibble(
     list(media_type = names2(out), spec = unname(out)),
@@ -324,7 +327,7 @@ parse_header_objects <- function(header_objects, openapi_spec) {
   # * All traits that are affected by the location MUST be applicable to a location of header (for example, style).
   header_objects <- purrr::map(
     header_objects,
-    ~ openapi_resolve_reference(.x, openapi_spec)
+    \(x) openapi_resolve_reference(x, openapi_spec)
   )
 
   spec <- tspec_df(
@@ -367,7 +370,7 @@ schema_to_tspec <- function(schema, openapi_spec) {
   if (type == "object") {
     fields <- purrr::imap(
       schema$properties,
-      ~ parse_schema_memoised(.x, .y, openapi_spec)
+      \(x, y) parse_schema_memoised(x, y, openapi_spec)
     )
     fields <- .apply_required(fields, schema$required)
 
@@ -377,7 +380,7 @@ schema_to_tspec <- function(schema, openapi_spec) {
 
     fields <- purrr::imap(
       schema$properties,
-      ~ parse_schema_memoised(.x, .y, openapi_spec)
+      \(x, y) parse_schema_memoised(x, y, openapi_spec)
     )
     fields <- .apply_required(fields, schema$required)
 
@@ -397,6 +400,18 @@ schema_to_tspec <- function(schema, openapi_spec) {
   }
 
   fields
+}
+
+# Short-circuiting check: does any nested list element have a "$ref" key?
+# Avoids the expensive names(unlist(schema)) materialisation.
+.schema_has_ref <- function(x) {
+  if (!is.list(x)) {
+    return(FALSE)
+  }
+  if ("$ref" %in% names(x)) {
+    return(TRUE)
+  }
+  any(vapply(x, .schema_has_ref, logical(1L)))
 }
 
 openapi_resolve_reference <- function(schema, openapi_spec) {
@@ -432,17 +447,11 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
     }
     # If any parts of the path are pure numbers (other than status codes), we
     # need to explicitly make them pure numbers.
-    ref_parts <- purrr::map(
-      ref_parts,
-      ~ {
-        x_int <- suppressWarnings(as.integer(.x))
-        if (!is.na(x_int) && x_int < 100 && x_int == .x) {
-          x_int + 1 # They're 0-indexed.
-        } else {
-          .x
-        }
-      }
-    )
+    x_int <- suppressWarnings(as.integer(ref_parts))
+    # Numeric ref_parts are 0-indexed list indices; convert to 1-indexed integers.
+    is_idx <- !is.na(x_int) & x_int < 100L & (x_int == ref_parts)
+    ref_parts <- as.list(ref_parts)
+    ref_parts[is_idx] <- as.list(x_int[is_idx] + 1L)
 
     schema <- purrr::chuck(openapi_spec, !!!ref_parts[-1])
 
@@ -453,8 +462,10 @@ openapi_resolve_reference <- function(schema, openapi_spec) {
   }
 
   # If anything under here has a $ref, keep going.
-  if (any(grepl("\\$ref$", names(unlist(schema))))) {
-    schema <- purrr::map(schema, ~ openapi_resolve_reference(.x, openapi_spec))
+  if (.schema_has_ref(schema)) {
+    schema <- purrr::map(schema, \(x) {
+      openapi_resolve_reference(x, openapi_spec)
+    })
   }
 
   schema
@@ -515,7 +526,7 @@ parse_schema <- function(schema, name, openapi_spec) {
 
     fields <- purrr::imap(
       c(schema$properties, additional_properties$properties),
-      ~ parse_schema_memoised(.x, .y, openapi_spec)
+      \(x, y) parse_schema_memoised(x, y, openapi_spec)
     )
     fields <- .apply_required(
       fields,
@@ -557,18 +568,18 @@ parse_schema <- function(schema, name, openapi_spec) {
   }
 }
 
-# # Explanation for `allOf`, `oneOf`, and `anyOf`
-# # https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/
+# Explanation for `allOf`, `oneOf`, and `anyOf`
+# https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/
 handle_all_of <- function(schema, name, openapi_spec) {
   # must satisfy all the schemas -> combine them
-  out <- purrr::map(schema$allOf, ~ parse_schema(.x, name, openapi_spec))
+  out <- purrr::map(schema$allOf, \(x) parse_schema(x, name, openapi_spec))
   # TODO fix `call`
   .tib_combine(out, name, current_call())
 }
 
 handle_all_of_tspec <- function(schema, openapi_spec) {
   # must satisfy all the schemas -> combine them
-  out <- purrr::map(schema$allOf, ~ schema_to_tspec(.x, openapi_spec))
+  out <- purrr::map(schema$allOf, \(x) schema_to_tspec(x, openapi_spec))
   # We can have some hacky "dummy" variants in here right now. For now we'll
   # remove them.
   out <- purrr::discard(
@@ -581,7 +592,7 @@ handle_all_of_tspec <- function(schema, openapi_spec) {
 }
 
 handle_one_of <- function(schema, name, openapi_spec) {
-  out <- purrr::map(schema$oneOf, ~ parse_schema(.x, name, openapi_spec))
+  out <- purrr::map(schema$oneOf, \(x) parse_schema(x, name, openapi_spec))
   # must satisfy one of the schemas
   # for now simply try to combine them...
   tryCatch(
@@ -601,7 +612,7 @@ handle_one_of <- function(schema, name, openapi_spec) {
 }
 
 handle_one_of_tspec <- function(schema, openapi_spec) {
-  out <- purrr::map(schema$oneOf, ~ schema_to_tspec(.x, openapi_spec))
+  out <- purrr::map(schema$oneOf, \(x) schema_to_tspec(x, openapi_spec))
   # must satisfy one of the schemas
   # for now simply try to combine them...
   tryCatch(

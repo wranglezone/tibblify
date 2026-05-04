@@ -42,6 +42,8 @@ wrapped.}
 
 \item{field_spec}{(\code{tib_collector}) A tibblify field collector.}
 
+\item{file}{(\code{character(1)}) A path to a file, a connection, or literal data.}
+
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 does not exist.}
 
