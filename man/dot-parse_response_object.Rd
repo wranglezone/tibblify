@@ -8,8 +8,7 @@
 }
 \arguments{
 \item{response_object}{(\code{list}) A response object from an OpenAPI spec, as
-defined in the
-\href{https://spec.openapis.org/oas/v3.1.0#response-object}{Response Object}.}
+defined in the \href{https://spec.openapis.org/oas/v3.1.0#response-object}{Response Object}.}
 
 \item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }

@@ -7,8 +7,8 @@
 .parse_media_type_object(media_type_object, openapi_spec)
 }
 \arguments{
-\item{media_type_object}{(\code{list}) A single media type object from an
-OpenAPI spec.}
+\item{media_type_object}{(\code{list}) A single media type object from an OpenAPI
+spec.}
 
 \item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }

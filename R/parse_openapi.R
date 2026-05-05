@@ -376,11 +376,13 @@ parse_openapi_schema <- function(file) {
 #' @returns (`tbl_df`) A tibble of parsed header objects.
 #' @keywords internal
 .parse_header_objects <- function(header_objects, openapi_spec) {
-  # https://spec.openapis.org/oas/v3.1.0#headerObject
-  # The Header Object follows the structure of the Parameter Object with the following changes:
-  # * `name` MUST NOT be specified, it is given in the corresponding headers map.
+  # https://spec.openapis.org/oas/v3.1.0#headerObject The Header Object follows
+  # the structure of the Parameter Object with the following changes:
+  # * `name` MUST NOT be specified, it is given in the corresponding headers
+  # map.
   # * `in` MUST NOT be specified, it is implicitly in header.
-  # * All traits that are affected by the location MUST be applicable to a location of header (for example, style).
+  # * All traits that are affected by the location MUST be applicable to a
+  # location of header (for example, style).
   header_objects <- purrr::map(
     header_objects,
     \(x) .openapi_resolve_reference(x, openapi_spec)
@@ -527,7 +529,8 @@ parse_openapi_schema <- function(file) {
     # If any parts of the path are pure numbers (other than status codes), we
     # need to explicitly make them pure numbers.
     x_int <- suppressWarnings(as.integer(ref_parts))
-    # Numeric ref_parts are 0-indexed list indices; convert to 1-indexed integers.
+    # Numeric ref_parts are 0-indexed list indices; convert to 1-indexed
+    # integers.
     is_idx <- !is.na(x_int) & x_int < 100L & (x_int == ref_parts)
     ref_parts <- as.list(ref_parts)
     ref_parts[is_idx] <- as.list(x_int[is_idx] + 1L)
@@ -600,7 +603,8 @@ parse_openapi_schema <- function(file) {
 
   if (rlang::is_empty(type)) {} else if (type == "object") {
     if (!is.null(schema$additionalProperties)) {
-      # FIXME hack required for asana which somehow has `additionalProperties = TRUE`
+      # FIXME hack required for asana which somehow has `additionalProperties =
+      # TRUE`
       # openapi_spec$components$schemas$RuleTriggerRequest$properties$action_data$additionalProperties
       if (is.list(schema$additionalProperties)) {
         additional_properties <- .openapi_resolve_reference(

@@ -7,10 +7,8 @@
 .get_openapi_type(schema)
 }
 \arguments{
-\item{schema}{(\code{list}) A JSON schema object, as defined in the
-\href{https://spec.openapis.org/oas/v3.1.0#schema-object}{Schema Object},
-typically from \code{openapi_spec$components$schemas} or inline within the
-spec.}
+\item{schema}{(\code{list}) A JSON schema object, as defined in the \href{https://spec.openapis.org/oas/v3.1.0#schema-object}{Schema Object}, typically from
+\code{openapi_spec$components$schemas} or inline within the spec.}
 }
 \value{
 (\code{character(1)}) The type string, one of \code{"object"}, \code{"array"},

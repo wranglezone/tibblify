@@ -7,10 +7,8 @@
 .parse_schema(schema, name, openapi_spec)
 }
 \arguments{
-\item{schema}{(\code{list}) A JSON schema object, as defined in the
-\href{https://spec.openapis.org/oas/v3.1.0#schema-object}{Schema Object},
-typically from \code{openapi_spec$components$schemas} or inline within the
-spec.}
+\item{schema}{(\code{list}) A JSON schema object, as defined in the \href{https://spec.openapis.org/oas/v3.1.0#schema-object}{Schema Object}, typically from
+\code{openapi_spec$components$schemas} or inline within the spec.}
 
 \item{name}{(\code{character(1)}) The name of the field.}
 

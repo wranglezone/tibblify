@@ -7,9 +7,8 @@
 .parse_path_item_object(path_item_object, openapi_spec)
 }
 \arguments{
-\item{path_item_object}{(\code{list}) A path item object from an OpenAPI spec,
-as defined in the
-\href{https://spec.openapis.org/oas/v3.1.0#path-item-object}{Path Item Object}.}
+\item{path_item_object}{(\code{list}) A path item object from an OpenAPI spec, as
+defined in the \href{https://spec.openapis.org/oas/v3.1.0#path-item-object}{Path Item Object}.}
 
 \item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }

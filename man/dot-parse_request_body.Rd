@@ -7,9 +7,8 @@
 .parse_request_body(request_body, openapi_spec)
 }
 \arguments{
-\item{request_body}{(\code{list} or \code{NULL}) A request body object from an
-OpenAPI spec, as defined in the
-\href{https://spec.openapis.org/oas/v3.1.0#request-body-object}{Request Body Object}.}
+\item{request_body}{(\code{list} or \code{NULL}) A request body object from an OpenAPI
+spec, as defined in the \href{https://spec.openapis.org/oas/v3.1.0#request-body-object}{Request Body Object}.}
 
 \item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }

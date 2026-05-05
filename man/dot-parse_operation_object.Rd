@@ -7,9 +7,8 @@
 .parse_operation_object(operation_object, openapi_spec)
 }
 \arguments{
-\item{operation_object}{(\code{list}) An operation object from an OpenAPI spec,
-as defined in the
-\href{https://spec.openapis.org/oas/v3.1.0#operation-object}{Operation Object}.}
+\item{operation_object}{(\code{list}) An operation object from an OpenAPI spec, as
+defined in the \href{https://spec.openapis.org/oas/v3.1.0#operation-object}{Operation Object}.}
 
 \item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }
