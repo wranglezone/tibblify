@@ -53,6 +53,9 @@ deduced from the spec?}
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}
 
+\item{header_objects}{(\code{list}) A named list of header objects from an
+OpenAPI spec.}
+
 \item{id_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
 uniquely identifies each observation.}
 
@@ -72,6 +75,12 @@ messages.}
 \item{local_env}{(\code{environment}) A local environment used to track state
 across recursive calls, such as whether empty lists were encountered.}
 
+\item{media_type_object}{(\code{list}) A single media type object from an
+OpenAPI spec.}
+
+\item{media_type_objects}{(\code{list}) A named list of media type objects from
+an OpenAPI spec.}
+
 \item{message}{(\code{character}) A cli message template.}
 
 \item{multi_line}{(\code{logical(1)}) Should the output be formatted across
@@ -90,6 +99,15 @@ deduced from the spec?}
 will be used to indent the output when \code{multi_line = TRUE}. Primarily for
 internal use when formatting is applied recursively.}
 
+\item{openapi_spec}{(\code{list}) The parsed OpenAPI specification.}
+
+\item{operation_object}{(\code{list}) An operation object from an OpenAPI spec,
+as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#operation-object}{Operation Object}.}
+
+\item{parameters}{(\code{list} or \code{NULL}) A list of parameter objects from an
+OpenAPI spec.}
+
 \item{parent_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
 identifies the parent id of each observation. Each value must either be
 missing (for the root elements) or appear in the \code{id_col} column.}
@@ -100,12 +118,27 @@ elements.}
 \item{path_exp}{(\code{list}) The path of the field used as the reference in size
 mismatch errors.}
 
+\item{path_item_object}{(\code{list}) A path item object from an OpenAPI spec,
+as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#path-item-object}{Path Item Object}.}
+
 \item{.ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
 
 \item{.ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 
+\item{request_body}{(\code{list} or \code{NULL}) A request body object from an
+OpenAPI spec.}
+
 \item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
+
+\item{response_object}{(\code{list}) A response object from an OpenAPI spec.}
+
+\item{responses_object}{(\code{list}) A responses object from an OpenAPI spec,
+mapping status codes to response objects.}
+
+\item{schema}{(\code{list}) A JSON schema object, typically from
+\code{openapi_spec$components$schemas} or inline within the spec.}
 
 \item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
 vectors?}

@@ -139,7 +139,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a path item object from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns A tibble of parsed operations with a `global_parameters` column.
 #' @keywords internal
 .parse_path_item_object <- function(path_item_object, openapi_spec) {
@@ -185,7 +185,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse an operation object from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns A one-row tibble describing the operation.
 #' @keywords internal
 .parse_operation_object <- function(operation_object, openapi_spec) {
@@ -220,7 +220,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a request body object from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`tspec_row` or `NULL`) A parsed request body row spec, or `NULL`
 #'   if `request_body` is `NULL`.
 #' @keywords internal
@@ -249,7 +249,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a list of parameter objects from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`tbl_df` or `NULL`) A tibble of parsed parameters, or `NULL` if
 #'   `parameters` is `NULL`.
 #' @keywords internal
@@ -291,7 +291,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a responses object from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`tbl_df`) A tibble of parsed response objects with a `status_code`
 #'   column.
 #' @keywords internal
@@ -309,7 +309,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a single response object from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`tbl_df`) A one-row tibble describing the response.
 #' @keywords internal
 .parse_response_object <- function(response_object, openapi_spec) {
@@ -347,7 +347,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a named list of media type objects from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`tbl_df`) A tibble with `media_type` and `spec` columns.
 #' @keywords internal
 .parse_media_type_objects <- function(media_type_objects, openapi_spec) {
@@ -363,7 +363,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a single media type object from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns A tibblify spec derived from the media type object's schema.
 #' @keywords internal
 .parse_media_type_object <- function(media_type_object, openapi_spec) {
@@ -372,7 +372,7 @@ parse_openapi_schema <- function(file) {
 
 #' Parse a named list of header objects from an OpenAPI spec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`tbl_df`) A tibble of parsed header objects.
 #' @keywords internal
 .parse_header_objects <- function(header_objects, openapi_spec) {
@@ -412,7 +412,7 @@ parse_openapi_schema <- function(file) {
 
 #' Convert an OpenAPI schema to a tibblify tspec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns A tibblify spec (`tspec_row`, `tspec_df`, or a tib field).
 #' @keywords internal
 .schema_to_tspec <- function(schema, openapi_spec) {
@@ -490,7 +490,7 @@ parse_openapi_schema <- function(file) {
 
 #' Resolve `$ref` references in an OpenAPI schema object
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`list`) The schema with all `$ref` references resolved.
 #' @keywords internal
 .openapi_resolve_reference <- function(schema, openapi_spec) {
@@ -552,7 +552,7 @@ parse_openapi_schema <- function(file) {
 
 #' Determine the type of an OpenAPI schema object
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns (`character(1)`) The type string, one of `"object"`, `"array"`,
 #'   `"string"`, `"integer"`, `"boolean"`, `"number"`, or `"variant"`.
 #' @keywords internal
@@ -573,7 +573,6 @@ parse_openapi_schema <- function(file) {
 #' Parse an OpenAPI schema object into a tib field spec
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-openapi
 #' @returns A tib field spec corresponding to the schema type.
 #' @keywords internal
 .parse_schema <- function(schema, name, openapi_spec) {
@@ -665,7 +664,6 @@ parse_openapi_schema <- function(file) {
 #' Handle an `allOf` schema by combining sub-schemas into a tib field
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-openapi
 #' @returns A combined tib field spec.
 #' @keywords internal
 .handle_all_of <- function(schema, name, openapi_spec) {
@@ -677,7 +675,7 @@ parse_openapi_schema <- function(file) {
 
 #' Handle an `allOf` schema by combining sub-schemas into a tspec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns A combined tspec.
 #' @keywords internal
 .handle_all_of_tspec <- function(schema, openapi_spec) {
@@ -697,7 +695,6 @@ parse_openapi_schema <- function(file) {
 #' Handle a `oneOf` schema by combining sub-schemas into a tib field
 #'
 #' @inheritParams .shared-params
-#' @inheritParams .shared-params-openapi
 #' @returns A combined tib field spec, or `tib_variant()` if schemas are
 #'   incompatible.
 #' @keywords internal
@@ -723,7 +720,7 @@ parse_openapi_schema <- function(file) {
 
 #' Handle a `oneOf` schema by combining sub-schemas into a tspec
 #'
-#' @inheritParams .shared-params-openapi
+#' @inheritParams .shared-params
 #' @returns A combined tspec, or `tib_variant("dummy")` if schemas are
 #'   incompatible.
 #' @keywords internal
