@@ -8,9 +8,10 @@
 }
 \arguments{
 \item{request_body}{(\code{list} or \code{NULL}) A request body object from an
-OpenAPI spec.}
+OpenAPI spec, as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#request-body-object}{Request Body Object}.}
 
-\item{openapi_spec}{(\code{list}) The parsed OpenAPI specification.}
+\item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }
 \value{
 (\code{tspec_row} or \code{NULL}) A parsed request body row spec, or \code{NULL}

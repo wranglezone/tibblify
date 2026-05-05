@@ -475,7 +475,7 @@ parse_openapi_schema <- function(file) {
 #' Short-circuiting check that avoids the expensive
 #' `names(unlist(schema))` materialisation.
 #'
-#' @param x (`any`) The object to check.
+#' @inheritParams .shared-params
 #' @returns (`logical(1)`) `TRUE` if any element has a `$ref` key.
 #' @keywords internal
 .schema_has_ref <- function(x) {

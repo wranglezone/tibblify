@@ -10,7 +10,7 @@
 \item{header_objects}{(\code{list}) A named list of header objects from an
 OpenAPI spec.}
 
-\item{openapi_spec}{(\code{list}) The parsed OpenAPI specification.}
+\item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }
 \value{
 (\code{tbl_df}) A tibble of parsed header objects.

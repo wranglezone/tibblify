@@ -99,14 +99,15 @@ deduced from the spec?}
 will be used to indent the output when \code{multi_line = TRUE}. Primarily for
 internal use when formatting is applied recursively.}
 
-\item{openapi_spec}{(\code{list}) The parsed OpenAPI specification.}
+\item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 
 \item{operation_object}{(\code{list}) An operation object from an OpenAPI spec,
 as defined in the
 \href{https://spec.openapis.org/oas/v3.1.0#operation-object}{Operation Object}.}
 
 \item{parameters}{(\code{list} or \code{NULL}) A list of parameter objects from an
-OpenAPI spec.}
+OpenAPI spec, as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#parameter-object}{Parameter Object}.}
 
 \item{parent_col}{(\code{character(1)}, \code{integer(1)}, or \code{symbol}) The column that
 identifies the parent id of each observation. Each value must either be
@@ -128,17 +129,23 @@ field.}
 \item{.ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 
 \item{request_body}{(\code{list} or \code{NULL}) A request body object from an
-OpenAPI spec.}
+OpenAPI spec, as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#request-body-object}{Request Body Object}.}
 
 \item{.required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
-\item{response_object}{(\code{list}) A response object from an OpenAPI spec.}
+\item{response_object}{(\code{list}) A response object from an OpenAPI spec, as
+defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#response-object}{Response Object}.}
 
 \item{responses_object}{(\code{list}) A responses object from an OpenAPI spec,
-mapping status codes to response objects.}
+mapping status codes to response objects, as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#responses-object}{Responses Object}.}
 
-\item{schema}{(\code{list}) A JSON schema object, typically from
-\code{openapi_spec$components$schemas} or inline within the spec.}
+\item{schema}{(\code{list}) A JSON schema object, as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#schema-object}{Schema Object},
+typically from \code{openapi_spec$components$schemas} or inline within the
+spec.}
 
 \item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
 vectors?}

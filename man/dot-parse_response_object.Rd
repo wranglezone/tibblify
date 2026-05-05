@@ -7,9 +7,11 @@
 .parse_response_object(response_object, openapi_spec)
 }
 \arguments{
-\item{response_object}{(\code{list}) A response object from an OpenAPI spec.}
+\item{response_object}{(\code{list}) A response object from an OpenAPI spec, as
+defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#response-object}{Response Object}.}
 
-\item{openapi_spec}{(\code{list}) The parsed OpenAPI specification.}
+\item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }
 \value{
 (\code{tbl_df}) A one-row tibble describing the response.

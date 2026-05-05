@@ -8,9 +8,10 @@
 }
 \arguments{
 \item{responses_object}{(\code{list}) A responses object from an OpenAPI spec,
-mapping status codes to response objects.}
+mapping status codes to response objects, as defined in the
+\href{https://spec.openapis.org/oas/v3.1.0#responses-object}{Responses Object}.}
 
-\item{openapi_spec}{(\code{list}) The parsed OpenAPI specification.}
+\item{openapi_spec}{(\code{list}) A parsed OpenAPI specification.}
 }
 \value{
 (\code{tbl_df}) A tibble of parsed response objects with a \code{status_code}
