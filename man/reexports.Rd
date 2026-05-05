@@ -12,8 +12,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{rlang}{\code{\link[rlang]{zap}}}
+  \item{rlang}{\code{\link[rlang:zap]{zap()}}}
 
-  \item{tibble}{\code{\link[tibble]{tibble}}}
+  \item{tibble}{\code{\link[tibble:tibble]{tibble()}}}
 }}
 

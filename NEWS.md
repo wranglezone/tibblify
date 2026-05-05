@@ -1,5 +1,9 @@
 # tibblify (development version)
 
+* Internal functions in `R/parse_openapi.R` now use a `.` prefix (e.g.,
+  `.read_spec()`, `.parse_schema()`) and are documented with abbreviated
+  roxygen2 docs (#313).
+
 * All arguments of functions that accept meaningful named `...` are now prefixed with `.` to minimize conflicts with column and object names in `...`. The un-dotted versions of the arguments are still accepted, but calling functions directly with un-dotted arguments will produce a warning once per session (see `?lifecycle::deprecate_soft()`). Un-dotted arguments will be phased out in a future version of this package, so we recommend switching to the dot-prefixed versions. See `?tspec_df` and `?tib_scalar()` for details.
 * All code has been refactored for maintainability. While we were careful to ensure that output is unchanged, it is possible that a corner case is no longer handled how it was in version 0.3.0. Please notify us (<https://github.com/wranglezone/tibblify/issues>) if something has changed for the worse in an unexpected way (#243).
 * The `guess_tspec()` variants `guess_tspec_list()` and `guess_tspec_object_list()` are now exported (along with `guess_tspec_df()` and `guess_tspec_object()`, which were already exported). `guess_tspec()` should correctly guess the format in most cases, but you can call the variant directly if you think `guess_tspec()` is dispatching incorrectly (#249). 

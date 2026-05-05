@@ -142,3 +142,38 @@ NULL
 #' @name .shared-params-tree
 #' @keywords internal
 NULL
+
+# .shared-params-openapi ----
+
+#' Shared OpenAPI parsing parameters
+#'
+#' These parameters are used in multiple internal functions in
+#' `R/parse_openapi.R`. They are defined here to make them easier to import
+#' and to find.
+#'
+#' @param header_objects (`list`) A named list of header objects from an
+#'   OpenAPI spec.
+#' @param media_type_object (`list`) A single media type object from an
+#'   OpenAPI spec.
+#' @param media_type_objects (`list`) A named list of media type objects from
+#'   an OpenAPI spec.
+#' @param openapi_spec (`list`) The parsed OpenAPI specification.
+#' @param operation_object (`list`) An operation object from an OpenAPI spec,
+#'   as defined in the
+#'   [Operation Object](https://spec.openapis.org/oas/v3.1.0#operation-object).
+#' @param parameters (`list` or `NULL`) A list of parameter objects from an
+#'   OpenAPI spec.
+#' @param path_item_object (`list`) A path item object from an OpenAPI spec,
+#'   as defined in the
+#'   [Path Item Object](https://spec.openapis.org/oas/v3.1.0#path-item-object).
+#' @param request_body (`list` or `NULL`) A request body object from an
+#'   OpenAPI spec.
+#' @param response_object (`list`) A response object from an OpenAPI spec.
+#' @param responses_object (`list`) A responses object from an OpenAPI spec,
+#'   mapping status codes to response objects.
+#' @param schema (`list`) A JSON schema object, typically from
+#'   `openapi_spec$components$schemas` or inline within the spec.
+#'
+#' @name .shared-params-openapi
+#' @keywords internal
+NULL
