@@ -137,6 +137,11 @@ deduced from the spec?</p></dd>
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
 
 
+<dt id="arg-header-objects">header_objects<a class="anchor" aria-label="anchor" href="#arg-header-objects"></a></dt>
+<dd><p>(<code>list</code>) A named list of header objects from an OpenAPI
+spec.</p></dd>
+
+
 <dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>
 <dd><p>(<code>character(1)</code>, <code>integer(1)</code>, or <code>symbol</code>) The column that
 uniquely identifies each observation.</p></dd>
@@ -170,6 +175,16 @@ messages.</p></dd>
 across recursive calls, such as whether empty lists were encountered.</p></dd>
 
 
+<dt id="arg-media-type-object">media_type_object<a class="anchor" aria-label="anchor" href="#arg-media-type-object"></a></dt>
+<dd><p>(<code>list</code>) A single media type object from an OpenAPI
+spec.</p></dd>
+
+
+<dt id="arg-media-type-objects">media_type_objects<a class="anchor" aria-label="anchor" href="#arg-media-type-objects"></a></dt>
+<dd><p>(<code>list</code>) A named list of media type objects from an
+OpenAPI spec.</p></dd>
+
+
 <dt id="arg-message">message<a class="anchor" aria-label="anchor" href="#arg-message"></a></dt>
 <dd><p>(<code>character</code>) A cli message template.</p></dd>
 
@@ -200,6 +215,20 @@ will be used to indent the output when <code>multi_line = TRUE</code>. Primarily
 internal use when formatting is applied recursively.</p></dd>
 
 
+<dt id="arg-openapi-spec">openapi_spec<a class="anchor" aria-label="anchor" href="#arg-openapi-spec"></a></dt>
+<dd><p>(<code>list</code>) A parsed OpenAPI specification.</p></dd>
+
+
+<dt id="arg-operation-object">operation_object<a class="anchor" aria-label="anchor" href="#arg-operation-object"></a></dt>
+<dd><p>(<code>list</code>) An operation object from an OpenAPI spec, as
+defined in the <a href="https://spec.openapis.org/oas/v3.1.0#operation-object" class="external-link">Operation Object</a>.</p></dd>
+
+
+<dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
+<dd><p>(<code>list</code> or <code>NULL</code>) A list of parameter objects from an
+OpenAPI spec, as defined in the <a href="https://spec.openapis.org/oas/v3.1.0#parameter-object" class="external-link">Parameter Object</a>.</p></dd>
+
+
 <dt id="arg-parent-col">parent_col<a class="anchor" aria-label="anchor" href="#arg-parent-col"></a></dt>
 <dd><p>(<code>character(1)</code>, <code>integer(1)</code>, or <code>symbol</code>) The column that
 identifies the parent id of each observation. Each value must either be
@@ -216,6 +245,11 @@ elements.</p></dd>
 mismatch errors.</p></dd>
 
 
+<dt id="arg-path-item-object">path_item_object<a class="anchor" aria-label="anchor" href="#arg-path-item-object"></a></dt>
+<dd><p>(<code>list</code>) A path item object from an OpenAPI spec, as
+defined in the <a href="https://spec.openapis.org/oas/v3.1.0#path-item-object" class="external-link">Path Item Object</a>.</p></dd>
+
+
 <dt id="arg--ptype">.ptype<a class="anchor" aria-label="anchor" href="#arg--ptype"></a></dt>
 <dd><p>(<code>vector(0)</code>) A prototype of the desired output type of the
 field.</p></dd>
@@ -225,8 +259,28 @@ field.</p></dd>
 <dd><p>(<code>vector(0)</code>) A prototype of the input field.</p></dd>
 
 
+<dt id="arg-request-body">request_body<a class="anchor" aria-label="anchor" href="#arg-request-body"></a></dt>
+<dd><p>(<code>list</code> or <code>NULL</code>) A request body object from an OpenAPI
+spec, as defined in the <a href="https://spec.openapis.org/oas/v3.1.0#request-body-object" class="external-link">Request Body Object</a>.</p></dd>
+
+
 <dt id="arg--required">.required<a class="anchor" aria-label="anchor" href="#arg--required"></a></dt>
 <dd><p>(<code>logical(1)</code>) Throw an error if the field does not exist?</p></dd>
+
+
+<dt id="arg-response-object">response_object<a class="anchor" aria-label="anchor" href="#arg-response-object"></a></dt>
+<dd><p>(<code>list</code>) A response object from an OpenAPI spec, as
+defined in the <a href="https://spec.openapis.org/oas/v3.1.0#response-object" class="external-link">Response Object</a>.</p></dd>
+
+
+<dt id="arg-responses-object">responses_object<a class="anchor" aria-label="anchor" href="#arg-responses-object"></a></dt>
+<dd><p>(<code>list</code>) A responses object from an OpenAPI spec,
+mapping status codes to response objects, as defined in the <a href="https://spec.openapis.org/oas/v3.1.0#responses-object" class="external-link">Responses Object</a>.</p></dd>
+
+
+<dt id="arg-schema">schema<a class="anchor" aria-label="anchor" href="#arg-schema"></a></dt>
+<dd><p>(<code>list</code>) A JSON schema object, as defined in the <a href="https://spec.openapis.org/oas/v3.1.0#schema-object" class="external-link">Schema Object</a>, typically from
+<code>openapi_spec$components$schemas</code> or inline within the spec.</p></dd>
 
 
 <dt id="arg-simplify-list">simplify_list<a class="anchor" aria-label="anchor" href="#arg-simplify-list"></a></dt>

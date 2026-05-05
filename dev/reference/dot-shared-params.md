@@ -89,6 +89,10 @@ to make them easier to import and to find.
   (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
 
+- header_objects:
+
+  (`list`) A named list of header objects from an OpenAPI spec.
+
 - id_col:
 
   (`character(1)`, `integer(1)`, or `symbol`) The column that uniquely
@@ -120,6 +124,14 @@ to make them easier to import and to find.
   (`environment`) A local environment used to track state across
   recursive calls, such as whether empty lists were encountered.
 
+- media_type_object:
+
+  (`list`) A single media type object from an OpenAPI spec.
+
+- media_type_objects:
+
+  (`list`) A named list of media type objects from an OpenAPI spec.
+
 - message:
 
   (`character`) A cli message template.
@@ -150,6 +162,22 @@ to make them easier to import and to find.
   to indent the output when `multi_line = TRUE`. Primarily for internal
   use when formatting is applied recursively.
 
+- openapi_spec:
+
+  (`list`) A parsed OpenAPI specification.
+
+- operation_object:
+
+  (`list`) An operation object from an OpenAPI spec, as defined in the
+  [Operation
+  Object](https://spec.openapis.org/oas/v3.1.0#operation-object).
+
+- parameters:
+
+  (`list` or `NULL`) A list of parameter objects from an OpenAPI spec,
+  as defined in the [Parameter
+  Object](https://spec.openapis.org/oas/v3.1.0#parameter-object).
+
 - parent_col:
 
   (`character(1)`, `integer(1)`, or `symbol`) The column that identifies
@@ -165,6 +193,12 @@ to make them easier to import and to find.
   (`list`) The path of the field used as the reference in size mismatch
   errors.
 
+- path_item_object:
+
+  (`list`) A path item object from an OpenAPI spec, as defined in the
+  [Path Item
+  Object](https://spec.openapis.org/oas/v3.1.0#path-item-object).
+
 - .ptype:
 
   (`vector(0)`) A prototype of the desired output type of the field.
@@ -173,9 +207,33 @@ to make them easier to import and to find.
 
   (`vector(0)`) A prototype of the input field.
 
+- request_body:
+
+  (`list` or `NULL`) A request body object from an OpenAPI spec, as
+  defined in the [Request Body
+  Object](https://spec.openapis.org/oas/v3.1.0#request-body-object).
+
 - .required:
 
   (`logical(1)`) Throw an error if the field does not exist?
+
+- response_object:
+
+  (`list`) A response object from an OpenAPI spec, as defined in the
+  [Response
+  Object](https://spec.openapis.org/oas/v3.1.0#response-object).
+
+- responses_object:
+
+  (`list`) A responses object from an OpenAPI spec, mapping status codes
+  to response objects, as defined in the [Responses
+  Object](https://spec.openapis.org/oas/v3.1.0#responses-object).
+
+- schema:
+
+  (`list`) A JSON schema object, as defined in the [Schema
+  Object](https://spec.openapis.org/oas/v3.1.0#schema-object), typically
+  from `openapi_spec$components$schemas` or inline within the spec.
 
 - simplify_list:
 

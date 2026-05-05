@@ -5,8 +5,8 @@ to see their documentation.
 
 - rlang:
 
-  [`zap`](https://rlang.r-lib.org/reference/zap.html)
+  [`zap()`](https://rlang.r-lib.org/reference/zap.html)
 
 - tibble:
 
-  [`tibble`](https://tibble.tidyverse.org/reference/tibble.html)
+  [`tibble()`](https://tibble.tidyverse.org/reference/tibble.html)
