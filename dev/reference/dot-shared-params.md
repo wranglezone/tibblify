@@ -70,6 +70,10 @@ to make them easier to import and to find.
 
   (`tib_collector`) A tibblify field collector.
 
+- file:
+
+  (`character(1)`) A path to a file, a connection, or literal data.
+
 - .fill:
 
   (`vector` or `NULL`) Optionally, a value to use if the field does not
