@@ -1,4 +1,4 @@
-## code to prepare `leaders_simple` dataset goes here
+## code to prepare `politicians` dataset goes here
 
 politicians <- list(
   list(

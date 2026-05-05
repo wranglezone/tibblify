@@ -28,6 +28,7 @@
 #'   wrapped.
 #' @param f_name (`character(1)`) The (possibly ANSI-colored) function name.
 #' @param field_spec (`tib_collector`) A tibblify field collector.
+#' @param file (`character(1)`) A path to a file, a connection, or literal data.
 #' @param .fill (`vector` or `NULL`) Optionally, a value to use if the field
 #'   does not exist.
 #' @param force_names (`logical(1)`) Should names be printed even if they can be
