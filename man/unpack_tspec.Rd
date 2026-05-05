@@ -52,7 +52,7 @@ repairing. For example use \code{\link[=camel_case_to_snake_case]{camel_case_to_
 A tibblify spec.
 }
 \description{
-\code{\link[tidyr:pack]{tidyr::unpack()}} makes data wider by expanding df-columns into individual
+\code{\link[tidyr:unpack]{tidyr::unpack()}} makes data wider by expanding df-columns into individual
 columns. Analogously, unpacking a tibblify specification makes a
 specification which will result in a wider tibble by expanding \code{\link[=tib_row]{tib_row()}}
 specifications into their individual fields.
