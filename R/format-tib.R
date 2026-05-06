@@ -192,87 +192,121 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
   UseMethod(".format_tib_f")
 }
 
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_unspecified <- function(x) {
   "tib_unspecified"
 }
 
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar_logical <- function(x) {
   cli::col_yellow("tib_lgl")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar_integer <- function(x) {
   cli::col_green("tib_int")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar_numeric <- function(x) {
   cli::col_green("tib_dbl")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar_character <- function(x) {
   cli::col_red("tib_chr")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar_date <- function(x) {
   "tib_date"
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar_chr_date <- function(x) {
   "tib_chr_date"
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_scalar <- function(x) {
   "tib_scalar"
 }
 
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector_logical <- function(x) {
   cli::col_yellow("tib_lgl_vec")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector_integer <- function(x) {
   cli::col_green("tib_int_vec")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector_numeric <- function(x) {
   cli::col_green("tib_dbl_vec")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector_character <- function(x) {
   cli::col_red("tib_chr_vec")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector_date <- function(x) {
   cli::col_red("tib_date_vec")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector_chr_date <- function(x) {
   "tib_chr_date_vec"
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_vector <- function(x) {
   "tib_vector"
 }
 
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_variant <- function(x) {
   "tib_variant"
 }
 
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_row <- function(x) {
   cli::col_magenta("tib_row")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_df <- function(x) {
   cli::col_magenta("tib_df")
 }
+
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.tib_recursive <- function(x) {
   cli::col_magenta("tib_recursive")
 }
 
+#' @rdname dot-format_tib_f
 #' @export
 .format_tib_f.default <- function(x) {
   class(x)[[1]]
@@ -357,11 +391,13 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
   UseMethod(".format_ptype")
 }
 
+#' @rdname dot-format_ptype
 #' @export
 .format_ptype.default <- function(x) {
   deparse(x)
 }
 
+#' @rdname dot-format_ptype
 #' @export
 .format_ptype.difftime <- function(x) {
   if (!identical(class(x), "difftime")) {
@@ -370,6 +406,7 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
   "vctrs::new_duration()"
 }
 
+#' @rdname dot-format_ptype
 #' @export
 .format_ptype.Date <- function(x) {
   if (!vctrs::vec_is(x, vctrs::new_date())) {
@@ -378,6 +415,7 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
   "vctrs::new_date()"
 }
 
+#' @rdname dot-format_ptype
 #' @export
 .format_ptype.POSIXct <- function(x) {
   tzone <- attr(x, "tzone")
@@ -431,11 +469,13 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
   UseMethod(".format_fill")
 }
 
+#' @rdname dot-format_fill
 #' @export
 .format_fill.default <- function(x) {
   deparse(x)
 }
 
+#' @rdname dot-format_fill
 #' @export
 .format_fill.Date <- function(x) {
   paste0("as.Date(", .double_quote(format(x, format = "%Y-%m-%d")), ")")

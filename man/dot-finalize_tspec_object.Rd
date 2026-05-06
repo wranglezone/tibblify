@@ -2,9 +2,18 @@
 % Please edit documentation in R/finalize_tspec_object.R
 \name{.finalize_tspec_object}
 \alias{.finalize_tspec_object}
+\alias{.finalize_tspec_object.tib_collector}
+\alias{.finalize_tspec_object.tib_scalar}
+\alias{.finalize_tspec_object.tib_row}
 \title{Finalize a tibblify object}
 \usage{
 .finalize_tspec_object(field_spec, field)
+
+\method{.finalize_tspec_object}{tib_collector}(field_spec, field)
+
+\method{.finalize_tspec_object}{tib_scalar}(field_spec, field)
+
+\method{.finalize_tspec_object}{tib_row}(field_spec, field)
 }
 \arguments{
 \item{field_spec}{(\code{tib_collector}) A field specification.}

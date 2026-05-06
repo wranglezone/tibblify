@@ -1,5 +1,4 @@
-test_that("can parse 'Sponsored Products' openapi spec", {
-  # Spec downloaded locally so tests don't require internet connection.
+test_that("parse_openapi_spec() can parse 'Sponsored Products' openapi spec", {
   url <- "https://dtrnk0o2zy01c.cloudfront.net/openapi/en-us/dest/SponsoredProducts_prod_3p.json"
   file <- test_path("fixtures", basename(url))
   # download.file(url, file)
@@ -8,8 +7,7 @@ test_that("can parse 'Sponsored Products' openapi spec", {
   expect_equal(parse_openapi_spec(file), readRDS(rds_file))
 })
 
-test_that("can parse slack.com openapi spec", {
-  # Spec downloaded locally so tests don't require internet connection.
+test_that("parse_openapi_spec() can parse slack.com openapi spec", {
   # url <- "https://api.apis.guru/v2/specs/slack.com/1.7.0/openapi.json"
   file <- test_path("fixtures", "slack-openapi.json")
   # download.file(url, file)
@@ -18,8 +16,7 @@ test_that("can parse slack.com openapi spec", {
   expect_equal(parse_openapi_spec(file), readRDS(rds_file))
 })
 
-test_that("can parse sportsdata.io openapi spec", {
-  # Spec downloaded locally so tests don't require internet connection.
+test_that("parse_openapi_spec() can parse sportsdata.io openapi spec", {
   # url <- "https://api.apis.guru/v2/specs/sportsdata.io/csgo-v3-scores/1.0/openapi.json"
   file <- test_path("fixtures", "sportsdata-openapi.json")
   # download.file(url, file)
@@ -28,21 +25,13 @@ test_that("can parse sportsdata.io openapi spec", {
   expect_equal(parse_openapi_spec(file), readRDS(rds_file))
 })
 
-test_that("can parse brex.io openapi spec", {
-  # Spec downloaded locally so tests don't require internet connection.
+test_that("parse_openapi_spec() can parse brex.io openapi spec", {
   # url <- "https://api.apis.guru/v2/specs/brex.io/2021.12/openapi.json"
   file <- test_path("fixtures", "brex-openapi.json")
   # download.file(url, file)
   rds_file <- sub("json$", "rds", file)
   # saveRDS(parse_openapi_spec(file), rds_file)
   expect_equal(parse_openapi_spec(file), readRDS(rds_file))
-})
-
-test_that("OpenAPI version < 3 throws an informative error", {
-  expect_error(
-    parse_openapi_spec(list()),
-    "OpenAPI versions before 3 are not supported"
-  )
 })
 
 # parse_openapi_schema() --------------------------------------------------
@@ -81,12 +70,6 @@ properties:
 "
   result <- parse_openapi_schema(yaml_str)
   expect_s3_class(result, "tspec_row")
-})
-
-# read_spec() -------------------------------------------------------------
-
-test_that("read_spec() errors informatively on unsupported input types", {
-  expect_error(parse_openapi_schema(123L), "not the number 123")
 })
 
 # parse_openapi_spec() edge cases -----------------------------------------

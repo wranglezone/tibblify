@@ -13,7 +13,6 @@
 (\code{logical(1)}) \code{TRUE} if any element has a \verb{$ref} key.
 }
 \description{
-Short-circuiting check that avoids the expensive
-\code{names(unlist(schema))} materialisation.
+Check whether any nested list element has a \verb{$ref} key
 }
 \keyword{internal}

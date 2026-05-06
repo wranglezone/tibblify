@@ -155,6 +155,12 @@ tspec_recursive <- function(
 
 # helpers ----------------------------------------------------------------------
 
+#' Check that `.names_to` is valid for the given input form
+#'
+#' @inheritParams tspec_df
+#' @inheritParams .shared-params
+#' @returns `NULL` (invisibly).
+#' @keywords internal
 .check_names_to <- function(.names_to, .input_form, .call = caller_env()) {
   if (!is.null(.names_to)) {
     if (.input_form == "colmajor") {
@@ -165,6 +171,16 @@ tspec_recursive <- function(
   }
 }
 
+#' Create a tibblify specification object
+#'
+#' @param .fields (`list`) A list of field specifications, typically created by
+#'   `tib_*()`.
+#' @param .type (`character(1)`) The type of specification being created
+#'   (`"df"`, `"object"`, `"row"`, or `"recursive"`).
+#' @param ... Additional specification attributes passed to [rlang::list2()].
+#' @inheritParams .shared-params
+#' @returns A `tspec` object with class `tspec_<type>` and `tspec`.
+#' @keywords internal
 .tspec <- function(
   .fields,
   .type,
@@ -190,6 +206,12 @@ tspec_recursive <- function(
 
 ## .tspec helpers --------------------------------------------------------------
 
+#' Flatten, validate, and auto-name field specifications
+#'
+#' @inheritParams .tspec
+#' @inheritParams .shared-params
+#' @returns A named list of validated field specifications.
+#' @keywords internal
 .prep_spec_fields <- function(.fields, .error_call) {
   .fields <- .flatten_fields(.fields)
   if (is.null(.fields)) {
@@ -202,7 +224,7 @@ tspec_recursive <- function(
       next
     }
 
-    name <- names2(.fields)[[i]]
+    name <- rlang::names2(.fields)[[i]]
     if (name == "") {
       name <- paste0("..", i)
     }
@@ -216,6 +238,11 @@ tspec_recursive <- function(
   .spec_auto_name_fields(.fields, .error_call)
 }
 
+#' Flatten nested field specifications
+#'
+#' @inheritParams .tspec
+#' @returns A flattened, named list of field specifications.
+#' @keywords internal
 .flatten_fields <- function(.fields) {
   ns <- lengths(.fields)
   .fields <- .fields[ns != 0]
@@ -231,10 +258,21 @@ tspec_recursive <- function(
   vctrs::vec_c(!!!.fields, .name_spec = "{inner}")
 }
 
+#' Check if object is a tibblify specification
+#'
+#' @inheritParams .shared-params
+#' @returns (`logical(1)`) `TRUE` if `x` is a `tspec` object.
+#' @keywords internal
 .is_tspec <- function(x) {
   inherits(x, "tspec")
 }
 
+#' Auto-name fields based on their key attribute
+#'
+#' @inheritParams .tspec
+#' @inheritParams .shared-params
+#' @returns A named list of field specifications.
+#' @keywords internal
 .spec_auto_name_fields <- function(.fields, .error_call) {
   field_nms <- rlang::names2(.fields)
   unnamed <- !rlang::have_name(.fields)
@@ -243,7 +281,7 @@ tspec_recursive <- function(
       .fields[unnamed],
       function(field) {
         key <- field$key
-        if (!is_string(key)) {
+        if (!rlang::is_string(key)) {
           msg <- c(
             "{.arg key} must be a single string to infer name.",
             x = "{.arg key} has length {length(key)}."

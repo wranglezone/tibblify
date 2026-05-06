@@ -2,9 +2,21 @@
 % Please edit documentation in R/format-tib.R
 \name{.format_ptype}
 \alias{.format_ptype}
+\alias{.format_ptype.default}
+\alias{.format_ptype.difftime}
+\alias{.format_ptype.Date}
+\alias{.format_ptype.POSIXct}
 \title{Format a ptype object as a character string}
 \usage{
 .format_ptype(x)
+
+\method{.format_ptype}{default}(x)
+
+\method{.format_ptype}{difftime}(x)
+
+\method{.format_ptype}{Date}(x)
+
+\method{.format_ptype}{POSIXct}(x)
 }
 \arguments{
 \item{x}{(\code{ptype}) A prototype object.}
