@@ -26,7 +26,8 @@
 forwarded from the calling \verb{format.*} method.}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
-does not exist.}
+does not exist. Note: this value must match the \code{.ptype_inner} of the field
+(the value \emph{before} any transformation), not the \code{.ptype}.}
 
 \item{.ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 

@@ -45,7 +45,8 @@ wrapped.}
 \item{file}{(\code{character(1)}) A path to a file, a connection, or literal data.}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
-does not exist.}
+does not exist. Note: this value must match the \code{.ptype_inner} of the field
+(the value \emph{before} any transformation), not the \code{.ptype}.}
 
 \item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
