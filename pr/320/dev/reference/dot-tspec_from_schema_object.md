@@ -1,0 +1,27 @@
+# Convert an object-type schema to a tibblify row spec
+
+Convert an object-type schema to a tibblify row spec
+
+## Usage
+
+``` r
+.tspec_from_schema_object(schema, openapi_spec)
+```
+
+## Arguments
+
+- schema:
+
+  (`list`) A JSON schema object, as defined in the [Schema
+  Object](https://spec.openapis.org/oas/v3.1.0#schema-object), typically
+  from `openapi_spec$components$schemas` or inline within the spec.
+
+- openapi_spec:
+
+  (`list`) A parsed OpenAPI specification.
+
+## Value
+
+A
+[`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
+spec with fields extracted from schema properties.
