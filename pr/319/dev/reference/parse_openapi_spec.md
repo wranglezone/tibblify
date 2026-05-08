@@ -50,10 +50,11 @@ shortcomings:
 - We do not yet support `summary` or `description` fields in path item
   objects.
 
-- We do not yet fully support `parameters` at the path item level:
-  parameters defined there are parsed and included in the
-  `global_parameters` column of the operations tibble, but they are not
-  yet applied to operations as supported path-item-level parameters.
+- We do not yet incorporate `parameters` defined at the path item level
+  into operation-level parameter parsing. We do, however, parse and
+  include them in the `global_parameters` column of the operations
+  tibble, so they are available even though they are not yet merged into
+  each operation's parameters.
 
 - We do not yet support `links` in response objects.
 
