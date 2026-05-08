@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 ```{r packages-used}
 library(tibblify)
 library(purrr)
+library(repurrrsive)
 library(vctrs)
 ```
 
@@ -27,11 +28,14 @@ These lists might come from an API in the form of JSON or from scraping XML.
 
 ## Example
 
-Let's start with `gh_users`, which is a list containing information about four GitHub users. 
+Let's start with `gh_users`, which is a list from the {repurrrsive} package containing information about four GitHub users. 
 We'll select a subset of columns to keep the example relatively simple.
 
 ```{r}
-gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")])
+gh_users_small <- purrr::map(
+  repurrrsive::gh_users, 
+  ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")]
+)
 
 names(gh_users_small[[1]])
 ```
@@ -184,7 +188,10 @@ You can use [`tidyr::unnest()`](https://tidyr.tidyverse.org/reference/nest.html)
 In `gh_repos_small`, the field `owner` is an object itself.
 
 ```{r}
-gh_repos_small <- purrr::map(gh_repos, ~ .x[c("id", "name", "owner")])
+gh_repos_small <- purrr::map(
+  repurrrsive::gh_repos, 
+  ~ .x[c("id", "name", "owner")]
+)
 gh_repos_small <- purrr::map(
   gh_repos_small,
   function(repo) {

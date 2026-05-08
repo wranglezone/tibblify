@@ -158,6 +158,7 @@ test_that("can tibblify empty objects (#204)", {
 })
 
 test_that("can tibblify discog", {
+  skip_if_not_installed("repurrrsive")
   row1 <- tibble(
     instance_id = 354823933L,
     date_added = "2019-02-16T17:48:59-08:00",
@@ -252,14 +253,14 @@ test_that("can tibblify discog", {
     tib_int("rating"),
   )
 
-  expect_equal(tibblify(discog[1], spec_collection), row1)
+  expect_equal(tibblify(repurrrsive::discog[1], spec_collection), row1)
   spec_collection2 <- spec_collection
   spec_collection2$fields$basic_information$fields$formats$fields$descriptions <-
     tib_chr_vec("descriptions", .required = FALSE)
   expect_equal(tibblify(row1, spec_collection2), row1)
 
   specs_object <- tspec_row(!!!spec_collection$fields)
-  expect_equal(tibblify(discog[[1]], specs_object), row1)
+  expect_equal(tibblify(repurrrsive::discog[[1]], specs_object), row1)
   expect_equal(tibblify(row1, specs_object), row1)
 })
 

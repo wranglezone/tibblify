@@ -101,6 +101,4 @@ supported by tibblify.
 \examples{
 guess_tspec(list(x = 1, y = "a"))
 guess_tspec(list(list(x = 1), list(x = 2)))
-
-guess_tspec(gh_users)
 }

@@ -128,11 +128,13 @@ test_that("guess_tspec_object_list errors informatively list of non-objects", {
 # specific cases ----
 
 test_that("guess_tspec_object_list can guess spec for discog", {
-  expect_snapshot(guess_tspec_object_list(discog))
+  skip_if_not_installed("repurrrsive")
+  expect_snapshot(guess_tspec_object_list(repurrrsive::discog))
 })
 
 test_that("guess_tspec_object_list can guess spec for gh_users", {
-  expect_snapshot(guess_tspec_object_list(gh_users))
+  skip_if_not_installed("repurrrsive")
+  expect_snapshot(guess_tspec_object_list(repurrrsive::gh_users))
 })
 
 test_that("guess_tspec_object_list can guess spec for gsoc-2018", {

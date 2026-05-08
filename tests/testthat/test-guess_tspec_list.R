@@ -14,6 +14,7 @@ test_that("guess_tspec_list errors informatively for bad objects", {
 })
 
 test_that("guess_tspec_list dispatches appropriately", {
+  skip_if_not_installed("repurrrsive")
   local_mocked_bindings(
     guess_tspec_object_list = function(x, ...) {
       cli::cli_inform("object_list", class = "object_list")
@@ -31,9 +32,9 @@ test_that("guess_tspec_list dispatches appropriately", {
     expect_message(class = "object")
 
   # guess_tspec_object_list()
-  guess_tspec_list(discog) |>
+  guess_tspec_list(repurrrsive::discog) |>
     expect_message(class = "object_list")
-  guess_tspec_list(gh_users) |>
+  guess_tspec_list(repurrrsive::gh_users) |>
     expect_message(class = "object_list")
   read_sample_json("gsoc-2018.json") |>
     guess_tspec_list() |>

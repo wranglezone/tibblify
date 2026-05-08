@@ -47,8 +47,12 @@ To illustrate how `tibblify()` works, we'll start with a list containing informa
 
 ```{r}
 library(tibblify)
+library(repurrrsive)
 
-gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")])
+gh_users_small <- purrr::map(
+  repurrrsive::gh_users,
+  ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")]
+)
 
 names(gh_users_small[[1]])
 ```

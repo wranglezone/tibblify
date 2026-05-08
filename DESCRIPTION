@@ -34,6 +34,7 @@ Suggests:
     jsonlite (>= 1.8.0),
     knitr (>= 1.40),
     memoise (>= 2.0.1),
+    repurrrsive,
     rmarkdown (>= 2.16),
     spelling (>= 2.2),
     stbl,

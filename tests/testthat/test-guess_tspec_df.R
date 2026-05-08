@@ -459,6 +459,7 @@ test_that("inform about unspecified elements", {
 })
 
 test_that("guess_tspec_df dispatches properly for object lists", {
+  skip_if_not_installed("repurrrsive")
   local_mocked_bindings(
     guess_tspec_object_list = function(
       x,
@@ -469,5 +470,8 @@ test_that("guess_tspec_df dispatches properly for object lists", {
       cli::cli_inform("guess_tspec_object_list called")
     }
   )
-  expect_message(guess_tspec_df(discog), "guess_tspec_object_list called")
+  expect_message(
+    guess_tspec_df(repurrrsive::discog),
+    "guess_tspec_object_list called"
+  )
 })
