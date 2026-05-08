@@ -21,8 +21,16 @@ subset of columns to keep the example relatively simple.
 
 ``` r
 gh_users_small <- purrr::map(
-  repurrrsive::gh_users, 
-  ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")]
+  repurrrsive::gh_users,
+  ~ .x[c(
+    "followers",
+    "login",
+    "url",
+    "name",
+    "location",
+    "email",
+    "public_gists"
+  )]
 )
 
 names(gh_users_small[[1]])
