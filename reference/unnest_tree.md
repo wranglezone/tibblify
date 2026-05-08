@@ -6,7 +6,7 @@ Unnest a recursive data frame
 
 ``` r
 unnest_tree(
-  data,
+  x,
   id_col,
   child_col,
   level_to = "level",
@@ -17,40 +17,42 @@ unnest_tree(
 
 ## Arguments
 
-- data:
+- x:
 
-  A data frame.
+  (`data.frame`) The data frame to unnest.
 
 - id_col:
 
-  A column that uniquely identifies each observation.
+  (`character(1)`, `integer(1)`, or `symbol`) The column that uniquely
+  identifies each observation.
 
 - child_col:
 
-  Column containing the children of an observation. This must be a list
-  where each element is either `NULL` or a data frame with the same
-  columns as `data`.
+  (`character(1)`, `integer(1)`, or `symbol`) The column that contains
+  the children of an observation. This column must be a list where each
+  element is either `NULL` or a data frame with the same columns as `x`.
 
 - level_to:
 
-  A string (`"level"` by default) specifying the new column to store the
-  level of an observation. Use `NULL` if you don't need this
+  (`character(1)`) The column name (`"level"` by default) in which to
+  store the level of an observation. Use `NULL` if you don't need this
   information.
 
 - parent_to:
 
-  A string (`"parent"` by default) specifying the new column storing the
-  parent id of an observation. Use `NULL` if you don't need this
-  information.
+  (`character(1)`) The column name (`"parent"` by default) in which to
+  store the parent id of an observation. Use `NULL` if you don't need
+  this information.
 
 - ancestors_to:
 
-  A string (`NULL` by default) specifying the new column storing the ids
-  of its ancestors. Use `NULL` if you don't need this information.
+  (`character(1)`) The column name (`NULL` by default) in which to store
+  the ids of the ancestors of a deeply nested child. Use `NULL` if you
+  don't need this information.
 
 ## Value
 
-A data frame.
+A "flat" data frame.
 
 ## Examples
 
@@ -72,6 +74,11 @@ df <- tibble(
     )
   )
 )
+df
+#> # A tibble: 1 × 3
+#>      id name  children        
+#>   <int> <chr> <list>          
+#> 1     1 a     <tibble [2 × 3]>
 
 unnest_tree(
   df,

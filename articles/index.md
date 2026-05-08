@@ -2,6 +2,6 @@
 
 ### All vignettes
 
-- [Overview supported
-  structures](https://tibblify.wrangle.zone/articles/overview-supported-structures.md):
+- [Overview of supported
+  structures](https://tibblify.wrangle.zone/articles/supported-structures.md):
 - [tibblify](https://tibblify.wrangle.zone/articles/tibblify.md):

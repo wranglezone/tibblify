@@ -1,10 +1,11 @@
 # tibblify: Rectangle Nested Lists
 
-A tool to rectangle a nested list, that is to convert it into a tibble.
-This is done automatically or according to a given specification. A
-common use case is for nested lists coming from parsing JSON files or
-the JSON response of REST APIs. It is supported by the 'vctrs' package
-and therefore offers a wide support of vector types.
+A tool to rectangle a nested list, that is to convert it into a
+'tibble'. This is done automatically or according to a given
+specification. A common use case is for nested lists coming from parsing
+'JSON' files, or the 'JSON' responses of 'REST' 'APIs'. 'Rectangling'
+uses the 'vctrs' package, and therefore offers a wide support of vector
+types.
 
 ## See also
 
@@ -22,6 +23,9 @@ Useful links:
 ([ORCID](https://orcid.org/0000-0003-4781-4346))
 
 Authors:
+
+- Jon Harmon <jonthegeek@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-4781-4346))
 
 - Maximilian Girlich <maximilian.girlich@outlook.com> \[copyright
   holder\]

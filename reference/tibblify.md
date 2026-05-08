@@ -1,6 +1,7 @@
 # Rectangle a nested list
 
-Rectangle a nested list
+Transform a nested list into a tibble or a list of objects according to
+a specification.
 
 ## Usage
 
@@ -12,31 +13,48 @@ tibblify(x, spec = NULL, unspecified = NULL)
 
 - x:
 
-  A nested list.
+  (`list`) A nested list.
 
 - spec:
 
-  A specification how to convert `x`. Generated with
-  [`tspec_row()`](https://tibblify.wrangle.zone/reference/tspec_df.md)
+  (`tspec`) A specification of how to convert `x`. Generated with
+  [`tspec_df()`](https://tibblify.wrangle.zone/reference/tspec_df.md),
+  [`tspec_row()`](https://tibblify.wrangle.zone/reference/tspec_df.md),
+  [`tspec_object()`](https://tibblify.wrangle.zone/reference/tspec_df.md),
+  [`tspec_recursive()`](https://tibblify.wrangle.zone/reference/tspec_df.md),
   or
-  [`tspec_df()`](https://tibblify.wrangle.zone/reference/tspec_df.md).
+  [`guess_tspec()`](https://tibblify.wrangle.zone/reference/guess_tspec.md).
+  If `spec` is `NULL` (the default),
+  `guess_tspec(x, inform_unspecified = TRUE)` will be used to guess the
+  `spec`.
 
 - unspecified:
 
-  A string that describes what happens if the specification contains
-  unspecified fields. Can be one of
+  (`character(1)`) What to do with
+  [`tib_unspecified()`](https://tibblify.wrangle.zone/reference/tib_spec.md)
+  fields. Can be one of
 
   - `"error"`: Throw an error.
 
-  - `"inform"`: Inform.
+  - `"inform"`: Inform the user then parse as with
+    [`tib_variant()`](https://tibblify.wrangle.zone/reference/tib_spec.md).
 
   - `"drop"`: Do not parse these fields.
 
-  - `"list"`: Parse an unspecified field into a list.
+  - `"list"`: Parse unspecified fields into lists as with
+    [`tib_variant()`](https://tibblify.wrangle.zone/reference/tib_spec.md).
 
 ## Value
 
-Either a tibble or a list, depending on the specification
+Either a tibble or a list, depending on the specification.
+
+## Details
+
+Fields specifically tagged as
+[`tib_unspecified()`](https://tibblify.wrangle.zone/reference/tib_spec.md)
+in the `spec` (or guessed as such) will be handled according to the
+`unspecified` argument. Fields that are present in `x` but not mentioned
+in the `spec` are ignored.
 
 ## See also
 

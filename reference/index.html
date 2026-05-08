@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview-supported-structures.html">Overview supported structures</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/supported-structures.html">Overview of supported structures</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -48,7 +48,7 @@
 
       <dl><dt>
 
-          <code><a href="formatting.html">print(<i>&lt;tspec&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tspec_df&gt;</i>)</a></code>
+          <code><a href="formatting.html">print(<i>&lt;tib_collector&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_scalar&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_variant&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_vector&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_unspecified&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_scalar_chr_date&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_vector_chr_date&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_row&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_df&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tib_recursive&gt;</i>)</a></code> <code><a href="formatting.html">print(<i>&lt;tibblify_object&gt;</i>)</a></code> <code><a href="formatting.html">print(<i>&lt;tspec&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tspec_df&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tspec_row&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tspec_recursive&gt;</i>)</a></code> <code><a href="formatting.html">format(<i>&lt;tspec_object&gt;</i>)</a></code>
 
         </dt>
         <dd>Printing tibblify specifications</dd>
@@ -62,31 +62,10 @@
 
         <dt>
 
-          <code><a href="gh_repos.html">gh_repos</a></code>
+          <code><a href="guess_tspec.html">guess_tspec()</a></code> <code><a href="guess_tspec.html">guess_tspec_df()</a></code> <code><a href="guess_tspec.html">guess_tspec_list()</a></code> <code><a href="guess_tspec.html">guess_tspec_object()</a></code> <code><a href="guess_tspec.html">guess_tspec_object_list()</a></code>
 
         </dt>
-        <dd>GitHub Repositories</dd>
-
-        <dt>
-
-          <code><a href="gh_users.html">gh_users</a></code>
-
-        </dt>
-        <dd>GitHub Users</dd>
-
-        <dt>
-
-          <code><a href="got_chars.html">got_chars</a></code>
-
-        </dt>
-        <dd>Game of Thrones POV characters</dd>
-
-        <dt>
-
-          <code><a href="guess_tspec.html">guess_tspec()</a></code> <code><a href="guess_tspec.html">guess_tspec_df()</a></code> <code><a href="guess_tspec.html">guess_tspec_object()</a></code>
-
-        </dt>
-        <dd>Guess the <code><a href="../reference/tibblify.html">tibblify()</a></code> Specification</dd>
+        <dd>Guess the <code><a href="../reference/tibblify.html">tibblify()</a></code> specification</dd>
 
         <dt>
 
@@ -118,10 +97,10 @@
 
         <dt>
 
-          <code><a href="tib_scalar.html">tib_unspecified()</a></code> <code><a href="tib_scalar.html">tib_scalar()</a></code> <code><a href="tib_scalar.html">tib_lgl()</a></code> <code><a href="tib_scalar.html">tib_int()</a></code> <code><a href="tib_scalar.html">tib_dbl()</a></code> <code><a href="tib_scalar.html">tib_chr()</a></code> <code><a href="tib_scalar.html">tib_date()</a></code> <code><a href="tib_scalar.html">tib_chr_date()</a></code> <code><a href="tib_scalar.html">tib_vector()</a></code> <code><a href="tib_scalar.html">tib_lgl_vec()</a></code> <code><a href="tib_scalar.html">tib_int_vec()</a></code> <code><a href="tib_scalar.html">tib_dbl_vec()</a></code> <code><a href="tib_scalar.html">tib_chr_vec()</a></code> <code><a href="tib_scalar.html">tib_date_vec()</a></code> <code><a href="tib_scalar.html">tib_chr_date_vec()</a></code> <code><a href="tib_scalar.html">tib_variant()</a></code> <code><a href="tib_scalar.html">tib_recursive()</a></code> <code><a href="tib_scalar.html">tib_row()</a></code> <code><a href="tib_scalar.html">tib_df()</a></code>
+          <code><a href="tib_spec.html">tib_scalar()</a></code> <code><a href="tib_spec.html">tib_vector()</a></code> <code><a href="tib_spec.html">tib_unspecified()</a></code> <code><a href="tib_spec.html">tib_lgl()</a></code> <code><a href="tib_spec.html">tib_int()</a></code> <code><a href="tib_spec.html">tib_dbl()</a></code> <code><a href="tib_spec.html">tib_chr()</a></code> <code><a href="tib_spec.html">tib_date()</a></code> <code><a href="tib_spec.html">tib_chr_date()</a></code> <code><a href="tib_spec.html">tib_lgl_vec()</a></code> <code><a href="tib_spec.html">tib_int_vec()</a></code> <code><a href="tib_spec.html">tib_dbl_vec()</a></code> <code><a href="tib_spec.html">tib_chr_vec()</a></code> <code><a href="tib_spec.html">tib_date_vec()</a></code> <code><a href="tib_spec.html">tib_chr_date_vec()</a></code> <code><a href="tib_spec.html">tib_variant()</a></code> <code><a href="tib_spec.html">tib_recursive()</a></code> <code><a href="tib_spec.html">tib_row()</a></code> <code><a href="tib_spec.html">tib_df()</a></code>
 
         </dt>
-        <dd>Create a Field Specification</dd>
+        <dd>Create a field specification</dd>
 
         <dt>
 
@@ -139,10 +118,10 @@
 
         <dt>
 
-          <code><a href="tspec_df.html">tspec_df()</a></code> <code><a href="tspec_df.html">tspec_object()</a></code> <code><a href="tspec_df.html">tspec_recursive()</a></code> <code><a href="tspec_df.html">tspec_row()</a></code>
+          <code><a href="tspec_df.html">tspec_df()</a></code> <code><a href="tspec_df.html">tspec_object()</a></code> <code><a href="tspec_df.html">tspec_row()</a></code> <code><a href="tspec_df.html">tspec_recursive()</a></code>
 
         </dt>
-        <dd>Create a Tibblify Specification</dd>
+        <dd>Create a tibblify specification</dd>
 
         <dt>
 

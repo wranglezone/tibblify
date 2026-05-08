@@ -1,8 +1,15 @@
 # Parse an OpenAPI spec
 
-**\[experimental\]** Use `parse_openapi_spec()` to parse a [OpenAPI
-spec](https://swagger.io/specification/) or use `parse_openapi_schema()`
-to parse a OpenAPI schema.
+**\[experimental\]**
+
+The [OpenAPI Initiative](https://www.openapis.org/) is a [Linux
+Foundation](https://www.linuxfoundation.org/projects) project to define
+an [OpenAPI Specification](https://spec.openapis.org/oas/latest.html), a
+formal standard for describing HTTP APIs. Use `parse_openapi_spec()` to
+parse such OpenAPI specs. You can also parse [OpenAPI Schema
+Objects](https://spec.openapis.org/oas/latest.html#schema-object) (which
+describe the structure of input and output datatypes) directly with
+`parse_openapi_schema()`.
 
 ## Usage
 
@@ -16,26 +23,47 @@ parse_openapi_schema(file)
 
 - file:
 
-  Either a path to a file, a connection, or literal data (a single
-  string).
+  (`character(1)`) A path to a file, a connection, or literal data.
 
 ## Value
 
-For `parse_openapi_spec()` a data frame with the columns
+For `parse_openapi_spec()`, a nested data frame with the columns
 
-- `endpoint` `<character>` Name of the endpoint.
+- `endpoint` (`character`) Name of the endpoint.
 
-- `operation` `<character>` The http operation; one of `"get"`, `"put"`,
-  `"post"`, `"delete"`, `"options"`, `"head"`, `"patch"`, or `"trace"`.
+- `operations` (`list`) A list of data frames describing that endpoint.
+  See the [Paths Object in the OpenAPI
+  spec](https://spec.openapis.org/oas/latest.html#paths-object) for
+  details. All references (`$ref`) in the spec are resolved.
 
-- `status_code` `<character>` The http status code. May contain
-  wildcards like `2xx` for all response codes between `200` and `299`.
+For `parse_openapi_schema()`, a tibblify spec. All references (`$ref`)
+in the spec are resolved.
 
-- `media_type` `<character>` The media type.
+## Shortcomings
 
-- `spec` `<list>` A list of tibblify specifications.
+This implementation is not complete, and there are some known
+shortcomings:
 
-For `parse_openapi_schema()` a tibblify spec.
+- We only tibblify the `paths` part of the spec, although we also parse
+  the `components` part in order to resolve references.
+
+- We do not yet support `summary` or `description` fields in path item
+  objects.
+
+- We do not yet incorporate `parameters` defined at the path item level
+  into operation-level parameter parsing. We do, however, parse and
+  include them in the `global_parameters` column of the operations
+  tibble, so they are available even though they are not yet merged into
+  each operation's parameters.
+
+- We do not yet support `links` in response objects.
+
+- We do not yet support `callbacks` in operation objects.
+
+- We do not yet support OpenAPI extensions (fields starting with `x-`).
+
+- Our implementation of `oneOf`, `anyOf`, and `allOf` is very basic and
+  may not cover all cases.
 
 ## Examples
 
@@ -71,12 +99,23 @@ file <- '{
     "edited"
   ]
 }'
-
 parse_openapi_schema(file)
 #> tspec_row(
 #>   tib_chr("name"),
 #>   tib_chr("model"),
-#>   tib_chr("url", required = FALSE),
+#>   tib_chr("url", .required = FALSE),
 #>   tib_chr("edited"),
 #> )
+
+# Spec example from
+# https://swagger.io/docs/specification/v3_0/basic-structure/
+spec_path <- system.file(
+  "examples", "openapi", "sample_api.yaml", package = "tibblify"
+)
+spec <- parse_openapi_spec(spec_path)
+spec
+#> # A tibble: 1 × 2
+#>   endpoint operations       
+#>   <chr>    <list>           
+#> 1 /users   <tibble [1 × 11]>
 ```

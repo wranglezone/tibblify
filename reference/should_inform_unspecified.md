@@ -1,7 +1,7 @@
 # Determine whether to inform about unspecified fields in spec
 
-Wrapper around `getOption("tibblify.show_unspecified")` that implements
-some \#' fall back logic if the option is unset. This returns:
+Wrapper around `getOption("tibblify.show_unspecified")` to return `TRUE`
+unless the option is explicitly set to `FALSE`.
 
 ## Usage
 
@@ -11,14 +11,11 @@ should_inform_unspecified()
 
 ## Value
 
-`TRUE` or `FALSE`.
+`FALSE` if the option is set to `FALSE`, `TRUE` otherwise.
 
-## Details
+## Examples
 
-- `TRUE` if the option is set to `TRUE`
-
-- `FALSE` if the option is set to `FALSE`
-
-- `FALSE` if the option is unset and we appear to be running tests
-
-- `TRUE` otherwise
+``` r
+should_inform_unspecified()
+#> [1] TRUE
+```
