@@ -90,10 +90,10 @@ the spec are resolved.</p>
 <code>components</code> part in order to resolve references.</p></li>
 <li><p>We do not yet support <code>summary</code> or <code>description</code> fields in path item
 objects.</p></li>
-<li><p>We do not yet support <code>parameters</code> at the path item level, so any
-parameters defined there will be ignored. However, we do parse and include
-them in the <code>global_parameters</code> column of the operations tibble, so they
-are not lost.</p></li>
+<li><p>We do not yet fully support <code>parameters</code> at the path item level:
+parameters defined there are parsed and included in the
+<code>global_parameters</code> column of the operations tibble, but they are not yet
+applied to operations as supported path-item-level parameters.</p></li>
 <li><p>We do not yet support <code>links</code> in response objects.</p></li>
 <li><p>We do not yet support <code>callbacks</code> in operation objects.</p></li>
 <li><p>We do not yet support OpenAPI extensions (fields starting with <code>x-</code>).</p></li>
