@@ -1,10 +1,17 @@
 #' Parse an OpenAPI spec
 #'
 #' @description
+#'
 #' `r lifecycle::badge("experimental")`
-#' Use `parse_openapi_spec()` to parse an
-#' [OpenAPI spec](https://spec.openapis.org/oas/latest.html) or use
-#' `parse_openapi_schema()` to parse an OpenAPI schema.
+#'
+#' The [OpenAPI Initiative](https://www.openapis.org/) is a [Linux
+#' Foundation](https://www.linuxfoundation.org/projects) project to define an
+#' [OpenAPI Specification](https://spec.openapis.org/oas/latest.html), a formal
+#' standard for describing HTTP APIs. Use `parse_openapi_spec()` to parse such
+#' OpenAPI specs. You can also parse [OpenAPI Schema
+#' Objects](https://spec.openapis.org/oas/latest.html#schema-object) (which
+#' describe the structure of input and output datatypes) directly with
+#' `parse_openapi_schema()`.
 #'
 #' @inheritParams .shared-params
 #'
@@ -16,7 +23,8 @@
 #'   spec](https://spec.openapis.org/oas/latest.html#paths-object) for details.
 #'   All references (`$ref`) in the spec are resolved.
 #'
-#'   For `parse_openapi_schema()`, a tibblify spec.
+#'   For `parse_openapi_schema()`, a tibblify spec. All references (`$ref`) in
+#'   the spec are resolved.
 #' @export
 #'
 #' @examples
@@ -62,28 +70,10 @@
 parse_openapi_spec <- function(file) {
   # https://spec.openapis.org/oas/v3.1.0#openapi-object2
   openapi_spec <- .read_spec(file)
-
-  version <- openapi_spec$openapi
-  if (is.null(version) || version < "3") {
-    cli::cli_abort("OpenAPI versions before 3 are not supported.")
-  }
-  # cannot use `openapi_spec` for memoising, as hashing it takes much more time
-  # than everything else. To still make sure the result is correct simply forget
-  # previous results.
-  if (rlang::is_installed("memoise")) {
-    memoise::forget(.parse_schema_memoised)
-  }
-
-  out <- purrr::map(
-    openapi_spec$paths,
-    \(x) {
-      .parse_path_item_object(path_item_object = x, openapi_spec = openapi_spec)
-    }
-  )
-
+  out <- .parse_path_item_objects(openapi_spec)
   .fast_tibble(
     list(
-      endpoint = names2(out),
+      endpoint = rlang::names2(out),
       operations = unname(out)
     )
   )
@@ -92,11 +82,8 @@ parse_openapi_spec <- function(file) {
 #' @export
 #' @rdname parse_openapi_spec
 parse_openapi_schema <- function(file) {
-  rlang::check_installed("memoise")
-  openapi_spec <- .read_spec(file)
+  openapi_spec <- .read_schema(file)
   out <- .parse_schema(openapi_spec, "a", openapi_spec)
-  memoise::forget(.parse_schema_memoised)
-
   if (out$type == "row") {
     tspec_row(!!!out$fields)
   } else {
@@ -104,36 +91,21 @@ parse_openapi_schema <- function(file) {
   }
 }
 
-#' Read an OpenAPI spec from a file, connection, or list
+# helpers ----
+
+## parsers ----
+
+#' Parse all path item objects from an OpenAPI spec
 #'
 #' @inheritParams .shared-params
-#' @returns (`list`) The parsed spec.
+#' @returns A named list of tibbles, one per path, containing parsed operations.
 #' @keywords internal
-.read_spec <- function(file, arg = caller_arg(file), call = caller_env()) {
-  if (is_list(file)) {
-    return(file)
-  }
-
-  rlang::check_installed("yaml")
-  if (inherits(file, "connection")) {
-    return(yaml::read_yaml(file)) # nocov
-  }
-
-  if (is_character(file)) {
-    rlang::check_string(file)
-
-    if (grepl("\n", file)) {
-      out <- yaml::yaml.load(file)
-    } else {
-      out <- yaml::read_yaml(file, readLines.warn = FALSE)
+.parse_path_item_objects <- function(openapi_spec) {
+  purrr::map(
+    openapi_spec$paths,
+    \(x) {
+      .parse_path_item_object(path_item_object = x, openapi_spec = openapi_spec)
     }
-
-    return(out)
-  }
-
-  stop_input_type(
-    file,
-    c("a string", "a connection", "a list")
   )
 }
 
@@ -146,7 +118,7 @@ parse_openapi_schema <- function(file) {
   # https://spec.openapis.org/oas/v3.1.0#path-item-object
   path_item_object <- .openapi_resolve_reference(path_item_object, openapi_spec)
 
-  # FIXME pass along `parameters`?
+  # FIXME pass along main `parameters`?
   parameters <- .parse_parameters(path_item_object$parameters, openapi_spec)
 
   # TODO `summary`: An optional, string summary, intended to apply to all
@@ -169,13 +141,12 @@ parse_openapi_schema <- function(file) {
   # }
 
   ops <- c("get", "put", "post", "delete", "options", "head", "patch", "trace")
-  operations <- path_item_object[intersect(names(path_item_object), ops)]
   parsed_operations <- purrr::map(
-    operations,
+    path_item_object[intersect(tolower(names(path_item_object)), ops)],
     \(x) .parse_operation_object(x, openapi_spec)
   )
   out <- vctrs::vec_rbind(!!!parsed_operations, .names_to = "operation")
-  if (nrow(out) > 0) {
+  if (nrow(out)) {
     out$global_parameters <- list(parameters)
   } else {
     out$global_parameters <- list()
@@ -191,7 +162,6 @@ parse_openapi_schema <- function(file) {
 .parse_operation_object <- function(operation_object, openapi_spec) {
   # https://spec.openapis.org/oas/v3.1.0#operation-object
   operation_object <- .openapi_resolve_reference(operation_object, openapi_spec)
-
   spec <- tspec_object(
     tib_chr("summary", .required = FALSE),
     tib_chr("description", .required = FALSE),
@@ -205,7 +175,6 @@ parse_openapi_schema <- function(file) {
   )
   operation_object$tags <- as.character(unlist(operation_object$tags))
   data <- tibblify(operation_object, spec)
-
   data$request_body <- list(.parse_request_body(
     data$request_body,
     openapi_spec
@@ -214,7 +183,6 @@ parse_openapi_schema <- function(file) {
   data$responses <- list(.parse_responses_object(data$responses, openapi_spec))
   data$tags <- list(data$tags)
   data$security <- list(data$security)
-
   .fast_tibble(unclass(data), n = 1L)
 }
 
@@ -229,7 +197,6 @@ parse_openapi_schema <- function(file) {
   if (is.null(request_body)) {
     return(NULL)
   }
-
   request_body <- .openapi_resolve_reference(request_body, openapi_spec)
 
   # TODO add extensions?
@@ -243,7 +210,6 @@ parse_openapi_schema <- function(file) {
     parsed_request_body$content[[1]],
     openapi_spec
   )
-
   parsed_request_body
 }
 
@@ -258,12 +224,10 @@ parse_openapi_schema <- function(file) {
   if (is.null(parameters)) {
     return(NULL)
   }
-
   parameters <- purrr::map(
     parameters,
     \(x) .openapi_resolve_reference(x, openapi_spec)
   )
-
   spec <- tspec_df(
     tib_chr("in"),
     tib_chr("name"),
@@ -285,7 +249,6 @@ parse_openapi_schema <- function(file) {
     tib_lgl("explode", .required = FALSE, .fill = FALSE),
     tib_chr("style", .required = FALSE),
   )
-
   tibblify(parameters, spec)
 }
 
@@ -320,7 +283,6 @@ parse_openapi_schema <- function(file) {
     tib_variant("links", .required = FALSE),
   )
   parsed_response <- tibblify(response_object, spec)
-
   if (!rlang::is_empty(parsed_response$headers)) {
     parsed_response$headers <- .parse_header_objects(
       parsed_response$headers,
@@ -337,11 +299,9 @@ parse_openapi_schema <- function(file) {
     parsed_response$content,
     openapi_spec
   )
-
   parsed_response$headers <- list(parsed_response$headers)
   parsed_response$content <- list(parsed_response$content)
   parsed_response$links <- list(parsed_response$links)
-
   .fast_tibble(parsed_response, n = 1L)
 }
 
@@ -353,21 +313,12 @@ parse_openapi_schema <- function(file) {
 .parse_media_type_objects <- function(media_type_objects, openapi_spec) {
   out <- purrr::map(
     media_type_objects,
-    \(x) .parse_media_type_object(x, openapi_spec)
+    \(x) .tspec_from_schema(x$schema, openapi_spec)
   )
   .fast_tibble(
-    list(media_type = names2(out), spec = unname(out)),
+    list(media_type = rlang::names2(out), spec = unname(out)),
     n = length(out)
   )
-}
-
-#' Parse a single media type object from an OpenAPI spec
-#'
-#' @inheritParams .shared-params
-#' @returns A tibblify spec derived from the media type object's schema.
-#' @keywords internal
-.parse_media_type_object <- function(media_type_object, openapi_spec) {
-  .schema_to_tspec(media_type_object$schema, openapi_spec)
 }
 
 #' Parse a named list of header objects from an OpenAPI spec
@@ -376,8 +327,10 @@ parse_openapi_schema <- function(file) {
 #' @returns (`tbl_df`) A tibble of parsed header objects.
 #' @keywords internal
 .parse_header_objects <- function(header_objects, openapi_spec) {
-  # https://spec.openapis.org/oas/v3.1.0#headerObject The Header Object follows
-  # the structure of the Parameter Object with the following changes:
+  # https://spec.openapis.org/oas/v3.1.0#headerObject
+
+  # The Header Object follows the structure of the Parameter Object with the
+  # following changes:
   # * `name` MUST NOT be specified, it is given in the corresponding headers
   # map.
   # * `in` MUST NOT be specified, it is implicitly in header.
@@ -387,7 +340,6 @@ parse_openapi_schema <- function(file) {
     header_objects,
     \(x) .openapi_resolve_reference(x, openapi_spec)
   )
-
   spec <- tspec_df(
     .names_to = "name",
     tib_chr("description", .required = FALSE),
@@ -408,54 +360,276 @@ parse_openapi_schema <- function(file) {
     tib_lgl("explode", .required = FALSE, .fill = FALSE),
     tib_chr("style", .required = FALSE),
   )
-
   tibblify(header_objects, spec)
+}
+
+#' Parse an OpenAPI schema object into a tib field spec
+#'
+#' @inheritParams .shared-params
+#' @returns A tib field spec corresponding to the schema type.
+#' @keywords internal
+.parse_schema <- function(schema, name, openapi_spec) {
+  schema <- .openapi_resolve_reference(schema, openapi_spec)
+  .tib_from_one_of(schema, name, openapi_spec) %||%
+    .tib_from_any_of(schema, name, openapi_spec) %||%
+    .tib_from_all_of(schema, name, openapi_spec) %||%
+    .tib_from_schema_type(schema, name, openapi_spec)
 }
 
 #' Convert an OpenAPI schema to a tibblify tspec
 #'
 #' @inheritParams .shared-params
-#' @returns A tibblify spec (`tspec_row`, `tspec_df`, or a tib field).
+#' @returns A tibblify spec ([tspec_row()], [tspec_df()], or a tib field).
 #' @keywords internal
-.schema_to_tspec <- function(schema, openapi_spec) {
+.tspec_from_schema <- function(schema, openapi_spec) {
   schema <- .openapi_resolve_reference(schema, openapi_spec)
+  .tspec_from_one_of(schema, openapi_spec) %||%
+    .tspec_from_all_of(schema, openapi_spec) %||%
+    .tspec_from_schema_type(schema, openapi_spec)
+}
 
-  if (!is.null(schema$oneOf)) {
-    out <- .handle_one_of_tspec(schema, openapi_spec)
-    return(out)
-  }
-  if (!is.null(schema$allOf)) {
-    out <- .handle_all_of_tspec(schema, openapi_spec)
-    return(out)
-  }
+## allOf, oneOf ----
 
-  type <- .get_openapi_type(schema)
-  if (type == "object") {
-    fields <- purrr::imap(
-      schema$properties,
-      \(x, y) .parse_schema_memoised(x, y, openapi_spec)
-    )
-    fields <- .apply_required(fields, schema$required)
+# Explanation for `allOf`, `oneOf`, and `anyOf`
+# https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/
 
-    tspec_row(!!!fields)
-  } else if (type == "array") {
-    schema <- .openapi_resolve_reference(schema$items, openapi_spec)
-
-    fields <- purrr::imap(
-      schema$properties,
-      \(x, y) .parse_schema_memoised(x, y, openapi_spec)
-    )
-    fields <- .apply_required(fields, schema$required)
-
-    tspec_df(!!!fields)
-  } else {
-    # this is a bit of a hack...
-    out <- .parse_schema(schema, "dummy", openapi_spec)
-    out$required <- TRUE
-
-    out
+#' Combine `allOf` sub-schemas into a tib field
+#'
+#' @inheritParams .shared-params
+#' @returns A combined tib field spec.
+#' @keywords internal
+.tib_from_all_of <- function(schema, name, openapi_spec) {
+  if (length(schema$allOf)) {
+    # must satisfy all the schemas -> combine them
+    out <- purrr::map(schema$allOf, \(x) .parse_schema(x, name, openapi_spec))
+    # TODO fix `call`
+    .tib_combine(out, name, current_call())
   }
 }
+
+#' Combine `allOf` sub-schemas into a tspec
+#'
+#' @inheritParams .shared-params
+#' @returns A [tspec_combine()], or `NULL` if `schema$allOf` is empty.
+#' @keywords internal
+.tspec_from_all_of <- function(schema, openapi_spec) {
+  if (length(schema$allOf)) {
+    # must satisfy all the schemas -> combine them
+    out <- purrr::map(schema$allOf, \(x) .tspec_from_schema(x, openapi_spec))
+    # We can have some hacky "dummy" variants in here right now. For now we'll
+    # remove them.
+    out <- purrr::discard(
+      out,
+      function(x) {
+        x$type == "variant" && x$key == "dummy"
+      }
+    )
+    tspec_combine(!!!out)
+  }
+}
+
+#' Combine `oneOf` sub-schemas into a tib field
+#'
+#' @inheritParams .shared-params
+#' @returns A combined tib field spec, or [tib_variant()] if schemas are
+#'   incompatible.
+#' @keywords internal
+.tib_from_one_of <- function(schema, name, openapi_spec) {
+  if (length(schema$oneOf)) {
+    out <- purrr::map(schema$oneOf, \(x) .parse_schema(x, name, openapi_spec))
+    # must satisfy one of the schemas
+    # for now simply try to combine them...
+    tryCatch(
+      {
+        # TODO fix `call`
+        .tib_combine(out, name, current_call())
+      },
+      error = function(cnd) {
+        types <- purrr::map_chr(out, "type")
+        if ("row" %in% types) {
+          .tib_combine(out[types == "row"], name, current_call())
+        } else {
+          tib_variant(name, .required = FALSE)
+        }
+      }
+    )
+  }
+}
+
+#' Combine `anyOf` sub-schemas into a tib field
+#'
+#' @inheritParams .shared-params
+#' @returns A combined tib field spec, or [tib_variant()] if schemas are
+#'   incompatible.
+#' @keywords internal
+.tib_from_any_of <- function(schema, name, openapi_spec) {
+  if (length(schema$anyOf)) {
+    # Since we're just combining specs, this should be enough.
+    schema$oneOf <- schema$anyOf
+    schema$anyOf <- NULL
+    return(.tib_from_one_of(schema, name, openapi_spec))
+  }
+}
+
+#' Combine `oneOf` sub-schemas into a tspec
+#'
+#' @inheritParams .shared-params
+#' @returns A [tspec_combine()], or `tib_variant("dummy")` if schemas are
+#'   incompatible, or `NULL` if `schema$oneOf` is empty.
+#' @keywords internal
+.tspec_from_one_of <- function(schema, openapi_spec) {
+  if (length(schema$oneOf)) {
+    out <- purrr::map(schema$oneOf, \(x) .tspec_from_schema(x, openapi_spec))
+    # for now simply try to combine them...
+    tryCatch(
+      {
+        tspec_combine(!!!out)
+      },
+      error = function(cnd) {
+        tib_variant("dummy")
+      }
+    )
+  }
+}
+
+# Set up the baseline version of the memoised function. Will be memoised onload
+# if memoise is available.
+.parse_schema_memoised <- .parse_schema
+
+## schema type ----
+
+#' Parse an OpenAPI schema type and create a tib field
+#'
+#' @inheritParams .shared-params
+#' @returns A tib field spec corresponding to the schema type.
+#' @keywords internal
+.tib_from_schema_type <- function(schema, name, openapi_spec) {
+  type <- .get_openapi_type(schema)
+  # TODO description, example, format?
+  switch(
+    type,
+    object = return(.tib_from_schema_object(schema, name, openapi_spec)),
+    array = return(.tib_from_schema_array(schema, name, openapi_spec)),
+    # TODO support for `enum` or `pattern` in string?
+    string = return(tib_chr(name, .required = FALSE)),
+    integer = return(tib_int(name, .required = FALSE)),
+    boolean = return(tib_lgl(name, .required = FALSE)),
+    number = return(tib_dbl(name, .required = FALSE)),
+    variant = return(tib_variant(name, .required = FALSE)),
+    cli::cli_abort("Unsupported type")
+  )
+}
+
+#' Choose and apply a tspec_from_schema_type function
+#'
+#' @inheritParams .shared-params
+#' @returns A tibblify spec ([tspec_row()], [tspec_df()], or a tib field).
+#' @keywords internal
+.tspec_from_schema_type <- function(schema, openapi_spec) {
+  type <- .get_openapi_type(schema)
+  if (type == "object") {
+    return(.tspec_from_schema_object(schema, openapi_spec))
+  }
+  if (type == "array") {
+    return(.tspec_from_schema_array(schema, openapi_spec))
+  }
+  # this is a bit of a hack...
+  out <- .parse_schema(schema, "dummy", openapi_spec)
+  out$required <- TRUE
+  out
+}
+
+#' Parse an object-type OpenAPI schema and create a tib field
+#'
+#' @inheritParams .shared-params
+#' @returns A [tib_row()] field spec with fields extracted from schema
+#'   properties.
+#' @keywords internal
+.tib_from_schema_object <- function(schema, name, openapi_spec) {
+  if (!is.null(schema$additionalProperties)) {
+    # hack required for asana which somehow has `additionalProperties = TRUE`
+    if (is.list(schema$additionalProperties)) {
+      additional_properties <- .openapi_resolve_reference(
+        schema$additionalProperties,
+        openapi_spec
+      )
+    } else {
+      additional_properties <- NULL
+    }
+  } else {
+    additional_properties <- NULL
+  }
+  fields <- purrr::imap(
+    c(schema$properties, additional_properties$properties),
+    \(x, y) .parse_schema_memoised(x, y, openapi_spec)
+  )
+  fields <- .apply_required(
+    fields,
+    c(schema$required, additional_properties$required)
+  )
+  tib_row(name, !!!fields, .required = FALSE)
+}
+
+#' Convert an object-type schema to a tibblify row spec
+#'
+#' @inheritParams .shared-params
+#' @returns A [tspec_row()] spec with fields extracted from schema properties.
+#' @keywords internal
+.tspec_from_schema_object <- function(schema, openapi_spec) {
+  fields <- .fields_from_schema_properties(schema, openapi_spec)
+  tspec_row(!!!fields)
+}
+
+#' Parse an array-type OpenAPI schema and create a tib field
+#'
+#' @inheritParams .shared-params
+#' @returns A tib field spec for the array, which may be a vector, data frame,
+#'   or variant field depending on the array items schema.
+#' @keywords internal
+.tib_from_schema_array <- function(schema, name, openapi_spec) {
+  items <- schema$items
+  if (is.null(items)) {
+    cli::cli_inform("Array has no items")
+    field_spec <- tib_variant(name)
+    return(field_spec)
+  }
+  inner_tib <- .parse_schema_memoised(schema$items, name, openapi_spec)
+  switch(
+    inner_tib$type,
+    scalar = tib_vector(name, inner_tib$ptype, .required = FALSE),
+    row = tib_df(name, !!!inner_tib$fields, .required = FALSE),
+    inner_tib
+  )
+  # TODO support for `minItems`, `maxItems`?
+}
+
+#' Convert an array-type schema to a tibblify data frame spec
+#'
+#' @inheritParams .shared-params
+#' @returns A [tspec_df()] spec with fields extracted from the array items
+#'   schema properties.
+#' @keywords internal
+.tspec_from_schema_array <- function(schema, openapi_spec) {
+  schema <- .openapi_resolve_reference(schema$items, openapi_spec)
+  fields <- .fields_from_schema_properties(schema, openapi_spec)
+  tspec_df(!!!fields)
+}
+
+#' Extract tib fields from schema properties
+#'
+#' @inheritParams .shared-params
+#' @returns A named list of tib field specs corresponding to the schema
+#'   properties, with required flags applied.
+#' @keywords internal
+.fields_from_schema_properties <- function(schema, openapi_spec) {
+  purrr::imap(
+    schema$properties,
+    \(x, y) .parse_schema_memoised(x, y, openapi_spec)
+  ) |>
+    .apply_required(schema$required)
+}
+
+## utils ----
 
 #' Apply required flags to a list of tib fields
 #'
@@ -473,9 +647,6 @@ parse_openapi_schema <- function(file) {
 }
 
 #' Check whether any nested list element has a `$ref` key
-#'
-#' Short-circuiting check that avoids the expensive
-#' `names(unlist(schema))` materialisation.
 #'
 #' @inheritParams .shared-params
 #' @returns (`logical(1)`) `TRUE` if any element has a `$ref` key.
@@ -560,195 +731,12 @@ parse_openapi_schema <- function(file) {
 #'   `"string"`, `"integer"`, `"boolean"`, `"number"`, or `"variant"`.
 #' @keywords internal
 .get_openapi_type <- function(schema) {
-  type <- schema$type
-  if (is.null(type)) {
-    if (!is.null(schema$properties)) {
-      type <- "object"
-    } else if (!is.null(schema$items)) {
-      type <- "array"
-    }
-  }
-
-  rlang::check_string(type, allow_null = TRUE)
-  type %||% "variant"
-}
-
-#' Parse an OpenAPI schema object into a tib field spec
-#'
-#' @inheritParams .shared-params
-#' @returns A tib field spec corresponding to the schema type.
-#' @keywords internal
-.parse_schema <- function(schema, name, openapi_spec) {
-  schema <- .openapi_resolve_reference(schema, openapi_spec)
-  if (!is.null(schema$oneOf)) {
-    out <- .handle_one_of(schema, name, openapi_spec)
-    return(out)
-  }
-  # Since we're just combining specs, this should be enough.
-  if (!is.null(schema$anyOf)) {
-    schema$oneOf <- schema$anyOf
-    schema$anyOf <- NULL
-    out <- .handle_one_of(schema, name, openapi_spec)
-    return(out)
-  }
-  if (!is.null(schema$allOf)) {
-    out <- .handle_all_of(schema, name, openapi_spec)
-    return(out)
-  }
-
-  type <- .get_openapi_type(schema)
-
-  # TODO description, example
-  # TODO format?!
-
-  if (rlang::is_empty(type)) {} else if (type == "object") {
-    if (!is.null(schema$additionalProperties)) {
-      # FIXME hack required for asana which somehow has `additionalProperties =
-      # TRUE`
-      # openapi_spec$components$schemas$RuleTriggerRequest$properties$action_data$additionalProperties
-      if (is.list(schema$additionalProperties)) {
-        additional_properties <- .openapi_resolve_reference(
-          schema$additionalProperties,
-          openapi_spec
-        )
-      } else {
-        additional_properties <- NULL
-      }
-    } else {
-      additional_properties <- NULL
-    }
-
-    fields <- purrr::imap(
-      c(schema$properties, additional_properties$properties),
-      \(x, y) .parse_schema_memoised(x, y, openapi_spec)
-    )
-    fields <- .apply_required(
-      fields,
-      c(schema$required, additional_properties$required)
-    )
-    tib_row(name, !!!fields, .required = FALSE)
-
-    # TODO additionalProperties?
-  } else if (type == "string") {
-    # TODO support for `enum` or `pattern`?
-    tib_chr(name, .required = FALSE)
-  } else if (type == "array") {
-    items <- schema$items
-    if (is.null(items)) {
-      cli::cli_inform("Array has no items")
-      field_spec <- tib_variant(name)
-      return(field_spec)
-    }
-
-    inner_tib <- .parse_schema_memoised(schema$items, name, openapi_spec)
-    if (inner_tib$type == "scalar") {
-      tib_vector(name, inner_tib$ptype, .required = FALSE)
-    } else if (inner_tib$type == "row") {
-      tib_df(name, !!!inner_tib$fields, .required = FALSE)
-    } else {
-      inner_tib
-    }
-    # TODO support for `minItems`, `maxItems`?
-  } else if (type == "integer") {
-    tib_int(name, .required = FALSE)
-  } else if (type == "boolean") {
-    tib_lgl(name, .required = FALSE)
-  } else if (type == "number") {
-    tib_dbl(name, .required = FALSE)
-  } else if (type == "variant") {
-    tib_variant(name, .required = FALSE)
-  } else {
-    cli::cli_abort("Unsupported type")
-  }
-}
-
-# Explanation for `allOf`, `oneOf`, and `anyOf`
-# https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/
-
-#' Handle an `allOf` schema by combining sub-schemas into a tib field
-#'
-#' @inheritParams .shared-params
-#' @returns A combined tib field spec.
-#' @keywords internal
-.handle_all_of <- function(schema, name, openapi_spec) {
-  # must satisfy all the schemas -> combine them
-  out <- purrr::map(schema$allOf, \(x) .parse_schema(x, name, openapi_spec))
-  # TODO fix `call`
-  .tib_combine(out, name, current_call())
-}
-
-#' Handle an `allOf` schema by combining sub-schemas into a tspec
-#'
-#' @inheritParams .shared-params
-#' @returns A combined tspec.
-#' @keywords internal
-.handle_all_of_tspec <- function(schema, openapi_spec) {
-  # must satisfy all the schemas -> combine them
-  out <- purrr::map(schema$allOf, \(x) .schema_to_tspec(x, openapi_spec))
-  # We can have some hacky "dummy" variants in here right now. For now we'll
-  # remove them.
-  out <- purrr::discard(
-    out,
-    function(x) {
-      x$type == "variant" && x$key == "dummy"
-    }
-  )
-  tspec_combine(!!!out)
-}
-
-#' Handle a `oneOf` schema by combining sub-schemas into a tib field
-#'
-#' @inheritParams .shared-params
-#' @returns A combined tib field spec, or `tib_variant()` if schemas are
-#'   incompatible.
-#' @keywords internal
-.handle_one_of <- function(schema, name, openapi_spec) {
-  out <- purrr::map(schema$oneOf, \(x) .parse_schema(x, name, openapi_spec))
-  # must satisfy one of the schemas
-  # for now simply try to combine them...
-  tryCatch(
-    {
-      # TODO fix `call`
-      .tib_combine(out, name, current_call())
-    },
-    error = function(cnd) {
-      types <- purrr::map_chr(out, "type")
-      if ("row" %in% types) {
-        .tib_combine(out[types == "row"], name, current_call())
-      } else {
-        tib_variant(name, .required = FALSE)
-      }
-    }
-  )
-}
-
-#' Handle a `oneOf` schema by combining sub-schemas into a tspec
-#'
-#' @inheritParams .shared-params
-#' @returns A combined tspec, or `tib_variant("dummy")` if schemas are
-#'   incompatible.
-#' @keywords internal
-.handle_one_of_tspec <- function(schema, openapi_spec) {
-  out <- purrr::map(schema$oneOf, \(x) .schema_to_tspec(x, openapi_spec))
-  # must satisfy one of the schemas
-  # for now simply try to combine them...
-  tryCatch(
-    {
-      tspec_combine(!!!out)
-    },
-    error = function(cnd) {
-      tib_variant("dummy")
-    }
-  )
-}
-
-if (rlang::is_installed("memoise")) {
-  .parse_schema_memoised <- memoise::memoise(
-    .parse_schema,
-    omit_args = "openapi_spec"
-  )
-} else {
-  .parse_schema_memoised <- .parse_schema
+  type <- schema$type %||%
+    (schema$properties %&&% "object") %||%
+    (schema$items %&&% "array") %||%
+    "variant"
+  rlang::check_string(type)
+  return(type)
 }
 
 #' Create a minimal tibble from a list

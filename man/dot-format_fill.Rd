@@ -2,9 +2,15 @@
 % Please edit documentation in R/format-tib.R
 \name{.format_fill}
 \alias{.format_fill}
+\alias{.format_fill.default}
+\alias{.format_fill.Date}
 \title{Format a fill value as a character string}
 \usage{
 .format_fill(x)
+
+\method{.format_fill}{default}(x)
+
+\method{.format_fill}{Date}(x)
 }
 \arguments{
 \item{x}{A fill value.}

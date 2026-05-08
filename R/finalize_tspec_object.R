@@ -7,16 +7,19 @@
   UseMethod(".finalize_tspec_object")
 }
 
+#' @rdname dot-finalize_tspec_object
 #' @export
 .finalize_tspec_object.tib_collector <- function(field_spec, field) {
   field[[1]]
 }
 
+#' @rdname dot-finalize_tspec_object
 #' @export
 .finalize_tspec_object.tib_scalar <- function(field_spec, field) {
   field
 }
 
+#' @rdname dot-finalize_tspec_object
 #' @export
 .finalize_tspec_object.tib_row <- function(field_spec, field) {
   purrr::map2(field_spec$fields, field, .finalize_tspec_object)
