@@ -30,7 +30,8 @@
 #' @param field_spec (`tib_collector`) A tibblify field collector.
 #' @param file (`character(1)`) A path to a file, a connection, or literal data.
 #' @param .fill (`vector` or `NULL`) Optionally, a value to use if the field
-#'   does not exist.
+#'   does not exist. Note: this value must match the `.ptype_inner` of the field
+#'   (the value *before* any transformation), not the `.ptype`.
 #' @param force_names (`logical(1)`) Should names be printed even if they can be
 #'   deduced from the spec?
 #' @param .format (`character(1)` or `NULL`) Passed to the `format` argument of

@@ -313,7 +313,8 @@ field.}
 \item{.required, required}{(\code{logical(1)}) Throw an error if the field does not exist?}
 
 \item{.fill, fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
-does not exist.}
+does not exist. Note: this value must match the \code{.ptype_inner} of the field
+(the value \emph{before} any transformation), not the \code{.ptype}.}
 
 \item{.ptype_inner, ptype_inner}{(\code{vector(0)}) A prototype of the input field.}
 

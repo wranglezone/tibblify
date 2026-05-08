@@ -10,7 +10,8 @@
 \item{x}{A tibblify collector object.}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
-does not exist.}
+does not exist. Note: this value must match the \code{.ptype_inner} of the field
+(the value \emph{before} any transformation), not the \code{.ptype}.}
 }
 \value{
 (\code{character(1)} or \code{NULL}) The formatted fill string, or \code{NULL} if
