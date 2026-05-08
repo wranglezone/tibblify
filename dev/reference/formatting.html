@@ -143,7 +143,8 @@ deduced from the spec?</p></dd>
 
 <dt id="arg--fill">.fill<a class="anchor" aria-label="anchor" href="#arg--fill"></a></dt>
 <dd><p>(<code>vector</code> or <code>NULL</code>) Optionally, a value to use if the field
-does not exist.</p></dd>
+does not exist. Note: this value must match the <code>.ptype_inner</code> of the field
+(the value <em>before</em> any transformation), not the <code>.ptype</code>.</p></dd>
 
 
 <dt id="arg--ptype-inner">.ptype_inner<a class="anchor" aria-label="anchor" href="#arg--ptype-inner"></a></dt>
