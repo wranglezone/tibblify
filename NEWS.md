@@ -1,14 +1,27 @@
-# tibblify (development version)
+# tibblify 0.4.0
 
-* All arguments of functions that accept meaningful named `...` are now prefixed with `.` to minimize conflicts with column and object names in `...`. The un-dotted versions of the arguments are still accepted, but calling functions directly with un-dotted arguments will produce a warning once per session (see `?lifecycle::deprecate_soft()`). Un-dotted arguments will be phased out in a future version of this package, so we recommend switching to the dot-prefixed versions. See `?tspec_df` and `?tib_scalar()` for details.
+## Breaking changes
+
+* All arguments of functions that accept meaningful named `...` are now prefixed with `.` to minimize conflicts with column and object names in `...`. The un-dotted versions of the arguments are still accepted, but calling functions directly with un-dotted arguments will produce a warning once per session (see `?lifecycle::deprecate_soft()`). Un-dotted arguments will be phased out in a future version of this package, so we recommend switching to the dot-prefixed versions. See `?tspec_df` and `?tib_scalar()` for details (#228).
+
+## Potential breaking changes
+
 * All code has been refactored for maintainability. While we were careful to ensure that output is unchanged, it is possible that a corner case is no longer handled how it was in version 0.3.0. Please notify us (<https://github.com/wranglezone/tibblify/issues>) if something has changed for the worse in an unexpected way (#243).
+
+## New features
+
 * The `guess_tspec()` variants `guess_tspec_list()` and `guess_tspec_object_list()` are now exported (along with `guess_tspec_df()` and `guess_tspec_object()`, which were already exported). `guess_tspec()` should correctly guess the format in most cases, but you can call the variant directly if you think `guess_tspec()` is dispatching incorrectly (#249). 
 * `untibblify()` now automatically uses the `tib_spec` attribute when present, so tibblified objects can be round-tripped without explicitly passing the spec (#235).
-* `parse_openapi_spec()` supports many more fields and works for many more APIs (#190, #200, @jonthegeek and @mgirlich).
-* The underlying C implementation has been updated to better comply with R's C API. We also fixed various bugs during this update (#203, #204, #222).
-* All vignettes and the documentation of all functions has been updated for clarity (#243).
+* `parse_openapi_spec()` supports many more fields and works for many more APIs (#170, #186, #190, #200, @jonthegeek and @mgirlich).
 
-(roughly sorted into "Breaking changes", "Potential breaking changes", "New features", "Bug fixes", and "Documentation" as of 2026-04-10, but I left out the headers to make it easier to add more bullets during development)
+## Bug fixes
+
+* The underlying C implementation has been updated to comply with R's C API. We also fixed various bugs during this update (#203, #204, #222).
+
+## Documentation
+
+* All vignettes and the documentation of all functions have been updated for clarity (#243).
+
 
 # tibblify 0.3.1
 
