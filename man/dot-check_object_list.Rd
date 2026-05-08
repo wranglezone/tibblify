@@ -2,7 +2,7 @@
 % Please edit documentation in R/shape_utils.R
 \name{.check_object_list}
 \alias{.check_object_list}
-\title{bort if \code{x} is not a list of objects}
+\title{Abort if \code{x} is not a list of objects}
 \usage{
 .check_object_list(x, arg = caller_arg(x), call = caller_env())
 }
@@ -18,6 +18,6 @@ error messages as the input that is at the origin of a problem.}
 \code{x} (invisibly). Called for side effect.
 }
 \description{
-bort if \code{x} is not a list of objects
+Abort if \code{x} is not a list of objects
 }
 \keyword{internal}

@@ -332,7 +332,6 @@ test_that(".guess_object_list_field_spec returns tib_variant when simplify_list 
 })
 
 test_that(".guess_object_list_field_spec respects empty_list_unspecified for vector ptype", {
-  # empty_list_unspecified = TRUE: empty lists are dropped, had_empty_lists is set
   local_env <- rlang::new_environment(list(empty_list_used = FALSE))
   result <- .guess_object_list_field_spec(
     list(list(), 1L, 2L),

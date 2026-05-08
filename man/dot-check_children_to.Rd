@@ -2,7 +2,7 @@
 % Please edit documentation in R/nest_tree.R
 \name{.check_children_to}
 \alias{.check_children_to}
-\title{Confirm that \code{children_to} is a single string that is different from \code{id_col} and \code{parent_col}}
+\title{Confirm that \code{children_to} is usable}
 \usage{
 .check_children_to(children_to, id_col, parent_col, call = caller_env())
 }
@@ -23,6 +23,6 @@ missing (for the root elements) or appear in the \code{id_col} column.}
 The input \code{children_to} object as a string.
 }
 \description{
-Confirm that \code{children_to} is a single string that is different from \code{id_col} and \code{parent_col}
+Confirm that \code{children_to} is usable
 }
 \keyword{internal}

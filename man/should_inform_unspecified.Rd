@@ -13,3 +13,6 @@ should_inform_unspecified()
 Wrapper around \code{getOption("tibblify.show_unspecified")} to return \code{TRUE}
 unless the option is explicitly set to \code{FALSE}.
 }
+\examples{
+should_inform_unspecified()
+}

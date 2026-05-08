@@ -101,7 +101,7 @@ unnest_tree <- function(
     .check_arg_different(id_col, arg_name = "child_col", call = call)
 }
 
-#' Validate and normalise an output column name
+#' Validate and normalize an output column name
 #'
 #' @inheritParams unnest_tree
 #' @inheritParams .shared-params-tree

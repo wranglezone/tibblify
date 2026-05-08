@@ -18,7 +18,7 @@
   .Call(ffi_is_object_list, x)
 }
 
-#' bort if `x` is not a list of objects
+#' Abort if `x` is not a list of objects
 #'
 #' @inheritParams .shared-params
 #' @returns `x` (invisibly). Called for side effect.
@@ -110,14 +110,12 @@
   ))
   ol_msg <- rlang::set_names(object_list_cnd, c("", object_list_bullets))
 
-  msg <- c(
-    "{.arg {arg}} is neither an object nor a list of objects.",
-    o_msg,
-    ol_msg
-  )
-
   cli::cli_abort(
-    msg,
+    c(
+      "{.arg {arg}} is neither an object nor a list of objects.",
+      o_msg,
+      ol_msg
+    ),
     class = c(
       "tibblify-error-untibblifiable_object",
       "tibblify-error",

@@ -122,11 +122,13 @@
     "vector"
   } else {
     if (!other) {
-      msg <- c(
-        "Column {name} must be a dataframe, a list, or a vector.",
-        x = "Column {name} has classes {.cls class(x)}."
+      cli::cli_abort(
+        c(
+          "Column {name} must be a dataframe, a list, or a vector.",
+          x = "Column {name} has classes {.cls class(x)}."
+        ),
+        .internal = TRUE
       )
-      cli::cli_abort(msg, .internal = TRUE)
     }
     "other"
   }

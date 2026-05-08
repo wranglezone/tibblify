@@ -2,7 +2,7 @@
 % Please edit documentation in R/unnest_tree.R
 \name{.check_unnest_col_name}
 \alias{.check_unnest_col_name}
-\title{Validate and normalise an output column name}
+\title{Validate and normalize an output column name}
 \usage{
 .check_unnest_col_name(
   col_name,
@@ -25,6 +25,6 @@ error messages.}
 \code{col_name} (cast to \code{character}) or \code{NULL}.
 }
 \description{
-Validate and normalise an output column name
+Validate and normalize an output column name
 }
 \keyword{internal}

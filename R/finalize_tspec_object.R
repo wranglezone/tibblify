@@ -2,6 +2,7 @@
 #'
 #' @param field (`any`) The field value.
 #' @inheritParams .shared-params-spec_prep
+#' @returns The finalized field spec.
 #' @keywords internal
 .finalize_tspec_object <- function(field_spec, field) {
   UseMethod(".finalize_tspec_object")

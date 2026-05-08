@@ -1,7 +1,7 @@
 # guess_tspec_object_list can guess spec for discog
 
     Code
-      guess_tspec_object_list(discog)
+      guess_tspec_object_list(repurrrsive::discog)
     Output
       tspec_df(
         tib_int("instance_id"),
@@ -50,7 +50,7 @@
 # guess_tspec_object_list can guess spec for gh_users
 
     Code
-      guess_tspec_object_list(gh_users)
+      guess_tspec_object_list(repurrrsive::gh_users)
     Output
       tspec_df(
         tib_chr("login"),

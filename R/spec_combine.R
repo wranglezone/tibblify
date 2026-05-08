@@ -85,11 +85,13 @@ tspec_combine <- function(...) {
   bad_idx <- purrr::detect_index(spec_list, ~ !.is_tspec(.x))
   if (bad_idx != 0) {
     cls1 <- class(spec_list[[bad_idx]])[[1]]
-    msg <- c(
-      "Every element of {.arg ...} must be a tibblify spec.",
-      x = "Element {bad_idx} has class {.cls {cls1}}."
+    cli::cli_abort(
+      c(
+        "Every element of {.arg ...} must be a tibblify spec.",
+        x = "Element {bad_idx} has class {.cls {cls1}}."
+      ),
+      call = .call
     )
-    cli::cli_abort(msg, call = .call)
   }
   spec_list
 }
@@ -437,8 +439,10 @@ tspec_combine <- function(...) {
 
   input_form <- input_forms[[input_form_locs]]
   if (any(types == "scalar") && input_form != "vector") {
-    msg <- "Cannot combine input form {.val {input_form}} with {.code tib_scalar()}."
-    cli::cli_abort(msg, call = .call)
+    cli::cli_abort(
+      "Cannot combine input form {.val {input_form}} with {.code tib_scalar()}.",
+      call = .call
+    )
   }
 
   input_form

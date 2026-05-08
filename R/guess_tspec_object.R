@@ -40,11 +40,13 @@ guess_tspec_object <- function(
 #' @keywords internal
 .check_not_df <- function(x, call) {
   if (is.data.frame(x)) {
-    msg <- c(
-      "{.arg x} must not be a dataframe.",
-      i = "Did you want to use {.fn guess_tspec_df} instead?"
+    cli::cli_abort(
+      c(
+        "{.arg x} must not be a dataframe.",
+        i = "Did you want to use {.fn guess_tspec_df} instead?"
+      ),
+      call = call
     )
-    cli::cli_abort(msg, call = call)
   }
   return(invisible(x))
 }
@@ -215,8 +217,7 @@ guess_tspec_object <- function(
 #' @keywords internal
 .check_named <- function(x, call) {
   if (!rlang::is_named2(x)) {
-    msg <- "{.arg x} must be fully named."
-    cli::cli_abort(msg, call = call)
+    cli::cli_abort("{.arg x} must be fully named.", call = call)
   }
   return(invisible(x))
 }
@@ -228,8 +229,7 @@ guess_tspec_object <- function(
 #' @keywords internal
 .check_names_not_duplicated <- function(x, call) {
   if (vctrs::vec_duplicate_any(names(x))) {
-    msg <- "Names of {.arg x} must be unique."
-    cli::cli_abort(msg, call = call)
+    cli::cli_abort("Names of {.arg x} must be unique.", call = call)
   }
   return(invisible(x))
 }

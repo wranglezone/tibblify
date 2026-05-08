@@ -5,6 +5,8 @@
 #'
 #' @returns `FALSE` if the option is set to `FALSE`, `TRUE` otherwise.
 #' @export
+#' @examples
+#' should_inform_unspecified()
 should_inform_unspecified <- function() {
   !rlang::is_false(getOption("tibblify.show_unspecified"))
 }

@@ -20,6 +20,9 @@
 
 \item{field}{(\code{any}) The field value.}
 }
+\value{
+The finalized field spec.
+}
 \description{
 Finalize a tibblify object
 }

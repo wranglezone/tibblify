@@ -7,15 +7,16 @@ test_that("guess_tspec errors informatively when x is neither df nor list", {
 })
 
 test_that("guess_tspec dispatches correctly for object lists", {
+  skip_if_not_installed("repurrrsive")
   local_mocked_bindings(
     guess_tspec_list = function(x, ...) {
       expect_type(x, "list")
       cli::cli_inform("list", class = "list-called")
     }
   )
-  expect_message(guess_tspec(discog), class = "list-called")
-  expect_message(guess_tspec(gh_users), class = "list-called")
-  expect_message(guess_tspec(got_chars), class = "list-called")
+  expect_message(guess_tspec(repurrrsive::discog), class = "list-called")
+  expect_message(guess_tspec(repurrrsive::gh_users), class = "list-called")
+  expect_message(guess_tspec(repurrrsive::got_chars), class = "list-called")
 })
 
 test_that("guess_tspec dispatches correctly for objects", {
