@@ -60,7 +60,11 @@
 #' tib_int("int", .required = FALSE, .fill = 0)
 #'
 #' # This is essentially how `tib_chr_date()` is implemented.
-#' tib_scalar("date", Sys.Date(), .transform = function(x) as.Date(x, format = "%Y-%m-%d"))
+#' tib_scalar(
+#'   "date",
+#'   Sys.Date(),
+#'   .transform = function(x) as.Date(x, format = "%Y-%m-%d")
+#' )
 #'
 #' tib_df(
 #'   "data",
@@ -134,13 +138,14 @@ NULL
   } else {
     if (vctrs::vec_any_missing(.key)) {
       na_idx <- purrr::detect_index(vctrs::vec_detect_missing(.key), ~.x)
-      msg <- "`.key[{.field {na_idx}}] must not be NA."
-      cli::cli_abort(msg, call = .call)
+      cli::cli_abort("`.key[{.field {na_idx}}] must not be NA.", call = .call)
     }
     if (any(.key == "")) {
       empty_string_idx <- purrr::detect_index(.key == "", ~.x)
-      msg <- "`.key[{.field {empty_string_idx}}] must not be an empty string."
-      cli::cli_abort(msg, call = .call)
+      cli::cli_abort(
+        "`.key[{.field {empty_string_idx}}] must not be an empty string.",
+        call = .call
+      )
     }
   }
 }
@@ -425,17 +430,23 @@ tib_vector <- function(
 .stabilize_names_to <- function(.names_to, .values_to, .input_form, .call) {
   if (!is.null(.names_to)) {
     if (is.null(.values_to)) {
-      msg <- "{.arg .names_to} can only be used if {.arg .values_to} is not {.code NULL}."
-      cli::cli_abort(msg, call = .call)
+      cli::cli_abort(
+        "{.arg .names_to} can only be used if {.arg .values_to} is not {.code NULL}.",
+        call = .call
+      )
     }
     if (.input_form == "scalar_list") {
-      msg <- '{.arg .names_to} can\'t be used for {.code .input_form = "scalar_list"}.'
-      cli::cli_abort(msg, call = .call)
+      cli::cli_abort(
+        '{.arg .names_to} can\'t be used for {.code .input_form = "scalar_list"}.',
+        call = .call
+      )
     }
     rlang::check_string(.names_to, call = .call)
     if (.names_to == .values_to) {
-      msg <- "{.arg .names_to} must be different from {.arg .values_to}."
-      cli::cli_abort(msg, call = .call)
+      cli::cli_abort(
+        "{.arg .names_to} must be different from {.arg .values_to}.",
+        call = .call
+      )
     }
   }
   .names_to

@@ -410,7 +410,11 @@ tib_int("int")
 tib_int("int", .required = FALSE, .fill = 0)
 
 # This is essentially how `tib_chr_date()` is implemented.
-tib_scalar("date", Sys.Date(), .transform = function(x) as.Date(x, format = "\%Y-\%m-\%d"))
+tib_scalar(
+  "date",
+  Sys.Date(),
+  .transform = function(x) as.Date(x, format = "\%Y-\%m-\%d")
+)
 
 tib_df(
   "data",

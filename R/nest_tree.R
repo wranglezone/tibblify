@@ -70,7 +70,7 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
   x
 }
 
-#' Confirm that `children_to` is a single string that is different from `id_col` and `parent_col`
+#' Confirm that `children_to` is usable
 #'
 #' @inheritParams .shared-params
 #' @returns The input `children_to` object as a string.
@@ -151,7 +151,7 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
   parent_col
 }
 
-#' Validate parent ids: cast to id type, check for self-references and missing roots
+#' Confirm that parent ids are usable
 #'
 #' @inheritParams .shared-params
 #' @returns The parent ids, cast to the same type as ids.
@@ -195,11 +195,13 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
   if (any(self_reference, na.rm = TRUE)) {
     self_reference_loc <- which(self_reference)
     n <- length(self_reference_loc)
-    msg <- c(
-      "An element must not be its own parent",
-      i = "{qty(n)}Element{?s} {self_reference_loc} {qty(n)}refer{?s/} to {?itself/themselves} as parent."
+    cli::cli_abort(
+      c(
+        "An element must not be its own parent",
+        i = "{qty(n)}Element{?s} {self_reference_loc} {qty(n)}refer{?s/} to {?itself/themselves} as parent."
+      ),
+      call = call
     )
-    cli::cli_abort(msg, call = call)
   }
   return(parent_ids)
 }
@@ -213,21 +215,25 @@ nest_tree <- function(x, id_col, parent_col, children_to) {
 .check_parent_id_missing <- function(parent_ids, ids, call = caller_env()) {
   parent_na <- vctrs::vec_detect_missing(parent_ids)
   if (!any(parent_na) && !vctrs::vec_is_empty(parent_ids)) {
-    msg <- c(
-      "There must be root elements.",
-      i = "A root element is an elements whose parent id is missing."
+    cli::cli_abort(
+      c(
+        "There must be root elements.",
+        i = "A root element is an elements whose parent id is missing."
+      ),
+      call = call
     )
-    cli::cli_abort(msg, call = call)
   }
   missing_parents <- !vctrs::vec_in(parent_ids, ids) & !parent_na
   if (any(missing_parents)) {
     missing_parent_ids <- vctrs::vec_slice(parent_ids, missing_parents)
     n <- sum(missing_parents)
-    msg <- c(
-      "The parent of each element must be found.",
-      i = "The parent {qty(n)} id{?s} {.value {missing_parent_ids}} {qty(n)}{?is/are} not found."
+    cli::cli_abort(
+      c(
+        "The parent of each element must be found.",
+        i = "The parent {qty(n)} id{?s} {.value {missing_parent_ids}} {qty(n)}{?is/are} not found."
+      ),
+      call = call
     )
-    cli::cli_abort(msg, call = call)
   }
   return(parent_ids)
 }

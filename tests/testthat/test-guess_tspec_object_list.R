@@ -51,13 +51,6 @@ test_that("can guess tib_unspecified", {
     tspec_df(x = tib_unspecified("x"))
   )
 
-  # in a row
-  # TODO
-  # expect_equal(
-  #   guess_tspec_object_list(list(list(x = list(a = NULL)), list(x = list(a = NULL)))),
-  #   tspec_df(x = tib_row("x", a = tib_unspecified("a")))
-  # )
-
   # in a df
   expect_equal(
     guess_tspec_object_list(

@@ -58,9 +58,8 @@
     for (i in seq_along(other_args)) {
       if (identical(arg, other_args[[i]])) {
         other_arg_nm <- names(other_args)[[i]]
-        msg <- "{.arg {arg_name}} must be different from {.arg {other_arg_nm}}."
         cli::cli_abort(
-          msg,
+          "{.arg {arg_name}} must be different from {.arg {other_arg_nm}}.",
           call = call,
           class = c("tibblify-error-args_same_value", "tibblify-error")
         )

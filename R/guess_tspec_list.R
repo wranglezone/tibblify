@@ -12,8 +12,7 @@ guess_tspec_list <- function(
   rlang::check_dots_empty()
   .check_list(x)
   if (rlang::is_empty(x)) {
-    msg <- "{.arg {arg}} must not be empty."
-    cli::cli_abort(msg, call = call)
+    cli::cli_abort("{.arg {arg}} must not be empty.", call = call)
   }
 
   # if `x` is both an object list and an object, we default to treating it as

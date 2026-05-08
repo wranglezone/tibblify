@@ -110,14 +110,12 @@
   ))
   ol_msg <- rlang::set_names(object_list_cnd, c("", object_list_bullets))
 
-  msg <- c(
-    "{.arg {arg}} is neither an object nor a list of objects.",
-    o_msg,
-    ol_msg
-  )
-
   cli::cli_abort(
-    msg,
+    c(
+      "{.arg {arg}} is neither an object nor a list of objects.",
+      o_msg,
+      ol_msg
+    ),
     class = c(
       "tibblify-error-untibblifiable_object",
       "tibblify-error",

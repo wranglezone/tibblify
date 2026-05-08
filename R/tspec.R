@@ -79,8 +79,9 @@ tspec_df <- function(
     .vector_allows_empty_list = .vector_allows_empty_list
   )
   if (!is.null(.names_to) && .names_to %in% names(out$fields)) {
-    msg <- "The column name of {.arg .names_to} is already specified in {.arg ...}."
-    cli::cli_abort(msg)
+    cli::cli_abort(
+      "The column name of {.arg .names_to} is already specified in {.arg ...}."
+    )
   }
 
   out
@@ -164,8 +165,10 @@ tspec_recursive <- function(
 .check_names_to <- function(.names_to, .input_form, .call = caller_env()) {
   if (!is.null(.names_to)) {
     if (.input_form == "colmajor") {
-      msg <- 'Can\'t use {.arg .names_to} with {.code .input_form = "colmajor"}.'
-      cli::cli_abort(msg, call = .call)
+      cli::cli_abort(
+        'Can\'t use {.arg .names_to} with {.code .input_form = "colmajor"}.',
+        call = .call
+      )
     }
     rlang::check_string(.names_to, allow_null = TRUE, call = .call)
   }
@@ -282,11 +285,13 @@ tspec_recursive <- function(
       function(field) {
         key <- field$key
         if (!rlang::is_string(key)) {
-          msg <- c(
-            "{.arg key} must be a single string to infer name.",
-            x = "{.arg key} has length {length(key)}."
+          cli::cli_abort(
+            c(
+              "{.arg key} must be a single string to infer name.",
+              x = "{.arg key} has length {length(key)}."
+            ),
+            call = NULL
           )
-          cli::cli_abort(msg, call = NULL)
         }
 
         key

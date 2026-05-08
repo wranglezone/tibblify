@@ -2,7 +2,7 @@
 % Please edit documentation in R/nest_tree.R
 \name{.check_parent_ids}
 \alias{.check_parent_ids}
-\title{Validate parent ids: cast to id type, check for self-references and missing roots}
+\title{Confirm that parent ids are usable}
 \usage{
 .check_parent_ids(x, parent_col, id_col, id_col_name, call = caller_env())
 }
@@ -25,6 +25,6 @@ identifies each observation.}
 The parent ids, cast to the same type as ids.
 }
 \description{
-Validate parent ids: cast to id type, check for self-references and missing roots
+Confirm that parent ids are usable
 }
 \keyword{internal}
