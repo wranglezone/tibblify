@@ -75,7 +75,7 @@
   )
 }
 
-#' Ensure the OpenAPI version is supported
+#' Forget memoised version of `.parse_schema`
 #'
 #' @returns If memoise is installed, `TRUE` if the function is memoised, `FALSE`
 #'   otherwise. If memoise is not installed, `NULL` (invisibly).

@@ -28,7 +28,7 @@ the spec are resolved.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 The \href{https://www.openapis.org/}{OpenAPI Initiative} is a \href{https://www.linuxfoundation.org/projects}{Linux Foundation} project to define an
-\href{https://spec.openapis.org/oas/latest.html}{OPenAPI Specification}, a formal
+\href{https://spec.openapis.org/oas/latest.html}{OpenAPI Specification}, a formal
 standard for describing HTTP APIs. Use \code{parse_openapi_spec()} to parse such
 OpenAPI specs. You can also parse \href{https://spec.openapis.org/oas/latest.html#schema-object}{OpenAPI Schema Objects} (which
 describe the structure of input and output datatypes) directly with

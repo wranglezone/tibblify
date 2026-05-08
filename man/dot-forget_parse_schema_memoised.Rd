@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_openapi-read_spec.R
 \name{.forget_parse_schema_memoised}
 \alias{.forget_parse_schema_memoised}
-\title{Ensure the OpenAPI version is supported}
+\title{Forget memoised version of \code{.parse_schema}}
 \usage{
 .forget_parse_schema_memoised()
 }
@@ -11,6 +11,6 @@ If memoise is installed, \code{TRUE} if the function is memoised, \code{FALSE}
 otherwise. If memoise is not installed, \code{NULL} (invisibly).
 }
 \description{
-Ensure the OpenAPI version is supported
+Forget memoised version of \code{.parse_schema}
 }
 \keyword{internal}
