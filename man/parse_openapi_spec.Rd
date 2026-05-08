@@ -34,6 +34,26 @@ OpenAPI specs. You can also parse \href{https://spec.openapis.org/oas/latest.htm
 describe the structure of input and output datatypes) directly with
 \code{parse_openapi_schema()}.
 }
+\section{Shortcomings}{
+This implementation is not complete, and there are some known shortcomings:
+\itemize{
+\item We only tibblify the \code{paths} part of the spec, although we also parse the
+\code{components} part in order to resolve references.
+\item We do not yet support \code{summary} or \code{description} fields in path item
+objects.
+\item We do not yet incorporate \code{parameters} defined at the path item level
+into operation-level parameter parsing. We do, however, parse and include
+them in the \code{global_parameters} column of the operations tibble, so they
+are available even though they are not yet merged into each operation's
+parameters.
+\item We do not yet support \code{links} in response objects.
+\item We do not yet support \code{callbacks} in operation objects.
+\item We do not yet support OpenAPI extensions (fields starting with \verb{x-}).
+\item Our implementation of \code{oneOf}, \code{anyOf}, and \code{allOf} is very basic and may
+not cover all cases.
+}
+}
+
 \examples{
 file <- '{
   "$schema": "http://json-schema.org/draft-04/schema",

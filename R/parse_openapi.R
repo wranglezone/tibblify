@@ -13,6 +13,25 @@
 #' describe the structure of input and output datatypes) directly with
 #' `parse_openapi_schema()`.
 #'
+#' @details # Shortcomings
+#'
+#'   This implementation is not complete, and there are some known shortcomings:
+#'
+#'   * We only tibblify the `paths` part of the spec, although we also parse the
+#'   `components` part in order to resolve references.
+#'   * We do not yet support `summary` or `description` fields in path item
+#'   objects.
+#'   * We do not yet incorporate `parameters` defined at the path item level
+#'   into operation-level parameter parsing. We do, however, parse and include
+#'   them in the `global_parameters` column of the operations tibble, so they
+#'   are available even though they are not yet merged into each operation's
+#'   parameters.
+#'   * We do not yet support `links` in response objects.
+#'   * We do not yet support `callbacks` in operation objects.
+#'   * We do not yet support OpenAPI extensions (fields starting with `x-`).
+#'   * Our implementation of `oneOf`, `anyOf`, and `allOf` is very basic and may
+#'   not cover all cases.
+#'
 #' @inheritParams .shared-params
 #'
 #' @return For `parse_openapi_spec()`, a nested data frame with the columns
