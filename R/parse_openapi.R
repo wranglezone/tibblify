@@ -21,10 +21,11 @@
 #'   `components` part in order to resolve references.
 #'   * We do not yet support `summary` or `description` fields in path item
 #'   objects.
-#'   * We do not yet support `parameters` at the path item level, so any
-#'   parameters defined there will be ignored. However, we do parse and include
+#'   * We do not yet incorporate `parameters` defined at the path item level
+#'   into operation-level parameter parsing. We do, however, parse and include
 #'   them in the `global_parameters` column of the operations tibble, so they
-#'   are not lost.
+#'   are available even though they are not yet merged into each operation's
+#'   parameters.
 #'   * We do not yet support `links` in response objects.
 #'   * We do not yet support `callbacks` in operation objects.
 #'   * We do not yet support OpenAPI extensions (fields starting with `x-`).
