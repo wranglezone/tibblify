@@ -41,10 +41,11 @@ This implementation is not complete, and there are some known shortcomings:
 \code{components} part in order to resolve references.
 \item We do not yet support \code{summary} or \code{description} fields in path item
 objects.
-\item We do not yet fully support \code{parameters} at the path item level:
-parameters defined there are parsed and included in the
-\code{global_parameters} column of the operations tibble, but they are not yet
-applied to operations as supported path-item-level parameters.
+\item We do not yet incorporate \code{parameters} defined at the path item level
+into operation-level parameter parsing. We do, however, parse and include
+them in the \code{global_parameters} column of the operations tibble, so they
+are available even though they are not yet merged into each operation's
+parameters.
 \item We do not yet support \code{links} in response objects.
 \item We do not yet support \code{callbacks} in operation objects.
 \item We do not yet support OpenAPI extensions (fields starting with \verb{x-}).
