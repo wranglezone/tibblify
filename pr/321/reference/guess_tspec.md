@@ -122,40 +122,4 @@ guess_tspec(list(list(x = 1), list(x = 2)))
 #> tspec_df(
 #>   tib_dbl("x"),
 #> )
-
-guess_tspec(gh_users)
-#> The spec contains 1 unspecified field:
-#> • email
-#> tspec_df(
-#>   tib_chr("login"),
-#>   tib_int("id"),
-#>   tib_chr("avatar_url"),
-#>   tib_chr("gravatar_id"),
-#>   tib_chr("url"),
-#>   tib_chr("html_url"),
-#>   tib_chr("followers_url"),
-#>   tib_chr("following_url"),
-#>   tib_chr("gists_url"),
-#>   tib_chr("starred_url"),
-#>   tib_chr("subscriptions_url"),
-#>   tib_chr("organizations_url"),
-#>   tib_chr("repos_url"),
-#>   tib_chr("events_url"),
-#>   tib_chr("received_events_url"),
-#>   tib_chr("type"),
-#>   tib_lgl("site_admin"),
-#>   tib_chr("name"),
-#>   tib_chr("company"),
-#>   tib_chr("blog"),
-#>   tib_chr("location"),
-#>   tib_unspecified("email"),
-#>   tib_lgl("hireable"),
-#>   tib_chr("bio"),
-#>   tib_int("public_repos"),
-#>   tib_int("public_gists"),
-#>   tib_int("followers"),
-#>   tib_int("following"),
-#>   tib_chr("created_at"),
-#>   tib_chr("updated_at"),
-#> )
 ```

@@ -1,6 +1,6 @@
-# Validate and normalise an output column name
+# Validate and normalize an output column name
 
-Validate and normalise an output column name
+Validate and normalize an output column name
 
 ## Usage
 

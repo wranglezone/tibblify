@@ -21,8 +21,12 @@ users.
 
 ``` r
 library(tibblify)
+library(repurrrsive)
 
-gh_users_small <- purrr::map(gh_users, ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")])
+gh_users_small <- purrr::map(
+  repurrrsive::gh_users,
+  ~ .x[c("followers", "login", "url", "name", "location", "email", "public_gists")]
+)
 
 names(gh_users_small[[1]])
 #> [1] "followers"    "login"        "url"          "name"         "location"    
@@ -34,15 +38,15 @@ We can rectangle `gh_users_small` automatically with
 
 ``` r
 tibblify(gh_users_small)
-#> The spec contains 1 unspecified field:
-#> • email
-#> # A tibble: 4 × 7
-#>   followers login      url                    name  location email  public_gists
-#>       <int> <chr>      <chr>                  <chr> <chr>    <list>        <int>
-#> 1       780 jennybc    https://api.github.co… Jenn… Vancouv… <NULL>           54
-#> 2      3958 jtleek     https://api.github.co… Jeff… Baltimo… <NULL>           12
-#> 3       115 juliasilge https://api.github.co… Juli… Salt La… <NULL>            4
-#> 4       213 leeper     https://api.github.co… Thom… London,… <NULL>           46
+#> # A tibble: 6 × 7
+#>   followers login       url                    name  location email public_gists
+#>       <int> <chr>       <chr>                  <chr> <chr>    <chr>        <int>
+#> 1       303 gaborcsardi https://api.github.co… Gábo… Chippen… csar…            6
+#> 2       780 jennybc     https://api.github.co… Jenn… Vancouv… <NA>            54
+#> 3      3958 jtleek      https://api.github.co… Jeff… Baltimo… <NA>            12
+#> 4       115 juliasilge  https://api.github.co… Juli… Salt La… <NA>             4
+#> 5       213 leeper      https://api.github.co… Thom… London,… <NA>            46
+#> 6        34 masalmon    https://api.github.co… Maël… Barcelo… <NA>             0
 ```
 
 We can avoid the note about the unspecified field by formally providing
@@ -54,13 +58,15 @@ spec <- guess_tspec(gh_users_small, inform_unspecified = FALSE)
 # Drop the unused email specification.
 spec$fields$email <- NULL
 tibblify(gh_users_small, spec = spec)
-#> # A tibble: 4 × 6
-#>   followers login      url                           name  location public_gists
-#>       <int> <chr>      <chr>                         <chr> <chr>           <int>
-#> 1       780 jennybc    https://api.github.com/users… Jenn… Vancouv…           54
-#> 2      3958 jtleek     https://api.github.com/users… Jeff… Baltimo…           12
-#> 3       115 juliasilge https://api.github.com/users… Juli… Salt La…            4
-#> 4       213 leeper     https://api.github.com/users… Thom… London,…           46
+#> # A tibble: 6 × 6
+#>   followers login       url                          name  location public_gists
+#>       <int> <chr>       <chr>                        <chr> <chr>           <int>
+#> 1       303 gaborcsardi https://api.github.com/user… Gábo… Chippen…            6
+#> 2       780 jennybc     https://api.github.com/user… Jenn… Vancouv…           54
+#> 3      3958 jtleek      https://api.github.com/user… Jeff… Baltimo…           12
+#> 4       115 juliasilge  https://api.github.com/user… Juli… Salt La…            4
+#> 5       213 leeper      https://api.github.com/user… Thom… London,…           46
+#> 6        34 masalmon    https://api.github.com/user… Maël… Barcelo…            0
 ```
 
 Learn more in
