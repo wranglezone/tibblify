@@ -4,7 +4,7 @@
 
 The [OpenAPI Initiative](https://www.openapis.org/) is a [Linux
 Foundation](https://www.linuxfoundation.org/projects) project to define
-an [OPenAPI Specification](https://spec.openapis.org/oas/latest.html), a
+an [OpenAPI Specification](https://spec.openapis.org/oas/latest.html), a
 formal standard for describing HTTP APIs. Use `parse_openapi_spec()` to
 parse such OpenAPI specs. You can also parse [OpenAPI Schema
 Objects](https://spec.openapis.org/oas/latest.html#schema-object) (which

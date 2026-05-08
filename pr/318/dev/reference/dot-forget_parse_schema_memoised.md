@@ -1,6 +1,6 @@
-# Ensure the OpenAPI version is supported
+# Forget memoised version of `.parse_schema`
 
-Ensure the OpenAPI version is supported
+Forget memoised version of `.parse_schema`
 
 ## Usage
 
