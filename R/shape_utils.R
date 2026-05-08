@@ -18,7 +18,7 @@
   .Call(ffi_is_object_list, x)
 }
 
-#' bort if `x` is not a list of objects
+#' Abort if `x` is not a list of objects
 #'
 #' @inheritParams .shared-params
 #' @returns `x` (invisibly). Called for side effect.
