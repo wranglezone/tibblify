@@ -1,8 +1,15 @@
 # Parse an OpenAPI spec
 
-**\[experimental\]** Use `parse_openapi_spec()` to parse an [OpenAPI
-spec](https://spec.openapis.org/oas/latest.html) or use
-`parse_openapi_schema()` to parse an OpenAPI schema.
+**\[experimental\]**
+
+The [OpenAPI Initiative](https://www.openapis.org/) is a [Linux
+Foundation](https://www.linuxfoundation.org/projects) project to define
+an [OpenAPI Specification](https://spec.openapis.org/oas/latest.html), a
+formal standard for describing HTTP APIs. Use `parse_openapi_spec()` to
+parse such OpenAPI specs. You can also parse [OpenAPI Schema
+Objects](https://spec.openapis.org/oas/latest.html#schema-object) (which
+describe the structure of input and output datatypes) directly with
+`parse_openapi_schema()`.
 
 ## Usage
 
@@ -29,7 +36,8 @@ For `parse_openapi_spec()`, a nested data frame with the columns
   spec](https://spec.openapis.org/oas/latest.html#paths-object) for
   details. All references (`$ref`) in the spec are resolved.
 
-For `parse_openapi_schema()`, a tibblify spec.
+For `parse_openapi_schema()`, a tibblify spec. All references (`$ref`)
+in the spec are resolved.
 
 ## Examples
 

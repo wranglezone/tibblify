@@ -6,6 +6,18 @@ Format a ptype object as a character string
 
 ``` r
 .format_ptype(x)
+
+# Default S3 method
+.format_ptype(x)
+
+# S3 method for class 'difftime'
+.format_ptype(x)
+
+# S3 method for class 'Date'
+.format_ptype(x)
+
+# S3 method for class 'POSIXct'
+.format_ptype(x)
 ```
 
 ## Arguments

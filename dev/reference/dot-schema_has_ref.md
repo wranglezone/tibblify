@@ -1,7 +1,6 @@
 # Check whether any nested list element has a `$ref` key
 
-Short-circuiting check that avoids the expensive `names(unlist(schema))`
-materialisation.
+Check whether any nested list element has a `$ref` key
 
 ## Usage
 

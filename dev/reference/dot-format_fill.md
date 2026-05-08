@@ -6,6 +6,12 @@ Format a fill value as a character string
 
 ``` r
 .format_fill(x)
+
+# Default S3 method
+.format_fill(x)
+
+# S3 method for class 'Date'
+.format_fill(x)
 ```
 
 ## Arguments
