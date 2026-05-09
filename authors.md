@@ -12,7 +12,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/wranglezone/tibblify/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/wranglezone/tibblify/blob/v0.4.0/DESCRIPTION)
 
 Harmon J, Girlich M (2026). *tibblify: Rectangle Nested Lists*. R
 package version 0.4.0, <https://tibblify.wrangle.zone>.

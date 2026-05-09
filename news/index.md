@@ -2,6 +2,8 @@
 
 ## tibblify 0.4.0
 
+CRAN release: 2026-05-09
+
 ### Breaking changes
 
 - All arguments of functions that accept meaningful named `...` are now
