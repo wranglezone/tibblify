@@ -1,7 +1,6 @@
-# Validate parent ids: cast to id type, check for self-references and missing roots
+# Confirm that parent ids are usable
 
-Validate parent ids: cast to id type, check for self-references and
-missing roots
+Confirm that parent ids are usable
 
 ## Usage
 

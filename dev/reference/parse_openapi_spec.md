@@ -107,7 +107,8 @@ parse_openapi_schema(file)
 #>   tib_chr("edited"),
 #> )
 
-# Spec example from https://swagger.io/docs/specification/v3_0/basic-structure/
+# Spec example from
+# https://swagger.io/docs/specification/v3_0/basic-structure/
 spec_path <- system.file(
   "examples", "openapi", "sample_api.yaml", package = "tibblify"
 )

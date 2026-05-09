@@ -2,6 +2,12 @@
 
 ## tibblify (development version)
 
+## tibblify 0.4.0
+
+CRAN release: 2026-05-09
+
+### Breaking changes
+
 - All arguments of functions that accept meaningful named `...` are now
   prefixed with `.` to minimize conflicts with column and object names
   in `...`. The un-dotted versions of the arguments are still accepted,
@@ -10,13 +16,20 @@
   Un-dotted arguments will be phased out in a future version of this
   package, so we recommend switching to the dot-prefixed versions. See
   [`?tspec_df`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)
-  and `?tib_scalar()` for details.
+  and `?tib_scalar()` for details
+  ([\#228](https://github.com/wranglezone/tibblify/issues/228)).
+
+### Potential breaking changes
+
 - All code has been refactored for maintainability. While we were
   careful to ensure that output is unchanged, it is possible that a
   corner case is no longer handled how it was in version 0.3.0. Please
   notify us (<https://github.com/wranglezone/tibblify/issues>) if
   something has changed for the worse in an unexpected way
   ([\#243](https://github.com/wranglezone/tibblify/issues/243)).
+
+### New features
+
 - The
   [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
   variants
@@ -40,23 +53,26 @@
   spec ([\#235](https://github.com/wranglezone/tibblify/issues/235)).
 - [`parse_openapi_spec()`](https://tibblify.wrangle.zone/dev/reference/parse_openapi_spec.md)
   supports many more fields and works for many more APIs
-  ([\#190](https://github.com/wranglezone/tibblify/issues/190),
+  ([\#170](https://github.com/wranglezone/tibblify/issues/170),
+  [\#186](https://github.com/wranglezone/tibblify/issues/186),
+  [\#190](https://github.com/wranglezone/tibblify/issues/190),
   [\#200](https://github.com/wranglezone/tibblify/issues/200),
   [@jonthegeek](https://github.com/jonthegeek) and
   [@mgirlich](https://github.com/mgirlich)).
-- The underlying C implementation has been updated to better comply with
-  R’s C API. We also fixed various bugs during this update
+
+### Bug fixes
+
+- The underlying C implementation has been updated to comply with R’s C
+  API. We also fixed various bugs during this update
   ([\#203](https://github.com/wranglezone/tibblify/issues/203),
   [\#204](https://github.com/wranglezone/tibblify/issues/204),
   [\#222](https://github.com/wranglezone/tibblify/issues/222)).
-- All vignettes and the documentation of all functions has been updated
+
+### Documentation
+
+- All vignettes and the documentation of all functions have been updated
   for clarity
   ([\#243](https://github.com/wranglezone/tibblify/issues/243)).
-
-(roughly sorted into “Breaking changes”, “Potential breaking changes”,
-“New features”, “Bug fixes”, and “Documentation” as of 2026-04-10, but I
-left out the headers to make it easier to add more bullets during
-development)
 
 ## tibblify 0.3.1
 

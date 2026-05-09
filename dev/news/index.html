@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,16 +39,33 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="tibblify-development-version">tibblify (development version)<a class="anchor" aria-label="anchor" href="#tibblify-development-version"></a></h2>
-<ul><li>All arguments of functions that accept meaningful named <code>...</code> are now prefixed with <code>.</code> to minimize conflicts with column and object names in <code>...</code>. The un-dotted versions of the arguments are still accepted, but calling functions directly with un-dotted arguments will produce a warning once per session (see <code>?lifecycle::deprecate_soft()</code>). Un-dotted arguments will be phased out in a future version of this package, so we recommend switching to the dot-prefixed versions. See <code><a href="../reference/tspec_df.html">?tspec_df</a></code> and <code>?tib_scalar()</code> for details.</li>
-<li>All code has been refactored for maintainability. While we were careful to ensure that output is unchanged, it is possible that a corner case is no longer handled how it was in version 0.3.0. Please notify us (<a href="https://github.com/wranglezone/tibblify/issues" class="external-link uri">https://github.com/wranglezone/tibblify/issues</a>) if something has changed for the worse in an unexpected way (<a href="https://github.com/wranglezone/tibblify/issues/243" class="external-link">#243</a>).</li>
-<li>The <code><a href="../reference/guess_tspec.html">guess_tspec()</a></code> variants <code><a href="../reference/guess_tspec.html">guess_tspec_list()</a></code> and <code><a href="../reference/guess_tspec.html">guess_tspec_object_list()</a></code> are now exported (along with <code><a href="../reference/guess_tspec.html">guess_tspec_df()</a></code> and <code><a href="../reference/guess_tspec.html">guess_tspec_object()</a></code>, which were already exported). <code><a href="../reference/guess_tspec.html">guess_tspec()</a></code> should correctly guess the format in most cases, but you can call the variant directly if you think <code><a href="../reference/guess_tspec.html">guess_tspec()</a></code> is dispatching incorrectly (<a href="https://github.com/wranglezone/tibblify/issues/249" class="external-link">#249</a>).</li>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.0" id="tibblify-040">tibblify 0.4.0<a class="anchor" aria-label="anchor" href="#tibblify-040"></a></h2><p class="text-muted">CRAN release: 2026-05-09</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-4-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h3>
+<ul><li>All arguments of functions that accept meaningful named <code>...</code> are now prefixed with <code>.</code> to minimize conflicts with column and object names in <code>...</code>. The un-dotted versions of the arguments are still accepted, but calling functions directly with un-dotted arguments will produce a warning once per session (see <code>?lifecycle::deprecate_soft()</code>). Un-dotted arguments will be phased out in a future version of this package, so we recommend switching to the dot-prefixed versions. See <code><a href="../reference/tspec_df.html">?tspec_df</a></code> and <code>?tib_scalar()</code> for details (<a href="https://github.com/wranglezone/tibblify/issues/228" class="external-link">#228</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="potential-breaking-changes-0-4-0">Potential breaking changes<a class="anchor" aria-label="anchor" href="#potential-breaking-changes-0-4-0"></a></h3>
+<ul><li>All code has been refactored for maintainability. While we were careful to ensure that output is unchanged, it is possible that a corner case is no longer handled how it was in version 0.3.0. Please notify us (<a href="https://github.com/wranglezone/tibblify/issues" class="external-link uri">https://github.com/wranglezone/tibblify/issues</a>) if something has changed for the worse in an unexpected way (<a href="https://github.com/wranglezone/tibblify/issues/243" class="external-link">#243</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
+<ul><li>The <code><a href="../reference/guess_tspec.html">guess_tspec()</a></code> variants <code><a href="../reference/guess_tspec.html">guess_tspec_list()</a></code> and <code><a href="../reference/guess_tspec.html">guess_tspec_object_list()</a></code> are now exported (along with <code><a href="../reference/guess_tspec.html">guess_tspec_df()</a></code> and <code><a href="../reference/guess_tspec.html">guess_tspec_object()</a></code>, which were already exported). <code><a href="../reference/guess_tspec.html">guess_tspec()</a></code> should correctly guess the format in most cases, but you can call the variant directly if you think <code><a href="../reference/guess_tspec.html">guess_tspec()</a></code> is dispatching incorrectly (<a href="https://github.com/wranglezone/tibblify/issues/249" class="external-link">#249</a>).</li>
 <li>
 <code><a href="../reference/untibblify.html">untibblify()</a></code> now automatically uses the <code>tib_spec</code> attribute when present, so tibblified objects can be round-tripped without explicitly passing the spec (<a href="https://github.com/wranglezone/tibblify/issues/235" class="external-link">#235</a>).</li>
 <li>
-<code><a href="../reference/parse_openapi_spec.html">parse_openapi_spec()</a></code> supports many more fields and works for many more APIs (<a href="https://github.com/wranglezone/tibblify/issues/190" class="external-link">#190</a>, <a href="https://github.com/wranglezone/tibblify/issues/200" class="external-link">#200</a>, <a href="https://github.com/jonthegeek" class="external-link">@jonthegeek</a> and <a href="https://github.com/mgirlich" class="external-link">@mgirlich</a>).</li>
-<li>The underlying C implementation has been updated to better comply with R’s C API. We also fixed various bugs during this update (<a href="https://github.com/wranglezone/tibblify/issues/203" class="external-link">#203</a>, <a href="https://github.com/wranglezone/tibblify/issues/204" class="external-link">#204</a>, <a href="https://github.com/wranglezone/tibblify/issues/222" class="external-link">#222</a>).</li>
-<li>All vignettes and the documentation of all functions has been updated for clarity (<a href="https://github.com/wranglezone/tibblify/issues/243" class="external-link">#243</a>).</li>
-</ul><p>(roughly sorted into “Breaking changes”, “Potential breaking changes”, “New features”, “Bug fixes”, and “Documentation” as of 2026-04-10, but I left out the headers to make it easier to add more bullets during development)</p>
+<code><a href="../reference/parse_openapi_spec.html">parse_openapi_spec()</a></code> supports many more fields and works for many more APIs (<a href="https://github.com/wranglezone/tibblify/issues/170" class="external-link">#170</a>, <a href="https://github.com/wranglezone/tibblify/issues/186" class="external-link">#186</a>, <a href="https://github.com/wranglezone/tibblify/issues/190" class="external-link">#190</a>, <a href="https://github.com/wranglezone/tibblify/issues/200" class="external-link">#200</a>, <a href="https://github.com/jonthegeek" class="external-link">@jonthegeek</a> and <a href="https://github.com/mgirlich" class="external-link">@mgirlich</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-4-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
+<ul><li>The underlying C implementation has been updated to comply with R’s C API. We also fixed various bugs during this update (<a href="https://github.com/wranglezone/tibblify/issues/203" class="external-link">#203</a>, <a href="https://github.com/wranglezone/tibblify/issues/204" class="external-link">#204</a>, <a href="https://github.com/wranglezone/tibblify/issues/222" class="external-link">#222</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-4-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-4-0"></a></h3>
+<ul><li>All vignettes and the documentation of all functions have been updated for clarity (<a href="https://github.com/wranglezone/tibblify/issues/243" class="external-link">#243</a>).</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="tibblify-031">tibblify 0.3.1<a class="anchor" aria-label="anchor" href="#tibblify-031"></a></h2><p class="text-muted">CRAN release: 2024-01-11</p>

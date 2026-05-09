@@ -26,3 +26,7 @@ Finalize a tibblify object
 - field:
 
   (`any`) The field value.
+
+## Value
+
+The finalized field spec.

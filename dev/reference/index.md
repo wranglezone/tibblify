@@ -23,15 +23,6 @@
 - [`get_spec()`](https://tibblify.wrangle.zone/dev/reference/get_spec.md)
   : Examine the column specification
 
-- [`gh_repos`](https://tibblify.wrangle.zone/dev/reference/gh_repos.md)
-  : GitHub repositories
-
-- [`gh_users`](https://tibblify.wrangle.zone/dev/reference/gh_users.md)
-  : GitHub users
-
-- [`got_chars`](https://tibblify.wrangle.zone/dev/reference/got_chars.md)
-  : Game of Thrones POV characters
-
 - [`guess_tspec()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
   [`guess_tspec_df()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)
   [`guess_tspec_list()`](https://tibblify.wrangle.zone/dev/reference/guess_tspec.md)

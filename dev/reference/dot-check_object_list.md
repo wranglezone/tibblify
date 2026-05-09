@@ -1,6 +1,6 @@
-# bort if `x` is not a list of objects
+# Abort if `x` is not a list of objects
 
-bort if `x` is not a list of objects
+Abort if `x` is not a list of objects
 
 ## Usage
 

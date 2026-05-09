@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tibblify</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibblify.wrangle.zone">tibblify</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jennybc.github.io/repurrrsive/" class="external-link">repurrrsive</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vctrs.r-lib.org/" class="external-link">vctrs</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -81,11 +82,23 @@ JSON or from scraping XML.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Let’s start with <code>gh_users</code>, which is a list containing
-information about four GitHub users. We’ll select a subset of columns to
-keep the example relatively simple.</p>
+<p>Let’s start with <code>gh_users</code>, which is a list from the
+{repurrrsive} package containing information about four GitHub users.
+We’ll select a subset of columns to keep the example relatively
+simple.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gh_users_small</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">gh_users</span>, <span class="op">~</span> <span class="va">.x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"followers"</span>, <span class="st">"login"</span>, <span class="st">"url"</span>, <span class="st">"name"</span>, <span class="st">"location"</span>, <span class="st">"email"</span>, <span class="st">"public_gists"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gh_users_small</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
+<span>  <span class="fu">repurrrsive</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/repurrrsive/reference/gh_users.html" class="external-link">gh_users</a></span>,</span>
+<span>  <span class="op">~</span> <span class="va">.x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"followers"</span>,</span>
+<span>    <span class="st">"login"</span>,</span>
+<span>    <span class="st">"url"</span>,</span>
+<span>    <span class="st">"name"</span>,</span>
+<span>    <span class="st">"location"</span>,</span>
+<span>    <span class="st">"email"</span>,</span>
+<span>    <span class="st">"public_gists"</span></span>
+<span>  <span class="op">)</span><span class="op">]</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">gh_users_small</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "followers"    "login"        "url"          "name"         "location"    </span></span>
@@ -94,28 +107,26 @@ keep the example relatively simple.</p>
 <code><a href="../reference/tibblify.html">tibblify()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">gh_users_small</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The spec contains 1 unspecified field:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">email</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 7</span></span></span>
-<span><span class="co">#&gt;   followers login      url                    name  location email  public_gists</span></span>
-<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       780 jennybc    https://api.github.co… Jenn… Vancouv… <span style="color: #949494;">&lt;NULL&gt;</span>           54</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      <span style="text-decoration: underline;">3</span>958 jtleek     https://api.github.co… Jeff… Baltimo… <span style="color: #949494;">&lt;NULL&gt;</span>           12</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>       115 juliasilge https://api.github.co… Juli… Salt La… <span style="color: #949494;">&lt;NULL&gt;</span>            4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>       213 leeper     https://api.github.co… Thom… London,… <span style="color: #949494;">&lt;NULL&gt;</span>           46</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
+<span><span class="co">#&gt;   followers login       url                    name  location email public_gists</span></span>
+<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       303 gaborcsardi https://api.github.co… Gábo… Chippen… csar…            6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>       780 jennybc     https://api.github.co… Jenn… Vancouv… <span style="color: #BB0000;">NA</span>              54</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      <span style="text-decoration: underline;">3</span>958 jtleek      https://api.github.co… Jeff… Baltimo… <span style="color: #BB0000;">NA</span>              12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>       115 juliasilge  https://api.github.co… Juli… Salt La… <span style="color: #BB0000;">NA</span>               4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>       213 leeper      https://api.github.co… Thom… London,… <span style="color: #BB0000;">NA</span>              46</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>        34 masalmon    https://api.github.co… Maël… Barcelo… <span style="color: #BB0000;">NA</span>               0</span></span></code></pre></div>
 <p>We can now look at the specification <code><a href="../reference/tibblify.html">tibblify()</a></code> used for
 rectangling.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/guess_tspec.html">guess_tspec</a></span><span class="op">(</span><span class="va">gh_users_small</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The spec contains 1 unspecified field:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">email</span></span></span>
 <span><span class="co">#&gt; tspec_df(</span></span>
 <span><span class="co">#&gt;   <span style="color: #00BB00;">tib_int</span>("followers"),</span></span>
 <span><span class="co">#&gt;   <span style="color: #BB0000;">tib_chr</span>("login"),</span></span>
 <span><span class="co">#&gt;   <span style="color: #BB0000;">tib_chr</span>("url"),</span></span>
 <span><span class="co">#&gt;   <span style="color: #BB0000;">tib_chr</span>("name"),</span></span>
 <span><span class="co">#&gt;   <span style="color: #BB0000;">tib_chr</span>("location"),</span></span>
-<span><span class="co">#&gt;   tib_unspecified("email"),</span></span>
+<span><span class="co">#&gt;   <span style="color: #BB0000;">tib_chr</span>("email"),</span></span>
 <span><span class="co">#&gt;   <span style="color: #00BB00;">tib_int</span>("public_gists"),</span></span>
 <span><span class="co">#&gt; )</span></span></code></pre></div>
 <p>If we are only interested in some of the fields we can easily adapt
@@ -128,13 +139,15 @@ the specification.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">gh_users_small</span>, <span class="va">spec</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
-<span><span class="co">#&gt;   login_name name                   public_gists</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> jennybc    Jennifer (Jenny) Bryan           54</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> jtleek     Jeff L.                          12</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> juliasilge Julia Silge                       4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> leeper     Thomas J. Leeper                 46</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;   login_name  name                   public_gists</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> gaborcsardi Gábor Csárdi                      6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> jennybc     Jennifer (Jenny) Bryan           54</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> jtleek      Jeff L.                          12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> juliasilge  Julia Silge                       4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> leeper      Thomas J. Leeper                 46</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> masalmon    Maëlle Salmon                     0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="objects">Objects<a class="anchor" aria-label="anchor" href="#objects"></a>
@@ -343,7 +356,10 @@ to flatten these columns to regular columns.</p>
 <p>In <code>gh_repos_small</code>, the field <code>owner</code> is an
 object itself.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gh_repos_small</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">gh_repos</span>, <span class="op">~</span> <span class="va">.x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"name"</span>, <span class="st">"owner"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gh_repos_small</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
+<span>  <span class="fu">repurrrsive</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/repurrrsive/reference/gh_repos.html" class="external-link">gh_repos</a></span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, </span>
+<span>  <span class="op">~</span> <span class="va">.x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"name"</span>, <span class="st">"owner"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">gh_repos_small</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>  <span class="va">gh_repos_small</span>,</span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">repo</span><span class="op">)</span> <span class="op">{</span></span>

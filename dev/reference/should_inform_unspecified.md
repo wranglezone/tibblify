@@ -12,3 +12,10 @@ should_inform_unspecified()
 ## Value
 
 `FALSE` if the option is set to `FALSE`, `TRUE` otherwise.
+
+## Examples
+
+``` r
+should_inform_unspecified()
+#> [1] TRUE
+```

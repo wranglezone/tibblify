@@ -1,7 +1,6 @@
-# Confirm that `children_to` is a single string that is different from `id_col` and `parent_col`
+# Confirm that `children_to` is usable
 
-Confirm that `children_to` is a single string that is different from
-`id_col` and `parent_col`
+Confirm that `children_to` is usable
 
 ## Usage
 
