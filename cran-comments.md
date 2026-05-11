@@ -19,7 +19,8 @@ Result: NOTE
 Flavors: r-oldrel-macos-arm64, r-oldrel-macos-x86_64
 ```
 
-* This NOTE is inherited from rlang, and does not appear in any other currently tested flavors.
+* This NOTE (on oldrel-macos) is inherited from rlang, and does not appear in any other currently tested flavors.
+* There is also a "Days since last update: 2" note, but this submission is to address check failures. 
 * This submission addresses LTO warnings:
 
 ```
