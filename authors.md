@@ -12,15 +12,15 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/wranglezone/tibblify/blob/v0.4.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/wranglezone/tibblify/blob/main/DESCRIPTION)
 
 Harmon J, Girlich M (2026). *tibblify: Rectangle Nested Lists*. R
-package version 0.4.0, <https://tibblify.wrangle.zone>.
+package version 0.4.1, <https://tibblify.wrangle.zone>.
 
     @Manual{,
       title = {tibblify: Rectangle Nested Lists},
       author = {Jon Harmon and Maximilian Girlich},
       year = {2026},
-      note = {R package version 0.4.0},
+      note = {R package version 0.4.1},
       url = {https://tibblify.wrangle.zone},
     }

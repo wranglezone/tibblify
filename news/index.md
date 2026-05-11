@@ -1,5 +1,10 @@
 # Changelog
 
+## tibblify 0.4.1
+
+- Fixed type mismatch in C code
+  ([\#323](https://github.com/wranglezone/tibblify/issues/323)).
+
 ## tibblify 0.4.0
 
 CRAN release: 2026-05-09
