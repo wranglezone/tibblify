@@ -7,3 +7,4 @@ inst/doc
 docs
 /.positai/
 conversation-export*.json
+.positai
