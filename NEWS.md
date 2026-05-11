@@ -1,5 +1,7 @@
 # tibblify (development version)
 
+* Fixed type mismatch in C code (#323).
+
 # tibblify 0.4.0
 
 ## Breaking changes
