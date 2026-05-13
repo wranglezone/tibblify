@@ -2,6 +2,10 @@
 
 ## tibblify (development version)
 
+## tibblify 0.4.1
+
+CRAN release: 2026-05-12
+
 - Fixed type mismatch in C code
   ([\#323](https://github.com/wranglezone/tibblify/issues/323)).
 
