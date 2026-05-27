@@ -552,7 +552,7 @@ test_that("explicit NULL tibblifies", {
   )
 })
 
-test_that("length-0 scalars are treated as empty for optional fields (#noissue)", {
+test_that("length-0 scalars are treated as empty for optional fields (#332)", {
   spec <- tspec_df(
     tib_dbl("a", .required = FALSE),
     tib_chr("b", .required = FALSE)
