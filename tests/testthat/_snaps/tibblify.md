@@ -179,14 +179,6 @@
       i You specified that the field is a scalar.
       i Use `tib_vector()` if the field is a vector instead.
     Code
-      (expect_error(tib(list(x = logical()), tib_lgl("x"))))
-    Output
-      <error/tibblify_error>
-      Error in `tibblify()`:
-      ! `x[[1]]$x` must have size 1, not size 0.
-      i You specified that the field is a scalar.
-      i Use `tib_vector()` if the field is a vector instead.
-    Code
       (expect_error(tib(list(x = c(dtt, dtt)), tib_scalar("x", dtt))))
     Output
       <error/tibblify_error>

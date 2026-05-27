@@ -115,7 +115,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
  * the collector prototype and validated to size 1.
  */
 #define ADD_VALUE(COLL, NA, EMPTY, CAST)                       \
-  if (value == r_null) {                                       \
+  if (value == r_null || r_length(value) == 0) {               \
     *v_collector->details.COLL.v_data = NA;                    \
     ++v_collector->details.COLL.v_data;                        \
     return;                                                    \
@@ -135,7 +135,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
  * Add a scalar value for collectors that write through R API setters.
  */
 #define ADD_VALUE_BARRIER(SET, NA, PTYPE, GET)                 \
-  if (value == r_null) {                                       \
+  if (value == r_null || r_length(value) == 0) {               \
     SET(v_collector->data, v_collector->current_row, NA);      \
     ++v_collector->current_row;                                \
     return;                                                    \
@@ -170,7 +170,7 @@ void add_value_chr(struct collector* v_collector, r_obj* value, struct Path* v_p
 void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* v_path) {
   // FIXME if `vec_assign()` gets exported this should use
   // `vec_init()` + `vec_assign()`
-  if (value == r_null) {
+  if (value == r_null || r_length(value) == 0) {
     r_obj* na = v_collector->details.scalar_coll.na;
     r_list_poke(v_collector->data, v_collector->current_row, na);
     ++v_collector->current_row;
