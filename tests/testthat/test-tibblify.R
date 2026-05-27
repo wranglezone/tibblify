@@ -85,8 +85,6 @@ test_that("tibblify errors if size is bad", {
   dtt <- vctrs::new_datetime(1)
   expect_snapshot({
     (expect_error(tib(list(x = c(TRUE, TRUE)), tib_lgl("x"))))
-    # empty element
-    (expect_error(tib(list(x = logical()), tib_lgl("x"))))
     (expect_error(tib(list(x = c(dtt, dtt)), tib_scalar("x", dtt))))
   })
 })
@@ -551,6 +549,24 @@ test_that("explicit NULL tibblifies", {
   expect_equal(
     tibblify(x, tspec_df(tib_int("x", .required = FALSE))),
     tibble(x = c(NA, 3L, NA))
+  )
+})
+
+test_that("length-0 scalars are treated as empty for optional fields (#noissue)", {
+  spec <- tspec_df(
+    tib_dbl("a", .required = FALSE),
+    tib_chr("b", .required = FALSE)
+  )
+
+  x <- list(
+    list(a = 3, b = list()),
+    list(a = 4, b = character()),
+    list(a = numeric(), b = NULL)
+  )
+
+  expect_equal(
+    tibblify(x, spec),
+    tibble(a = c(3, 4, NA), b = c(NA_character_, NA_character_, NA_character_))
   )
 })
 
