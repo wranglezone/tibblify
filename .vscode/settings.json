@@ -6,5 +6,16 @@
     "[quarto]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "quarto.quarto"
-    }
+    },
+    "cSpell.words": [
+        "colmajor",
+        "elts",
+        "Girlich",
+        "Kirill",
+        "Müller",
+        "ptype",
+        "Rectangling",
+        "tibblify",
+        "unchop"
+    ]
 }
