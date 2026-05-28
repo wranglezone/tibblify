@@ -570,6 +570,28 @@ test_that("length-0 scalars are treated as empty for optional fields (#332)", {
   )
 })
 
+test_that("length-0 list vectors are treated as empty for optional fields (#334)", {
+  spec <- tspec_df(
+    tib_dbl_vec("a", .required = FALSE),
+    tib_chr_vec("b", .required = FALSE)
+  )
+
+  x <- list(
+    list(a = 3),
+    list(a = 3, b = NULL),
+    list(a = 3, b = list()),
+    list(a = list(), b = list())
+  )
+
+  expect_equal(
+    tibblify(x, spec),
+    tibble(
+      a = vctrs::list_of(3, 3, 3, NULL, .ptype = double()),
+      b = vctrs::list_of(NULL, NULL, NULL, NULL, .ptype = character())
+    )
+  )
+})
+
 test_that("tibblify: tib_vector respects .vector_allows_empty_list", {
   x <- list(
     list(x = 1),
