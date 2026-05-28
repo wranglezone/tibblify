@@ -296,6 +296,17 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     }
   }
 
+  // For optional fields, treat `list()` like `NULL`.
+  // This runs after the `.vector_allows_empty_list` branch above so that
+  // explicit "allow empty list as empty vector" behavior is preserved.
+  if (r_length(value) == 0 &&
+      r_typeof(value) == R_TYPE_list &&
+      v_collector->add_default_absent == v_collector->add_default) {
+    r_list_poke(v_collector->data, v_collector->current_row, r_null);
+    ++v_collector->current_row;
+    return;
+  }
+
   r_obj* names = r_names(value);
   if (v_vec_coll->input_form == VECTOR_FORM_scalar_list || v_vec_coll->input_form == VECTOR_FORM_object) {
     // FIXME should check with `vec_is_list()`?
