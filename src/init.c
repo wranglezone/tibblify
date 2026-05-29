@@ -7,6 +7,7 @@
 #include <R_ext/Visibility.h>
 #include <vctrs.c>
 #include "r-vctrs.h"
+#include "stbl.h"
 
 #define export attribute_visible extern
 
@@ -46,6 +47,7 @@ SEXP tibblify_initialize(SEXP ns, SEXP vctrs_ns) {
   r_init_library(ns);
   tibblify_init_utils(ns);
   rvctrs_init(vctrs_ns);
+  stbl_init_api();
 
   return R_NilValue;
 }

@@ -1,5 +1,7 @@
 # tibblify (development version)
 
+* `tibblify()` now accepts values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected, and "false lists" that trivially `unlist()` to the expected type (such as `list(list("a"))`) (#330).
+
 # tibblify 0.4.1
 
 * Fixed type mismatch in C code (#323).
