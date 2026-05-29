@@ -186,6 +186,38 @@ test_that(".fill arg of tib_vector() is used properly", {
   )
 })
 
+
+test_that(".fill is coerced to .ptype with stbl-style friendliness (#337)", {
+  # chr -> int
+  expect_equal(tib_scalar("x", integer(), .fill = "1")$fill, 1L)
+  # chr -> dbl
+  expect_equal(tib_scalar("x", double(), .fill = "1.5")$fill, 1.5)
+  # chr -> lgl
+  expect_equal(tib_scalar("x", logical(), .fill = "TRUE")$fill, TRUE)
+  # int -> dbl
+  expect_equal(tib_scalar("x", double(), .fill = 1L)$fill, 1.0)
+  # lgl -> int
+  expect_equal(tib_scalar("x", integer(), .fill = TRUE)$fill, 1L)
+
+  # tib_vector: chr -> int
+  expect_equal(tib_vector("x", integer(), .fill = "1")$fill, 1L)
+  # tib_vector: chr -> dbl
+  expect_equal(tib_vector("x", double(), .fill = "2.5")$fill, 2.5)
+})
+
+test_that(".fill coercion still errors when not losslessly coercible (#337)", {
+  expect_snapshot({
+    # chr that cannot be parsed as int
+    (expect_error(tib_scalar("x", integer(), .fill = "a")))
+    # int -> chr not permitted (mirrors C-level behavior)
+    (expect_error(tib_scalar(
+      "x",
+      character(),
+      .fill = 0L,
+      .ptype_inner = character()
+    )))
+  })
+})
 test_that("tib_unspecified() creates the expected spec", {
   test_result <- tib_unspecified("x")
   expect_s3_class(

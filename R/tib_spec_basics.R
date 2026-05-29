@@ -269,11 +269,11 @@ tib_scalar <- function(
   } else {
     vctrs::obj_check_vector(.fill, call = .call)
     vctrs::vec_check_size(.fill, size = 1L, call = .call)
-    .fill <- vctrs::vec_cast(
+    .fill <- .cast_fill(
       .fill,
       .ptype_inner,
-      call = .call,
-      to_arg = ".ptype_inner"
+      ptype_arg = ".ptype_inner",
+      call = .call
     )
   }
 
@@ -386,7 +386,7 @@ tib_vector <- function(
     x_arg = ".ptype_inner"
   )
   if (!is.null(.fill)) {
-    .fill <- vctrs::vec_cast(.fill, .ptype, call = .call, to_arg = ".ptype")
+    .fill <- .cast_fill(.fill, .ptype, ptype_arg = ".ptype", call = .call)
   }
   .values_to <- .stabilize_values_to(.values_to, .call)
   .names_to <- .stabilize_names_to(.names_to, .values_to, .input_form, .call)

@@ -117,9 +117,11 @@
     Code
       (expect_error(tib_scalar("x", integer(), .fill = "a")))
     Output
-      <error/vctrs_error_cast>
+      <error/stbl-error-incompatible_type>
       Error in `tib_scalar()`:
-      ! Can't convert `.fill` <character> to match type of `.ptype_inner` <integer>.
+      ! `.fill` <character> must be coercible to <integer>
+      x Can't convert some values due to incompatible values.
+      * Locations: 1
 
 ---
 
@@ -232,4 +234,22 @@
       <error/rlang_error>
       Error in `tib_vector()`:
       ! `.names_to` must be a single string, not a character vector.
+
+# .fill coercion still errors when not losslessly coercible (#337)
+
+    Code
+      (expect_error(tib_scalar("x", integer(), .fill = "a")))
+    Output
+      <error/stbl-error-incompatible_type>
+      Error in `tib_scalar()`:
+      ! `.fill` <character> must be coercible to <integer>
+      x Can't convert some values due to incompatible values.
+      * Locations: 1
+    Code
+      (expect_error(tib_scalar("x", character(), .fill = 0L, .ptype_inner = character()))
+      )
+    Output
+      <error/vctrs_error_cast>
+      Error in `tib_scalar()`:
+      ! Can't convert `.fill` <integer> to match type of `.ptype_inner` <character>.
 
