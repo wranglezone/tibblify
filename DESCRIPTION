@@ -25,6 +25,7 @@ Imports:
     lifecycle,
     purrr (>= 1.0.2),
     rlang (>= 1.2.0),
+    stbl (>= 0.3.0.9002),
     tibble (>= 3.2.1),
     tidyselect (>= 1.2.0),
     vctrs (>= 0.7.2),
@@ -37,11 +38,11 @@ Suggests:
     repurrrsive,
     rmarkdown (>= 2.16),
     spelling (>= 2.2),
-    stbl,
     testthat (>= 3.1.4),
     tidyr,
     yaml (>= 2.3.6)
 LinkingTo:
+    stbl,
     vctrs
 VignetteBuilder:
     knitr

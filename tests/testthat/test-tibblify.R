@@ -1223,3 +1223,39 @@ test_that("tibblify does not confuse key order due to case (#96)", {
     structure(list(B = 1, a = NA_integer_), class = "tibblify_object")
   )
 })
+
+test_that("friendlier coercion: false lists unlist to the correct type (#330)", {
+  spec <- tspec_df(
+    tib_dbl_vec("a"),
+    tib_chr_vec("b")
+  )
+  x <- tibblify(list(list(a = 1:3, b = c("a", "b", "c"))), spec)
+  expect_no_error({
+    y <- tibblify(list(list(a = list(1L, 2L, 3L), b = c("a", "b", "c"))), spec)
+  })
+  expect_no_error({
+    z <- tibblify(list(list(a = 1:3, b = list("a", "b", "c"))), spec)
+  })
+  expect_no_error({
+    w <- tibblify(list(list(a = c("1", "2", "3"), b = c("a", "b", "c"))), spec)
+  })
+  expect_identical(x, y)
+  expect_identical(x, z)
+  expect_identical(x, w)
+})
+
+test_that("friendlier coercion: scalars with false list or lossy-free coercion (#330)", {
+  spec <- tspec_df(
+    tib_dbl("a"),
+    tib_chr("b")
+  )
+  x <- tibblify(list(list(a = 1L, b = "a")), spec)
+  expect_no_error({
+    y <- tibblify(list(list(a = list(1L), b = list("a"))), spec)
+  })
+  expect_no_error({
+    z <- tibblify(list(list(a = 1L, b = list("a"))), spec)
+  })
+  expect_identical(x, y)
+  expect_identical(x, z)
+})

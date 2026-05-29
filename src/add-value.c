@@ -5,6 +5,106 @@
 #include "utils.h"
 #include "tibblify.h"
 #include "r-vctrs.h"
+#include "stbl.h"
+
+
+/**
+ * Tolerant cast: like rvctrs_vec_cast() but uses stbl lossless-coercion rules.
+ *
+ * Uses stbl_*_are_*ish() to check whether the conversion is lossless. If all
+ * elements are valid, calls stbl_*_to_*() and returns element 0 of the result
+ * list. If any are invalid, falls back to rvctrs_vec_cast() so the caller gets
+ * a consistent, informative vctrs error.
+ *
+ * Handles two cases beyond what vctrs allows:
+ *   1. "False lists": non-empty bare list -> atomic target (stbl_lst_to_*).
+ *   2. Lossless atomic mismatches: chr/int/lgl/dbl -> other atomic (stbl_*_to_*).
+ *
+ * Falls back to rvctrs_vec_cast() for unsupported type combos and non-atomic
+ * ptypes (e.g. Date, POSIXct).
+ */
+
+/* Check if all elements of a logical validity vector are TRUE. */
+static inline bool stbl_all_valid(r_obj* valid) {
+  R_xlen_t n = XLENGTH(valid);
+  int* p_v = LOGICAL(valid);
+  for (R_xlen_t i = 0; i < n; i++) {
+    if (!p_v[i]) return false;
+  }
+  return true;
+}
+
+/* Call fn_to(value), extract element 0 (the result), and return it.
+ * fn_to must return a list whose first element is the coerced vector. */
+#define STBL_CAST(FN_ARE, FN_TO, VALUE, PTYPE)                         \
+  do {                                                                  \
+    r_obj* _valid = KEEP(FN_ARE(VALUE));                               \
+    if (!stbl_all_valid(_valid)) { FREE(1); return rvctrs_vec_cast(VALUE, PTYPE); } \
+    FREE(1);                                                           \
+    r_obj* _out = KEEP(FN_TO(VALUE));                                  \
+    r_obj* _result = VECTOR_ELT(_out, 0);                              \
+    FREE(1);                                                           \
+    return _result;                                                    \
+  } while (0)
+
+static inline r_obj* tolerant_vec_cast(r_obj* value, r_obj* ptype) {
+  SEXPTYPE value_type = TYPEOF(value);
+  SEXPTYPE ptype_type = TYPEOF(ptype);
+
+  // Handle false lists: non-empty bare list -> target atomic type
+  if (value_type == VECSXP && !r_is_object(value) && Rf_length(value) > 0) {
+    // lst_to_* also returns list(result, valid) -- use element 1 as validity
+    r_obj* stbl_out = NULL;
+    switch (ptype_type) {
+    case LGLSXP:  stbl_out = KEEP(stbl_lst_to_lgl(value)); break;
+    case INTSXP:  stbl_out = KEEP(stbl_lst_to_int(value)); break;
+    case REALSXP: stbl_out = KEEP(stbl_lst_to_dbl(value)); break;
+    case STRSXP:  stbl_out = KEEP(stbl_lst_to_chr(value)); break;
+    default: break;
+    }
+    if (stbl_out != NULL) {
+      r_obj* valid = VECTOR_ELT(stbl_out, 1);
+      if (!stbl_all_valid(valid)) { FREE(1); return rvctrs_vec_cast(value, ptype); }
+      r_obj* result = VECTOR_ELT(stbl_out, 0);
+      FREE(1);
+      return result;
+    }
+  }
+
+  // Handle atomic type mismatches via stbl lossless coercion.
+  // Use are_*ish for validity (avoids depending on internal list structure of to_*).
+  if (value_type != ptype_type) {
+    switch (ptype_type) {
+    case LGLSXP:
+      if (value_type == REALSXP)
+        STBL_CAST(stbl_dbl_are_lglish, stbl_dbl_to_lgl, value, ptype);
+      if (value_type == INTSXP)
+        STBL_CAST(stbl_lgl_are_intish, stbl_lgl_to_int, value, ptype);
+      if (value_type == STRSXP)
+        STBL_CAST(stbl_chr_are_lglish, stbl_chr_to_lgl, value, ptype);
+      break;
+    case INTSXP:
+      if (value_type == REALSXP)
+        STBL_CAST(stbl_dbl_are_intish, stbl_dbl_to_int, value, ptype);
+      if (value_type == LGLSXP)
+        STBL_CAST(stbl_lgl_are_intish, stbl_lgl_to_int, value, ptype);
+      if (value_type == STRSXP)
+        STBL_CAST(stbl_chr_are_intish, stbl_chr_to_int, value, ptype);
+      break;
+    case REALSXP:
+      if (value_type == INTSXP)
+        STBL_CAST(stbl_int_are_dblish, stbl_int_to_dbl, value, ptype);
+      if (value_type == LGLSXP)
+        STBL_CAST(stbl_lgl_are_dblish, stbl_lgl_to_dbl, value, ptype);
+      if (value_type == STRSXP)
+        STBL_CAST(stbl_chr_are_dblish, stbl_chr_to_dbl, value, ptype);
+      break;
+    default: break;
+    }
+  }
+
+  return rvctrs_vec_cast(value, ptype);
+}
 
 /**
  * @file add-value.c
@@ -121,7 +221,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
     return;                                                    \
   }                                                            \
                                                                \
-  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, EMPTY));          \
+  r_obj* value_casted = KEEP(tolerant_vec_cast(value, EMPTY));          \
   r_ssize size = short_vec_size(value_casted);                 \
   if (size != 1) {                                             \
     stop_scalar(size, v_path->data);                            \
@@ -141,7 +241,7 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
     return;                                                    \
   }                                                            \
                                                                \
-  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, PTYPE));          \
+  r_obj* value_casted = KEEP(tolerant_vec_cast(value, PTYPE));          \
   r_ssize size = short_vec_size(value_casted);                 \
   if (size != 1) {                                             \
     stop_scalar(size, v_path->data);                           \
@@ -196,7 +296,7 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
  * Replace collector storage with a casted col-major input vector.
  */
 #define ADD_VALUE_COLMAJOR(PTYPE)                              \
-  v_collector->data = KEEP(rvctrs_vec_cast(value, PTYPE));            \
+  v_collector->data = KEEP(tolerant_vec_cast(value, PTYPE));            \
   r_list_poke(v_collector->shelter, 0, v_collector->data);     \
   FREE(1);
 
@@ -329,7 +429,7 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
   if (v_vec_coll->elt_transform != r_null) value = apply_transform(value, v_vec_coll->elt_transform);
   KEEP(value);
 
-  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, v_collector->ptype));
+  r_obj* value_casted = KEEP(tolerant_vec_cast(value, v_collector->ptype));
   r_obj* value_prepped = KEEP(v_vec_coll->prep_data(value_casted, names, v_vec_coll->col_names));
 
   r_list_poke(v_collector->data, v_collector->current_row, value_prepped);
