@@ -2,6 +2,13 @@
 
 ## tibblify (development version)
 
+- [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
+  now accepts values that can be losslessly coerced to the expected
+  type, such as `"1"` when an integer or double is expected, and “false
+  lists” that trivially [`unlist()`](https://rdrr.io/r/base/unlist.html)
+  to the expected type (such as `list(list("a"))`)
+  ([\#330](https://github.com/wranglezone/tibblify/issues/330)).
+
 ## tibblify 0.4.1
 
 CRAN release: 2026-05-12

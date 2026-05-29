@@ -154,10 +154,11 @@ By default they cannot be parsed with
 
 ``` r
 tibblify(x, tspec_df(tib_int_vec("a")))
-#> Error in `tibblify()`:
-#> ! Problem while tibblifying `x[[1]]$a`
-#> Caused by error:
-#> ! Can't convert `<list>` <list> to <integer>.
+#> # A tibble: 2 × 1
+#>             a
+#>   <list<int>>
+#> 1         [2]
+#> 2         [3]
 ```
 
 Use `.input_form = "scalar_list"` in
