@@ -40,14 +40,16 @@ Suggests:
     spelling (>= 2.2),
     testthat (>= 3.1.4),
     tidyr,
-    yaml (>= 2.3.6)
+    yaml (>= 2.3.6),
+    gh (>= 1.5.0.9000)
 LinkingTo:
     stbl,
     vctrs
 VignetteBuilder:
     knitr
 Remotes:
-    wranglezone/stbl
+    wranglezone/stbl,
+    gh=r-lib/gh
 Config/roxygen2/version: 8.0.0
 Config/testthat/edition: 3
 Encoding: UTF-8
