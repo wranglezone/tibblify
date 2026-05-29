@@ -1259,3 +1259,60 @@ test_that("friendlier coercion: scalars with false list or lossy-free coercion (
   expect_identical(x, y)
   expect_identical(x, z)
 })
+
+test_that("friendlier coercion: false lists unlist to lgl and int (#330)", {
+  ref_lgl <- tibblify(list(list(x = TRUE)), tspec_df(tib_lgl("x")))
+  expect_identical(
+    tibblify(list(list(x = list(TRUE))), tspec_df(tib_lgl("x"))),
+    ref_lgl
+  )
+  ref_lgl_vec <- tibblify(
+    list(list(x = c(TRUE, FALSE))),
+    tspec_df(tib_lgl_vec("x"))
+  )
+  expect_identical(
+    tibblify(list(list(x = list(TRUE, FALSE))), tspec_df(tib_lgl_vec("x"))),
+    ref_lgl_vec
+  )
+  ref_int <- tibblify(list(list(x = 1L)), tspec_df(tib_int("x")))
+  expect_identical(
+    tibblify(list(list(x = list(1L))), tspec_df(tib_int("x"))),
+    ref_int
+  )
+  ref_int_vec <- tibblify(list(list(x = c(1L, 2L))), tspec_df(tib_int_vec("x")))
+  expect_identical(
+    tibblify(list(list(x = list(1L, 2L))), tspec_df(tib_int_vec("x"))),
+    ref_int_vec
+  )
+})
+
+test_that("tolerant_vec_cast: false list with list() ptype falls through to vctrs (#330)", {
+  expect_no_error(
+    tibblify(list(list(x = list(1L))), tspec_df(tib_vector("x", list())))
+  )
+})
+
+test_that("friendlier coercion: lossless dbl/lgl atomic mismatches (#330)", {
+  expect_identical(
+    tibblify(list(list(x = 1.0)), tspec_df(tib_lgl("x"))),
+    tibble(x = TRUE)
+  )
+  expect_identical(
+    tibblify(list(list(x = TRUE)), tspec_df(tib_int("x"))),
+    tibble(x = 1L)
+  )
+  expect_identical(
+    tibblify(list(list(x = TRUE)), tspec_df(tib_dbl("x"))),
+    tibble(x = 1.0)
+  )
+  expect_identical(
+    tibblify(list(list(x = 1L)), tspec_df(tib_lgl("x"))),
+    tibble(x = TRUE)
+  )
+})
+
+test_that("tolerant_vec_cast: unsupported coercions produce errors (#330)", {
+  expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_lgl("x"))))
+  expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_dbl("x"))))
+  expect_error(tibblify(list(list(x = 1L)), tspec_df(tib_chr("x"))))
+})

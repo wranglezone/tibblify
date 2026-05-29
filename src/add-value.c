@@ -78,8 +78,17 @@ static inline r_obj* tolerant_vec_cast(r_obj* value, r_obj* ptype) {
     case LGLSXP:
       if (value_type == REALSXP)
         STBL_CAST(stbl_dbl_are_lglish, stbl_dbl_to_lgl, value, ptype);
-      if (value_type == INTSXP)
-        STBL_CAST(stbl_lgl_are_intish, stbl_lgl_to_int, value, ptype);
+      if (value_type == INTSXP) {
+        // No stbl_int_* family exists; upcast to dbl and reuse the dbl path.
+        r_obj* dbl_value = KEEP(Rf_coerceVector(value, REALSXP));
+        r_obj* valid = KEEP(stbl_dbl_are_lglish(dbl_value));
+        if (!stbl_all_valid(valid)) { FREE(2); return rvctrs_vec_cast(value, ptype); }
+        FREE(1);
+        r_obj* out = KEEP(stbl_dbl_to_lgl(dbl_value));
+        r_obj* result = VECTOR_ELT(out, 0);
+        FREE(2);
+        return result;
+      }
       if (value_type == STRSXP)
         STBL_CAST(stbl_chr_are_lglish, stbl_chr_to_lgl, value, ptype);
       break;
