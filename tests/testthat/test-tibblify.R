@@ -284,7 +284,7 @@ test_that("Can tibblify with tspec_object", {
 
 # tib_*() specific tests
 
-test_that("tib_scalar tibblifies", {
+test_that("tib_scalar tibblifies (#231)", {
   dtt <- vctrs::new_datetime(1)
 
   # can parse
@@ -310,17 +310,17 @@ test_that("tib_scalar tibblifies", {
     tibble(x = vctrs::new_datetime(NA_real_))
   )
 
-  # use NA if NULL
+  # use fill for NULL (#231)
   expect_equal(
     tib(list(x = NULL), tib_lgl("x", .required = FALSE, .fill = FALSE)),
-    tibble(x = NA)
+    tibble(x = FALSE)
   )
   expect_equal(
     tib(
       list(x = NULL),
       tib_scalar("x", vctrs::vec_ptype(dtt), .required = FALSE, .fill = dtt)
     ),
-    tibble(x = vctrs::vec_init(dtt))
+    tibble(x = dtt)
   )
 
   # specified default works
@@ -431,7 +431,7 @@ test_that("tibblify: tib_scalar respect ptype_inner", {
   )
 })
 
-test_that("tib_vector tibblifies", {
+test_that("tib_vector tibblifies (#231)", {
   dtt <- vctrs::new_datetime(1)
 
   # can parse
@@ -467,10 +467,10 @@ test_that("tib_vector tibblifies", {
     tibble(x = vctrs::list_of(c(dtt, dtt + 1)))
   )
 
-  # uses NULL for NULL
+  # uses fill for NULL (#231)
   expect_equal(
     tib(list(x = NULL), tib_int_vec("x", .fill = 1:2)),
-    tibble(x = vctrs::list_of(NULL, .ptype = integer()))
+    tibble(x = vctrs::list_of(1:2, .ptype = integer()))
   )
 
   # elt_transform works
@@ -635,16 +635,18 @@ test_that("length-0 list vectors use .fill (#231)", {
   )
 })
 
-test_that("tibblify: tib_vector respects .vector_allows_empty_list", {
+test_that("tibblify: tib_vector respects .vector_allows_empty_list (#231)", {
   x <- list(
     list(x = 1),
     list(x = list()),
     list(x = 1:3)
   )
 
-  expect_snapshot({
-    (expect_error(tibblify(x, tspec_df(tib_int_vec("x")))))
-  })
+  # length-0 list uses fill (NULL by default) for required fields too
+  expect_equal(
+    tibblify(x, tspec_df(tib_int_vec("x"))),
+    tibble(x = vctrs::list_of(1L, NULL, 1:3, .ptype = integer()))
+  )
 
   expect_equal(
     tibblify(x, tspec_df(tib_int_vec("x"), .vector_allows_empty_list = TRUE)),
@@ -820,7 +822,7 @@ test_that("tibblify: tib_vector creates tibble with names_to", {
   )
 })
 
-test_that("tib_variant tibblifies", {
+test_that("tib_variant tibblifies (#231)", {
   # can parse
   expect_equal(
     tibblify(
@@ -864,13 +866,13 @@ test_that("tib_variant tibblifies", {
     tibble(x = list(1))
   )
 
-  # can handle NULL
+  # uses fill for NULL (#231)
   expect_equal(
     tibblify(
       list(list(x = NULL)),
       tspec_df(x = tib_variant("x", .fill = 1))
     ),
-    tibble(x = list(NULL))
+    tibble(x = list(1))
   )
 
   # transform works

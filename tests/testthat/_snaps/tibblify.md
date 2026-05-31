@@ -187,17 +187,6 @@
       i You specified that the field is a scalar.
       i Use `tib_vector()` if the field is a vector instead.
 
-# tibblify: tib_vector respects .vector_allows_empty_list
-
-    Code
-      (expect_error(tibblify(x, tspec_df(tib_int_vec("x")))))
-    Output
-      <error/tibblify_error>
-      Error in `tibblify()`:
-      ! Problem while tibblifying `x[[2]]$x`
-      Caused by error:
-      ! Can't convert `<list>` <list> to <integer>.
-
 # tibblify: tib_vector can parse scalar list
 
     Code
@@ -278,7 +267,7 @@
       ! `x[[1]]$x` is not an object.
       x Element 2 must have size 1, not size 2.
 
-# tib_variant tibblifies
+# tib_variant tibblifies (#231)
 
     Code
       (expect_error(tibblify(list(list(x = TRUE), list(zzz = 1)), tspec_df(x = tib_variant(

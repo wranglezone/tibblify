@@ -1,9 +1,9 @@
 # rowmajor ----------------------------------------------------------------
 
-test_that("fill is used as-is when there isn't a names column", {
+test_that("fill is used as-is when there isn't a names column (#231)", {
   expect_equal(
     tib(list(x = NULL), tib_int_vec("x", .fill = 1:2)),
-    tibble(x = vctrs::list_of(NULL, .ptype = integer()))
+    tibble(x = vctrs::list_of(1:2, .ptype = integer()))
   )
 })
 
