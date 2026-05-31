@@ -361,7 +361,7 @@ tspec_combine <- function(...) {
     fill_locs <- fill_locs[!fill_locs %in% unspecified_locs]
     fill_list <- fill_list[fill_locs]
 
-    fill_list_cast <- lapply(fill_list, vctrs::vec_cast, ptype)
+    fill_list_cast <- lapply(fill_list, .cast_fill, ptype)
     fill_locs2 <- vctrs::vec_unique_loc(fill_list_cast)
     fill_list_cast <- fill_list_cast[fill_locs2]
     fill_locs <- fill_locs[fill_locs2]
@@ -373,7 +373,7 @@ tspec_combine <- function(...) {
       cli::cli_abort("Can't combine fill {value_infos}", call = .call)
     }
 
-    return(vctrs::vec_cast(fill_list_cast[[1]], ptype))
+    return(.cast_fill(fill_list_cast[[1]], ptype))
   }
 
   scalar_idx <- types == "scalar"
@@ -394,7 +394,7 @@ tspec_combine <- function(...) {
   if (is.null(fill_value)) {
     fill_value
   } else {
-    vctrs::vec_cast(fill_value, ptype)
+    .cast_fill(fill_value, ptype)
   }
 }
 

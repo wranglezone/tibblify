@@ -109,3 +109,20 @@ test_that(".is_url_string() detects http and https URLs (#noissue)", {
   expect_false(.is_url_string("ftp://example.com"))
   expect_false(.is_url_string(c("https://example.com", "https://example.org")))
 })
+
+test_that(".cast_fill() uses stbl-style coercion for plain atomic targets (#337)", {
+  # lossless coercions
+  expect_equal(.cast_fill("TRUE", logical()), TRUE)
+  expect_equal(.cast_fill("1", integer()), 1L)
+  expect_equal(.cast_fill("1.5", double()), 1.5)
+  expect_equal(.cast_fill(1L, double()), 1.0)
+  expect_equal(.cast_fill(TRUE, integer()), 1L)
+
+  # chr target falls back to vctrs (strict)
+  expect_equal(.cast_fill("a", character()), "a")
+  expect_error(.cast_fill(1L, character()))
+
+  # classed types fall back to vctrs
+  t <- as.POSIXct("2024-01-01", tz = "UTC")
+  expect_equal(.cast_fill(t, t), t)
+})
