@@ -273,12 +273,13 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
 /**
  * Add a scalar value into primitive collector storage.
  *
- * `NULL` maps to type-appropriate missing value, non-`NULL` input is cast to
- * the collector prototype and validated to size 1.
+ * Both `NULL` and length-0 inputs use the configured fill (`default_value`).
+ * Non-empty input is cast to the collector prototype and validated to size 1.
  */
 #define ADD_VALUE(COLL, NA, EMPTY, CAST)                       \
   if (value == r_null || r_length(value) == 0) {               \
-    *v_collector->details.COLL.v_data = NA;                    \
+    *v_collector->details.COLL.v_data =                        \
+      v_collector->details.COLL.default_value;                 \
     ++v_collector->details.COLL.v_data;                        \
     return;                                                    \
   }                                                            \
@@ -295,10 +296,13 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
 
 /**
  * Add a scalar value for collectors that write through R API setters.
+ *
+ * Both `NULL` and length-0 inputs use the configured fill (`default_value`).
  */
 #define ADD_VALUE_BARRIER(SET, NA, PTYPE, GET)                 \
   if (value == r_null || r_length(value) == 0) {               \
-    SET(v_collector->data, v_collector->current_row, NA);      \
+    SET(v_collector->data, v_collector->current_row,           \
+        v_collector->details.chr_coll.default_value);          \
     ++v_collector->current_row;                                \
     return;                                                    \
   }                                                            \
@@ -333,8 +337,8 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
   // FIXME if `vec_assign()` gets exported this should use
   // `vec_init()` + `vec_assign()`
   if (value == r_null || r_length(value) == 0) {
-    r_obj* na = v_collector->details.scalar_coll.na;
-    r_list_poke(v_collector->data, v_collector->current_row, na);
+    r_obj* default_value = v_collector->details.scalar_coll.default_value;
+    r_list_poke(v_collector->data, v_collector->current_row, default_value);
     ++v_collector->current_row;
     return;
   }
@@ -443,13 +447,15 @@ r_obj* list_unchop_value(r_obj* value,
 }
 
 void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* v_path) {
+  struct vector_collector* v_vec_coll = &v_collector->details.vec_coll;
+
+  // NULL uses fill (treated the same as absent).
   if (value == r_null) {
-    r_list_poke(v_collector->data, v_collector->current_row, r_null);
+    r_list_poke(v_collector->data, v_collector->current_row, v_vec_coll->default_value);
     ++v_collector->current_row;
     return;
   }
 
-  struct vector_collector* v_vec_coll = &v_collector->details.vec_coll;
   if (v_vec_coll->input_form == VECTOR_FORM_vector && v_vec_coll->vector_allows_empty_list) {
     if (r_length(value) == 0 && r_typeof(value) == R_TYPE_list) {
       r_list_poke(v_collector->data, v_collector->current_row, v_collector->ptype);
@@ -458,13 +464,17 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     }
   }
 
-  // For optional fields, treat `list()` like `NULL`.
-  // This runs after the `.vector_allows_empty_list` branch above so that
-  // explicit "allow empty list as empty vector" behavior is preserved.
+  // For optional `vector`-form fields, a length-0 `list()` uses fill. This
+  // runs after the `.vector_allows_empty_list` branch so that explicit
+  // "allow empty list" behavior is preserved. When `vector_allows_empty_list`
+  // is FALSE (the default), required fields fall through and error; optional
+  // fields use fill. `scalar_list`/`object` forms fall through so an empty
+  // list is treated as an empty typed vector.
   if (r_length(value) == 0 &&
       r_typeof(value) == R_TYPE_list &&
+      v_vec_coll->input_form == VECTOR_FORM_vector &&
       v_collector->add_default_absent == v_collector->add_default) {
-    r_list_poke(v_collector->data, v_collector->current_row, r_null);
+    r_list_poke(v_collector->data, v_collector->current_row, v_vec_coll->default_value);
     ++v_collector->current_row;
     return;
   }
@@ -511,8 +521,10 @@ void add_value_vector_colmajor(struct collector* v_collector, r_obj* value, stru
 }
 
 void add_value_variant(struct collector* v_collector, r_obj* value, struct Path* v_path) {
+  // NULL uses fill (treated the same as absent).
   if (value == r_null) {
-    r_list_poke(v_collector->data, v_collector->current_row, r_null);
+    r_obj* default_value = v_collector->details.variant_coll.default_value;
+    r_list_poke(v_collector->data, v_collector->current_row, default_value);
     ++v_collector->current_row;
     return;
   }

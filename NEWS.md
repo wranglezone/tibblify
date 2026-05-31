@@ -1,5 +1,6 @@
 # tibblify (development version)
 
+* `tib_*()` functions now use `.fill` when a field is `NULL` or otherwise has length 0 (e.g., `list()` or `character()`), treating it the same as an absent field (#231).
 * `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (#337, #340).
 * `tibblify()` now accepts values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected, and "false lists" that trivially `unlist()` to the expected type (such as `list(list("a"))`) (#330).
 

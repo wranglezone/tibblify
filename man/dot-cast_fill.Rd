@@ -19,9 +19,6 @@
 The coerced fill value.
 }
 \description{
-Mirrors the lossless-coercion rules applied by the C-level \code{add_value}
-function: stbl's \verb{to_*()} functions are used for plain atomic targets
-(lgl/int/dbl/chr) and factor targets; all other targets fall back to
-\code{vctrs::vec_cast()}.
+Cast a fill value using stbl-style friendlier coercion
 }
 \keyword{internal}
