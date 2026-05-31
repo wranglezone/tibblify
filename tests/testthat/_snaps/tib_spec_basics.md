@@ -225,7 +225,7 @@
       Error in `tib_vector()`:
       ! `.names_to` must be a single string, not a character vector.
 
-# .fill coercion still errors when not losslessly coercible (#337)
+# .fill coercion still errors when not losslessly coercible (#337, #340)
 
     Code
       (expect_error(tib_scalar("x", integer(), .fill = "a")))

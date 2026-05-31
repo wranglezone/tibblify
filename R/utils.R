@@ -344,11 +344,6 @@
 
 #' Cast a fill value using stbl-style friendlier coercion
 #'
-#' Mirrors the lossless-coercion rules applied by the C-level `add_value`
-#' function: stbl's `to_*()` functions are used for plain atomic targets
-#' (lgl/int/dbl/chr) and factor targets; all other targets fall back to
-#' `vctrs::vec_cast()`.
-#'
 #' @param fill The fill value to coerce.
 #' @param ptype The target prototype.
 #' @param ptype_arg Argument name for the ptype, used in error messages.
@@ -356,30 +351,18 @@
 #' @returns The coerced fill value.
 #' @keywords internal
 .cast_fill <- function(fill, ptype, ptype_arg = NULL, call = caller_env()) {
-  if (is.factor(ptype)) {
-    return(stbl::to_fct(
+  switch(
+    vctrs::vec_ptype_abbr(ptype),
+    "lgl" = stbl::to_lgl(fill, x_arg = ".fill", call = call),
+    "int" = stbl::to_int(fill, x_arg = ".fill", call = call),
+    "dbl" = stbl::to_dbl(fill, x_arg = ".fill", call = call),
+    "chr" = stbl::to_chr(fill, x_arg = ".fill", call = call),
+    "fct" = stbl::to_fct(
       fill,
       levels = levels(ptype),
       x_arg = ".fill",
       call = call
-    ))
-  }
-  if (is.atomic(ptype) && !is.object(ptype)) {
-    switch(
-      typeof(ptype),
-      "logical" = stbl::to_lgl(fill, x_arg = ".fill", call = call),
-      "integer" = stbl::to_int(fill, x_arg = ".fill", call = call),
-      "double" = stbl::to_dbl(fill, x_arg = ".fill", call = call),
-      "character" = stbl::to_chr(fill, x_arg = ".fill", call = call),
-      vctrs::vec_cast(
-        fill,
-        ptype,
-        x_arg = ".fill",
-        to_arg = ptype_arg,
-        call = call
-      )
-    )
-  } else {
+    ),
     vctrs::vec_cast(
       fill,
       ptype,
@@ -387,5 +370,5 @@
       to_arg = ptype_arg,
       call = call
     )
-  }
+  )
 }

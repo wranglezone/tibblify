@@ -201,12 +201,13 @@ test_that(".fill is coerced to .ptype with stbl-style friendliness (#337)", {
   expect_equal(tib_vector("x", double(), .fill = "2.5")$fill, 2.5)
 })
 
-test_that(".fill coercion still errors when not losslessly coercible (#337)", {
+test_that(".fill coercion still errors when not losslessly coercible (#337, #340)", {
   expect_snapshot({
     # chr that cannot be parsed as int
     (expect_error(tib_scalar("x", integer(), .fill = "a")))
   })
 })
+
 test_that("tib_unspecified() creates the expected spec", {
   test_result <- tib_unspecified("x")
   expect_s3_class(

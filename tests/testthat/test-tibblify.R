@@ -1311,7 +1311,7 @@ test_that("friendlier coercion: lossless dbl/lgl atomic mismatches (#330)", {
   )
 })
 
-test_that("tolerant_vec_cast: unsupported coercions produce errors (#330)", {
+test_that("tolerant_vec_cast: unsupported coercions produce errors (#330, #340)", {
   expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_lgl("x"))))
   expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_dbl("x"))))
   expect_no_error(tibblify(list(list(x = 1L)), tspec_df(tib_chr("x"))))

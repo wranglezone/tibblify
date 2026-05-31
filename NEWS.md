@@ -1,7 +1,6 @@
 # tibblify (development version)
 
-* `tibblify()` and `.fill` arguments now accept values that can be losslessly coerced to character or factor targets, such as `1L` when a character field is expected, or `"a"` when a factor field is expected (using stbl's C API for `chr` and `fct` targets) (@jonthegeek, #340).
-* `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (#337).
+* `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (#337, #340).
 * `tibblify()` now accepts values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected, and "false lists" that trivially `unlist()` to the expected type (such as `list(list("a"))`) (#330).
 
 # tibblify 0.4.1

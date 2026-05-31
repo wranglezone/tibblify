@@ -110,7 +110,7 @@ test_that(".is_url_string() detects http and https URLs (#noissue)", {
   expect_false(.is_url_string(c("https://example.com", "https://example.org")))
 })
 
-test_that(".cast_fill() uses stbl-style coercion for plain atomic targets (#337)", {
+test_that(".cast_fill() uses stbl-style coercion for plain atomic targets (#337, #340)", {
   # lossless coercions
   expect_equal(.cast_fill("TRUE", logical()), TRUE)
   expect_equal(.cast_fill("1", integer()), 1L)
