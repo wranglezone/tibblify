@@ -1311,8 +1311,26 @@ test_that("friendlier coercion: lossless dbl/lgl atomic mismatches (#330)", {
   )
 })
 
-test_that("tolerant_vec_cast: unsupported coercions produce errors (#330)", {
+test_that("tolerant_vec_cast: unsupported coercions produce errors (#330, #340)", {
   expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_lgl("x"))))
   expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_dbl("x"))))
-  expect_error(tibblify(list(list(x = 1L)), tspec_df(tib_chr("x"))))
+  expect_no_error(tibblify(list(list(x = 1L)), tspec_df(tib_chr("x"))))
+})
+
+test_that("friendlier coercion: int/lgl/dbl/fct to chr (#340)", {
+  spec <- tspec_df(tib_chr("x"))
+  expect_identical(tibblify(list(list(x = 1L)), spec), tibble(x = "1"))
+  expect_identical(tibblify(list(list(x = TRUE)), spec), tibble(x = "TRUE"))
+  expect_identical(tibblify(list(list(x = 1.5)), spec), tibble(x = "1.5"))
+  expect_identical(
+    tibblify(list(list(x = factor("a", levels = c("a", "b")))), spec),
+    tibble(x = "a")
+  )
+})
+
+test_that("friendlier coercion: false list to fct (#340)", {
+  fct_ptype <- factor(levels = c("a", "b", "c"))
+  spec <- tspec_df(tib_scalar("x", fct_ptype))
+  ref <- tibblify(list(list(x = "a")), spec)
+  expect_identical(tibblify(list(list(x = list("a"))), spec), ref)
 })

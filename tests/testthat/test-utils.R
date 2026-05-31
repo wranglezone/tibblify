@@ -110,7 +110,7 @@ test_that(".is_url_string() detects http and https URLs (#noissue)", {
   expect_false(.is_url_string(c("https://example.com", "https://example.org")))
 })
 
-test_that(".cast_fill() uses stbl-style coercion for plain atomic targets (#337)", {
+test_that(".cast_fill() uses stbl-style coercion for plain atomic targets (#337, #340)", {
   # lossless coercions
   expect_equal(.cast_fill("TRUE", logical()), TRUE)
   expect_equal(.cast_fill("1", integer()), 1L)
@@ -120,9 +120,26 @@ test_that(".cast_fill() uses stbl-style coercion for plain atomic targets (#337)
 
   # chr target falls back to vctrs (strict)
   expect_equal(.cast_fill("a", character()), "a")
-  expect_error(.cast_fill(1L, character()))
+  expect_equal(.cast_fill(1L, character()), "1")
 
   # classed types fall back to vctrs
   t <- as.POSIXct("2024-01-01", tz = "UTC")
   expect_equal(.cast_fill(t, t), t)
+})
+
+test_that(".cast_fill() uses stbl coercion for chr and fct targets (#340)", {
+  # chr target: int/lgl/dbl/fct -> chr
+  expect_equal(.cast_fill(1L, character()), "1")
+  expect_equal(.cast_fill(TRUE, character()), "TRUE")
+  expect_equal(.cast_fill(1.5, character()), "1.5")
+  expect_equal(.cast_fill(factor("a", levels = c("a", "b")), character()), "a")
+
+  # fct target: chr -> fct
+  fct_ptype <- factor(levels = c("a", "b", "c"))
+  expect_equal(
+    .cast_fill("a", fct_ptype),
+    factor("a", levels = c("a", "b", "c"))
+  )
+  expect_error(.cast_fill("d", fct_ptype))
+  expect_error(.cast_fill("a", complex())) # switch fallthrough to vctrs
 })
