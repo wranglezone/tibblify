@@ -105,11 +105,10 @@ By default they are not supported but produce an error.
 
 ``` r
 tibblify(x, tspec_df(tib_int_vec("a")))
-#> # A tibble: 2 × 1
-#>             a
-#>   <list<int>>
-#> 1         [2]
-#> 2
+#> Error in `tibblify()`:
+#> ! Problem while tibblifying `x[[2]]$a`
+#> Caused by error:
+#> ! Can't convert `<list>` <list> to <integer>.
 ```
 
 Use `vector_allows_empty_list = TRUE` in `tspec_*()` so that they are
