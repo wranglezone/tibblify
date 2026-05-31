@@ -1,6 +1,6 @@
 # tibblify (development version)
 
-* `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (@jonthegeek, #337).
+* `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (#337).
 * `tibblify()` now accepts values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected, and "false lists" that trivially `unlist()` to the expected type (such as `list(list("a"))`) (#330).
 
 # tibblify 0.4.1
