@@ -40,6 +40,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="tibblify-development-version">tibblify (development version)<a class="anchor" aria-label="anchor" href="#tibblify-development-version"></a></h2>
 <ul><li>
+<code>tib_*()</code> functions now use <code>.fill</code> when a field is <code>NULL</code> or otherwise has length 0 (e.g., <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> or <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>), treating it the same as an absent field (<a href="https://github.com/wranglezone/tibblify/issues/231" class="external-link">#231</a>).</li>
+<li>
 <code>.fill</code> arguments now accept values that can be losslessly coerced to the expected type, such as <code>"1"</code> when an integer or double is expected (<a href="https://github.com/wranglezone/tibblify/issues/337" class="external-link">#337</a>, <a href="https://github.com/wranglezone/tibblify/issues/340" class="external-link">#340</a>).</li>
 <li>
 <code><a href="../reference/tibblify.html">tibblify()</a></code> now accepts values that can be losslessly coerced to the expected type, such as <code>"1"</code> when an integer or double is expected, and “false lists” that trivially <code><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist()</a></code> to the expected type (such as <code>list(list("a"))</code>) (<a href="https://github.com/wranglezone/tibblify/issues/330" class="external-link">#330</a>).</li>

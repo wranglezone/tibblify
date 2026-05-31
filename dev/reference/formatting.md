@@ -100,9 +100,9 @@ format(x, width = NULL, ..., names = NULL)
 
 - .fill:
 
-  (`vector` or `NULL`) Optionally, a value to use if the field does not
-  exist. Note: this value must match the `.ptype_inner` of the field
-  (the value *before* any transformation), not the `.ptype`.
+  (`vector` or `NULL`) Optionally, a value to use if the field is empty
+  or does not exist. Note: this value must match the `.ptype_inner` of
+  the field (the value *before* any transformation), not the `.ptype`.
 
 - .ptype_inner:
 

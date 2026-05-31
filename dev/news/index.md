@@ -2,6 +2,12 @@
 
 ## tibblify (development version)
 
+- `tib_*()` functions now use `.fill` when a field is `NULL` or
+  otherwise has length 0 (e.g.,
+  [`list()`](https://rdrr.io/r/base/list.html) or
+  [`character()`](https://rdrr.io/r/base/character.html)), treating it
+  the same as an absent field
+  ([\#231](https://github.com/wranglezone/tibblify/issues/231)).
 - `.fill` arguments now accept values that can be losslessly coerced to
   the expected type, such as `"1"` when an integer or double is expected
   ([\#337](https://github.com/wranglezone/tibblify/issues/337),
