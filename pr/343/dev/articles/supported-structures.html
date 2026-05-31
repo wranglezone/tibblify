@@ -162,10 +162,11 @@ when parsing an empty JSON array.</p>
 <p>By default they are not supported but produce an error.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `tibblify()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Problem while tibblifying `x[[2]]$a`</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't convert `&lt;list&gt;` &lt;list&gt; to &lt;integer&gt;.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 1</span></span></span>
+<span><span class="co">#&gt;             a</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;list&lt;int&gt;&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         <span style="color: #949494;">[2]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span></span></span></code></pre></div>
 <p>Use <code>vector_allows_empty_list = TRUE</code> in
 <code>tspec_*()</code> so that they are converted to an empty vector
 instead.</p>

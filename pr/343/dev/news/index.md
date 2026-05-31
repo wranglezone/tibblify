@@ -2,7 +2,8 @@
 
 ## tibblify (development version)
 
-- `tib_*()` functions now use `.fill` when a field has length 0 (e.g.,
+- `tib_*()` functions now use `.fill` when a field is `NULL` or
+  otherwise has length 0 (e.g.,
   [`list()`](https://rdrr.io/r/base/list.html) or
   [`character()`](https://rdrr.io/r/base/character.html)), treating it
   the same as an absent field

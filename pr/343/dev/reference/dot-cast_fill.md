@@ -1,9 +1,6 @@
 # Cast a fill value using stbl-style friendlier coercion
 
-Mirrors the lossless-coercion rules applied by the C-level `add_value`
-function: stbl's `to_*()` functions are used for plain atomic targets
-(lgl/int/dbl/chr) and factor targets; all other targets fall back to
-[`vctrs::vec_cast()`](https://vctrs.r-lib.org/reference/vec_cast.html).
+Cast a fill value using stbl-style friendlier coercion
 
 ## Usage
 
