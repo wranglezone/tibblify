@@ -4,7 +4,8 @@
 
 - `.fill` arguments now accept values that can be losslessly coerced to
   the expected type, such as `"1"` when an integer or double is expected
-  ([\#337](https://github.com/wranglezone/tibblify/issues/337)).
+  ([\#337](https://github.com/wranglezone/tibblify/issues/337),
+  [\#340](https://github.com/wranglezone/tibblify/issues/340)).
 - [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
   now accepts values that can be losslessly coerced to the expected
   type, such as `"1"` when an integer or double is expected, and “false

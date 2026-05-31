@@ -1,10 +1,9 @@
 # Cast a fill value using stbl-style friendlier coercion
 
-For plain atomic targets (lgl/int/dbl), use stbl's lossless coercion so
-that e.g. `"1"` can fill an integer field. For all other targets
-(including chr), falls back to
+Mirrors the lossless-coercion rules applied by the C-level `add_value`
+function: stbl's `to_*()` functions are used for plain atomic targets
+(lgl/int/dbl/chr) and factor targets; all other targets fall back to
 [`vctrs::vec_cast()`](https://vctrs.r-lib.org/reference/vec_cast.html).
-Mirrors the behavior of the C-level `add_value` function.
 
 ## Usage
 
