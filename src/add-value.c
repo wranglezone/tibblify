@@ -464,13 +464,16 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     }
   }
 
-  // For `vector`-form fields, a length-0 `list()` uses fill. This runs after
-  // the `.vector_allows_empty_list` branch so that explicit "allow empty list"
-  // behavior is preserved. `scalar_list`/`object` forms fall through so an
-  // empty list is correctly treated as an empty typed vector.
+  // For optional `vector`-form fields, a length-0 `list()` uses fill. This
+  // runs after the `.vector_allows_empty_list` branch so that explicit
+  // "allow empty list" behavior is preserved. When `vector_allows_empty_list`
+  // is FALSE (the default), required fields fall through and error; optional
+  // fields use fill. `scalar_list`/`object` forms fall through so an empty
+  // list is treated as an empty typed vector.
   if (r_length(value) == 0 &&
       r_typeof(value) == R_TYPE_list &&
-      v_vec_coll->input_form == VECTOR_FORM_vector) {
+      v_vec_coll->input_form == VECTOR_FORM_vector &&
+      v_collector->add_default_absent == v_collector->add_default) {
     r_list_poke(v_collector->data, v_collector->current_row, v_vec_coll->default_value);
     ++v_collector->current_row;
     return;

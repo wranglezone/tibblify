@@ -642,11 +642,9 @@ test_that("tibblify: tib_vector respects .vector_allows_empty_list (#231)", {
     list(x = 1:3)
   )
 
-  # length-0 list uses fill (NULL by default) for required fields too
-  expect_equal(
-    tibblify(x, tspec_df(tib_int_vec("x"))),
-    tibble(x = vctrs::list_of(1L, NULL, 1:3, .ptype = integer()))
-  )
+  expect_snapshot({
+    (expect_error(tibblify(x, tspec_df(tib_int_vec("x")))))
+  })
 
   expect_equal(
     tibblify(x, tspec_df(tib_int_vec("x"), .vector_allows_empty_list = TRUE)),
