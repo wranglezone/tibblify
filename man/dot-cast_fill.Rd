@@ -19,9 +19,9 @@
 The coerced fill value.
 }
 \description{
-For plain atomic targets (lgl/int/dbl), use stbl's lossless coercion so that
-e.g. \code{"1"} can fill an integer field. For all other targets (including chr),
-falls back to \code{vctrs::vec_cast()}. Mirrors the behavior of the C-level
-\code{add_value} function.
+Mirrors the lossless-coercion rules applied by the C-level \code{add_value}
+function: stbl's \verb{to_*()} functions are used for plain atomic targets
+(lgl/int/dbl/chr) and factor targets; all other targets fall back to
+\code{vctrs::vec_cast()}.
 }
 \keyword{internal}

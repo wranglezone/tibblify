@@ -344,10 +344,10 @@
 
 #' Cast a fill value using stbl-style friendlier coercion
 #'
-#' For plain atomic targets (lgl/int/dbl), use stbl's lossless coercion so that
-#' e.g. `"1"` can fill an integer field. For all other targets (including chr),
-#' falls back to `vctrs::vec_cast()`. Mirrors the behavior of the C-level
-#' `add_value` function.
+#' Mirrors the lossless-coercion rules applied by the C-level `add_value`
+#' function: stbl's `to_*()` functions are used for plain atomic targets
+#' (lgl/int/dbl/chr) and factor targets; all other targets fall back to
+#' `vctrs::vec_cast()`.
 #'
 #' @param fill The fill value to coerce.
 #' @param ptype The target prototype.
@@ -356,12 +356,21 @@
 #' @returns The coerced fill value.
 #' @keywords internal
 .cast_fill <- function(fill, ptype, ptype_arg = NULL, call = caller_env()) {
+  if (is.factor(ptype)) {
+    return(stbl::to_fct(
+      fill,
+      levels = levels(ptype),
+      x_arg = ".fill",
+      call = call
+    ))
+  }
   if (is.atomic(ptype) && !is.object(ptype)) {
     switch(
       typeof(ptype),
       "logical" = stbl::to_lgl(fill, x_arg = ".fill", call = call),
       "integer" = stbl::to_int(fill, x_arg = ".fill", call = call),
       "double" = stbl::to_dbl(fill, x_arg = ".fill", call = call),
+      "character" = stbl::to_chr(fill, x_arg = ".fill", call = call),
       vctrs::vec_cast(
         fill,
         ptype,

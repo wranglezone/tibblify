@@ -54,6 +54,29 @@ static inline r_obj* tolerant_vec_cast(r_obj* value, r_obj* ptype) {
   // Handle false lists: non-empty bare list -> target atomic type
   if (value_type == VECSXP && !r_is_object(value) && Rf_length(value) > 0) {
     // lst_to_* also returns list(result, valid) -- use element 1 as validity
+
+    // Factor ptype: unlist to chr first, then coerce chr to factor.
+    if (r_is_object(ptype) && Rf_inherits(ptype, "factor")) {
+      r_obj* chr_out = KEEP(stbl_lst_to_chr(value));
+      r_obj* chr_valid = VECTOR_ELT(chr_out, 1);
+      if (!stbl_all_valid(chr_valid)) { FREE(1); return rvctrs_vec_cast(value, ptype); }
+      r_obj* chr_val = KEEP(VECTOR_ELT(chr_out, 0));
+      FREE(1);
+      r_obj* levels = Rf_getAttrib(ptype, R_LevelsSymbol);
+      r_obj* ordered = KEEP(Rf_ScalarLogical(Rf_inherits(ptype, "ordered")));
+      r_obj* fct_valid = KEEP(stbl_chr_are_fctish(chr_val, levels, r_null));
+      bool all_valid = stbl_all_valid(fct_valid);
+      FREE(1);
+      if (all_valid) {
+        r_obj* fct_out = KEEP(stbl_chr_to_fct(chr_val, levels, ordered));
+        r_obj* result = VECTOR_ELT(fct_out, 0);
+        FREE(3);
+        return result;
+      }
+      FREE(2);
+      return rvctrs_vec_cast(value, ptype);
+    }
+
     r_obj* stbl_out = NULL;
     switch (ptype_type) {
     case LGLSXP:  stbl_out = KEEP(stbl_lst_to_lgl(value)); break;
@@ -74,6 +97,26 @@ static inline r_obj* tolerant_vec_cast(r_obj* value, r_obj* ptype) {
   // Handle atomic type mismatches via stbl lossless coercion.
   // Use are_*ish for validity (avoids depending on internal list structure of to_*).
   if (value_type != ptype_type) {
+    // Factor ptype: TYPEOF is INTSXP but must not be treated as plain integer.
+    // Handle chr -> fct via stbl; other source types fall through to vctrs.
+    if (r_is_object(ptype) && Rf_inherits(ptype, "factor")) {
+      if (value_type == STRSXP) {
+        r_obj* levels = Rf_getAttrib(ptype, R_LevelsSymbol);
+        r_obj* ordered = KEEP(Rf_ScalarLogical(Rf_inherits(ptype, "ordered")));
+        r_obj* valid = KEEP(stbl_chr_are_fctish(value, levels, r_null));
+        bool all_valid = stbl_all_valid(valid);
+        FREE(1);
+        if (all_valid) {
+          r_obj* out = KEEP(stbl_chr_to_fct(value, levels, ordered));
+          r_obj* result = VECTOR_ELT(out, 0);
+          FREE(2);
+          return result;
+        }
+        FREE(1);
+      }
+      return rvctrs_vec_cast(value, ptype);
+    }
+
     switch (ptype_type) {
     case LGLSXP:
       if (value_type == REALSXP)
@@ -107,6 +150,16 @@ static inline r_obj* tolerant_vec_cast(r_obj* value, r_obj* ptype) {
         STBL_CAST(stbl_lgl_are_dblish, stbl_lgl_to_dbl, value, ptype);
       if (value_type == STRSXP)
         STBL_CAST(stbl_chr_are_dblish, stbl_chr_to_dbl, value, ptype);
+      break;
+    case STRSXP:
+      if (value_type == INTSXP && !r_is_object(value))
+        STBL_CAST(stbl_int_are_chrish, stbl_int_to_chr, value, ptype);
+      if (value_type == LGLSXP)
+        STBL_CAST(stbl_lgl_are_chrish, stbl_lgl_to_chr, value, ptype);
+      if (value_type == REALSXP)
+        STBL_CAST(stbl_dbl_are_chrish, stbl_dbl_to_chr, value, ptype);
+      if (value_type == INTSXP && r_is_object(value) && Rf_inherits(value, "factor"))
+        STBL_CAST(stbl_fct_are_chrish, stbl_fct_to_chr, value, ptype);
       break;
     default: break;
     }
@@ -286,7 +339,7 @@ void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* 
     return;
   }
 
-  r_obj* value_casted = KEEP(rvctrs_vec_cast(value, v_collector->details.scalar_coll.ptype_inner));
+  r_obj* value_casted = KEEP(tolerant_vec_cast(value, v_collector->details.scalar_coll.ptype_inner));
   r_ssize size = short_vec_size(value_casted);
   if (size != 1) {
     stop_scalar(size, v_path->data);

@@ -46,15 +46,11 @@ test_that("tib_scalar checks arguments", {
     (expect_error(tib_scalar("x", integer(), .fill = "a")))
   })
 
-  # .ptype_inner + .fill
-  expect_snapshot({
-    (expect_error(tib_scalar(
-      "x",
-      character(),
-      .fill = 0L,
-      .ptype_inner = character()
-    )))
-  })
+  # .ptype_inner + .fill: int coerces to chr
+  expect_equal(
+    tib_scalar("x", character(), .fill = 0L, .ptype_inner = character())$fill,
+    "0"
+  )
 
   # .transform
   expect_snapshot({
@@ -209,13 +205,6 @@ test_that(".fill coercion still errors when not losslessly coercible (#337)", {
   expect_snapshot({
     # chr that cannot be parsed as int
     (expect_error(tib_scalar("x", integer(), .fill = "a")))
-    # int -> chr not permitted (mirrors C-level behavior)
-    (expect_error(tib_scalar(
-      "x",
-      character(),
-      .fill = 0L,
-      .ptype_inner = character()
-    )))
   })
 })
 test_that("tib_unspecified() creates the expected spec", {

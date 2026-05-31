@@ -126,16 +126,6 @@
 ---
 
     Code
-      (expect_error(tib_scalar("x", character(), .fill = 0L, .ptype_inner = character()))
-      )
-    Output
-      <error/vctrs_error_cast>
-      Error in `tib_scalar()`:
-      ! Can't convert `.fill` <integer> to match type of `.ptype_inner` <character>.
-
----
-
-    Code
       (expect_error(tib_scalar("x", integer(), .transform = integer())))
     Output
       <error/rlang_error>
@@ -245,11 +235,4 @@
       ! `.fill` <character> must be coercible to <integer>
       x Can't convert some values due to incompatible values.
       * Locations: 1
-    Code
-      (expect_error(tib_scalar("x", character(), .fill = 0L, .ptype_inner = character()))
-      )
-    Output
-      <error/vctrs_error_cast>
-      Error in `tib_scalar()`:
-      ! Can't convert `.fill` <integer> to match type of `.ptype_inner` <character>.
 
