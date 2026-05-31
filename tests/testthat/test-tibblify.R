@@ -552,7 +552,7 @@ test_that("explicit NULL tibblifies", {
   )
 })
 
-test_that("length-0 scalars are treated as empty for optional fields (#231, #332)", {
+test_that("length-0 scalars are treated as empty for optional fields (#332)", {
   spec <- tspec_df(
     tib_dbl("a", .required = FALSE),
     tib_chr("b", .required = FALSE)
@@ -570,7 +570,7 @@ test_that("length-0 scalars are treated as empty for optional fields (#231, #332
   )
 })
 
-test_that("length-0 list vectors are treated as empty for optional fields (#231, #334)", {
+test_that("length-0 list vectors are treated as empty for optional fields (#334)", {
   spec <- tspec_df(
     tib_dbl_vec("a", .required = FALSE),
     tib_chr_vec("b", .required = FALSE)
@@ -592,7 +592,7 @@ test_that("length-0 list vectors are treated as empty for optional fields (#231,
   )
 })
 
-test_that("length-0 scalars use .fill (#231, #332)", {
+test_that("length-0 scalars use .fill (#231)", {
   spec <- tspec_df(
     tib_dbl("a", .required = FALSE, .fill = 0),
     tib_chr("b", .required = FALSE, .fill = "unknown"),
@@ -616,7 +616,7 @@ test_that("length-0 scalars use .fill (#231, #332)", {
   )
 })
 
-test_that("length-0 list vectors use .fill (#231, #334)", {
+test_that("length-0 list vectors use .fill (#231)", {
   spec <- tspec_df(
     tib_dbl_vec("a", .required = FALSE, .fill = c(1, 2)),
     tib_chr_vec("b", .required = FALSE)
