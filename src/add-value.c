@@ -273,12 +273,19 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
 /**
  * Add a scalar value into primitive collector storage.
  *
- * `NULL` maps to type-appropriate missing value, non-`NULL` input is cast to
- * the collector prototype and validated to size 1.
+ * `NULL` maps to type-appropriate missing value; length-0 uses the configured
+ * fill (`default_value`). Non-empty input is cast to the collector prototype
+ * and validated to size 1.
  */
 #define ADD_VALUE(COLL, NA, EMPTY, CAST)                       \
-  if (value == r_null || r_length(value) == 0) {               \
+  if (value == r_null) {                                       \
     *v_collector->details.COLL.v_data = NA;                    \
+    ++v_collector->details.COLL.v_data;                        \
+    return;                                                    \
+  }                                                            \
+  if (r_length(value) == 0) {                                  \
+    *v_collector->details.COLL.v_data =                        \
+      v_collector->details.COLL.default_value;                 \
     ++v_collector->details.COLL.v_data;                        \
     return;                                                    \
   }                                                            \
@@ -295,10 +302,19 @@ void add_default_recursive(struct collector* v_collector, struct Path* v_path) {
 
 /**
  * Add a scalar value for collectors that write through R API setters.
+ *
+ * `NULL` maps to type-appropriate missing value; length-0 uses the configured
+ * fill (`default_value`).
  */
 #define ADD_VALUE_BARRIER(SET, NA, PTYPE, GET)                 \
-  if (value == r_null || r_length(value) == 0) {               \
+  if (value == r_null) {                                       \
     SET(v_collector->data, v_collector->current_row, NA);      \
+    ++v_collector->current_row;                                \
+    return;                                                    \
+  }                                                            \
+  if (r_length(value) == 0) {                                  \
+    SET(v_collector->data, v_collector->current_row,           \
+        v_collector->details.chr_coll.default_value);          \
     ++v_collector->current_row;                                \
     return;                                                    \
   }                                                            \
@@ -332,9 +348,15 @@ void add_value_chr(struct collector* v_collector, r_obj* value, struct Path* v_p
 void add_value_scalar(struct collector* v_collector, r_obj* value, struct Path* v_path) {
   // FIXME if `vec_assign()` gets exported this should use
   // `vec_init()` + `vec_assign()`
-  if (value == r_null || r_length(value) == 0) {
+  if (value == r_null) {
     r_obj* na = v_collector->details.scalar_coll.na;
     r_list_poke(v_collector->data, v_collector->current_row, na);
+    ++v_collector->current_row;
+    return;
+  }
+  if (r_length(value) == 0) {
+    r_obj* default_value = v_collector->details.scalar_coll.default_value;
+    r_list_poke(v_collector->data, v_collector->current_row, default_value);
     ++v_collector->current_row;
     return;
   }
@@ -458,13 +480,16 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     }
   }
 
-  // For optional fields, treat `list()` like `NULL`.
-  // This runs after the `.vector_allows_empty_list` branch above so that
-  // explicit "allow empty list as empty vector" behavior is preserved.
+  // For optional `vector`-form fields, treat a length-0 `list()` using the
+  // configured fill (`default_value`). This runs after the
+  // `.vector_allows_empty_list` branch so that explicit "allow empty list"
+  // behavior is preserved.
   if (r_length(value) == 0 &&
       r_typeof(value) == R_TYPE_list &&
+      v_vec_coll->input_form == VECTOR_FORM_vector &&
       v_collector->add_default_absent == v_collector->add_default) {
-    r_list_poke(v_collector->data, v_collector->current_row, r_null);
+    r_list_poke(v_collector->data, v_collector->current_row,
+                v_vec_coll->default_value);
     ++v_collector->current_row;
     return;
   }

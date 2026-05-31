@@ -552,7 +552,7 @@ test_that("explicit NULL tibblifies", {
   )
 })
 
-test_that("length-0 scalars are treated as empty for optional fields (#332)", {
+test_that("length-0 scalars are treated as empty for optional fields (#231, #332)", {
   spec <- tspec_df(
     tib_dbl("a", .required = FALSE),
     tib_chr("b", .required = FALSE)
@@ -570,7 +570,7 @@ test_that("length-0 scalars are treated as empty for optional fields (#332)", {
   )
 })
 
-test_that("length-0 list vectors are treated as empty for optional fields (#334)", {
+test_that("length-0 list vectors are treated as empty for optional fields (#231, #334)", {
   spec <- tspec_df(
     tib_dbl_vec("a", .required = FALSE),
     tib_chr_vec("b", .required = FALSE)
@@ -588,6 +588,49 @@ test_that("length-0 list vectors are treated as empty for optional fields (#334)
     tibble(
       a = vctrs::list_of(3, 3, 3, NULL, .ptype = double()),
       b = vctrs::list_of(NULL, NULL, NULL, NULL, .ptype = character())
+    )
+  )
+})
+
+test_that("length-0 scalars use .fill (#231, #332)", {
+  spec <- tspec_df(
+    tib_dbl("a", .required = FALSE, .fill = 0),
+    tib_chr("b", .required = FALSE, .fill = "unknown"),
+    tib_int("c", .required = FALSE, .fill = 1L),
+    tib_lgl("d", .required = FALSE, .fill = FALSE)
+  )
+
+  x <- list(
+    list(a = list(), b = list(), c = list(), d = list()),
+    list(a = numeric(), b = character(), c = integer(), d = logical())
+  )
+
+  expect_equal(
+    tibblify(x, spec),
+    tibble(
+      a = c(0, 0),
+      b = c("unknown", "unknown"),
+      c = c(1L, 1L),
+      d = c(FALSE, FALSE)
+    )
+  )
+})
+
+test_that("length-0 list vectors use .fill (#231, #334)", {
+  spec <- tspec_df(
+    tib_dbl_vec("a", .required = FALSE, .fill = c(1, 2)),
+    tib_chr_vec("b", .required = FALSE)
+  )
+
+  x <- list(
+    list(a = list(), b = list())
+  )
+
+  expect_equal(
+    tibblify(x, spec),
+    tibble(
+      a = vctrs::list_of(c(1, 2), .ptype = double()),
+      b = vctrs::list_of(NULL, .ptype = character())
     )
   )
 })
