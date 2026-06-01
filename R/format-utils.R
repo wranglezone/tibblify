@@ -71,17 +71,16 @@
   )
 }
 
+#' Format a function name with optional full qualification
+#'
+#' @inheritParams .format_fields
+#' @returns The formatted function name, potentially fully qualified.
+#' @keywords internal
 .format_maybe_fully_qualify <- function(f_name, fully_qualify) {
-  if (!fully_qualify) {
-    return(f_name)
+  if (fully_qualify && grepl("^(tib_|tspec_)", cli::ansi_strip(f_name))) {
+    f_name <- paste0("tibblify::", f_name)
   }
-
-  f_name_plain <- cli::ansi_strip(f_name)
-  if (grepl("^(tib_|tspec_)", f_name_plain)) {
-    paste0("tibblify::", f_name)
-  } else {
-    f_name
-  }
+  return(f_name)
 }
 
 #' Check if a tib field has a canonical name
