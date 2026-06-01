@@ -8,7 +8,13 @@ print.tspec <- function(
   fully_qualify = FALSE
 ) {
   names <- .check_print_names_arg(names)
-  cat(format(x, width = width, ..., names = names, fully_qualify = fully_qualify))
+  cat(format(
+    x,
+    width = width,
+    ...,
+    names = names,
+    fully_qualify = fully_qualify
+  ))
   invisible(x)
 }
 
