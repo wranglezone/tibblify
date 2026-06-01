@@ -1,14 +1,32 @@
 #' @rdname formatting
 #' @export
-print.tspec <- function(x, width = NULL, ..., names = NULL) {
+print.tspec <- function(
+  x,
+  width = NULL,
+  ...,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
-  cat(format(x, width = width, ..., names = names))
+  cat(format(
+    x,
+    width = width,
+    ...,
+    names = names,
+    fully_qualify = fully_qualify
+  ))
   invisible(x)
 }
 
 #' @rdname formatting
 #' @export
-format.tspec_df <- function(x, width = NULL, ..., names = NULL) {
+format.tspec_df <- function(
+  x,
+  width = NULL,
+  ...,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     "tspec_df",
@@ -21,13 +39,20 @@ format.tspec_df <- function(x, width = NULL, ..., names = NULL) {
       },
       .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }
 
 #' @rdname formatting
 #' @export
-format.tspec_row <- function(x, width = NULL, ..., names = NULL) {
+format.tspec_row <- function(
+  x,
+  width = NULL,
+  ...,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     "tspec_row",
@@ -39,13 +64,20 @@ format.tspec_row <- function(x, width = NULL, ..., names = NULL) {
       },
       .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }
 
 #' @rdname formatting
 #' @export
-format.tspec_recursive <- function(x, width = NULL, ..., names = NULL) {
+format.tspec_recursive <- function(
+  x,
+  width = NULL,
+  ...,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     "tspec_recursive",
@@ -59,13 +91,20 @@ format.tspec_recursive <- function(x, width = NULL, ..., names = NULL) {
       },
       .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }
 
 #' @rdname formatting
 #' @export
-format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
+format.tspec_object <- function(
+  x,
+  width = NULL,
+  ...,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     "tspec_object",
@@ -77,6 +116,7 @@ format.tspec_object <- function(x, width = NULL, ..., names = NULL) {
       },
       .input_form = if (x$input_form != "rowmajor") .double_quote(x$input_form)
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }

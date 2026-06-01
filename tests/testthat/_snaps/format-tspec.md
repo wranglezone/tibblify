@@ -27,3 +27,12 @@
     Output
       [1] "tspec_df(\n  a = tib_int(\"a\"),\n  b = tib_df(\n    \"b\",\n    x = tib_int(\"x\"),\n  ),\n)"
 
+# format and print can fully qualify tspec calls (#344)
+
+    Code
+      print(tspec_df(tib_int("a")), fully_qualify = TRUE)
+    Output
+      tibblify::tspec_df(
+        tibblify::tib_int("a"),
+      )
+

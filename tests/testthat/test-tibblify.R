@@ -1377,3 +1377,21 @@ test_that("friendlier coercion: false list to fct (#340)", {
   ref <- tibblify(list(list(x = "a")), spec)
   expect_identical(tibblify(list(list(x = list("a"))), spec), ref)
 })
+
+test_that("friendlier coercion: invalid values to fct error (#340)", {
+  fct_ptype <- factor(levels = c("a", "b", "c"))
+  spec <- tspec_df(tib_scalar("x", fct_ptype))
+
+  expect_error(tibblify(list(list(x = "z")), spec), class = "tibblify_error")
+  expect_error(
+    tibblify(list(list(x = list("z"))), spec),
+    class = "tibblify_error"
+  )
+})
+
+test_that("friendlier coercion: classed lists to chr fall through to vctrs (#340)", {
+  spec <- tspec_df(tib_chr("x"))
+  x <- structure(list("a"), class = "foo")
+
+  expect_error(tibblify(list(list(x = x)), spec), class = "tibblify_error")
+})

@@ -54,6 +54,9 @@ deduced from the spec?}
 \item{.format}{(\code{character(1)} or \code{NULL}) Passed to the \code{format} argument of
 \code{\link[=as.Date]{as.Date()}}.}
 
+\item{fully_qualify}{(\code{logical(1)}) Should \verb{tib_*()} and \verb{tspec_*()} calls be
+prefixed with \verb{tibblify::}?}
+
 \item{header_objects}{(\code{list}) A named list of header objects from an OpenAPI
 spec.}
 

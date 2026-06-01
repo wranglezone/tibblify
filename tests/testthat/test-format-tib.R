@@ -225,6 +225,21 @@ test_that("format for empty tib_* works", {
   expect_equal(format(tib_row("x")), "tib_row(\n  \"x\",\n)")
 })
 
+test_that("format and print can fully qualify tib calls (#344)", {
+  local_options(cli.num_colors = 1)
+  expect_equal(
+    format(tib_int("a"), fully_qualify = TRUE),
+    'tibblify::tib_int("a")'
+  )
+  expect_equal(
+    format(tib_row("x", a = tib_int("a")), fully_qualify = TRUE),
+    'tibblify::tib_row(\n  "x",\n  tibblify::tib_int("a"),\n)'
+  )
+  expect_snapshot({
+    print(tib_int("a"), fully_qualify = TRUE)
+  })
+})
+
 test_that("format uses trailing comma", {
   expect_equal(
     format(tib_df("x", a = tib_int("a"))),

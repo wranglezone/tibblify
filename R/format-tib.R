@@ -24,9 +24,21 @@
 #' )
 #' print(spec, names = FALSE)
 #' print(spec, names = TRUE)
-print.tib_collector <- function(x, width = NULL, ..., names = NULL) {
+print.tib_collector <- function(
+  x,
+  width = NULL,
+  ...,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
-  cat(format(x, width = width, ..., names = names))
+  cat(format(
+    x,
+    width = width,
+    ...,
+    names = names,
+    fully_qualify = fully_qualify
+  ))
   invisible(x)
 }
 
@@ -41,9 +53,11 @@ format.tib_scalar <- function(
   multi_line = FALSE,
   nchar_indent = 0,
   width = NULL,
-  names = FALSE
+  names = FALSE,
+  fully_qualify = FALSE
 ) {
   f_name <- .format_tib_f(x)
+  f_name <- .format_maybe_fully_qualify(f_name, fully_qualify)
   parts <- .format_tib_parts(
     f_name = f_name,
     x = x,
@@ -66,14 +80,16 @@ format.tib_variant <- function(
   ...,
   multi_line = FALSE,
   nchar_indent = 0,
-  width = NULL
+  width = NULL,
+  fully_qualify = FALSE
 ) {
   format.tib_scalar(
     x = x,
     .elt_transform = x$elt_transform,
     multi_line = multi_line,
     nchar_indent = nchar_indent,
-    width = width
+    width = width,
+    fully_qualify = fully_qualify
   )
 }
 
@@ -84,7 +100,8 @@ format.tib_vector <- function(
   ...,
   multi_line = FALSE,
   nchar_indent = 0,
-  width = NULL
+  width = NULL,
+  fully_qualify = FALSE
 ) {
   format.tib_scalar(
     x = x,
@@ -96,7 +113,8 @@ format.tib_vector <- function(
     .names_to = .double_quote(x$names_to),
     multi_line = multi_line,
     nchar_indent = nchar_indent,
-    width = width
+    width = width,
+    fully_qualify = fully_qualify
   )
 }
 
@@ -111,7 +129,8 @@ format.tib_scalar_chr_date <- function(
   ...,
   multi_line = FALSE,
   nchar_indent = 0,
-  width = NULL
+  width = NULL,
+  fully_qualify = FALSE
 ) {
   format.tib_scalar(
     x = x,
@@ -121,7 +140,8 @@ format.tib_scalar_chr_date <- function(
     .transform = zap(),
     multi_line = multi_line,
     nchar_indent = nchar_indent,
-    width = width
+    width = width,
+    fully_qualify = fully_qualify
   )
 }
 
@@ -131,7 +151,13 @@ format.tib_vector_chr_date <- format.tib_scalar_chr_date
 
 #' @rdname formatting
 #' @export
-format.tib_row <- function(x, ..., width = NULL, names = NULL) {
+format.tib_row <- function(
+  x,
+  ...,
+  width = NULL,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     .format_tib_f(x),
@@ -141,13 +167,20 @@ format.tib_row <- function(x, ..., width = NULL, names = NULL) {
       deparse(x$key),
       `.required` = if (!x$required) FALSE
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }
 
 #' @rdname formatting
 #' @export
-format.tib_df <- function(x, ..., width = NULL, names = NULL) {
+format.tib_df <- function(
+  x,
+  ...,
+  width = NULL,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     .format_tib_f(x),
@@ -158,13 +191,20 @@ format.tib_df <- function(x, ..., width = NULL, names = NULL) {
       `.required` = if (!x$required) FALSE,
       .names_to = .double_quote(x$names_col)
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }
 
 #' @rdname formatting
 #' @export
-format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
+format.tib_recursive <- function(
+  x,
+  ...,
+  width = NULL,
+  names = NULL,
+  fully_qualify = FALSE
+) {
   names <- .check_print_names_arg(names)
   .format_fields(
     .format_tib_f(x),
@@ -176,7 +216,8 @@ format.tib_recursive <- function(x, ..., width = NULL, names = NULL) {
       .children_to = if (x$child != x$children_to) .double_quote(x$children_to),
       `.required` = if (!x$required) FALSE
     ),
-    force_names = names
+    force_names = names,
+    fully_qualify = fully_qualify
   )
 }
 

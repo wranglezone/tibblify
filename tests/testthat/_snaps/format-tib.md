@@ -390,6 +390,13 @@
         tib_chr("name"),
       )
 
+# format and print can fully qualify tib calls (#344)
+
+    Code
+      print(tib_int("a"), fully_qualify = TRUE)
+    Output
+      tibblify::tib_int("a")
+
 # special ptypes correctly formatted
 
     Code
