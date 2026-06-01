@@ -80,11 +80,6 @@ to make them easier to import and to find.
   or does not exist. Note: this value must match the `.ptype_inner` of
   the field (the value *before* any transformation), not the `.ptype`.
 
-- fully_qualify:
-
-  (`logical(1)`) Should printed/formatted `tib_*()` and `tspec_*()`
-  calls be prefixed with `tibblify::`?
-
 - force_names:
 
   (`logical(1)`) Should names be printed even if they can be deduced
@@ -94,6 +89,11 @@ to make them easier to import and to find.
 
   (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
+
+- fully_qualify:
+
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 - header_objects:
 

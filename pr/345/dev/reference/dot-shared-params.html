@@ -128,11 +128,6 @@ is empty or does not exist. Note: this value must match the <code>.ptype_inner</
 of the field (the value <em>before</em> any transformation), not the <code>.ptype</code>.</p></dd>
 
 
-<dt id="arg-fully-qualify">fully_qualify<a class="anchor" aria-label="anchor" href="#arg-fully-qualify"></a></dt>
-<dd><p>(<code>logical(1)</code>) Should printed/formatted <code>tib_*()</code> and
-<code>tspec_*()</code> calls be prefixed with <code>tibblify::</code>?</p></dd>
-
-
 <dt id="arg-force-names">force_names<a class="anchor" aria-label="anchor" href="#arg-force-names"></a></dt>
 <dd><p>(<code>logical(1)</code>) Should names be printed even if they can be
 deduced from the spec?</p></dd>
@@ -141,6 +136,11 @@ deduced from the spec?</p></dd>
 <dt id="arg--format">.format<a class="anchor" aria-label="anchor" href="#arg--format"></a></dt>
 <dd><p>(<code>character(1)</code> or <code>NULL</code>) Passed to the <code>format</code> argument of
 <code><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date()</a></code>.</p></dd>
+
+
+<dt id="arg-fully-qualify">fully_qualify<a class="anchor" aria-label="anchor" href="#arg-fully-qualify"></a></dt>
+<dd><p>(<code>logical(1)</code>) Should <code>tib_*()</code> and <code>tspec_*()</code> calls be
+prefixed with <code>tibblify::</code>?</p></dd>
 
 
 <dt id="arg-header-objects">header_objects<a class="anchor" aria-label="anchor" href="#arg-header-objects"></a></dt>

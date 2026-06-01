@@ -31,8 +31,8 @@ Collect formatted field parts
 
 - fully_qualify:
 
-  (`logical(1)`) Should printed/formatted `tib_*()` and `tspec_*()`
-  calls be prefixed with `tibblify::`?
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 ## Value
 

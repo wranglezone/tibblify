@@ -130,8 +130,8 @@ format(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 - fully_qualify:
 
-  (`logical(1)`) Should printed/formatted `tib_*()` and `tspec_*()`
-  calls be prefixed with `tibblify::`?
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 - .fill:
 
