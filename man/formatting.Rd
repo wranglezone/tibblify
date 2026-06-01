@@ -21,7 +21,7 @@
 \alias{format.tspec_object}
 \title{Printing tibblify specifications}
 \usage{
-\method{print}{tib_collector}(x, width = NULL, ..., names = NULL)
+\method{print}{tib_collector}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 \method{format}{tib_scalar}(
   x,
@@ -32,12 +32,27 @@
   multi_line = FALSE,
   nchar_indent = 0,
   width = NULL,
-  names = FALSE
+  names = FALSE,
+  fully_qualify = FALSE
 )
 
-\method{format}{tib_variant}(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+\method{format}{tib_variant}(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
-\method{format}{tib_vector}(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+\method{format}{tib_vector}(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
 \method{format}{tib_unspecified}(
   x,
@@ -48,30 +63,45 @@
   multi_line = FALSE,
   nchar_indent = 0,
   width = NULL,
-  names = FALSE
+  names = FALSE,
+  fully_qualify = FALSE
 )
 
-\method{format}{tib_scalar_chr_date}(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+\method{format}{tib_scalar_chr_date}(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
-\method{format}{tib_vector_chr_date}(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+\method{format}{tib_vector_chr_date}(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
-\method{format}{tib_row}(x, ..., width = NULL, names = NULL)
+\method{format}{tib_row}(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
-\method{format}{tib_df}(x, ..., width = NULL, names = NULL)
+\method{format}{tib_df}(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
-\method{format}{tib_recursive}(x, ..., width = NULL, names = NULL)
+\method{format}{tib_recursive}(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
-\method{print}{tibblify_object}(x, ...)
+\method{print}{tibblify_object}(x, ..., fully_qualify = FALSE)
 
-\method{print}{tspec}(x, width = NULL, ..., names = NULL)
+\method{print}{tspec}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
-\method{format}{tspec_df}(x, width = NULL, ..., names = NULL)
+\method{format}{tspec_df}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
-\method{format}{tspec_row}(x, width = NULL, ..., names = NULL)
+\method{format}{tspec_row}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
-\method{format}{tspec_recursive}(x, width = NULL, ..., names = NULL)
+\method{format}{tspec_recursive}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
-\method{format}{tspec_object}(x, width = NULL, ..., names = NULL)
+\method{format}{tspec_object}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 }
 \arguments{
 \item{x}{(\code{any}) The spec to format or print.}
@@ -83,6 +113,9 @@ output to generate.}
 
 \item{names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
+
+\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
+\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 is empty or does not exist. Note: this value must match the \code{.ptype_inner}

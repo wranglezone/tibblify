@@ -4,7 +4,14 @@
 \alias{.format_fields}
 \title{Format fields to print a function call}
 \usage{
-.format_fields(f_name, fields, width, force_names, args = NULL)
+.format_fields(
+  f_name,
+  fields,
+  width,
+  force_names,
+  args = NULL,
+  fully_qualify = FALSE
+)
 }
 \arguments{
 \item{f_name}{(\code{character(1)}) The (possibly ANSI-colored) function name.}
@@ -19,6 +26,9 @@ deduced from the spec?}
 
 \item{args}{(\code{list} or \code{NULL}) Additional arguments to format and display
 before fields.}
+
+\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
+\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
 }
 \value{
 A single string with the formatted fields.

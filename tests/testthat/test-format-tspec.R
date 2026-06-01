@@ -31,6 +31,19 @@ test_that("format for empty tspec_* works", {
   expect_equal(format(tspec_object()), "tspec_object()")
 })
 
+test_that("format and print can fully qualify tspec calls", {
+  local_options(cli.num_colors = 1)
+
+  expect_equal(
+    format(tspec_df(tib_int("a")), fully_qualify = TRUE),
+    'tibblify::tspec_df(\n  tibblify::tib_int("a"),\n)'
+  )
+  expect_equal(
+    capture.output(print(tspec_df(tib_int("a")), fully_qualify = TRUE)),
+    c("tibblify::tspec_df(", "  tibblify::tib_int(\"a\"),", ")")
+  )
+})
+
 test_that("prints arguments of spec_* (#95)", {
   expect_equal(
     format(tspec_df(tib_int("a"), .input_form = "colmajor")),

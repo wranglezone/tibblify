@@ -6,8 +6,16 @@
 #' @inheritParams .shared-params
 #' @returns A single string with the formatted fields.
 #' @keywords internal
-.format_fields <- function(f_name, fields, width, force_names, args = NULL) {
-  parts <- .collect_parts(fields, width, force_names, args)
+.format_fields <- function(
+  f_name,
+  fields,
+  width,
+  force_names,
+  args = NULL,
+  fully_qualify = FALSE
+) {
+  f_name <- .format_maybe_fully_qualify(f_name, fully_qualify)
+  parts <- .collect_parts(fields, width, force_names, args, fully_qualify)
   if (rlang::is_empty(parts)) {
     return(paste0(f_name, "()"))
   }
@@ -20,8 +28,13 @@
 #' @inheritParams .format_fields
 #' @returns A character vector of formatted field parts.
 #' @keywords internal
-.collect_parts <- function(fields, width, force_names, args) {
-  fields_formatted <- .format_field_canonical_names(fields, width, force_names)
+.collect_parts <- function(fields, width, force_names, args, fully_qualify) {
+  fields_formatted <- .format_field_canonical_names(
+    fields,
+    width,
+    force_names,
+    fully_qualify
+  )
   args <- args[!vctrs::vec_detect_missing(args)]
   c(args, fields_formatted)
 }
@@ -32,7 +45,12 @@
 #' @returns A character vector of formatted field parts with canonical names
 #'   potentially suppressed.
 #' @keywords internal
-.format_field_canonical_names <- function(fields, width, force_names) {
+.format_field_canonical_names <- function(
+  fields,
+  width,
+  force_names,
+  fully_qualify
+) {
   nchar_indent_vector <- .nchar_field_names(fields)
   if (!force_names) {
     canonical <- purrr::map2_lgl(fields, names2(fields), .is_tib_name_canonical)
@@ -43,9 +61,27 @@
     fields,
     nchar_indent_vector,
     \(col, nchar_indent) {
-      format(col, nchar_indent = nchar_indent, width = width)
+      format(
+        col,
+        nchar_indent = nchar_indent,
+        width = width,
+        fully_qualify = fully_qualify
+      )
     }
   )
+}
+
+.format_maybe_fully_qualify <- function(f_name, fully_qualify) {
+  if (!fully_qualify) {
+    return(f_name)
+  }
+
+  f_name_plain <- cli::ansi_strip(f_name)
+  if (grepl("^(tib_|tspec_)", f_name_plain)) {
+    paste0("tibblify::", f_name)
+  } else {
+    f_name
+  }
 }
 
 #' Check if a tib field has a canonical name

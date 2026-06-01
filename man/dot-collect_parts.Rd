@@ -4,7 +4,7 @@
 \alias{.collect_parts}
 \title{Collect formatted field parts}
 \usage{
-.collect_parts(fields, width, force_names, args)
+.collect_parts(fields, width, force_names, args, fully_qualify)
 }
 \arguments{
 \item{fields}{(\code{list} or \code{NULL}) Fields to format.}
@@ -17,6 +17,9 @@ deduced from the spec?}
 
 \item{args}{(\code{list} or \code{NULL}) Additional arguments to format and display
 before fields.}
+
+\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
+\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
 }
 \value{
 A character vector of formatted field parts.

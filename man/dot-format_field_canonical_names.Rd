@@ -4,7 +4,7 @@
 \alias{.format_field_canonical_names}
 \title{Format field parts with canonical names}
 \usage{
-.format_field_canonical_names(fields, width, force_names)
+.format_field_canonical_names(fields, width, force_names, fully_qualify)
 }
 \arguments{
 \item{fields}{(\code{list} or \code{NULL}) Fields to format.}
@@ -14,6 +14,9 @@ output to generate.}
 
 \item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
+
+\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
+\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
 }
 \value{
 A character vector of formatted field parts with canonical names

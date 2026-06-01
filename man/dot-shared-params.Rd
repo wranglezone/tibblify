@@ -48,6 +48,9 @@ wrapped.}
 is empty or does not exist. Note: this value must match the \code{.ptype_inner}
 of the field (the value \emph{before} any transformation), not the \code{.ptype}.}
 
+\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
+\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
+
 \item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
 

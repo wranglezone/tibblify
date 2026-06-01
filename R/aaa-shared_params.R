@@ -32,6 +32,8 @@
 #' @param .fill (`vector` or `NULL`) Optionally, a value to use if the field
 #'   is empty or does not exist. Note: this value must match the `.ptype_inner`
 #'   of the field (the value *before* any transformation), not the `.ptype`.
+#' @param fully_qualify (`logical(1)`) Should printed/formatted `tib_*()` and
+#'   `tspec_*()` calls be prefixed with `tibblify::`?
 #' @param force_names (`logical(1)`) Should names be printed even if they can be
 #'   deduced from the spec?
 #' @param .format (`character(1)` or `NULL`) Passed to the `format` argument of
