@@ -91,7 +91,7 @@
 
 \method{format}{tib_recursive}(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
-\method{print}{tibblify_object}(x, ..., fully_qualify = FALSE)
+\method{print}{tibblify_object}(x, ...)
 
 \method{print}{tspec}(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
