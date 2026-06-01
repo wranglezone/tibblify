@@ -225,7 +225,7 @@ test_that("format for empty tib_* works", {
   expect_equal(format(tib_row("x")), "tib_row(\n  \"x\",\n)")
 })
 
-test_that("format and print can fully qualify tib calls", {
+test_that("format and print can fully qualify tib calls (#345)", {
   local_options(cli.num_colors = 1)
 
   expect_equal(
