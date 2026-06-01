@@ -44,7 +44,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.collect_parts</span><span class="op">(</span><span class="va">fields</span>, <span class="va">width</span>, <span class="va">force_names</span>, <span class="va">args</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.collect_parts</span><span class="op">(</span><span class="va">fields</span>, <span class="va">width</span>, <span class="va">force_names</span>, <span class="va">args</span>, <span class="va">fully_qualify</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,6 +68,11 @@ deduced from the spec?</p></dd>
 <dt id="arg-args">args<a class="anchor" aria-label="anchor" href="#arg-args"></a></dt>
 <dd><p>(<code>list</code> or <code>NULL</code>) Additional arguments to format and display
 before fields.</p></dd>
+
+
+<dt id="arg-fully-qualify">fully_qualify<a class="anchor" aria-label="anchor" href="#arg-fully-qualify"></a></dt>
+<dd><p>(<code>logical(1)</code>) Should <code>tib_*()</code> and <code>tspec_*()</code> calls be
+prefixed with <code>tibblify::</code>?</p></dd>
 
 </dl></div>
     <div class="section level2">

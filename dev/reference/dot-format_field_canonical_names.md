@@ -5,7 +5,7 @@ Format field parts with canonical names
 ## Usage
 
 ``` r
-.format_field_canonical_names(fields, width, force_names)
+.format_field_canonical_names(fields, width, force_names, fully_qualify)
 ```
 
 ## Arguments
@@ -23,6 +23,11 @@ Format field parts with canonical names
 
   (`logical(1)`) Should names be printed even if they can be deduced
   from the spec?
+
+- fully_qualify:
+
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 ## Value
 

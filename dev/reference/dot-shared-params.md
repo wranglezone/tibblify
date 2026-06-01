@@ -90,6 +90,11 @@ to make them easier to import and to find.
   (`character(1)` or `NULL`) Passed to the `format` argument of
   [`as.Date()`](https://rdrr.io/r/base/as.Date.html).
 
+- fully_qualify:
+
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
+
 - header_objects:
 
   (`list`) A named list of header objects from an OpenAPI spec.

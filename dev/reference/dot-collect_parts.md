@@ -5,7 +5,7 @@ Collect formatted field parts
 ## Usage
 
 ``` r
-.collect_parts(fields, width, force_names, args)
+.collect_parts(fields, width, force_names, args, fully_qualify)
 ```
 
 ## Arguments
@@ -28,6 +28,11 @@ Collect formatted field parts
 
   (`list` or `NULL`) Additional arguments to format and display before
   fields.
+
+- fully_qualify:
+
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 ## Value
 

@@ -10,7 +10,7 @@ types of collectors.
 
 ``` r
 # S3 method for class 'tib_collector'
-print(x, width = NULL, ..., names = NULL)
+print(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tib_scalar'
 format(
@@ -22,14 +22,29 @@ format(
   multi_line = FALSE,
   nchar_indent = 0,
   width = NULL,
-  names = FALSE
+  names = FALSE,
+  fully_qualify = FALSE
 )
 
 # S3 method for class 'tib_variant'
-format(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+format(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
 # S3 method for class 'tib_vector'
-format(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+format(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
 # S3 method for class 'tib_unspecified'
 format(
@@ -41,41 +56,56 @@ format(
   multi_line = FALSE,
   nchar_indent = 0,
   width = NULL,
-  names = FALSE
+  names = FALSE,
+  fully_qualify = FALSE
 )
 
 # S3 method for class 'tib_scalar_chr_date'
-format(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+format(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
 # S3 method for class 'tib_vector_chr_date'
-format(x, ..., multi_line = FALSE, nchar_indent = 0, width = NULL)
+format(
+  x,
+  ...,
+  multi_line = FALSE,
+  nchar_indent = 0,
+  width = NULL,
+  fully_qualify = FALSE
+)
 
 # S3 method for class 'tib_row'
-format(x, ..., width = NULL, names = NULL)
+format(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tib_df'
-format(x, ..., width = NULL, names = NULL)
+format(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tib_recursive'
-format(x, ..., width = NULL, names = NULL)
+format(x, ..., width = NULL, names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tibblify_object'
 print(x, ...)
 
 # S3 method for class 'tspec'
-print(x, width = NULL, ..., names = NULL)
+print(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tspec_df'
-format(x, width = NULL, ..., names = NULL)
+format(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tspec_row'
-format(x, width = NULL, ..., names = NULL)
+format(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tspec_recursive'
-format(x, width = NULL, ..., names = NULL)
+format(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 
 # S3 method for class 'tspec_object'
-format(x, width = NULL, ..., names = NULL)
+format(x, width = NULL, ..., names = NULL, fully_qualify = FALSE)
 ```
 
 ## Arguments
@@ -97,6 +127,11 @@ format(x, width = NULL, ..., names = NULL)
 
   (`logical(1)`) Should names be printed even if they can be deduced
   from the spec?
+
+- fully_qualify:
+
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 - .fill:
 

@@ -5,7 +5,14 @@ Format fields to print a function call
 ## Usage
 
 ``` r
-.format_fields(f_name, fields, width, force_names, args = NULL)
+.format_fields(
+  f_name,
+  fields,
+  width,
+  force_names,
+  args = NULL,
+  fully_qualify = FALSE
+)
 ```
 
 ## Arguments
@@ -32,6 +39,11 @@ Format fields to print a function call
 
   (`list` or `NULL`) Additional arguments to format and display before
   fields.
+
+- fully_qualify:
+
+  (`logical(1)`) Should `tib_*()` and `tspec_*()` calls be prefixed with
+  `tibblify::`?
 
 ## Value
 
