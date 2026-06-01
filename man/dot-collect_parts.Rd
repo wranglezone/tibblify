@@ -18,8 +18,8 @@ deduced from the spec?}
 \item{args}{(\code{list} or \code{NULL}) Additional arguments to format and display
 before fields.}
 
-\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
-\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
+\item{fully_qualify}{(\code{logical(1)}) Should \verb{tib_*()} and \verb{tspec_*()} calls be
+prefixed with \verb{tibblify::}?}
 }
 \value{
 A character vector of formatted field parts.

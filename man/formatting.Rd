@@ -114,8 +114,8 @@ output to generate.}
 \item{names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
 
-\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
-\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
+\item{fully_qualify}{(\code{logical(1)}) Should \verb{tib_*()} and \verb{tspec_*()} calls be
+prefixed with \verb{tibblify::}?}
 
 \item{.fill}{(\code{vector} or \code{NULL}) Optionally, a value to use if the field
 is empty or does not exist. Note: this value must match the \code{.ptype_inner}

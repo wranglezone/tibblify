@@ -15,8 +15,8 @@ output to generate.}
 \item{force_names}{(\code{logical(1)}) Should names be printed even if they can be
 deduced from the spec?}
 
-\item{fully_qualify}{(\code{logical(1)}) Should printed/formatted \verb{tib_*()} and
-\verb{tspec_*()} calls be prefixed with \verb{tibblify::}?}
+\item{fully_qualify}{(\code{logical(1)}) Should \verb{tib_*()} and \verb{tspec_*()} calls be
+prefixed with \verb{tibblify::}?}
 }
 \value{
 A character vector of formatted field parts with canonical names
