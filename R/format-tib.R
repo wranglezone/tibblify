@@ -50,7 +50,8 @@ format.tib_scalar <- function(
   names = FALSE,
   fully_qualify = FALSE
 ) {
-  f_name <- .format_maybe_fully_qualify(.format_tib_f(x), fully_qualify)
+  f_name <- .format_tib_f(x)
+  f_name <- .format_maybe_fully_qualify(f_name, fully_qualify)
   parts <- .format_tib_parts(
     f_name = f_name,
     x = x,
