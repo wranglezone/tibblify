@@ -88,6 +88,28 @@ test_that(".format_fields drops NULL args", {
 
 # .is_tib_name_canonical -----------------------------------------------------
 
+test_that(".format_maybe_fully_qualify optionally prefixes tibblify:: (#344)", {
+  expect_identical(
+    .format_maybe_fully_qualify("tib_int", fully_qualify = FALSE),
+    "tib_int"
+  )
+  expect_identical(
+    .format_maybe_fully_qualify("tib_int", fully_qualify = TRUE),
+    "tibblify::tib_int"
+  )
+})
+
+test_that(".format_maybe_fully_qualify only prefixes tib_ and tspec_ names (#344)", {
+  expect_identical(
+    .format_maybe_fully_qualify("tspec_df", fully_qualify = TRUE),
+    "tibblify::tspec_df"
+  )
+  expect_identical(
+    .format_maybe_fully_qualify("spec_df", fully_qualify = TRUE),
+    "spec_df"
+  )
+})
+
 test_that(".is_tib_name_canonical returns TRUE when key matches name", {
   field <- list(key = "x")
   expect_true(.is_tib_name_canonical(field, "x"))

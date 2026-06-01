@@ -390,7 +390,7 @@
         tib_chr("name"),
       )
 
-# format and print can fully qualify tib calls (#345)
+# format and print can fully qualify tib calls (#344)
 
     Code
       print(tib_int("a"), fully_qualify = TRUE)

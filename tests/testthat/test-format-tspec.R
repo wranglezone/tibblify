@@ -31,7 +31,7 @@ test_that("format for empty tspec_* works", {
   expect_equal(format(tspec_object()), "tspec_object()")
 })
 
-test_that("format and print can fully qualify tspec calls (#345)", {
+test_that("format and print can fully qualify tspec calls (#344)", {
   local_options(cli.num_colors = 1)
   expect_equal(
     format(tspec_df(tib_int("a")), fully_qualify = TRUE),
