@@ -1,4 +1,4 @@
-# .format_fields -------------------------------------------------------------
+# .format_fields ---------------------------------------------------------------
 
 test_that(".format_fields returns 'f_name()' for empty fields and no args", {
   expect_equal(
@@ -86,7 +86,7 @@ test_that(".format_fields drops NULL args", {
 })
 
 
-# .is_tib_name_canonical -----------------------------------------------------
+# .format_maybe_fully_qualify --------------------------------------------------
 
 test_that(".format_maybe_fully_qualify optionally prefixes tibblify:: (#344)", {
   expect_identical(
@@ -109,6 +109,8 @@ test_that(".format_maybe_fully_qualify only prefixes tib_ and tspec_ names (#344
     "spec_df"
   )
 })
+
+# .is_tib_name_canonical -------------------------------------------------------
 
 test_that(".is_tib_name_canonical returns TRUE when key matches name", {
   field <- list(key = "x")
@@ -142,7 +144,7 @@ test_that(".double_quote returns NULL for NULL input", {
 })
 
 
-# .tibblify_width -------------------------------------------------------------
+# .tibblify_width --------------------------------------------------------------
 
 test_that(".tibblify_width returns width argument when supplied", {
   expect_equal(.tibblify_width(42L), 42L)
@@ -154,7 +156,7 @@ test_that(".tibblify_width falls back to getOption('width') when NULL", {
 })
 
 
-# .pad ------------------------------------------------------------------------
+# .pad -------------------------------------------------------------------------
 
 test_that(".pad prepends n spaces to each line", {
   expect_equal(.pad("hello", 2), "  hello")
@@ -166,7 +168,7 @@ test_that(".pad indents all lines of a multi-line string", {
 })
 
 
-# .name_exprs -----------------------------------------------------------------
+# .name_exprs ------------------------------------------------------------------
 
 test_that(".name_exprs omits name prefix when show_name is FALSE", {
   expect_equal(.name_exprs(c("expr"), c("name"), FALSE), "expr")
@@ -196,7 +198,7 @@ test_that(".name_exprs handles mixed show_name vector", {
 })
 
 
-# .collapse_with_pad ----------------------------------------------------------
+# .collapse_with_pad -----------------------------------------------------------
 
 test_that(".collapse_with_pad returns single-line for short unnamed input", {
   result <- .collapse_with_pad(list("a", "b"), multi_line = FALSE, width = 80)
@@ -242,7 +244,7 @@ test_that(".collapse_with_pad backtick-wraps non-syntactic names", {
 })
 
 
-# .should_force_names ---------------------------------------------------------
+# .should_force_names ----------------------------------------------------------
 
 test_that(".should_force_names returns FALSE by default", {
   expect_false(.should_force_names())
@@ -254,7 +256,7 @@ test_that(".should_force_names returns TRUE when option is set", {
 })
 
 
-# .check_print_names_arg ------------------------------------------------------
+# .check_print_names_arg -------------------------------------------------------
 
 test_that(".check_print_names_arg passes through TRUE and FALSE", {
   expect_true(.check_print_names_arg(TRUE))
