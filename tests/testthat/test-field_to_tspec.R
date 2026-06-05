@@ -1,4 +1,4 @@
-test_that("field_to_tspec_df works (#346)", {
+test_that("field_to_tspec_df works with tib_df field (#346)", {
   spec <- tspec_df(
     tib_int("id"),
     tib_df(
@@ -17,7 +17,29 @@ test_that("field_to_tspec_df works (#346)", {
   )
 })
 
-test_that("field_to_tspec_df preserves .names_to (#346)", {
+test_that("field_to_tspec_df works with tib_row field (#346)", {
+  spec <- tspec_df(
+    tib_row("loc", tib_dbl("lat"), tib_dbl("lng"))
+  )
+
+  expect_equal(
+    field_to_tspec_df(spec, "loc"),
+    tspec_df(tib_dbl("lat"), tib_dbl("lng"))
+  )
+})
+
+test_that("field_to_tspec_df works with tib_recursive field (#346)", {
+  spec <- tspec_df(
+    tib_recursive("nodes", tib_chr("label"), .children = "nodes")
+  )
+
+  expect_equal(
+    field_to_tspec_df(spec, "nodes"),
+    tspec_df(tib_chr("label"))
+  )
+})
+
+test_that("field_to_tspec_df preserves .names_to from tib_df (#346)", {
   spec <- tspec_df(
     tib_df(
       "items",
@@ -47,7 +69,7 @@ test_that("field_to_tspec_df preserves .vector_allows_empty_list (#346)", {
   )
 })
 
-test_that("field_to_tspec_row works (#346)", {
+test_that("field_to_tspec_row works with tib_row field (#346)", {
   spec <- tspec_df(
     tib_row(
       "location",
@@ -62,6 +84,28 @@ test_that("field_to_tspec_row works (#346)", {
       tib_dbl("lat"),
       tib_dbl("lng")
     )
+  )
+})
+
+test_that("field_to_tspec_row works with tib_df field (#346)", {
+  spec <- tspec_df(
+    tib_df("items", tib_chr("name"))
+  )
+
+  expect_equal(
+    field_to_tspec_row(spec, "items"),
+    tspec_row(tib_chr("name"))
+  )
+})
+
+test_that("field_to_tspec_row works with tib_recursive field (#346)", {
+  spec <- tspec_df(
+    tib_recursive("nodes", tib_chr("label"), .children = "nodes")
+  )
+
+  expect_equal(
+    field_to_tspec_row(spec, "nodes"),
+    tspec_row(tib_chr("label"))
   )
 })
 
@@ -147,24 +191,31 @@ test_that("field_to_tspec errors on non-nested field types (#346)", {
   })
 })
 
-test_that("field_to_tspec_df errors on wrong field type (#346)", {
-  spec <- tspec_df(tib_row("loc", tib_dbl("x")))
+test_that("field_to_tspec_df errors on non-nested field type (#346)", {
+  spec <- tspec_df(tib_int("id"))
   expect_snapshot({
-    (expect_error(field_to_tspec_df(spec, "loc")))
+    (expect_error(field_to_tspec_df(spec, "id")))
   })
 })
 
-test_that("field_to_tspec_row errors on wrong field type (#346)", {
-  spec <- tspec_df(tib_df("items", tib_chr("name")))
+test_that("field_to_tspec_row errors on non-nested field type (#346)", {
+  spec <- tspec_df(tib_int("id"))
   expect_snapshot({
-    (expect_error(field_to_tspec_row(spec, "items")))
+    (expect_error(field_to_tspec_row(spec, "id")))
   })
 })
 
-test_that("field_to_tspec_recursive errors on wrong field type (#346)", {
+test_that("field_to_tspec_recursive errors on non-recursive field type (#346)", {
   spec <- tspec_df(tib_int("id"))
   expect_snapshot({
     (expect_error(field_to_tspec_recursive(spec, "id")))
+  })
+})
+
+test_that("field_to_tspec_recursive errors on tib_row (#346)", {
+  spec <- tspec_df(tib_row("loc", tib_dbl("x")))
+  expect_snapshot({
+    (expect_error(field_to_tspec_recursive(spec, "loc")))
   })
 })
 

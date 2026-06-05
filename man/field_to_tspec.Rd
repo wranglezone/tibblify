@@ -21,15 +21,15 @@ field_to_tspec_recursive(spec, name)
 \item{name}{(\code{character(1)}) The name of the field.}
 }
 \value{
-A tibblify specification (\code{tspec_df}, \code{tspec_row}, or
-\code{tspec_recursive}).
+A tibblify specification (\code{\link[=tspec_df]{tspec_df()}}, \code{\link[=tspec_row]{tspec_row()}}, or
+\code{\link[=tspec_recursive]{tspec_recursive()}}).
 }
 \description{
 Extract a nested field from a \code{tspec} and convert it to a top-level
 \verb{tspec_*()} object. \code{field_to_tspec()} dispatches to the appropriate
 variant based on the type of the field. Use \code{field_to_tspec_df()},
 \code{field_to_tspec_row()}, or \code{field_to_tspec_recursive()} to extract a field
-of a specific type.
+to the specified tspec type.
 }
 \examples{
 spec <- tspec_df(
@@ -42,5 +42,5 @@ spec <- tspec_df(
 )
 
 field_to_tspec(spec, "address")
-field_to_tspec_df(spec, "address")
+field_to_tspec_row(spec, "address")
 }
