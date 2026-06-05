@@ -2,6 +2,12 @@
 
 ## All functions
 
+- [`field_to_tspec()`](https://tibblify.wrangle.zone/dev/reference/field_to_tspec.md)
+  [`field_to_tspec_df()`](https://tibblify.wrangle.zone/dev/reference/field_to_tspec.md)
+  [`field_to_tspec_row()`](https://tibblify.wrangle.zone/dev/reference/field_to_tspec.md)
+  [`field_to_tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/field_to_tspec.md)
+  : Elevate a field to a tspec
+
 - [`print(`*`<tib_collector>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
   [`format(`*`<tib_scalar>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)
   [`format(`*`<tib_variant>`*`)`](https://tibblify.wrangle.zone/dev/reference/formatting.md)

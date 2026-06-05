@@ -31,6 +31,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_col_new.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_col_value_duplicates.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_col_values_missing.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_field_exists.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_id.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_id_col.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_is_df.html</loc></url>
@@ -90,6 +91,8 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_tib_f.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_tib_parts.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_unspecified_paths.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_field_of_type.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_nested_field.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_openapi_type.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_ptype_common.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_required.html</loc></url>
@@ -262,6 +265,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-vector_col_to_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-walk_tree_levels.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-with_indexed_errors.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/field_to_tspec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/formatting.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/get_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/guess_tspec.html</loc></url>
