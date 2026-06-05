@@ -4,7 +4,7 @@ Extract a nested field from a `tspec` and convert it to a top-level
 `tspec_*()` object. `field_to_tspec()` dispatches to the appropriate
 variant based on the type of the field. Use `field_to_tspec_df()`,
 `field_to_tspec_row()`, or `field_to_tspec_recursive()` to extract a
-field of a specific type.
+field to the specified tspec type.
 
 ## Usage
 
@@ -30,8 +30,11 @@ field_to_tspec_recursive(spec, name)
 
 ## Value
 
-A tibblify specification (`tspec_df`, `tspec_row`, or
-`tspec_recursive`).
+A tibblify specification
+([`tspec_df()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+[`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+or
+[`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md)).
 
 ## Examples
 
@@ -50,8 +53,8 @@ field_to_tspec(spec, "address")
 #>   tib_chr("street"),
 #>   tib_chr("city"),
 #> )
-field_to_tspec_df(spec, "address")
-#> tspec_df(
+field_to_tspec_row(spec, "address")
+#> tspec_row(
 #>   tib_chr("street"),
 #>   tib_chr("city"),
 #> )

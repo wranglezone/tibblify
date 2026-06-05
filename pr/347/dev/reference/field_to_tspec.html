@@ -3,11 +3,11 @@
 tspec_*() object. field_to_tspec() dispatches to the appropriate
 variant based on the type of the field. Use field_to_tspec_df(),
 field_to_tspec_row(), or field_to_tspec_recursive() to extract a field
-of a specific type."><meta property="og:description" content="Extract a nested field from a tspec and convert it to a top-level
+to the specified tspec type."><meta property="og:description" content="Extract a nested field from a tspec and convert it to a top-level
 tspec_*() object. field_to_tspec() dispatches to the appropriate
 variant based on the type of the field. Use field_to_tspec_df(),
 field_to_tspec_row(), or field_to_tspec_recursive() to extract a field
-of a specific type."><meta name="robots" content="noindex"></head><body>
+to the specified tspec type."><meta name="robots" content="noindex"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -51,7 +51,7 @@ of a specific type."><meta name="robots" content="noindex"></head><body>
 <code>tspec_*()</code> object. <code>field_to_tspec()</code> dispatches to the appropriate
 variant based on the type of the field. Use <code>field_to_tspec_df()</code>,
 <code>field_to_tspec_row()</code>, or <code>field_to_tspec_recursive()</code> to extract a field
-of a specific type.</p>
+to the specified tspec type.</p>
     </div>
 
     <div class="section level2">
@@ -79,8 +79,8 @@ of a specific type.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibblify specification (<code>tspec_df</code>, <code>tspec_row</code>, or
-<code>tspec_recursive</code>).</p>
+    <p>A tibblify specification (<code><a href="tspec_df.html">tspec_df()</a></code>, <code><a href="tspec_df.html">tspec_row()</a></code>, or
+<code><a href="tspec_df.html">tspec_recursive()</a></code>).</p>
     </div>
 
     <div class="section level2">
@@ -99,8 +99,8 @@ of a specific type.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #BB0000;">tib_chr</span>("street"),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #BB0000;">tib_chr</span>("city"),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> )</span>
-<span class="r-in"><span><span class="fu">field_to_tspec_df</span><span class="op">(</span><span class="va">spec</span>, <span class="st">"address"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> tspec_df(</span>
+<span class="r-in"><span><span class="fu">field_to_tspec_row</span><span class="op">(</span><span class="va">spec</span>, <span class="st">"address"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tspec_row(</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #BB0000;">tib_chr</span>("street"),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #BB0000;">tib_chr</span>("city"),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> )</span>

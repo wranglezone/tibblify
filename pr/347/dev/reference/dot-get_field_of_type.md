@@ -1,6 +1,6 @@
-# Check that a field exists in spec and extract it
+# Extract a field of a specific type from a spec
 
-Check that a field exists in spec and extract it
+Extract a field of a specific type from a spec
 
 ## Usage
 

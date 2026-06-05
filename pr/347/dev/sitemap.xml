@@ -92,6 +92,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_tib_parts.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-format_unspecified_paths.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_field_of_type.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_nested_field.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_openapi_type.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_ptype_common.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-get_required.html</loc></url>
