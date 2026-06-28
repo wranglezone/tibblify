@@ -17,7 +17,7 @@ might come from an API in the form of JSON or from scraping XML.
 ## Example
 
 Let’s start with `gh_users`, which is a list from the {repurrrsive}
-package containing information about four GitHub users. We’ll select a
+package containing information about six GitHub users. We’ll select a
 subset of columns to keep the example relatively simple.
 
 ``` r
