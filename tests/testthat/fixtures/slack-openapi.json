@@ -18212,10 +18212,10 @@
                 "examples": {
                   "response": {
                     "value": {
-                      "access_token": "xoxb-17653672481-19874698323-pdFZKVeTuE8sk7oOcBrzbqgy",
+                      "access_token": "xoxb-access-token-string",
                       "app_id": "A0KRD7HC3",
                       "authed_user": {
-                        "access_token": "xoxp-1234",
+                        "access_token": "xoxp-XXXX",
                         "id": "U1234",
                         "scope": "chat:write",
                         "token_type": "user"
