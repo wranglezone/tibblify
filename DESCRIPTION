@@ -25,7 +25,7 @@ Imports:
     lifecycle,
     purrr (>= 1.0.2),
     rlang (>= 1.2.0),
-    stbl (>= 0.3.0.9002),
+    stbl (>= 0.4.0.9000),
     tibble (>= 3.2.1),
     tidyselect (>= 1.2.0),
     vctrs (>= 0.7.2),
@@ -40,17 +40,15 @@ Suggests:
     spelling (>= 2.2),
     testthat (>= 3.1.4),
     tidyr,
-    yaml (>= 2.3.6),
-    gh (>= 1.5.0.9000)
+    yaml (>= 2.3.6)
 LinkingTo:
     stbl,
     vctrs
 VignetteBuilder:
     knitr
 Remotes:
-    wranglezone/stbl,
-    gh=r-lib/gh
-Config/roxygen2/version: 8.0.0
+    wranglezone/stbl
+Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US

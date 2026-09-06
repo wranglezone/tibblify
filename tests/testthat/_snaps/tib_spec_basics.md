@@ -117,11 +117,12 @@
     Code
       (expect_error(tib_scalar("x", integer(), .fill = "a")))
     Output
-      <error/stbl-error-incompatible_type>
+      <error/stbl-error-incompatible_values-integer>
       Error in `tib_scalar()`:
       ! `.fill` <character> must be coercible to <integer>
-      x Can't convert some values due to incompatible values.
+      x Can't convert some values due to non-numeric strings.
       * Locations: 1
+      * Values: "a"
 
 ---
 
@@ -230,9 +231,10 @@
     Code
       (expect_error(tib_scalar("x", integer(), .fill = "a")))
     Output
-      <error/stbl-error-incompatible_type>
+      <error/stbl-error-incompatible_values-integer>
       Error in `tib_scalar()`:
       ! `.fill` <character> must be coercible to <integer>
-      x Can't convert some values due to incompatible values.
+      x Can't convert some values due to non-numeric strings.
       * Locations: 1
+      * Values: "a"
 

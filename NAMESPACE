@@ -98,18 +98,22 @@ import(rlang)
 importFrom(cli,qty)
 importFrom(glue,glue)
 importFrom(lifecycle,deprecated)
-importFrom(rlang,"%&&%")
-importFrom(rlang,arg_match0)
-importFrom(rlang,as_function)
-importFrom(rlang,caller_arg)
-importFrom(rlang,caller_env)
-importFrom(rlang,current_call)
-importFrom(rlang,current_env)
-importFrom(rlang,is_true)
-importFrom(rlang,list2)
-importFrom(rlang,zap)
+importFrom(rlang,
+  "%&&%",
+  arg_match0,
+  as_function,
+  caller_arg,
+  caller_env,
+  current_call,
+  current_env,
+  is_true,
+  list2,
+  zap
+)
 importFrom(tibble,tibble)
-importFrom(vctrs,list_unchop)
-importFrom(vctrs,vec_cast)
-importFrom(vctrs,vec_is)
+importFrom(vctrs,
+  list_unchop,
+  vec_cast,
+  vec_is
+)
 useDynLib(tibblify, .registration = TRUE)
