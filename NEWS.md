@@ -1,4 +1,6 @@
-# tibblify (development version)
+# tibblify 0.4.2
+
+* Length-0 vectors are now treated as `NULL` and ignored by `tibblify()` for optional fields (#332, #334).
 
 # tibblify 0.4.1
 

@@ -1,10 +1,8 @@
 # .abort_not_tibblifiable throws informative errors
 
     Code
-      (expect_pkg_error_classes(.abort_not_tibblifiable(letters), "tibblify",
-      "untibblifiable_object"))
-    Output
-      <error/tibblify-error-untibblifiable_object>
+      .abort_not_tibblifiable(letters)
+    Condition <tibblify-error-untibblifiable_object>
       Error:
       ! `letters` is neither an object nor a list of objects.
       An object
@@ -19,10 +17,8 @@
 ---
 
     Code
-      (expect_pkg_error_classes(.abort_not_tibblifiable(list(1, 2, 3)), "tibblify",
-      "untibblifiable_object"))
-    Output
-      <error/tibblify-error-untibblifiable_object>
+      .abort_not_tibblifiable(list(1, 2, 3))
+    Condition <tibblify-error-untibblifiable_object>
       Error:
       ! `list(1, 2, 3)` is neither an object nor a list of objects.
       An object
@@ -37,10 +33,8 @@
 ---
 
     Code
-      (expect_pkg_error_classes(.abort_not_tibblifiable(list(a = 1, a = 2)),
-      "tibblify", "untibblifiable_object"))
-    Output
-      <error/tibblify-error-untibblifiable_object>
+      .abort_not_tibblifiable(list(a = 1, a = 2))
+    Condition <tibblify-error-untibblifiable_object>
       Error:
       ! `list(a = 1, a = 2)` is neither an object nor a list of objects.
       An object
@@ -55,10 +49,8 @@
 ---
 
     Code
-      (expect_pkg_error_classes(.abort_not_tibblifiable(list(list(a = 1), letters)),
-      "tibblify", "untibblifiable_object"))
-    Output
-      <error/tibblify-error-untibblifiable_object>
+      .abort_not_tibblifiable(list(list(a = 1), letters))
+    Condition <tibblify-error-untibblifiable_object>
       Error:
       ! `list(list(a = 1), letters)` is neither an object nor a list of objects.
       An object
