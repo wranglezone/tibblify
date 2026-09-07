@@ -113,6 +113,7 @@ test_that(".lgl_to_bullet converts lgl vectors to bullets", {
 })
 
 test_that(".abort_not_tibblifiable throws informative errors", {
+  skip_if_not_installed("stbl", "0.4.0.9000")
   stbl::expect_pkg_error_snapshot(
     .abort_not_tibblifiable(letters),
     package = "tibblify",
