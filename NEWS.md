@@ -4,6 +4,10 @@
 * `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (#337, #340).
 * `tibblify()` now accepts values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected, and "false lists" that trivially `unlist()` to the expected type (such as `list(list("a"))`) (#330).
 
+# tibblify 0.4.2
+
+* Length-0 vectors are now treated as `NULL` and ignored by `tibblify()` for optional fields (#332, #334).
+
 # tibblify 0.4.1
 
 * Fixed type mismatch in C code (#323).
