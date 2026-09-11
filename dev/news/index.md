@@ -19,6 +19,14 @@
   to the expected type (such as `list(list("a"))`)
   ([\#330](https://github.com/wranglezone/tibblify/issues/330)).
 
+## tibblify 0.4.2
+
+- Length-0 vectors are now treated as `NULL` and ignored by
+  [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
+  for optional fields
+  ([\#332](https://github.com/wranglezone/tibblify/issues/332),
+  [\#334](https://github.com/wranglezone/tibblify/issues/334)).
+
 ## tibblify 0.4.1
 
 CRAN release: 2026-05-12
