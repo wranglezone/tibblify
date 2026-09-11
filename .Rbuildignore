@@ -26,3 +26,4 @@
 ^\.claude$
 ^src/rlang/decl/\.clangd$
 ^\.posit$
+^TODO\.txt$
