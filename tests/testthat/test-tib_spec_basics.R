@@ -28,7 +28,7 @@ test_that("errors if dots are not empty", {
 })
 
 test_that("tib_scalar checks arguments", {
-  skip_if_not_installed("stbl", "0.4.0.9000")
+  skip_if_not_installed("stbl", "0.5.0")
   model <- lm(Sepal.Length ~ Sepal.Width, data = iris)
   # .ptype
   expect_snapshot({
@@ -203,7 +203,7 @@ test_that(".fill is coerced to .ptype with stbl-style friendliness (#337)", {
 })
 
 test_that(".fill coercion still errors when not losslessly coercible (#337, #340)", {
-  skip_if_not_installed("stbl", "0.4.0.9000")
+  skip_if_not_installed("stbl", "0.5.0")
   expect_snapshot({
     # chr that cannot be parsed as int
     (expect_error(tib_scalar("x", integer(), .fill = "a")))
