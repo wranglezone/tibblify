@@ -21,6 +21,8 @@
 
 ## tibblify 0.4.2
 
+CRAN release: 2026-09-11
+
 - Length-0 vectors are now treated as `NULL` and ignored by
   [`tibblify()`](https://tibblify.wrangle.zone/dev/reference/tibblify.md)
   for optional fields
