@@ -47,14 +47,13 @@ jobs:
       qcthat-app-private-key: ${{ secrets.CM_BOT_PRIVATE_KEY }}
     with:
       # Configuration variables for controlling workflow behavior
-      manage-uat: true
+      manage-uat: false
       generate-pr-report: true
       generate-completed-report: false
       generate-milestone-report: true
       generate-release-report: false
       fail-for-test-failures: true
       fail-for-missing-tests: true
-      uat-assignees: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main' && 'jwildfire') || (github.event_name == 'pull_request' && github.base_ref != 'main' && 'lauramaxwell,nandriychuk') || '' }}
       # Event context passed through to the core workflow
       has-uat-label: ${{ contains(github.event.issue.labels.*.name, 'qcthat-uat') }}
       pr-number: ${{ github.event.pull_request.number || inputs.pr-number || '' }}
