@@ -147,7 +147,10 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
       Caused by error:
-      ! Can't convert `"a"` <character> to <logical>.
+      ! `value` <character> must be convertible to <logical>
+      x Can't convert some values due to unexpected strings (should be 'TRUE', 'FALSE', 'T', 'F', or an integer).
+      * Locations: 1
+      * Values: "a"
 
 ---
 
@@ -158,15 +161,10 @@
       Error in `tibblify()`:
       ! Problem while tibblifying `x[[1]]$x`
       Caused by error:
-      ! Can't convert `"a"` <character> to <logical>.
-    Code
-      (expect_error(tib(list(x = 1), tib_scalar("x", dtt))))
-    Output
-      <error/tibblify_error>
-      Error in `tibblify()`:
-      ! Problem while tibblifying `x[[1]]$x`
-      Caused by error:
-      ! Can't convert `1` <double> to <datetime<local>>.
+      ! `value` <character> must be convertible to <logical>
+      x Can't convert some values due to unexpected strings (should be 'TRUE', 'FALSE', 'T', 'F', or an integer).
+      * Locations: 1
+      * Values: "a"
 
 # tibblify errors if size is bad
 
@@ -186,17 +184,6 @@
       ! `x[[1]]$x` must have size 1, not size 2.
       i You specified that the field is a scalar.
       i Use `tib_vector()` if the field is a vector instead.
-
-# tibblify: tib_vector respects .vector_allows_empty_list (#231)
-
-    Code
-      (expect_error(tibblify(x, tspec_df(tib_int_vec("x")))))
-    Output
-      <error/tibblify_error>
-      Error in `tibblify()`:
-      ! Problem while tibblifying `x[[2]]$x`
-      Caused by error:
-      ! Can't convert `<list>` <list> to <integer>.
 
 # tibblify: tib_vector can parse scalar list
 

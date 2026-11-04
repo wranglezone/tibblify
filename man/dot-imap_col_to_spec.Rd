@@ -4,16 +4,13 @@
 \alias{.imap_col_to_spec}
 \title{Apply column-to-spec conversion across a data frame}
 \usage{
-.imap_col_to_spec(col_list, empty_list_unspecified, local_env)
+.imap_col_to_spec(col_list, empty_list_unspecified)
 }
 \arguments{
 \item{col_list}{(\code{list}) A named list of columns, typically a data frame.}
 
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A named list of tib field specifications.

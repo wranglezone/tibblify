@@ -41,8 +41,7 @@ test_that(".get_ptype_common returns common ptype when valid", {
     .get_ptype_common(list(list(), letters), TRUE),
     list(
       has_common_ptype = TRUE,
-      ptype = character(),
-      had_empty_lists = TRUE
+      ptype = character()
     )
   )
   expect_mapequal(
@@ -53,8 +52,7 @@ test_that(".get_ptype_common returns common ptype when valid", {
     .get_ptype_common(list(LETTERS, letters), FALSE),
     list(
       has_common_ptype = TRUE,
-      ptype = character(),
-      had_empty_lists = NULL
+      ptype = character()
     )
   )
 })
@@ -78,22 +76,6 @@ test_that(".get_ptype_common handles scalar type error (non-vector elements)", {
     .get_ptype_common(list(mean, sum), empty_list_unspecified = FALSE),
     list(has_common_ptype = FALSE)
   )
-})
-
-# .mark_empty_list_argument ----------------------------------------------------
-
-test_that(".mark_empty_list_argument sets the value in the env when called with TRUE", {
-  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
-  .mark_empty_list_argument(TRUE, local_env)
-  expect_true(.read_empty_list_argument(local_env))
-})
-
-test_that(".mark_empty_list_argument does nothing when called with non-TRUE", {
-  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
-  .mark_empty_list_argument(FALSE, local_env)
-  expect_false(.read_empty_list_argument(local_env))
-  .mark_empty_list_argument(NULL, local_env)
-  expect_false(.read_empty_list_argument(local_env))
 })
 
 # .tib_type_of -----------------------------------------------------------------

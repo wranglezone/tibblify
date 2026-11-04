@@ -18,9 +18,10 @@
 #' @param .names_to (`character(1)` or `NULL`) The name of the column in the
 #'   output which will contain the names of top-level elements of the input
 #'   named list. If `NULL`, the default, no name column is created.
-#' @param .vector_allows_empty_list,vector_allows_empty_list (`logical(1)`)
-#'   Should empty lists for columns with `.input_form = "vector"` be accepted
-#'   and treated as empty vectors?
+#' @param .vector_allows_empty_list,vector_allows_empty_list
+#'   `r lifecycle::badge("deprecated")` Deprecated as of tibblify 0.5.0. Empty
+#'   lists are now always accepted for vector fields. A required field treats
+#'   `list()` as an empty vector, and an optional field uses `.fill`.
 #' @inheritParams .shared-params
 #'
 #' @returns A tibblify specification.
@@ -61,11 +62,11 @@ tspec_df <- function(
   ...,
   .input_form = c("rowmajor", "colmajor"),
   .names_to = NULL,
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
-  .vector_allows_empty_list <- .deprecate_arg(
+  .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
@@ -75,8 +76,7 @@ tspec_df <- function(
     list2(...),
     "df",
     .input_form = .input_form,
-    .names_col = .names_to,
-    .vector_allows_empty_list = .vector_allows_empty_list
+    .names_col = .names_to
   )
   if (!is.null(.names_to) && .names_to %in% names(out$fields)) {
     cli::cli_abort(
@@ -92,19 +92,18 @@ tspec_df <- function(
 tspec_object <- function(
   ...,
   .input_form = c("rowmajor", "colmajor"),
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
-  .vector_allows_empty_list <- .deprecate_arg(
+  .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
   .tspec(
     list2(...),
     "object",
-    .input_form = .input_form,
-    .vector_allows_empty_list = .vector_allows_empty_list
+    .input_form = .input_form
   )
 }
 
@@ -113,15 +112,18 @@ tspec_object <- function(
 tspec_row <- function(
   ...,
   .input_form = c("rowmajor", "colmajor"),
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
+  .deprecate_vector_allows_empty_list(
+    .vector_allows_empty_list,
+    vector_allows_empty_list
+  )
   .tspec(
     list2(...),
     "row",
-    .input_form = .input_form,
-    .vector_allows_empty_list = .vector_allows_empty_list
+    .input_form = .input_form
   )
 }
 
@@ -132,11 +134,11 @@ tspec_recursive <- function(
   .children,
   .children_to = .children,
   .input_form = c("rowmajor", "colmajor"),
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
-  .vector_allows_empty_list <- .deprecate_arg(
+  .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
@@ -149,12 +151,40 @@ tspec_recursive <- function(
     "recursive",
     child = .children,
     children_to = .children_to,
-    .input_form = .input_form,
-    .vector_allows_empty_list = .vector_allows_empty_list
+    .input_form = .input_form
   )
 }
 
-# helpers ----------------------------------------------------------------------
+0
+#' Deprecate the `vector_allows_empty_list` arguments
+#'
+#' Empty lists are now always accepted, so the arguments have no effect.
+#'
+#' @param dotted,undotted The values of `.vector_allows_empty_list` and
+#'   `vector_allows_empty_list`.
+#' @inheritParams .shared-params
+#' @returns `NULL`, invisibly.
+#' @keywords internal
+.deprecate_vector_allows_empty_list <- function(
+  dotted,
+  undotted,
+  fn_name = rlang::call_name(rlang::caller_call()),
+  user_env = rlang::caller_env(2)
+) {
+  args <- c(
+    .vector_allows_empty_list = lifecycle::is_present(dotted),
+    vector_allows_empty_list = lifecycle::is_present(undotted)
+  )
+  for (arg in names(args)[args]) {
+    lifecycle::deprecate_warn(
+      "0.5.0",
+      paste0(fn_name, "(", arg, ")"),
+      details = "Empty lists are now always accepted for vector fields.",
+      user_env = user_env
+    )
+  }
+  invisible(NULL)
+}
 
 #' Check that `.names_to` is valid for the given input form
 #'
@@ -188,16 +218,12 @@ tspec_recursive <- function(
   .fields,
   .type,
   ...,
-  .vector_allows_empty_list = FALSE,
   .error_call = caller_env()
 ) {
-  rlang::check_bool(.vector_allows_empty_list, call = .error_call)
-
   out <- list2(
     type = .type,
     fields = .prep_spec_fields(.fields, .error_call),
-    ...,
-    vector_allows_empty_list = .vector_allows_empty_list
+    ...
   )
 
   # We don't want to maintain dotted names past here.

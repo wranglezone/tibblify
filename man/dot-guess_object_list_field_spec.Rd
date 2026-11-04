@@ -8,8 +8,7 @@
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 )
 }
 \arguments{
@@ -22,9 +21,6 @@ unspecified?}
 
 \item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
 vectors?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A tib field spec.

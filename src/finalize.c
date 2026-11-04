@@ -3,6 +3,7 @@
 #include "collector.h"
 #include "utils.h"
 #include "r-vctrs.h"
+#include "stbl.h"
 
 // See finalize.h for documentation.
 r_obj* finalize_atomic_scalar(struct collector* v_collector) {
@@ -11,7 +12,7 @@ r_obj* finalize_atomic_scalar(struct collector* v_collector) {
     data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
-  data = rvctrs_vec_cast(data, v_collector->ptype);
+  data = stbl_to(data, v_collector->ptype, chr_cast_value_arg, r_null, r_null);
   FREE(1);
   return data;
 }
@@ -32,7 +33,7 @@ r_obj* finalize_scalar(struct collector* v_collector) {
     data = apply_transform(data, v_collector->transform);
   KEEP(data);
 
-  r_obj* value_cast = rvctrs_vec_cast(data, v_collector->ptype);
+  r_obj* value_cast = stbl_to(data, v_collector->ptype, chr_cast_value_arg, r_null, r_null);
   FREE(2);
   return value_cast;
 }

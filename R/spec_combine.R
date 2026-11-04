@@ -49,7 +49,7 @@ tspec_combine <- function(...) {
   } else if (type == "object") {
     return(tspec_object(!!!fields))
   } else if (type == "df") {
-    # TODO input_form, vector_allows_empty_list
+    # TODO input_form
     names_to <- .tib_combine_names_col(spec_list, rlang::current_env())
 
     return(tspec_df(!!!fields, .names_to = names_to))

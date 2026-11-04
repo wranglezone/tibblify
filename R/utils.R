@@ -351,24 +351,11 @@
 #' @returns The coerced fill value.
 #' @keywords internal
 .cast_fill <- function(fill, ptype, ptype_arg = NULL, call = caller_env()) {
-  switch(
-    vctrs::vec_ptype_abbr(ptype),
-    "lgl" = stbl::to_lgl(fill, x_arg = ".fill", call = call),
-    "int" = stbl::to_int(fill, x_arg = ".fill", call = call),
-    "dbl" = stbl::to_dbl(fill, x_arg = ".fill", call = call),
-    "chr" = stbl::to_chr(fill, x_arg = ".fill", call = call),
-    "fct" = stbl::to_fct(
-      fill,
-      levels = levels(ptype),
-      x_arg = ".fill",
-      call = call
-    ),
-    vctrs::vec_cast(
-      fill,
-      ptype,
-      x_arg = ".fill",
-      to_arg = ptype_arg,
-      call = call
-    )
+  stbl::to(
+    fill,
+    ptype,
+    x_arg = ".fill",
+    to_arg = ptype_arg %||% "ptype",
+    call = call
   )
 }

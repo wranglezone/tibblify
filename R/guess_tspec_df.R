@@ -14,13 +14,11 @@ guess_tspec_df <- function(
   rlang::check_bool(simplify_list, call = call)
   rlang::check_bool(inform_unspecified, call = call)
 
-  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
   if (is.data.frame(x)) {
     # TODO inform that `simplify_list` is not used for data frames
-    fields <- .imap_col_to_spec(x, empty_list_unspecified, local_env)
+    fields <- .imap_col_to_spec(x, empty_list_unspecified)
     spec <- tspec_df(
-      !!!fields,
-      .vector_allows_empty_list = .read_empty_list_argument(local_env)
+      !!!fields
     )
   } else {
     .check_list(x, arg = arg)
@@ -40,18 +38,18 @@ guess_tspec_df <- function(
 #' @inheritParams .shared-params
 #' @returns A tib field specification.
 #' @keywords internal
-.col_to_spec <- function(col, name, empty_list_unspecified, local_env) {
+.col_to_spec <- function(col, name, empty_list_unspecified) {
   col_type <- .tib_type_of(col, name, other = FALSE)
 
   # Can only be df, vector, or list
   if (col_type == "df") {
-    return(.df_col_to_spec(col, name, empty_list_unspecified, local_env))
+    return(.df_col_to_spec(col, name, empty_list_unspecified))
   }
   if (col_type == "vector") {
     return(.vector_col_to_spec(col, name))
   }
 
-  return(.list_col_to_spec(col, name, empty_list_unspecified, local_env))
+  return(.list_col_to_spec(col, name, empty_list_unspecified))
 }
 
 #' Apply column-to-spec conversion across a data frame
@@ -60,9 +58,9 @@ guess_tspec_df <- function(
 #' @inheritParams .shared-params
 #' @returns A named list of tib field specifications.
 #' @keywords internal
-.imap_col_to_spec <- function(col_list, empty_list_unspecified, local_env) {
+.imap_col_to_spec <- function(col_list, empty_list_unspecified) {
   purrr::imap(col_list, \(col, name) {
-    .col_to_spec(col, name, empty_list_unspecified, local_env)
+    .col_to_spec(col, name, empty_list_unspecified)
   })
 }
 
@@ -71,8 +69,8 @@ guess_tspec_df <- function(
 #' @inheritParams .shared-params
 #' @returns A [tib_row()] specification.
 #' @keywords internal
-.df_col_to_spec <- function(col, name, empty_list_unspecified, local_env) {
-  fields_spec <- .imap_col_to_spec(col, empty_list_unspecified, local_env)
+.df_col_to_spec <- function(col, name, empty_list_unspecified) {
+  fields_spec <- .imap_col_to_spec(col, empty_list_unspecified)
   return(tib_row(name, !!!fields_spec))
 }
 
@@ -99,7 +97,7 @@ guess_tspec_df <- function(
 #' @inheritParams .shared-params
 #' @returns A tib field specification.
 #' @keywords internal
-.list_col_to_spec <- function(col, name, empty_list_unspecified, local_env) {
+.list_col_to_spec <- function(col, name, empty_list_unspecified) {
   # `col` must be a list, so we need to check what its elements are
   list_of_col <- vctrs::is_list_of(col)
   if (list_of_col) {
@@ -116,7 +114,6 @@ guess_tspec_df <- function(
       return(tib_unspecified(name))
     }
     ptype_type <- .tib_type_of(ptype, name, other = FALSE)
-    .mark_empty_list_argument(ptype_common$had_empty_lists, local_env)
   }
 
   if (ptype_type == "vector") {
@@ -128,8 +125,7 @@ guess_tspec_df <- function(
       col = col,
       name = name,
       list_of_col,
-      empty_list_unspecified,
-      local_env
+      empty_list_unspecified
     ))
   }
 
@@ -152,22 +148,19 @@ guess_tspec_df <- function(
   col,
   name,
   list_of_col,
-  empty_list_unspecified,
-  local_env
+  empty_list_unspecified
 ) {
   if (list_of_col) {
     fields_spec <- .list_of_col_to_spec_df(
       col,
       ptype,
-      empty_list_unspecified,
-      local_env
+      empty_list_unspecified
     )
   } else {
     fields_spec <- .non_list_of_col_to_spec_df(
       col,
       ptype,
-      empty_list_unspecified,
-      local_env
+      empty_list_unspecified
     )
   }
   tib_df(name, !!!fields_spec)
@@ -181,8 +174,7 @@ guess_tspec_df <- function(
 .list_of_col_to_spec_df <- function(
   col,
   ptype,
-  empty_list_unspecified,
-  local_env
+  empty_list_unspecified
 ) {
   col_required <- TRUE # Tests are the same with this being ~anything.
   has_non_vec_cols <- purrr::detect_index(ptype, ~ !.is_vec(.x)) > 0
@@ -195,8 +187,7 @@ guess_tspec_df <- function(
   }
   .imap_col_to_spec(
     col_flat,
-    empty_list_unspecified,
-    local_env
+    empty_list_unspecified
   )
 }
 
@@ -208,14 +199,12 @@ guess_tspec_df <- function(
 .non_list_of_col_to_spec_df <- function(
   col,
   ptype,
-  empty_list_unspecified,
-  local_env
+  empty_list_unspecified
 ) {
   col_flat <- vctrs::list_unchop(col, ptype = ptype)
   fields_spec <- .imap_col_to_spec(
     col_flat,
-    empty_list_unspecified,
-    local_env
+    empty_list_unspecified
   ) |>
     .df_guess_required(col, ptype)
   fields_spec

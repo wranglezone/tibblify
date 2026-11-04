@@ -45,13 +45,6 @@ test_that("tspec_df errors if `.names_to` is used with colmajor", {
   })
 })
 
-test_that("tspec_df errors if `vector_allows_empty_list` is invalid", {
-  expect_snapshot({
-    (expect_error(tspec_df(.vector_allows_empty_list = NA)))
-    (expect_error(tspec_df(.vector_allows_empty_list = "a")))
-  })
-})
-
 test_that("empty dots create empty list", {
   expect_equal(tspec_df()$fields, list())
   expect_equal(tspec_row()$fields, list())
@@ -115,8 +108,7 @@ test_that("tspec_recursive creates the expected spec", {
         ),
         child = "children",
         children_to = "children",
-        input_form = "rowmajor",
-        vector_allows_empty_list = FALSE
+        input_form = "rowmajor"
       ),
       class = c("tspec_recursive", "tspec")
     )

@@ -73,11 +73,9 @@ test_that("tibblify errors if required fields are absent", {
 })
 
 test_that("tibblify errors if type is bad", {
-  dtt <- vctrs::new_datetime(1)
   expect_snapshot((expect_error(tib(list(x = "a"), tib_lgl_vec("x")))))
   expect_snapshot({
     (expect_error(tib(list(x = "a"), tib_lgl("x"))))
-    (expect_error(tib(list(x = 1), tib_scalar("x", dtt))))
   })
 })
 
@@ -285,7 +283,7 @@ test_that("Can tibblify with tspec_object", {
 # tib_*() specific tests
 
 test_that("tib_scalar tibblifies (#231)", {
-  dtt <- vctrs::new_datetime(1)
+  dtt <- vctrs::new_datetime(1, tzone = "UTC")
 
   # can parse
   expect_equal(tib(list(x = TRUE), tib_lgl("x")), tibble(x = TRUE))
@@ -307,7 +305,7 @@ test_that("tib_scalar tibblifies (#231)", {
   )
   expect_equal(
     tib(list(), tib_scalar("x", dtt, .required = FALSE)),
-    tibble(x = vctrs::new_datetime(NA_real_))
+    tibble(x = vctrs::new_datetime(NA_real_, tzone = "UTC"))
   )
 
   # use fill for NULL (#231)
@@ -343,7 +341,7 @@ test_that("tib_scalar tibblifies (#231)", {
   )
   expect_equal(
     tib(list(x = dtt), tib_scalar("x", dtt, .transform = ~ .x + 1)),
-    tibble(x = vctrs::new_datetime(2))
+    tibble(x = vctrs::new_datetime(2, tzone = "UTC"))
   )
 })
 
@@ -432,7 +430,7 @@ test_that("tibblify: tib_scalar respect ptype_inner", {
 })
 
 test_that("tib_vector tibblifies (#231)", {
-  dtt <- vctrs::new_datetime(1)
+  dtt <- vctrs::new_datetime(1, tzone = "UTC")
 
   # can parse
   expect_equal(
@@ -451,7 +449,9 @@ test_that("tib_vector tibblifies (#231)", {
   )
   expect_equal(
     tib(list(), tib_vector("x", dtt, .required = FALSE)),
-    tibble(x = vctrs::list_of(NULL, .ptype = vctrs::new_datetime()))
+    tibble(
+      x = vctrs::list_of(NULL, .ptype = vctrs::new_datetime(tzone = "UTC"))
+    )
   )
 
   # specified default works
@@ -635,20 +635,51 @@ test_that("length-0 list vectors use .fill (#231)", {
   )
 })
 
-test_that("tibblify: tib_vector respects .vector_allows_empty_list (#231)", {
+test_that("tib_vector accepts empty lists (#111, #231, #363)", {
   x <- list(
     list(x = 1),
     list(x = list()),
     list(x = 1:3)
   )
 
-  expect_snapshot({
-    (expect_error(tibblify(x, tspec_df(tib_int_vec("x")))))
-  })
-
   expect_equal(
-    tibblify(x, tspec_df(tib_int_vec("x"), .vector_allows_empty_list = TRUE)),
+    tibblify(x, tspec_df(tib_int_vec("x"))),
     tibble(x = vctrs::list_of(1, integer(), 1:3))
+  )
+
+  # Empty lists go through the normal cast path.
+  expect_equal(
+    tibblify(
+      list(list(x = list())),
+      tspec_df(tib_vector("x", vctrs::new_datetime(tzone = "UTC")))
+    ),
+    tibble(
+      x = vctrs::list_of(
+        vctrs::new_datetime(tzone = "UTC"),
+        .ptype = vctrs::new_datetime(tzone = "UTC")
+      )
+    )
+  )
+
+  # Optional fields use `.fill` for empty lists.
+  expect_equal(
+    tibblify(
+      list(list(x = 1), list(x = list())),
+      tspec_df(tib_int_vec("x", .required = FALSE, .fill = 9L))
+    ),
+    tibble(x = vctrs::list_of(1L, 9L))
+  )
+})
+
+test_that("`vector_allows_empty_list` is deprecated (#363)", {
+  lifecycle::expect_deprecated(
+    tspec_df(.vector_allows_empty_list = TRUE),
+    "0.5.0"
+  )
+  lifecycle::expect_deprecated(tspec_object(vector_allows_empty_list = TRUE))
+  lifecycle::expect_deprecated(tspec_row(.vector_allows_empty_list = FALSE))
+  lifecycle::expect_deprecated(
+    tspec_recursive(.children = "x", .vector_allows_empty_list = TRUE)
   )
 })
 
@@ -815,8 +846,8 @@ test_that("tibblify: tib_vector creates tibble with names_to", {
 
   spec3 <- tib_int_vec("x", .values_to = "val", .names_to = "name")
   expect_equal(
-    tib(list(x = c(a = 1, b = NA)), spec3),
-    tibble(x = vctrs::list_of(tibble(name = c("a", "b"), val = c(1L, NA))))
+    tib(list(x = c(a = 1, b = NA)), spec3)$x[[1]],
+    tibble(name = c("a", "b"), val = c(a = 1L, b = NA))
   )
 })
 
@@ -1038,7 +1069,7 @@ test_that("tib_df tibblifies", {
   )
 
   # can handle every `tib_*()`
-  dtt <- vctrs::new_datetime(1)
+  dtt <- vctrs::new_datetime(1, tzone = "UTC")
   x <- list(
     atomic_scalar = 1L,
     scalar = dtt,
@@ -1356,7 +1387,11 @@ test_that("friendlier coercion: lossless dbl/lgl atomic mismatches (#330)", {
 
 test_that("tolerant_vec_cast: unsupported coercions produce errors (#330, #340)", {
   expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_lgl("x"))))
-  expect_error(tibblify(list(list(x = 1 + 0i)), tspec_df(tib_dbl("x"))))
+  expect_error(tibblify(list(list(x = 1 + 1i)), tspec_df(tib_dbl("x"))))
+  expect_identical(
+    tibblify(list(list(x = 1 + 0i)), tspec_df(tib_dbl("x"))),
+    tibble(x = 1)
+  )
   expect_no_error(tibblify(list(list(x = 1L)), tspec_df(tib_chr("x"))))
 })
 
@@ -1389,9 +1424,9 @@ test_that("friendlier coercion: invalid values to fct error (#340)", {
   )
 })
 
-test_that("friendlier coercion: classed lists to chr fall through to vctrs (#340)", {
+test_that("friendlier coercion: flat classed lists of strings to chr (#340)", {
   spec <- tspec_df(tib_chr("x"))
   x <- structure(list("a"), class = "foo")
 
-  expect_error(tibblify(list(list(x = x)), spec), class = "tibblify_error")
+  expect_identical(tibblify(list(list(x = x)), spec), tibble(x = "a"))
 })

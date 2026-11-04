@@ -4,13 +4,7 @@
 \alias{.tspec}
 \title{Create a tibblify specification object}
 \usage{
-.tspec(
-  .fields,
-  .type,
-  ...,
-  .vector_allows_empty_list = FALSE,
-  .error_call = caller_env()
-)
+.tspec(.fields, .type, ..., .error_call = caller_env())
 }
 \arguments{
 \item{.fields}{(\code{list}) A list of field specifications, typically created by

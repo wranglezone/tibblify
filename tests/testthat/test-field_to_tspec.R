@@ -57,18 +57,6 @@ test_that("field_to_tspec_df preserves .names_to from tib_df (#346)", {
   )
 })
 
-test_that("field_to_tspec_df preserves .vector_allows_empty_list (#346)", {
-  spec <- tspec_df(
-    tib_df("items", tib_int("value")),
-    .vector_allows_empty_list = TRUE
-  )
-
-  expect_equal(
-    field_to_tspec_df(spec, "items"),
-    tspec_df(tib_int("value"), .vector_allows_empty_list = TRUE)
-  )
-})
-
 test_that("field_to_tspec_row works with tib_row field (#346)", {
   spec <- tspec_df(
     tib_row(
@@ -106,18 +94,6 @@ test_that("field_to_tspec_row works with tib_recursive field (#346)", {
   expect_equal(
     field_to_tspec_row(spec, "nodes"),
     tspec_row(tib_chr("label"))
-  )
-})
-
-test_that("field_to_tspec_row preserves .vector_allows_empty_list (#346)", {
-  spec <- tspec_df(
-    tib_row("location", tib_dbl("lat")),
-    .vector_allows_empty_list = TRUE
-  )
-
-  expect_equal(
-    field_to_tspec_row(spec, "location"),
-    tspec_row(tib_dbl("lat"), .vector_allows_empty_list = TRUE)
   )
 })
 

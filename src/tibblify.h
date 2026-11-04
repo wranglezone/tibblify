@@ -31,6 +31,7 @@ extern SEXP classes_list_of;
 
 extern SEXP strings_empty;
 extern SEXP strings_object;
+extern SEXP chr_cast_value_arg;
 
 extern SEXP syms_transform;
 extern SEXP syms_value;

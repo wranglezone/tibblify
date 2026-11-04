@@ -13,6 +13,7 @@ SEXP syms_ptype = NULL;
 
 SEXP strings_empty = NULL;
 SEXP strings_object = NULL;
+SEXP chr_cast_value_arg = NULL;
 
 // -----------------------------------------------------------------------------
 
@@ -125,6 +126,7 @@ void tibblify_init_utils(SEXP ns) {
 
   r_preserve_global(strings_empty = r_str(""));
   r_preserve_global(strings_object = r_str("object"));
+  r_preserve_global(chr_cast_value_arg = r_chr("value"));
 
   r_preserve_global(r_string_input_form.rowmajor = r_str("rowmajor"));
   r_preserve_global(r_string_input_form.colmajor = r_str("colmajor"));

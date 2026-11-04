@@ -76,9 +76,6 @@ messages.}
 
 \item{.key}{(\code{character}) The path of names to the field in the object.}
 
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
-
 \item{media_type_object}{(\code{list}) A single media type object from an OpenAPI
 spec.}
 

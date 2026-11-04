@@ -77,21 +77,6 @@
       Error in `tspec_df()`:
       ! Can't use `.names_to` with `.input_form = "colmajor"`.
 
-# tspec_df errors if `vector_allows_empty_list` is invalid
-
-    Code
-      (expect_error(tspec_df(.vector_allows_empty_list = NA)))
-    Output
-      <error/rlang_error>
-      Error in `tspec_df()`:
-      ! `.vector_allows_empty_list` must be `TRUE` or `FALSE`, not `NA`.
-    Code
-      (expect_error(tspec_df(.vector_allows_empty_list = "a")))
-    Output
-      <error/rlang_error>
-      Error in `tspec_df()`:
-      ! `.vector_allows_empty_list` must be `TRUE` or `FALSE`, not the string "a".
-
 # tspec_* can nest specifications
 
     Code

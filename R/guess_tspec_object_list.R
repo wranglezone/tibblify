@@ -16,13 +16,10 @@ guess_tspec_object_list <- function(
   .check_list(x, arg = arg, call = call)
   .check_object_list(x, arg = arg, call = call)
 
-  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
   spec <- .guess_object_field_spec_expand_fields_df(
     x,
     empty_list_unspecified,
     simplify_list,
-    local_env,
-    .vector_allows_empty_list = .read_empty_list_argument(local_env),
     tib_fn = tspec_df
   )
   return(.maybe_inform_unspecified(spec, inform_unspecified, call = call))

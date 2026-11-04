@@ -4,7 +4,7 @@
 \alias{.df_col_to_spec}
 \title{Convert a nested data frame column to a tib_row specification}
 \usage{
-.df_col_to_spec(col, name, empty_list_unspecified, local_env)
+.df_col_to_spec(col, name, empty_list_unspecified)
 }
 \arguments{
 \item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
@@ -14,9 +14,6 @@ or a nested data frame.}
 
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A \code{\link[=tib_row]{tib_row()}} specification.

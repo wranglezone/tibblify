@@ -4,14 +4,7 @@
 \alias{.col_to_spec_df}
 \title{Convert a df-typed list column to a tib_df specification}
 \usage{
-.col_to_spec_df(
-  ptype,
-  col,
-  name,
-  list_of_col,
-  empty_list_unspecified,
-  local_env
-)
+.col_to_spec_df(ptype, col, name, list_of_col, empty_list_unspecified)
 }
 \arguments{
 \item{ptype}{(\code{vector(0)}) A prototype of the desired output type of the
@@ -26,9 +19,6 @@ or a nested data frame.}
 
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A \code{\link[=tib_df]{tib_df()}} specification.

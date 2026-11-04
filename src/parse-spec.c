@@ -4,7 +4,6 @@
 #include "tibblify.h"
 
 struct collector* parse_spec_elt(r_obj* spec_elt,
-                                 bool vector_allows_empty_list,
                                  bool rowmajor,
                                  bool parser_flag) {
   r_obj* type = r_chr_get(r_list_get_by_name(spec_elt, "type"), 0);
@@ -75,7 +74,7 @@ struct collector* parse_spec_elt(r_obj* spec_elt,
     }
 
     KEEP(p_collector->shelter);
-    collector_add_fields(p_collector, ffi_fields_spec, vector_allows_empty_list, rowmajor);
+    collector_add_fields(p_collector, ffi_fields_spec, rowmajor);
 
     FREE(1);
     return p_collector;
@@ -119,7 +118,6 @@ struct collector* parse_spec_elt(r_obj* spec_elt,
                                 default_value,
                                 transform,
                                 input_form,
-                                vector_allows_empty_list,
                                 r_list_get_by_name(spec_elt, "names_to"),
                                 r_list_get_by_name(spec_elt, "values_to"),
                                 r_list_get_by_name(spec_elt, "na"),
@@ -136,14 +134,13 @@ struct collector* parse_spec_elt(r_obj* spec_elt,
 
 void collector_add_fields(struct collector* p_coll,
                           r_obj* fields,
-                          bool vector_allows_empty_list,
                           bool rowmajor) {
   struct multi_collector* p_multi_coll = &p_coll->details.multi_coll;
   r_obj* const * v_spec = r_list_cbegin(fields);
   int n_fields = r_length(fields);
 
   for (r_ssize i = 0; i < n_fields; ++i) {
-    struct collector* coll_i = parse_spec_elt(v_spec[i], vector_allows_empty_list, rowmajor, false);
+    struct collector* coll_i = parse_spec_elt(v_spec[i], rowmajor, false);
     r_list_poke(p_coll->shelter, 5 + i, coll_i->shelter);
     p_multi_coll->collectors[i] = *coll_i;
 
@@ -156,10 +153,8 @@ void collector_add_fields(struct collector* p_coll,
 
 struct collector* create_parser(r_obj* spec) {
   bool rowmajor = r_lgl_get(r_list_get_by_name(spec, "rowmajor"), 0);
-  bool vector_allows_empty_list = r_lgl_get(r_list_get_by_name(spec, "vector_allows_empty_list"), 0);
 
   return parse_spec_elt(spec,
-                        vector_allows_empty_list,
                         rowmajor,
                         true);
 }

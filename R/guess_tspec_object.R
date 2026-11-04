@@ -19,15 +19,12 @@ guess_tspec_object <- function(
     return(tspec_object())
   }
 
-  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
   fields <- .imap_guess_object_field_spec(
     x,
     empty_list_unspecified,
-    simplify_list,
-    local_env
+    simplify_list
   )
   spec <- tspec_object(
-    .vector_allows_empty_list = .read_empty_list_argument(local_env),
     !!!fields
   )
   return(.maybe_inform_unspecified(spec, inform_unspecified, call = call))
@@ -62,8 +59,7 @@ guess_tspec_object <- function(
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   if (is.null(value) || identical(unname(value), list())) {
     return(tib_unspecified(name))
@@ -79,8 +75,7 @@ guess_tspec_object <- function(
     return(.guess_object_field_spec_df(
       value,
       name,
-      empty_list_unspecified,
-      local_env
+      empty_list_unspecified
     ))
   }
 
@@ -101,8 +96,7 @@ guess_tspec_object <- function(
       value,
       name,
       empty_list_unspecified,
-      simplify_list,
-      local_env
+      simplify_list
     ))
   }
   if (simplify_list) {
@@ -116,8 +110,7 @@ guess_tspec_object <- function(
       value,
       name,
       empty_list_unspecified,
-      simplify_list,
-      local_env
+      simplify_list
     ))
   }
 
@@ -145,10 +138,9 @@ guess_tspec_object <- function(
 .guess_object_field_spec_df <- function(
   value,
   name,
-  empty_list_unspecified,
-  local_env
+  empty_list_unspecified
 ) {
-  field_spec <- .imap_col_to_spec(value, empty_list_unspecified, local_env)
+  field_spec <- .imap_col_to_spec(value, empty_list_unspecified)
   return(tib_df(name, !!!field_spec))
 }
 
@@ -161,14 +153,12 @@ guess_tspec_object <- function(
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   .guess_object_field_spec_expand_fields(
     value,
     empty_list_unspecified,
     simplify_list,
-    local_env,
     .key = name,
     tib_fn = tib_row,
     fields_fn = .imap_guess_object_field_spec
@@ -183,8 +173,7 @@ guess_tspec_object <- function(
 .imap_guess_object_field_spec <- function(
   x,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   purrr::imap(
     x,
@@ -193,8 +182,7 @@ guess_tspec_object <- function(
         value,
         name,
         empty_list_unspecified,
-        simplify_list,
-        local_env
+        simplify_list
       )
     }
   )
