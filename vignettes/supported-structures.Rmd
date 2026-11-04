@@ -123,16 +123,10 @@ x <- jsonlite::fromJSON(x_json, simplifyDataFrame = FALSE)
 str(x)
 ```
 
-By default they are not supported but produce an error.
-
-```{r error=TRUE}
-tibblify(x, tspec_df(tib_int_vec("a")))
-```
-
-Use `vector_allows_empty_list = TRUE` in `tspec_*()` so that they are converted to an empty vector instead.
+Empty lists are converted to an empty vector.
 
 ```{r}
-tibblify(x, tspec_df(tib_int_vec("a"), .vector_allows_empty_list = TRUE))$a
+tibblify(x, tspec_df(tib_int_vec("a")))$a
 ```
 
 ### Homogeneous R lists of scalars

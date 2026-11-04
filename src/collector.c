@@ -534,7 +534,6 @@ struct collector* new_vector_collector(bool required,
                                        r_obj* default_value,
                                        r_obj* transform,
                                        r_obj* input_form,
-                                       bool vector_allows_empty_list,
                                        r_obj* names_to,
                                        r_obj* values_to,
                                        r_obj* na,
@@ -572,7 +571,6 @@ struct collector* new_vector_collector(bool required,
   p_vec_coll->default_value = default_value;
   p_vec_coll->na = na;
   p_vec_coll->elt_transform = elt_transform;
-  p_vec_coll->vector_allows_empty_list = vector_allows_empty_list;
   p_vec_coll->input_form = r_to_vector_form(input_form);
   p_vec_coll->col_names = col_names;
   p_vec_coll->list_of_ptype = list_of_ptype;

@@ -4,12 +4,7 @@
 \alias{.imap_guess_object_field_spec}
 \title{Map \code{.guess_object_field_spec} over a named list}
 \usage{
-.imap_guess_object_field_spec(
-  x,
-  empty_list_unspecified,
-  simplify_list,
-  local_env
-)
+.imap_guess_object_field_spec(x, empty_list_unspecified, simplify_list)
 }
 \arguments{
 \item{x}{(\code{any}) The object to check.}
@@ -19,9 +14,6 @@ unspecified?}
 
 \item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
 vectors?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A named list of tib field specifications, one per element of \code{x}.

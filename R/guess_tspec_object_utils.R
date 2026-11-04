@@ -36,7 +36,6 @@
   value,
   empty_list_unspecified,
   simplify_list,
-  local_env,
   ...,
   tib_fn = tib_df,
   fields_fn = .guess_object_list_spec
@@ -44,8 +43,7 @@
   fields <- fields_fn(
     value,
     empty_list_unspecified,
-    simplify_list,
-    local_env
+    simplify_list
   )
   return(tib_fn(
     !!!fields,
@@ -66,7 +64,6 @@
   value,
   empty_list_unspecified,
   simplify_list,
-  local_env,
   ...,
   tib_fn = tib_df
 ) {
@@ -74,7 +71,6 @@
     value,
     empty_list_unspecified,
     simplify_list,
-    local_env,
     tib_fn = tib_fn,
     .names_to = if (rlang::is_named(value) && !rlang::is_empty(value)) ".names",
     ...
@@ -90,14 +86,12 @@
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   .guess_object_field_spec_expand_fields_df(
     value,
     empty_list_unspecified,
     simplify_list,
-    local_env,
     .key = name
   )
 }
@@ -111,8 +105,7 @@
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   ptype_result <- .get_ptype_common(value, empty_list_unspecified)
   if (!ptype_result$has_common_ptype) {
@@ -128,9 +121,7 @@
     return(.guess_object_list_field_spec_vector(
       value,
       name,
-      ptype,
-      ptype_result$had_empty_lists,
-      local_env
+      ptype
     ))
   }
   if (ptype_type == "df") {
@@ -148,8 +139,7 @@
       value_flat,
       name,
       empty_list_unspecified,
-      simplify_list,
-      local_env
+      simplify_list
     ))
   }
 
@@ -158,8 +148,7 @@
       value,
       name,
       empty_list_unspecified,
-      simplify_list,
-      local_env
+      simplify_list
     ))
   }
 
@@ -177,8 +166,7 @@
       value,
       name,
       empty_list_unspecified,
-      simplify_list,
-      local_env
+      simplify_list
     ))
   }
 
@@ -187,22 +175,15 @@
 
 #' Guess the spec for a vector-typed field in an object list
 #'
-#' @param had_empty_lists (`logical(1)` or `NULL`) Whether empty lists were
-#'   dropped when computing the common ptype.
 #' @inheritParams .shared-params
 #' @returns A [tib_scalar()] or [tib_vector()] spec.
 #' @keywords internal
 .guess_object_list_field_spec_vector <- function(
   value,
   name,
-  ptype,
-  had_empty_lists,
-  local_env
+  ptype
 ) {
   is_scalar <- .is_field_scalar(value)
-  if (!is_scalar) {
-    .mark_empty_list_argument(is_true(had_empty_lists), local_env)
-  }
   .tib_scalar_or_vector_spec(name, ptype, is_scalar)
 }
 
@@ -215,8 +196,7 @@
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   if (.is_object_list(value)) {
     return(
@@ -224,8 +204,7 @@
         value,
         name,
         empty_list_unspecified,
-        simplify_list,
-        local_env
+        simplify_list
       )
     )
   }
@@ -261,15 +240,13 @@
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   return(
     .guess_object_field_spec_expand_fields(
       value,
       empty_list_unspecified,
       simplify_list,
-      local_env,
       tib_fn = tib_row,
       .key = name
     )
@@ -286,8 +263,7 @@
 .guess_object_list_spec <- function(
   object_list,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 ) {
   required <- .get_required(object_list)
   # need to remove empty elements for `purrr::transpose()` to work.
@@ -305,8 +281,7 @@
         value,
         name,
         empty_list_unspecified,
-        simplify_list,
-        local_env
+        simplify_list
       )
     }
   )

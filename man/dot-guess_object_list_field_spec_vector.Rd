@@ -4,13 +4,7 @@
 \alias{.guess_object_list_field_spec_vector}
 \title{Guess the spec for a vector-typed field in an object list}
 \usage{
-.guess_object_list_field_spec_vector(
-  value,
-  name,
-  ptype,
-  had_empty_lists,
-  local_env
-)
+.guess_object_list_field_spec_vector(value, name, ptype)
 }
 \arguments{
 \item{value}{(\code{list}) An object list whose fields will be guessed.}
@@ -19,12 +13,6 @@
 
 \item{ptype}{(\code{vector(0)}) A prototype of the desired output type of the
 field.}
-
-\item{had_empty_lists}{(\code{logical(1)} or \code{NULL}) Whether empty lists were
-dropped when computing the common ptype.}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A \code{\link[=tib_scalar]{tib_scalar()}} or \code{\link[=tib_vector]{tib_vector()}} spec.

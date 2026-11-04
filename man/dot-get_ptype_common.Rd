@@ -15,8 +15,7 @@ unspecified?}
 \value{
 A list with component \code{has_common_ptype} (\code{TRUE} if so, \code{FALSE}
 otherwise) and optional components \code{ptype} (an object representing the
-common \code{ptype}, if there is one) and \code{had_empty_lists} (\code{TRUE} if
-\code{empty_list_unspecified} is \code{TRUE} and the \code{x} input had such empty lists).
+common \code{ptype}, if there is one).
 }
 \description{
 Find the common ptype of a list of objects

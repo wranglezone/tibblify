@@ -15,8 +15,7 @@
 #' Remove empty lists from an object
 #'
 #' @inheritParams .shared-params
-#' @returns The input object with empty lists removed. If any were removed, the
-#'   returned object has an attribute `had_empty_lists` set to `TRUE`.
+#' @returns The input object with empty lists removed.
 #' @keywords internal
 .drop_empty_lists <- function(x) {
   # TODO this could be implement in C for performance
@@ -28,7 +27,6 @@
   empty_flag[empty_flag] <- empty_list_flag
   if (any(empty_flag)) {
     x <- x[!empty_flag]
-    attr(x, "had_empty_lists") <- TRUE
   }
   x
 }
@@ -58,8 +56,7 @@
 #' @inheritParams .shared-params
 #' @returns A list with component `has_common_ptype` (`TRUE` if so, `FALSE`
 #'   otherwise) and optional components `ptype` (an object representing the
-#'   common `ptype`, if there is one) and `had_empty_lists` (`TRUE` if
-#'   `empty_list_unspecified` is `TRUE` and the `x` input had such empty lists).
+#'   common `ptype`, if there is one).
 #' @keywords internal
 .get_ptype_common <- function(x, empty_list_unspecified) {
   rlang::try_fetch(
@@ -70,8 +67,7 @@
       ptype <- vctrs::vec_ptype_common(!!!x)
       list(
         has_common_ptype = TRUE,
-        ptype = .cast_posixlt_ptype(ptype),
-        had_empty_lists = attr(x, "had_empty_lists", exact = TRUE)
+        ptype = .cast_posixlt_ptype(ptype)
       )
     },
     vctrs_error_incompatible_type = function(cnd) {
@@ -81,29 +77,6 @@
       list(has_common_ptype = FALSE)
     }
   )
-}
-
-#' Mark that the empty list argument was used
-#'
-#' @param used_empty_list_arg (`logical(1)`) Whether any empty lists were
-#'   dropped during ptype detection due to `empty_list_unspecified`.
-#' @inheritParams .shared-params
-#' @returns Called for its side effect of setting `local_env$empty_list_used` to
-#'   `TRUE` when `used_empty_list_arg` is `TRUE`.
-#' @keywords internal
-.mark_empty_list_argument <- function(used_empty_list_arg, local_env) {
-  if (is_true(used_empty_list_arg)) {
-    local_env$empty_list_used <- TRUE
-  }
-}
-
-#' Read whether the empty list argument was used
-#'
-#' @inheritParams .shared-params
-#' @returns `TRUE` if `local_env$empty_list_used` is `TRUE`, `FALSE` otherwise.
-#' @keywords internal
-.read_empty_list_argument <- function(local_env) {
-  rlang::is_true(local_env$empty_list_used)
 }
 
 #' Determine the tib type of an object

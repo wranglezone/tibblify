@@ -50,8 +50,6 @@
 #' @param input_form (`character(1)`) The input form string used in error
 #'   messages.
 #' @param .key (`character`) The path of names to the field in the object.
-#' @param local_env (`environment`) A local environment used to track state
-#'   across recursive calls, such as whether empty lists were encountered.
 #' @param media_type_object (`list`) A single media type object from an OpenAPI
 #'   spec.
 #' @param media_type_objects (`list`) A named list of media type objects from an

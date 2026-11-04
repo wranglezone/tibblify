@@ -133,7 +133,6 @@ struct vector_collector {
   r_obj* na;             /**< R value to use when the field is `NULL`. */
 
   enum vector_form input_form;       /**< How the input data is structured. */
-  bool vector_allows_empty_list;     /**< Whether an empty list is a valid value. */
   r_obj* elt_transform;              /**< Per-element transform function, or `r_null`. */
 
   /** Prepare raw input data before storing; selected by `names_to`/`values_to`. */
@@ -285,7 +284,6 @@ struct collector* new_scalar_collector(bool required,
  * @param default_value             Value to use when the field is absent.
  * @param transform                 Post-processing function, or `r_null`.
  * @param input_form                One of `r_vector_form.*` (interned string).
- * @param vector_allows_empty_list  Whether an empty list is a valid element.
  * @param names_to                  Column name for captured element names, or `r_null`.
  * @param values_to                 Column name for captured values, or `r_null`.
  * @param na                        R value for `NULL` elements.
@@ -301,7 +299,6 @@ struct collector* new_vector_collector(bool required,
                                        r_obj* default_value,
                                        r_obj* transform,
                                        r_obj* input_form,
-                                       bool vector_allows_empty_list,
                                        r_obj* names_to,
                                        r_obj* values_to,
                                        r_obj* na,

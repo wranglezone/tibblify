@@ -4,7 +4,7 @@
 \alias{.guess_object_field_spec_df}
 \title{Guess the field spec for a data-frame-typed field}
 \usage{
-.guess_object_field_spec_df(value, name, empty_list_unspecified, local_env)
+.guess_object_field_spec_df(value, name, empty_list_unspecified)
 }
 \arguments{
 \item{value}{(\code{list}) An object list whose fields will be guessed.}
@@ -13,9 +13,6 @@
 
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A \code{tib_df} field specification.

@@ -9,163 +9,14 @@
 
 
 /**
- * Tolerant cast: like rvctrs_vec_cast() but uses stbl lossless-coercion rules.
+ * Tolerant cast: coerce `value` to the type of `ptype` using stbl's dispatch.
  *
- * Uses stbl_*_are_*ish() to check whether the conversion is lossless. If all
- * elements are valid, calls stbl_*_to_*() and returns element 0 of the result
- * list. If any are invalid, falls back to rvctrs_vec_cast() so the caller gets
- * a consistent, informative vctrs error.
- *
- * Handles two cases beyond what vctrs allows:
- *   1. "False lists": non-empty bare list -> atomic target (stbl_lst_to_*).
- *   2. Lossless atomic mismatches: chr/int/lgl/dbl -> other atomic (stbl_*_to_*).
- *
- * Falls back to rvctrs_vec_cast() for unsupported type combos and non-atomic
- * ptypes (e.g. Date, POSIXct).
+ * stbl_to() handles lossless atomic coercions, "false lists", factors, and
+ * delegates all other targets to stbl::to(), which falls back to
+ * vctrs::vec_cast(). New stbl types therefore need no changes here.
  */
-
-/* Check if all elements of a logical validity vector are TRUE. */
-static inline bool stbl_all_valid(r_obj* valid) {
-  R_xlen_t n = XLENGTH(valid);
-  int* p_v = LOGICAL(valid);
-  for (R_xlen_t i = 0; i < n; i++) {
-    if (!p_v[i]) return false;
-  }
-  return true;
-}
-
-/* Call fn_to(value), extract element 0 (the result), and return it.
- * fn_to must return a list whose first element is the coerced vector. */
-#define STBL_CAST(FN_ARE, FN_TO, VALUE, PTYPE)                         \
-  do {                                                                  \
-    r_obj* _valid = KEEP(FN_ARE(VALUE));                               \
-    if (!stbl_all_valid(_valid)) { FREE(1); return rvctrs_vec_cast(VALUE, PTYPE); } \
-    FREE(1);                                                           \
-    r_obj* _out = KEEP(FN_TO(VALUE));                                  \
-    r_obj* _result = VECTOR_ELT(_out, 0);                              \
-    FREE(1);                                                           \
-    return _result;                                                    \
-  } while (0)
-
 static inline r_obj* tolerant_vec_cast(r_obj* value, r_obj* ptype) {
-  SEXPTYPE value_type = TYPEOF(value);
-  SEXPTYPE ptype_type = TYPEOF(ptype);
-
-  // Handle false lists: non-empty bare list -> target atomic type
-  if (value_type == VECSXP && !r_is_object(value) && Rf_length(value) > 0) {
-    // lst_to_* also returns list(result, valid) -- use element 1 as validity
-
-    // Factor ptype: unlist to chr first, then coerce chr to factor.
-    if (r_is_object(ptype) && Rf_inherits(ptype, "factor")) {
-      r_obj* chr_out = KEEP(stbl_lst_to_chr(value));
-      r_obj* chr_valid = VECTOR_ELT(chr_out, 1);
-      if (!stbl_all_valid(chr_valid)) { FREE(1); return rvctrs_vec_cast(value, ptype); }
-      r_obj* chr_val = KEEP(VECTOR_ELT(chr_out, 0));
-      FREE(1);
-      r_obj* levels = Rf_getAttrib(ptype, R_LevelsSymbol);
-      r_obj* ordered = KEEP(Rf_ScalarLogical(Rf_inherits(ptype, "ordered")));
-      r_obj* fct_valid = KEEP(stbl_chr_are_fctish(chr_val, levels, r_null));
-      bool all_valid = stbl_all_valid(fct_valid);
-      FREE(1);
-      if (all_valid) {
-        r_obj* fct_out = KEEP(stbl_chr_to_fct(chr_val, levels, ordered));
-        r_obj* result = VECTOR_ELT(fct_out, 0);
-        FREE(3);
-        return result;
-      }
-      FREE(2);
-      return rvctrs_vec_cast(value, ptype);
-    }
-
-    r_obj* stbl_out = NULL;
-    switch (ptype_type) {
-    case LGLSXP:  stbl_out = KEEP(stbl_lst_to_lgl(value)); break;
-    case INTSXP:  stbl_out = KEEP(stbl_lst_to_int(value)); break;
-    case REALSXP: stbl_out = KEEP(stbl_lst_to_dbl(value)); break;
-    case STRSXP:  stbl_out = KEEP(stbl_lst_to_chr(value)); break;
-    default: break;
-    }
-    if (stbl_out != NULL) {
-      r_obj* valid = VECTOR_ELT(stbl_out, 1);
-      if (!stbl_all_valid(valid)) { FREE(1); return rvctrs_vec_cast(value, ptype); }
-      r_obj* result = VECTOR_ELT(stbl_out, 0);
-      FREE(1);
-      return result;
-    }
-  }
-
-  // Handle atomic type mismatches via stbl lossless coercion.
-  // Use are_*ish for validity (avoids depending on internal list structure of to_*).
-  if (value_type != ptype_type) {
-    // Factor ptype: TYPEOF is INTSXP but must not be treated as plain integer.
-    // Handle chr -> fct via stbl; other source types fall through to vctrs.
-    if (r_is_object(ptype) && Rf_inherits(ptype, "factor")) {
-      if (value_type == STRSXP) {
-        r_obj* levels = Rf_getAttrib(ptype, R_LevelsSymbol);
-        r_obj* ordered = KEEP(Rf_ScalarLogical(Rf_inherits(ptype, "ordered")));
-        r_obj* valid = KEEP(stbl_chr_are_fctish(value, levels, r_null));
-        bool all_valid = stbl_all_valid(valid);
-        FREE(1);
-        if (all_valid) {
-          r_obj* out = KEEP(stbl_chr_to_fct(value, levels, ordered));
-          r_obj* result = VECTOR_ELT(out, 0);
-          FREE(2);
-          return result;
-        }
-        FREE(1);
-      }
-      return rvctrs_vec_cast(value, ptype);
-    }
-
-    switch (ptype_type) {
-    case LGLSXP:
-      if (value_type == REALSXP)
-        STBL_CAST(stbl_dbl_are_lglish, stbl_dbl_to_lgl, value, ptype);
-      if (value_type == INTSXP) {
-        // No stbl_int_* family exists; upcast to dbl and reuse the dbl path.
-        r_obj* dbl_value = KEEP(Rf_coerceVector(value, REALSXP));
-        r_obj* valid = KEEP(stbl_dbl_are_lglish(dbl_value));
-        if (!stbl_all_valid(valid)) { FREE(2); return rvctrs_vec_cast(value, ptype); }
-        FREE(1);
-        r_obj* out = KEEP(stbl_dbl_to_lgl(dbl_value));
-        r_obj* result = VECTOR_ELT(out, 0);
-        FREE(2);
-        return result;
-      }
-      if (value_type == STRSXP)
-        STBL_CAST(stbl_chr_are_lglish, stbl_chr_to_lgl, value, ptype);
-      break;
-    case INTSXP:
-      if (value_type == REALSXP)
-        STBL_CAST(stbl_dbl_are_intish, stbl_dbl_to_int, value, ptype);
-      if (value_type == LGLSXP)
-        STBL_CAST(stbl_lgl_are_intish, stbl_lgl_to_int, value, ptype);
-      if (value_type == STRSXP)
-        STBL_CAST(stbl_chr_are_intish, stbl_chr_to_int, value, ptype);
-      break;
-    case REALSXP:
-      if (value_type == INTSXP)
-        STBL_CAST(stbl_int_are_dblish, stbl_int_to_dbl, value, ptype);
-      if (value_type == LGLSXP)
-        STBL_CAST(stbl_lgl_are_dblish, stbl_lgl_to_dbl, value, ptype);
-      if (value_type == STRSXP)
-        STBL_CAST(stbl_chr_are_dblish, stbl_chr_to_dbl, value, ptype);
-      break;
-    case STRSXP:
-      if (value_type == INTSXP && !r_is_object(value))
-        STBL_CAST(stbl_int_are_chrish, stbl_int_to_chr, value, ptype);
-      if (value_type == LGLSXP)
-        STBL_CAST(stbl_lgl_are_chrish, stbl_lgl_to_chr, value, ptype);
-      if (value_type == REALSXP)
-        STBL_CAST(stbl_dbl_are_chrish, stbl_dbl_to_chr, value, ptype);
-      if (value_type == INTSXP && r_is_object(value) && Rf_inherits(value, "factor"))
-        STBL_CAST(stbl_fct_are_chrish, stbl_fct_to_chr, value, ptype);
-      break;
-    default: break;
-    }
-  }
-
-  return rvctrs_vec_cast(value, ptype);
+  return stbl_to(value, ptype, chr_cast_value_arg, r_null, r_null);
 }
 
 /**
@@ -456,20 +307,7 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     return;
   }
 
-  if (v_vec_coll->input_form == VECTOR_FORM_vector && v_vec_coll->vector_allows_empty_list) {
-    if (r_length(value) == 0 && r_typeof(value) == R_TYPE_list) {
-      r_list_poke(v_collector->data, v_collector->current_row, v_collector->ptype);
-      ++v_collector->current_row;
-      return;
-    }
-  }
-
-  // For optional `vector`-form fields, a length-0 `list()` uses fill. This
-  // runs after the `.vector_allows_empty_list` branch so that explicit
-  // "allow empty list" behavior is preserved. When `vector_allows_empty_list`
-  // is FALSE (the default), required fields fall through and error; optional
-  // fields use fill. `scalar_list`/`object` forms fall through so an empty
-  // list is treated as an empty typed vector.
+  // For optional `vector`-form fields, a length-0 `list()` uses fill.
   if (r_length(value) == 0 &&
       r_typeof(value) == R_TYPE_list &&
       v_vec_coll->input_form == VECTOR_FORM_vector &&
@@ -477,6 +315,14 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     r_list_poke(v_collector->data, v_collector->current_row, v_vec_coll->default_value);
     ++v_collector->current_row;
     return;
+  }
+
+  // Required fields treat `list()` as an empty vector of the element type.
+  // Not every type can cast `list()`, so swap it for an empty vector first.
+  if (r_length(value) == 0 &&
+      r_typeof(value) == R_TYPE_list &&
+      v_vec_coll->input_form == VECTOR_FORM_vector) {
+    value = v_vec_coll->ptype_inner;
   }
 
   r_obj* names = r_names(value);

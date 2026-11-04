@@ -46,7 +46,6 @@ test_that("respect empty_list_unspecified for scalar elements (#83, #95)", {
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = TRUE),
     tspec_df(
-      .vector_allows_empty_list = TRUE,
       tib_int_vec("x")
     )
   )
@@ -84,7 +83,6 @@ test_that("respect empty_list_unspecified for vector elements (#95)", {
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = TRUE),
     tspec_df(
-      .vector_allows_empty_list = TRUE,
       x = tib_int_vec("x")
     )
   )
@@ -332,16 +330,13 @@ test_that(".guess_object_list_field_spec returns tib_variant when simplify_list 
 })
 
 test_that(".guess_object_list_field_spec respects empty_list_unspecified for vector ptype", {
-  local_env <- rlang::new_environment(list(empty_list_used = FALSE))
   result <- .guess_object_list_field_spec(
     list(list(), 1L, 2L),
     "x",
     TRUE,
-    FALSE,
-    local_env
+    FALSE
   )
   expect_equal(result, tib_int_vec("x"))
-  expect_true(.read_empty_list_argument(local_env))
 })
 
 # .get_required() ----------------------------------------------------------

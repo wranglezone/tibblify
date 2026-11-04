@@ -119,7 +119,7 @@
     Output
       <error/stbl-error-incompatible_values-integer>
       Error in `tib_scalar()`:
-      ! `.fill` <character> must be coercible to <integer>
+      ! Can't convert `.fill` <character> to match `.ptype_inner` <integer>.
       x Can't convert some values due to non-numeric strings.
       * Locations: 1
       * Values: "a"
@@ -233,7 +233,7 @@
     Output
       <error/stbl-error-incompatible_values-integer>
       Error in `tib_scalar()`:
-      ! `.fill` <character> must be coercible to <integer>
+      ! Can't convert `.fill` <character> to match `.ptype_inner` <integer>.
       x Can't convert some values due to non-numeric strings.
       * Locations: 1
       * Values: "a"

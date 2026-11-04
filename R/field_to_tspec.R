@@ -50,8 +50,7 @@ field_to_tspec_df <- function(spec, name) {
   field <- .get_nested_field(spec, name)
   tspec_df(
     !!!field[["fields"]],
-    .names_to = field[["names_col"]],
-    .vector_allows_empty_list = spec[["vector_allows_empty_list"]]
+    .names_to = field[["names_col"]]
   )
 }
 
@@ -60,8 +59,7 @@ field_to_tspec_df <- function(spec, name) {
 field_to_tspec_row <- function(spec, name) {
   field <- .get_nested_field(spec, name)
   tspec_row(
-    !!!field[["fields"]],
-    .vector_allows_empty_list = spec[["vector_allows_empty_list"]]
+    !!!field[["fields"]]
   )
 }
 
@@ -72,8 +70,7 @@ field_to_tspec_recursive <- function(spec, name) {
   tspec_recursive(
     !!!field[["fields"]],
     .children = field[["child"]],
-    .children_to = field[["children_to"]],
-    .vector_allows_empty_list = spec[["vector_allows_empty_list"]]
+    .children_to = field[["children_to"]]
   )
 }
 

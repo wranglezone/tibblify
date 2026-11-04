@@ -8,7 +8,6 @@ test_that("respect empty_list_unspecified for object elements (#95)", {
   expect_equal(
     guess_tspec_object_list(x, empty_list_unspecified = TRUE),
     tspec_df(
-      .vector_allows_empty_list = TRUE,
       x = tib_row("x", y = tib_int_vec("y"))
     )
   )

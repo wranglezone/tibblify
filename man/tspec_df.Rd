@@ -11,21 +11,21 @@ tspec_df(
   ...,
   .input_form = c("rowmajor", "colmajor"),
   .names_to = NULL,
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
 
 tspec_object(
   ...,
   .input_form = c("rowmajor", "colmajor"),
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
 
 tspec_row(
   ...,
   .input_form = c("rowmajor", "colmajor"),
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
 
@@ -34,7 +34,7 @@ tspec_recursive(
   .children,
   .children_to = .children,
   .input_form = c("rowmajor", "colmajor"),
-  .vector_allows_empty_list = FALSE,
+  .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
 }
@@ -55,9 +55,9 @@ Can be one of:
 output which will contain the names of top-level elements of the input
 named list. If \code{NULL}, the default, no name column is created.}
 
-\item{.vector_allows_empty_list, vector_allows_empty_list}{(\code{logical(1)})
-Should empty lists for columns with \code{.input_form = "vector"} be accepted
-and treated as empty vectors?}
+\item{.vector_allows_empty_list, vector_allows_empty_list}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated as of tibblify 0.5.0. Empty
+lists are now always accepted for vector fields. A required field treats
+\code{list()} as an empty vector, and an optional field uses \code{.fill}.}
 
 \item{.children}{(\code{character(1)}) The name of the field that contains the
 children.}

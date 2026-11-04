@@ -89,12 +89,10 @@ test_that("respect empty_list_unspecified for vector columns (#95)", {
     tib_variant("int_vec")
   )
 
-  # needs to check against `tspec_df()` for `.vector_allows_empty_list`
   x <- tibble(int_vec = list(1:2, list()))
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = TRUE),
     tspec_df(
-      .vector_allows_empty_list = TRUE,
       int_vec = tib_int_vec("int_vec")
     )
   )
@@ -182,7 +180,6 @@ test_that("respect empty_list_unspecified in tibble columns (#95)", {
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = TRUE),
     tspec_df(
-      .vector_allows_empty_list = TRUE,
       tib_row("x", tib_int_vec("int_vec"))
     )
   )
@@ -305,7 +302,6 @@ test_that("respect empty_list_unspecified for list of tibble columns (#95)", {
   expect_equal(
     guess_tspec_df(x, empty_list_unspecified = TRUE),
     tspec_df(
-      .vector_allows_empty_list = TRUE,
       tib_df("x", tib_int_vec("int_vec"))
     )
   )

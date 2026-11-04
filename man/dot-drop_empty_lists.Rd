@@ -10,8 +10,7 @@
 \item{x}{(\code{any}) The object to check.}
 }
 \value{
-The input object with empty lists removed. If any were removed, the
-returned object has an attribute \code{had_empty_lists} set to \code{TRUE}.
+The input object with empty lists removed.
 }
 \description{
 Remove empty lists from an object

@@ -4,13 +4,7 @@
 \alias{.guess_object_field_spec}
 \title{Guess the field spec for a single object field}
 \usage{
-.guess_object_field_spec(
-  value,
-  name,
-  empty_list_unspecified,
-  simplify_list,
-  local_env
-)
+.guess_object_field_spec(value, name, empty_list_unspecified, simplify_list)
 }
 \arguments{
 \item{value}{(\code{list}) An object list whose fields will be guessed.}
@@ -22,9 +16,6 @@ unspecified?}
 
 \item{simplify_list}{(\code{logical(1)}) Should scalar lists be simplified to
 vectors?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A tib field specification.

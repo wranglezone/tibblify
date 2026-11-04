@@ -214,7 +214,6 @@ test_that("guess_tspec_object respects empty_list_unspecified for list of object
   expect_equal(
     guess_tspec_object(x, empty_list_unspecified = TRUE),
     tspec_object(
-      .vector_allows_empty_list = TRUE,
       x = tib_df(
         "x",
         a = tib_int_vec("a"),

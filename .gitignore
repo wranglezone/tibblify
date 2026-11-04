@@ -5,6 +5,6 @@ inst/doc
 /doc/
 /Meta/
 docs
-/.posit/assistant/
+/.posit/
 conversation-export*.json
 .positai

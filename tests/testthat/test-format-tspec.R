@@ -52,35 +52,11 @@ test_that("prints arguments of spec_* (#95)", {
     format(tspec_df(tib_int("a"), .names_to = "nms")),
     'tspec_df(\n  .names_to = "nms",\n  tib_int("a"),\n)'
   )
-
-  expect_equal(
-    format(tspec_df(tib_int("a"), .vector_allows_empty_list = TRUE)),
-    'tspec_df(\n  .vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
-  )
-
-  expect_equal(
-    format(tspec_row(tib_int("a"), .vector_allows_empty_list = TRUE)),
-    'tspec_row(\n  .vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
-  )
-
-  expect_equal(
-    format(tspec_object(tib_int("a"), .vector_allows_empty_list = TRUE)),
-    'tspec_object(\n  .vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
-  )
 })
 
 test_that("prints arguments of tspec_recursive (#155)", {
   expect_equal(
     format(tspec_recursive(tib_int("a"), .children = "children")),
     'tspec_recursive(\n  .children = "children",\n  tib_int("a"),\n)'
-  )
-
-  expect_equal(
-    format(tspec_recursive(
-      tib_int("a"),
-      .children = "children",
-      .vector_allows_empty_list = TRUE
-    )),
-    'tspec_recursive(\n  .children = "children",\n  .vector_allows_empty_list = TRUE,\n  tib_int("a"),\n)'
   )
 })

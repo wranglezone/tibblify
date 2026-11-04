@@ -4,7 +4,7 @@
 \alias{.list_of_col_to_spec_df}
 \title{Build field specs from a list_of df column}
 \usage{
-.list_of_col_to_spec_df(col, ptype, empty_list_unspecified, local_env)
+.list_of_col_to_spec_df(col, ptype, empty_list_unspecified)
 }
 \arguments{
 \item{col}{(\code{any}) A column from a data frame, which may be a vector, a list,
@@ -15,9 +15,6 @@ field.}
 
 \item{empty_list_unspecified}{(\code{logical(1)}) Treat empty lists as
 unspecified?}
-
-\item{local_env}{(\code{environment}) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.}
 }
 \value{
 A named list of tib field specifications.
