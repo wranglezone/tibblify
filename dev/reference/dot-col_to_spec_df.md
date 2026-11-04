@@ -9,14 +9,7 @@ based on whether `col` is a `list_of()` column.
 ## Usage
 
 ``` r
-.col_to_spec_df(
-  ptype,
-  col,
-  name,
-  list_of_col,
-  empty_list_unspecified,
-  local_env
-)
+.col_to_spec_df(ptype, col, name, list_of_col, empty_list_unspecified)
 ```
 
 ## Arguments
@@ -41,11 +34,6 @@ based on whether `col` is a `list_of()` column.
 - empty_list_unspecified:
 
   (`logical(1)`) Treat empty lists as unspecified?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

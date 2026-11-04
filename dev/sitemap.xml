@@ -68,6 +68,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-compat_map_chr.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-data_field_name.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-deprecate_arg.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-deprecate_vector_allows_empty_list.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_col_to_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_guess_required.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-double_quote.html</loc></url>
@@ -136,7 +137,6 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_is_list_of_null.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-list_of_col_to_spec_df.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-loc_name_helper.html</loc></url>
-<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-mark_empty_list_argument.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-maybe_inform_unspecified.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-name_exprs.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-nchar_field_names.html</loc></url>
@@ -172,7 +172,6 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-prep_transform.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-process_complex_fields.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-process_simple_fields.html</loc></url>
-<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-read_empty_list_argument.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-read_schema.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-read_spec.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-read_spec_impl.html</loc></url>

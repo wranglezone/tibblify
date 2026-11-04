@@ -5,7 +5,7 @@ Build field specs from a list_of df column
 ## Usage
 
 ``` r
-.list_of_col_to_spec_df(col, ptype, empty_list_unspecified, local_env)
+.list_of_col_to_spec_df(col, ptype, empty_list_unspecified)
 ```
 
 ## Arguments
@@ -22,11 +22,6 @@ Build field specs from a list_of df column
 - empty_list_unspecified:
 
   (`logical(1)`) Treat empty lists as unspecified?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

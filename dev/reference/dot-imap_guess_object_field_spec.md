@@ -5,12 +5,7 @@ Map `.guess_object_field_spec` over a named list
 ## Usage
 
 ``` r
-.imap_guess_object_field_spec(
-  x,
-  empty_list_unspecified,
-  simplify_list,
-  local_env
-)
+.imap_guess_object_field_spec(x, empty_list_unspecified, simplify_list)
 ```
 
 ## Arguments
@@ -26,11 +21,6 @@ Map `.guess_object_field_spec` over a named list
 - simplify_list:
 
   (`logical(1)`) Should scalar lists be simplified to vectors?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

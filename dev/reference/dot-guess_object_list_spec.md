@@ -5,12 +5,7 @@ Guess field specs for an object list
 ## Usage
 
 ``` r
-.guess_object_list_spec(
-  object_list,
-  empty_list_unspecified,
-  simplify_list,
-  local_env
-)
+.guess_object_list_spec(object_list, empty_list_unspecified, simplify_list)
 ```
 
 ## Arguments
@@ -27,11 +22,6 @@ Guess field specs for an object list
 - simplify_list:
 
   (`logical(1)`) Should scalar lists be simplified to vectors?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

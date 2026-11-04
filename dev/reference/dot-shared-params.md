@@ -125,11 +125,6 @@ to make them easier to import and to find.
 
   (`character`) The path of names to the field in the object.
 
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
-
 - media_type_object:
 
   (`list`) A single media type object from an OpenAPI spec.

@@ -44,13 +44,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.guess_object_list_field_spec_vector</span><span class="op">(</span></span>
-<span>  <span class="va">value</span>,</span>
-<span>  <span class="va">name</span>,</span>
-<span>  <span class="va">ptype</span>,</span>
-<span>  <span class="va">had_empty_lists</span>,</span>
-<span>  <span class="va">local_env</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.guess_object_list_field_spec_vector</span><span class="op">(</span><span class="va">value</span>, <span class="va">name</span>, <span class="va">ptype</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,16 +62,6 @@
 <dt id="arg-ptype">ptype<a class="anchor" aria-label="anchor" href="#arg-ptype"></a></dt>
 <dd><p>(<code>vector(0)</code>) A prototype of the desired output type of the
 field.</p></dd>
-
-
-<dt id="arg-had-empty-lists">had_empty_lists<a class="anchor" aria-label="anchor" href="#arg-had-empty-lists"></a></dt>
-<dd><p>(<code>logical(1)</code> or <code>NULL</code>) Whether empty lists were
-dropped when computing the common ptype.</p></dd>
-
-
-<dt id="arg-local-env">local_env<a class="anchor" aria-label="anchor" href="#arg-local-env"></a></dt>
-<dd><p>(<code>environment</code>) A local environment used to track state
-across recursive calls, such as whether empty lists were encountered.</p></dd>
 
 </dl></div>
     <div class="section level2">

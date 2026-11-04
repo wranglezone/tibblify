@@ -9,7 +9,6 @@ Expand an object list into a tib spec
   value,
   empty_list_unspecified,
   simplify_list,
-  local_env,
   ...,
   tib_fn = tib_df,
   fields_fn = .guess_object_list_spec
@@ -29,11 +28,6 @@ Expand an object list into a tib spec
 - simplify_list:
 
   (`logical(1)`) Should scalar lists be simplified to vectors?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 - ...:
 

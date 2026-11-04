@@ -5,7 +5,7 @@ Apply column-to-spec conversion across a data frame
 ## Usage
 
 ``` r
-.imap_col_to_spec(col_list, empty_list_unspecified, local_env)
+.imap_col_to_spec(col_list, empty_list_unspecified)
 ```
 
 ## Arguments
@@ -17,11 +17,6 @@ Apply column-to-spec conversion across a data frame
 - empty_list_unspecified:
 
   (`logical(1)`) Treat empty lists as unspecified?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

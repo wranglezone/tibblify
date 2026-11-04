@@ -5,13 +5,7 @@ Guess the spec for a vector-typed field in an object list
 ## Usage
 
 ``` r
-.guess_object_list_field_spec_vector(
-  value,
-  name,
-  ptype,
-  had_empty_lists,
-  local_env
-)
+.guess_object_list_field_spec_vector(value, name, ptype)
 ```
 
 ## Arguments
@@ -27,16 +21,6 @@ Guess the spec for a vector-typed field in an object list
 - ptype:
 
   (`vector(0)`) A prototype of the desired output type of the field.
-
-- had_empty_lists:
-
-  (`logical(1)` or `NULL`) Whether empty lists were dropped when
-  computing the common ptype.
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

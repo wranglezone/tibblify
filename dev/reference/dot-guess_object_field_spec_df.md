@@ -5,7 +5,7 @@ Guess the field spec for a data-frame-typed field
 ## Usage
 
 ``` r
-.guess_object_field_spec_df(value, name, empty_list_unspecified, local_env)
+.guess_object_field_spec_df(value, name, empty_list_unspecified)
 ```
 
 ## Arguments
@@ -21,11 +21,6 @@ Guess the field spec for a data-frame-typed field
 - empty_list_unspecified:
 
   (`logical(1)`) Treat empty lists as unspecified?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

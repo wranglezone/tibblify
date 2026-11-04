@@ -159,18 +159,9 @@ when parsing an empty JSON array.</p>
 <span><span class="co">#&gt;   ..$ a: int [1:2] 1 2</span></span>
 <span><span class="co">#&gt;  $ :List of 1</span></span>
 <span><span class="co">#&gt;   ..$ a: list()</span></span></code></pre></div>
-<p>By default they are not supported but produce an error.</p>
+<p>Empty lists are converted to an empty vector.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `tibblify()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Problem while tibblifying `x[[2]]$a`</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't convert `&lt;list&gt;` &lt;list&gt; to &lt;integer&gt;.</span></span></code></pre></div>
-<p>Use <code>vector_allows_empty_list = TRUE</code> in
-<code>tspec_*()</code> so that they are converted to an empty vector
-instead.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>, .vector_allows_empty_list <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
 <span><span class="co">#&gt; &lt;list_of&lt;integer&gt;[2]&gt;</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] 1 2</span></span>
@@ -184,7 +175,7 @@ instead.</p>
 <p>When using <code>jsonlite::fromJSON(simplifyVector = FALSE)</code> to
 parse JSON to an R object one does not get R vectors but homogeneous
 lists of scalars.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x_json</span> <span class="op">&lt;-</span> <span class="st">'[</span></span>
 <span><span class="st">  {"a": [1, 2]},</span></span>
 <span><span class="st">  {"a": [1, 2, 3]}</span></span>
@@ -203,7 +194,7 @@ lists of scalars.</p>
 <span><span class="co">#&gt;   .. ..$ : int 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : int 3</span></span></code></pre></div>
 <p>By default they cannot be parsed with <code><a href="../reference/tib_spec.html">tib_vector()</a></code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 1</span></span></span>
 <span><span class="co">#&gt;             a</span></span>
@@ -212,7 +203,7 @@ lists of scalars.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         <span style="color: #949494;">[3]</span></span></span></code></pre></div>
 <p>Use <code>.input_form = "scalar_list"</code> in
 <code><a href="../reference/tib_spec.html">tib_vector()</a></code> to parse them:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tibblify.html">tibblify</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span><span class="st">"a"</span>, .input_form <span class="op">=</span> <span class="st">"scalar_list"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span>
 <span><span class="co">#&gt; &lt;list_of&lt;integer&gt;[2]&gt;</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
@@ -226,7 +217,7 @@ lists of scalars.</p>
 <h2 id="homogeneous-json-objects-of-scalars">Homogeneous JSON objects of scalars<a class="anchor" aria-label="anchor" href="#homogeneous-json-objects-of-scalars"></a>
 </h2>
 <p>Sometimes vectors are encoded as objects in JSON.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x_json</span> <span class="op">&lt;-</span> <span class="st">'[</span></span>
 <span><span class="st">  {"a": {"x": 1, "y": 2}},</span></span>
 <span><span class="st">  {"a": {"a": 1, "b": 2, "b": 3}}</span></span>
@@ -247,7 +238,7 @@ lists of scalars.</p>
 <p>Use <code>.input_form = "object"</code> in <code><a href="../reference/tib_spec.html">tib_vector()</a></code>
 to parse them. To store the names use the <code>.names_to</code> and
 <code>.values_to</code> arguments.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/tib_spec.html">tib_int_vec</a></span><span class="op">(</span></span>
 <span>    <span class="st">"a"</span>,</span>
@@ -278,10 +269,10 @@ to parse them. To store the names use the <code>.names_to</code> and
 instead vary. For example:</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; width: 100%;">
 <div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="st">"a"</span><span class="ot">,</span> <span class="kw">true</span><span class="ot">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="st">"a"</span><span class="ot">,</span> <span class="kw">true</span><span class="ot">]</span></span></code></pre></div>
 </div>
 <div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -295,13 +286,13 @@ fulfill the requirements of
 <code>vctrs::vec_as_names(repair = "check_unique")</code>.</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; width: 100%;">
 <div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="dt">"a"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">true</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="dt">"a"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 <div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  a <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  b <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -309,7 +300,7 @@ fulfill the requirements of
 </div>
 </div>
 <p>They can be parsed with <code><a href="../reference/tib_spec.html">tib_row()</a></code>. For example:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
@@ -336,13 +327,13 @@ fulfill the requirements of
 <p>JSON can also store lists of objects.</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; width: 100%;">
 <div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ot">[</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"a"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"b"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">}</span></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"a"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"b"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">}</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div>
 </div>
 <div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -357,13 +348,13 @@ fulfill the requirements of
 represented as objects where each element is an object.</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; width: 100%;">
 <div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="dt">"object1"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"a"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">},</span></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="dt">"object2"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"b"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">}</span></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="dt">"object1"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"a"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">},</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="dt">"object2"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"b"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">"b"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">}</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 <div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  object1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  object2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -373,7 +364,7 @@ represented as objects where each element is an object.</p>
 <p>They are also parsed with <code><a href="../reference/tib_spec.html">tib_df()</a></code>, but you can parse
 the names into an extra column via the <code>.names_to</code>
 argument:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x_json</span> <span class="op">&lt;-</span> <span class="st">'[</span></span>
 <span><span class="st">{</span></span>
 <span><span class="st">  "df": {</span></span>
@@ -414,13 +405,13 @@ argument:</p>
 <p>The column-major format is also supported.</p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; width: 100%;">
 <div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  <span class="dt">"a"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>  <span class="dt">"b"</span><span class="fu">:</span> <span class="ot">[</span><span class="kw">true</span><span class="ot">,</span> <span class="kw">false</span><span class="ot">]</span></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="dt">"a"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="dt">"b"</span><span class="fu">:</span> <span class="ot">[</span><span class="kw">true</span><span class="ot">,</span> <span class="kw">false</span><span class="ot">]</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 <div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -429,7 +420,7 @@ argument:</p>
 </div>
 <p>Parse this using <code>.input_form = "colmajor"</code> in
 <code>tspec_*()</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tspec_df.html">tspec_df</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/tib_spec.html">tib_int</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="../reference/tib_spec.html">tib_lgl</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,</span>

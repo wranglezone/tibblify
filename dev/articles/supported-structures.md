@@ -101,21 +101,10 @@ str(x)
 #>   ..$ a: list()
 ```
 
-By default they are not supported but produce an error.
+Empty lists are converted to an empty vector.
 
 ``` r
-tibblify(x, tspec_df(tib_int_vec("a")))
-#> Error in `tibblify()`:
-#> ! Problem while tibblifying `x[[2]]$a`
-#> Caused by error:
-#> ! Can't convert `<list>` <list> to <integer>.
-```
-
-Use `vector_allows_empty_list = TRUE` in `tspec_*()` so that they are
-converted to an empty vector instead.
-
-``` r
-tibblify(x, tspec_df(tib_int_vec("a"), .vector_allows_empty_list = TRUE))$a
+tibblify(x, tspec_df(tib_int_vec("a")))$a
 #> <list_of<integer>[2]>
 #> [[1]]
 #> [1] 1 2

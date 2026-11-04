@@ -16,5 +16,4 @@ Remove empty lists from an object
 
 ## Value
 
-The input object with empty lists removed. If any were removed, the
-returned object has an attribute `had_empty_lists` set to `TRUE`.
+The input object with empty lists removed.

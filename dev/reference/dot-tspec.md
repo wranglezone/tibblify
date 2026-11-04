@@ -5,13 +5,7 @@ Create a tibblify specification object
 ## Usage
 
 ``` r
-.tspec(
-  .fields,
-  .type,
-  ...,
-  .vector_allows_empty_list = FALSE,
-  .error_call = caller_env()
-)
+.tspec(.fields, .type, ..., .error_call = caller_env())
 ```
 
 ## Arguments

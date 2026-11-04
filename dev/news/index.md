@@ -2,6 +2,13 @@
 
 ## tibblify (development version)
 
+- `tspec_*()` now always accept empty lists
+  ([`list()`](https://rdrr.io/r/base/list.html)) for vector fields, so
+  the `.vector_allows_empty_list` argument is deprecated and no longer
+  needed. Required fields treat
+  [`list()`](https://rdrr.io/r/base/list.html) as an empty vector, and
+  optional fields use `.fill`
+  ([\#363](https://github.com/wranglezone/tibblify/issues/363)).
 - `tib_*()` functions now use `.fill` when a field is `NULL` or
   otherwise has length 0 (e.g.,
   [`list()`](https://rdrr.io/r/base/list.html) or

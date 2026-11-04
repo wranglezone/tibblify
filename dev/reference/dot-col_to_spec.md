@@ -5,7 +5,7 @@ Convert a column to a tib field specification
 ## Usage
 
 ``` r
-.col_to_spec(col, name, empty_list_unspecified, local_env)
+.col_to_spec(col, name, empty_list_unspecified)
 ```
 
 ## Arguments
@@ -22,11 +22,6 @@ Convert a column to a tib field specification
 - empty_list_unspecified:
 
   (`logical(1)`) Treat empty lists as unspecified?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

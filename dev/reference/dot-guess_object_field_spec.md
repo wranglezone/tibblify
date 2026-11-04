@@ -6,13 +6,7 @@ Dispatches to the appropriate helper based on the detected type of
 ## Usage
 
 ``` r
-.guess_object_field_spec(
-  value,
-  name,
-  empty_list_unspecified,
-  simplify_list,
-  local_env
-)
+.guess_object_field_spec(value, name, empty_list_unspecified, simplify_list)
 ```
 
 ## Arguments
@@ -32,11 +26,6 @@ Dispatches to the appropriate helper based on the detected type of
 - simplify_list:
 
   (`logical(1)`) Should scalar lists be simplified to vectors?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 

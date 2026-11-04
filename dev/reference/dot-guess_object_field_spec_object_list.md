@@ -9,8 +9,7 @@ Guess the spec for an object list field
   value,
   name,
   empty_list_unspecified,
-  simplify_list,
-  local_env
+  simplify_list
 )
 ```
 
@@ -31,11 +30,6 @@ Guess the spec for an object list field
 - simplify_list:
 
   (`logical(1)`) Should scalar lists be simplified to vectors?
-
-- local_env:
-
-  (`environment`) A local environment used to track state across
-  recursive calls, such as whether empty lists were encountered.
 
 ## Value
 
