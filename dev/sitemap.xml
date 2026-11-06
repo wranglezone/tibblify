@@ -31,6 +31,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_col_new.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_col_value_duplicates.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_col_values_missing.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_duplicate_keys.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_field_exists.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_id.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_id_col.html</loc></url>
@@ -52,6 +53,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_parent_id_missing.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_parent_ids.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_print_names_arg.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_recursive_children.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_self_reference.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_tspec_combine_dots.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-check_tspec_combine_type.html</loc></url>
@@ -73,6 +75,7 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-df_guess_required.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-double_quote.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-drop_empty_lists.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-duplicate_keys_bullets.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-element_subset_string.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-eval_pull.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-extract_children.html</loc></url>
@@ -235,7 +238,9 @@
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_vector_impl.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tib_vector_input_form.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_abort.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_abort_old.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_impl.html</loc></url>
+<url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_warn.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tibblify_width.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-try_tibblify_impl.html</loc></url>
 <url><loc>https://tibblify.wrangle.zone/dev/reference/dot-tspec.html</loc></url>

@@ -5,7 +5,7 @@ Combine fields from a list of specs
 ## Usage
 
 ``` r
-.tspec_combine_field_list(spec_list, .call)
+.tspec_combine_field_list(spec_list, .duplicate_keys, .call)
 ```
 
 ## Arguments
@@ -13,6 +13,20 @@ Combine fields from a list of specs
 - spec_list:
 
   (`list`) A list of specifications.
+
+- .duplicate_keys:
+
+  (`character(1)`) What to do if more than one field uses the same
+  `.key`. Can be one of:
+
+  - `"error"`: The default. Throw an error.
+
+  - `"warn"`: Allow the duplicates, but warn.
+
+  - `"allow"`: Allow the duplicates without checking.
+
+  Keys are compared as a whole, so `c("a", "b")` and `c("a", "c")` are
+  different keys.
 
 - .call:
 

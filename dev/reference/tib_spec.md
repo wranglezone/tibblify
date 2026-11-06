@@ -278,11 +278,29 @@ tib_variant(
   elt_transform = deprecated()
 )
 
-tib_recursive(.key, ..., .children, .children_to = .children, .required = TRUE)
+tib_recursive(
+  .key,
+  ...,
+  .children,
+  .children_to = .children,
+  .required = TRUE,
+  .duplicate_keys = c("error", "warn", "allow")
+)
 
-tib_row(.key, ..., .required = TRUE)
+tib_row(
+  .key,
+  ...,
+  .required = TRUE,
+  .duplicate_keys = c("error", "warn", "allow")
+)
 
-tib_df(.key, ..., .required = TRUE, .names_to = NULL)
+tib_df(
+  .key,
+  ...,
+  .required = TRUE,
+  .names_to = NULL,
+  .duplicate_keys = c("error", "warn", "allow")
+)
 ```
 
 ## Arguments
@@ -364,6 +382,20 @@ tib_df(.key, ..., .required = TRUE, .names_to = NULL)
 - .children_to:
 
   (`character(1)`) The column name in which to store the children.
+
+- .duplicate_keys:
+
+  (`character(1)`) What to do if more than one field uses the same
+  `.key`. Can be one of:
+
+  - `"error"`: The default. Throw an error.
+
+  - `"warn"`: Allow the duplicates, but warn.
+
+  - `"allow"`: Allow the duplicates without checking.
+
+  Keys are compared as a whole, so `c("a", "b")` and `c("a", "c")` are
+  different keys.
 
 ## Value
 

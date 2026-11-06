@@ -319,11 +319,29 @@ object.</p>
 <span>  elt_transform <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tib_recursive</span><span class="op">(</span><span class="va">.key</span>, <span class="va">...</span>, <span class="va">.children</span>, .children_to <span class="op">=</span> <span class="va">.children</span>, .required <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">tib_recursive</span><span class="op">(</span></span>
+<span>  <span class="va">.key</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  <span class="va">.children</span>,</span>
+<span>  .children_to <span class="op">=</span> <span class="va">.children</span>,</span>
+<span>  .required <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .duplicate_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"allow"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tib_row</span><span class="op">(</span><span class="va">.key</span>, <span class="va">...</span>, .required <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">tib_row</span><span class="op">(</span></span>
+<span>  <span class="va">.key</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .required <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .duplicate_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"allow"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tib_df</span><span class="op">(</span><span class="va">.key</span>, <span class="va">...</span>, .required <span class="op">=</span> <span class="cn">TRUE</span>, .names_to <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">tib_df</span><span class="op">(</span></span>
+<span>  <span class="va">.key</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .required <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .names_to <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .duplicate_keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"allow"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -404,6 +422,15 @@ children.</p></dd>
 <dt id="arg--children-to">.children_to<a class="anchor" aria-label="anchor" href="#arg--children-to"></a></dt>
 <dd><p>(<code>character(1)</code>) The column name in which to store the
 children.</p></dd>
+
+
+<dt id="arg--duplicate-keys">.duplicate_keys<a class="anchor" aria-label="anchor" href="#arg--duplicate-keys"></a></dt>
+<dd><p>(<code>character(1)</code>) What to do if more than one field
+uses the same <code>.key</code>. Can be one of:</p><ul><li><p><code>"error"</code>: The default. Throw an error.</p></li>
+<li><p><code>"warn"</code>: Allow the duplicates, but warn.</p></li>
+<li><p><code>"allow"</code>: Allow the duplicates without checking.</p></li>
+</ul><p>Keys are compared as a whole, so <code>c("a", "b")</code> and <code>c("a", "c")</code> are
+different keys.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -2,6 +2,18 @@
 
 ## tibblify (development version)
 
+- [`tspec_df()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+  [`tspec_row()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+  [`tspec_object()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+  [`tspec_recursive()`](https://tibblify.wrangle.zone/dev/reference/tspec_df.md),
+  [`tspec_combine()`](https://tibblify.wrangle.zone/dev/reference/tspec_combine.md),
+  [`tib_row()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md),
+  [`tib_df()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md),
+  and
+  [`tib_recursive()`](https://tibblify.wrangle.zone/dev/reference/tib_spec.md)
+  now error when more than one field uses the same `.key`, and gain a
+  `.duplicate_keys` argument to warn instead or skip the check
+  ([\#139](https://github.com/wranglezone/tibblify/issues/139)).
 - `tspec_*()` now always accept empty lists
   ([`list()`](https://rdrr.io/r/base/list.html)) for vector fields, so
   the `.vector_allows_empty_list` argument is deprecated and no longer

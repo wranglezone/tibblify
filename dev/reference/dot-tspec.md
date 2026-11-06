@@ -5,7 +5,13 @@ Create a tibblify specification object
 ## Usage
 
 ``` r
-.tspec(.fields, .type, ..., .error_call = caller_env())
+.tspec(
+  .fields,
+  .type,
+  ...,
+  .duplicate_keys = "error",
+  .error_call = caller_env()
+)
 ```
 
 ## Arguments
@@ -24,6 +30,20 @@ Create a tibblify specification object
 
   Additional specification attributes passed to
   [`rlang::list2()`](https://rlang.r-lib.org/reference/list2.html).
+
+- .duplicate_keys:
+
+  (`character(1)`) What to do if more than one field uses the same
+  `.key`. Can be one of:
+
+  - `"error"`: The default. Throw an error.
+
+  - `"warn"`: Allow the duplicates, but warn.
+
+  - `"allow"`: Allow the duplicates without checking.
+
+  Keys are compared as a whole, so `c("a", "b")` and `c("a", "c")` are
+  different keys.
 
 - .error_call:
 

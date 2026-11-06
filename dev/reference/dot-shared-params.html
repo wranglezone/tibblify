@@ -82,6 +82,15 @@ or a nested data frame.</p></dd>
 <dd><p>(<code>character(1)</code>) The name of the column.</p></dd>
 
 
+<dt id="arg--duplicate-keys">.duplicate_keys<a class="anchor" aria-label="anchor" href="#arg--duplicate-keys"></a></dt>
+<dd><p>(<code>character(1)</code>) What to do if more than one field
+uses the same <code>.key</code>. Can be one of:</p><ul><li><p><code>"error"</code>: The default. Throw an error.</p></li>
+<li><p><code>"warn"</code>: Allow the duplicates, but warn.</p></li>
+<li><p><code>"allow"</code>: Allow the duplicates without checking.</p></li>
+</ul><p>Keys are compared as a whole, so <code>c("a", "b")</code> and <code>c("a", "c")</code> are
+different keys.</p></dd>
+
+
 <dt id="arg-elt">elt<a class="anchor" aria-label="anchor" href="#arg-elt"></a></dt>
 <dd><p>(<code>character</code> or <code>integer</code>) An element of a path.</p></dd>
 

@@ -44,7 +44,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.tib_combine</span><span class="op">(</span><span class="va">tib_list</span>, <span class="va">name</span>, <span class="va">.call</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.tib_combine</span><span class="op">(</span><span class="va">tib_list</span>, <span class="va">name</span>, <span class="va">.duplicate_keys</span>, <span class="va">.call</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,6 +57,15 @@
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
 <dd><p>(<code>character(1)</code>) The name of the field.</p></dd>
+
+
+<dt id="arg--duplicate-keys">.duplicate_keys<a class="anchor" aria-label="anchor" href="#arg--duplicate-keys"></a></dt>
+<dd><p>(<code>character(1)</code>) What to do if more than one field
+uses the same <code>.key</code>. Can be one of:</p><ul><li><p><code>"error"</code>: The default. Throw an error.</p></li>
+<li><p><code>"warn"</code>: Allow the duplicates, but warn.</p></li>
+<li><p><code>"allow"</code>: Allow the duplicates without checking.</p></li>
+</ul><p>Keys are compared as a whole, so <code>c("a", "b")</code> and <code>c("a", "c")</code> are
+different keys.</p></dd>
 
 
 <dt id="arg--call">.call<a class="anchor" aria-label="anchor" href="#arg--call"></a></dt>

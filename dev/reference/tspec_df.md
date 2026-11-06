@@ -12,6 +12,7 @@ tspec_df(
   ...,
   .input_form = c("rowmajor", "colmajor"),
   .names_to = NULL,
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -19,6 +20,7 @@ tspec_df(
 tspec_object(
   ...,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -26,6 +28,7 @@ tspec_object(
 tspec_row(
   ...,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -35,6 +38,7 @@ tspec_recursive(
   .children,
   .children_to = .children,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -63,6 +67,20 @@ tspec_recursive(
   (`character(1)` or `NULL`) The name of the column in the output which
   will contain the names of top-level elements of the input named list.
   If `NULL`, the default, no name column is created.
+
+- .duplicate_keys:
+
+  (`character(1)`) What to do if more than one field uses the same
+  `.key`. Can be one of:
+
+  - `"error"`: The default. Throw an error.
+
+  - `"warn"`: Allow the duplicates, but warn.
+
+  - `"allow"`: Allow the duplicates without checking.
+
+  Keys are compared as a whole, so `c("a", "b")` and `c("a", "c")` are
+  different keys.
 
 - .vector_allows_empty_list, vector_allows_empty_list:
 
