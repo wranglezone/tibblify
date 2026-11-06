@@ -62,10 +62,12 @@ tspec_df <- function(
   ...,
   .input_form = c("rowmajor", "colmajor"),
   .names_to = NULL,
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
@@ -76,7 +78,8 @@ tspec_df <- function(
     list2(...),
     "df",
     .input_form = .input_form,
-    .names_col = .names_to
+    .names_col = .names_to,
+    .duplicate_keys = .duplicate_keys
   )
   if (!is.null(.names_to) && .names_to %in% names(out$fields)) {
     cli::cli_abort(
@@ -92,10 +95,12 @@ tspec_df <- function(
 tspec_object <- function(
   ...,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
@@ -103,7 +108,8 @@ tspec_object <- function(
   .tspec(
     list2(...),
     "object",
-    .input_form = .input_form
+    .input_form = .input_form,
+    .duplicate_keys = .duplicate_keys
   )
 }
 
@@ -112,10 +118,12 @@ tspec_object <- function(
 tspec_row <- function(
   ...,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
@@ -123,7 +131,8 @@ tspec_row <- function(
   .tspec(
     list2(...),
     "row",
-    .input_form = .input_form
+    .input_form = .input_form,
+    .duplicate_keys = .duplicate_keys
   )
 }
 
@@ -134,28 +143,37 @@ tspec_recursive <- function(
   .children,
   .children_to = .children,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 ) {
   .input_form <- arg_match0(.input_form, c("rowmajor", "colmajor"))
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   .deprecate_vector_allows_empty_list(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
   rlang::check_string(.children)
   rlang::check_string(.children_to)
-  # TODO check that key is unique
 
-  .tspec(
+  out <- .tspec(
     list2(...),
     "recursive",
     child = .children,
     children_to = .children_to,
-    .input_form = .input_form
+    .input_form = .input_form,
+    .duplicate_keys = .duplicate_keys
   )
+  .check_recursive_children(
+    out$fields,
+    .children,
+    .children_to,
+    .duplicate_keys
+  )
+
+  out
 }
 
-0
 #' Deprecate the `vector_allows_empty_list` arguments
 #'
 #' Empty lists are now always accepted, so the arguments have no effect.
@@ -218,11 +236,12 @@ tspec_recursive <- function(
   .fields,
   .type,
   ...,
+  .duplicate_keys = "error",
   .error_call = caller_env()
 ) {
   out <- list2(
     type = .type,
-    fields = .prep_spec_fields(.fields, .error_call),
+    fields = .prep_spec_fields(.fields, .duplicate_keys, .error_call),
     ...
   )
 
@@ -241,7 +260,11 @@ tspec_recursive <- function(
 #' @inheritParams .shared-params
 #' @returns A named list of validated field specifications.
 #' @keywords internal
-.prep_spec_fields <- function(.fields, .error_call) {
+.prep_spec_fields <- function(
+  .fields,
+  .duplicate_keys = "error",
+  .error_call = caller_env()
+) {
   .fields <- .flatten_fields(.fields)
   if (is.null(.fields)) {
     return(list())
@@ -264,7 +287,115 @@ tspec_recursive <- function(
     )
   }
 
-  .spec_auto_name_fields(.fields, .error_call)
+  .fields <- .spec_auto_name_fields(.fields, .error_call)
+  .check_duplicate_keys(.fields, .duplicate_keys, .error_call)
+  .fields
+}
+
+#' Check that no two fields use the same key
+#'
+#' Keys are compared as a whole, so `c("a", "b")` and `c("a", "c")` are
+#' different keys.
+#'
+#' @param fields (`list`) A named list of field specifications.
+#' @inheritParams .shared-params
+#' @returns `fields`, invisibly. Throws an error or warning if keys are
+#'   duplicated, depending on `.duplicate_keys`.
+#' @keywords internal
+.check_duplicate_keys <- function(
+  fields,
+  .duplicate_keys,
+  .call = caller_env()
+) {
+  if (.duplicate_keys == "allow") {
+    return(invisible(fields))
+  }
+
+  keys <- purrr::map(fields, "key")
+  is_duplicated <- vctrs::vec_duplicate_detect(keys)
+  if (!any(is_duplicated)) {
+    return(invisible(fields))
+  }
+
+  groups <- vctrs::vec_group_loc(keys[is_duplicated])
+  field_names <- names(fields)[is_duplicated]
+  message <- c(
+    "Each field must use a unique {.arg .key}.",
+    .duplicate_keys_bullets(groups$key, groups$loc, field_names),
+    i = "Use {.code .duplicate_keys = \"allow\"} to process the same key in multiple fields."
+  )
+
+  if (.duplicate_keys == "error") {
+    .tibblify_abort(message, c("spec", "duplicate_keys"), call = .call)
+  }
+  .tibblify_warn(message, c("spec", "duplicate_keys"), call = .call)
+  invisible(fields)
+}
+
+#' Check that recursive children don't collide with other fields
+#'
+#' The children are parsed into an extra column named `.children_to`, using the
+#' key `.children`. If `.children_to` matches the name of another field, that
+#' field would be silently replaced, so this is always an error. If
+#' `.children` matches the key of another field, the same input is processed
+#' twice, so it is handled like any other duplicated key.
+#'
+#' @param fields (`list`) A named list of field specifications.
+#' @inheritParams .shared-params
+#' @returns `fields`, invisibly.
+#' @keywords internal
+.check_recursive_children <- function(
+  fields,
+  .children,
+  .children_to,
+  .duplicate_keys,
+  .call = caller_env()
+) {
+  if (.children_to %in% names(fields)) {
+    children_to <- .children_to
+    .tibblify_abort(
+      c(
+        "{.arg .children_to} must not match the name of another field.",
+        x = "The column name {.val {children_to}} is already specified in {.arg ...}."
+      ),
+      c("spec", "children_to"),
+      call = .call,
+      message_env = current_env()
+    )
+  }
+
+  # Only fields that clash with the children, so other duplicates (already
+  # reported by `.prep_spec_fields()`) aren't reported twice.
+  clashing <- purrr::keep(fields, function(x) identical(x$key, .children))
+  clashing[[.children_to]] <- list(key = .children)
+  .check_duplicate_keys(clashing, .duplicate_keys, .call)
+  invisible(fields)
+}
+
+#' Describe duplicated keys as cli bullets
+#'
+#' @param keys (`list`) The duplicated keys, each a character vector.
+#' @param locs (`list`) For each key, the locations in `field_names` that use
+#'   it.
+#' @param field_names (`character`) Names of the fields with duplicated keys.
+#' @returns (`character`) A named vector of cli bullets.
+#' @keywords internal
+.duplicate_keys_bullets <- function(keys, locs, field_names) {
+  bullets <- purrr::map2_chr(keys, locs, function(key, loc) {
+    key_string <- paste(key, collapse = "$")
+    nms <- field_names[loc]
+    cli::format_inline(
+      "Key {.code {key_string}} is used by fields {.field {nms}}."
+    )
+  })
+  # The bullets are passed through cli's glue again, so escape literal braces.
+  bullets <- gsub(
+    "}",
+    "}}",
+    gsub("{", "{{", bullets, fixed = TRUE),
+    fixed = TRUE
+  )
+  rlang::set_names(bullets, rep("x", length(bullets)))
 }
 
 #' Flatten nested field specifications

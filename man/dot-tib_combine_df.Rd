@@ -4,7 +4,7 @@
 \alias{.tib_combine_df}
 \title{Combine dataframe tib fields}
 \usage{
-.tib_combine_df(tib_list, type, key, required, .call)
+.tib_combine_df(tib_list, type, key, required, .duplicate_keys, .call)
 }
 \arguments{
 \item{tib_list}{(\code{list}) A list of tib fields.}
@@ -14,6 +14,17 @@
 \item{key}{(\code{character(1)}) The key of the field.}
 
 \item{required}{(\code{logical(1)}) Whether the field is required.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 
 \item{.call}{(\code{environment}) The environment to use for error messages.}
 }

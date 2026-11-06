@@ -22,6 +22,17 @@ or a nested data frame.}
 
 \item{col_name}{(\code{character(1)}) The name of the column.}
 
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
+
 \item{elt}{(\code{character} or \code{integer}) An element of a path.}
 
 \item{.elt_transform}{(\code{function} or \code{NULL}) A function to apply to each

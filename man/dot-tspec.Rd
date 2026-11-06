@@ -4,7 +4,13 @@
 \alias{.tspec}
 \title{Create a tibblify specification object}
 \usage{
-.tspec(.fields, .type, ..., .error_call = caller_env())
+.tspec(
+  .fields,
+  .type,
+  ...,
+  .duplicate_keys = "error",
+  .error_call = caller_env()
+)
 }
 \arguments{
 \item{.fields}{(\code{list}) A list of field specifications, typically created by
@@ -14,6 +20,17 @@
 (\code{"df"}, \code{"object"}, \code{"row"}, or \code{"recursive"}).}
 
 \item{...}{Additional specification attributes passed to \code{\link[rlang:list2]{rlang::list2()}}.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 
 \item{.error_call}{(\code{environment}) The environment to use for error messages.}
 }
