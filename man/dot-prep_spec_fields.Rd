@@ -4,11 +4,26 @@
 \alias{.prep_spec_fields}
 \title{Flatten, validate, and auto-name field specifications}
 \usage{
-.prep_spec_fields(.fields, .error_call)
+.prep_spec_fields(
+  .fields,
+  .duplicate_keys = "error",
+  .error_call = caller_env()
+)
 }
 \arguments{
 \item{.fields}{(\code{list}) A list of field specifications, typically created by
 \verb{tib_*()}.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 
 \item{.error_call}{(\code{environment}) The environment to use for error messages.}
 }

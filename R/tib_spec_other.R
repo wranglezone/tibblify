@@ -49,10 +49,25 @@ tib_recursive <- function(
   ...,
   .children,
   .children_to = .children,
-  .required = TRUE
+  .required = TRUE,
+  .duplicate_keys = c("error", "warn", "allow")
 ) {
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   rlang::check_string(.children)
   rlang::check_string(.children_to)
+
+  fields <- .prep_spec_fields(
+    list2(...),
+    .duplicate_keys,
+    .error_call = current_env()
+  )
+  .check_recursive_children(
+    fields,
+    .children,
+    .children_to,
+    .duplicate_keys,
+    .call = current_env()
+  )
 
   .tib_collector(
     .key = .key,
@@ -60,7 +75,7 @@ tib_recursive <- function(
     .required = .required,
     child = .children,
     children_to = .children_to,
-    fields = .prep_spec_fields(list2(...), .error_call = current_env())
+    fields = fields
   )
 }
 
@@ -68,12 +83,22 @@ tib_recursive <- function(
 
 #' @rdname tib_spec
 #' @export
-tib_row <- function(.key, ..., .required = TRUE) {
+tib_row <- function(
+  .key,
+  ...,
+  .required = TRUE,
+  .duplicate_keys = c("error", "warn", "allow")
+) {
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   .tib_collector(
     .key = .key,
     .type = "row",
     .required = .required,
-    fields = .prep_spec_fields(list2(...), .error_call = current_env())
+    fields = .prep_spec_fields(
+      list2(...),
+      .duplicate_keys,
+      .error_call = current_env()
+    )
   )
 }
 
@@ -90,7 +115,14 @@ tib_row <- function(.key, ..., .required = TRUE) {
 
 #' @rdname tib_spec
 #' @export
-tib_df <- function(.key, ..., .required = TRUE, .names_to = NULL) {
+tib_df <- function(
+  .key,
+  ...,
+  .required = TRUE,
+  .names_to = NULL,
+  .duplicate_keys = c("error", "warn", "allow")
+) {
+  .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   if (!is.null(.names_to)) {
     rlang::check_string(.names_to)
   }
@@ -99,7 +131,11 @@ tib_df <- function(.key, ..., .required = TRUE, .names_to = NULL) {
     .key = .key,
     .type = "df",
     .required = .required,
-    fields = .prep_spec_fields(list2(...), .error_call = current_env()),
+    fields = .prep_spec_fields(
+      list2(...),
+      .duplicate_keys,
+      .error_call = current_env()
+    ),
     .names_col = .names_to
   )
 }

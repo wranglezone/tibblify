@@ -247,3 +247,13 @@
       Caused by error in `tspec_combine()`:
       ! Cannot combine different `names_col`
 
+# tspec_combine() errors if combined fields share a key (#139)
+
+    Code
+      tspec_combine(spec1, spec2)
+    Condition <tibblify-error-spec-duplicate_keys>
+      Error in `tspec_combine()`:
+      ! Each field must use a unique `.key`.
+      x Key `x` is used by fields a and b.
+      i Use `.duplicate_keys = "allow"` to process the same key in multiple fields.
+

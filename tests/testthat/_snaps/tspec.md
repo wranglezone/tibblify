@@ -104,3 +104,55 @@
       Error in `tspec_recursive()`:
       ! `.children_to` must be a single string, not the number 1.
 
+# tspec_*() errors on duplicate keys (#139)
+
+    Code
+      tspec_df(id1 = tib_int("id"), id2 = tib_chr("id"), tib_chr("name"), tib_chr_vec(
+        "aliases"))
+    Condition <tibblify-error-spec-duplicate_keys>
+      Error in `tspec_df()`:
+      ! Each field must use a unique `.key`.
+      x Key `id` is used by fields id1 and id2.
+      i Use `.duplicate_keys = "allow"` to process the same key in multiple fields.
+
+# tspec_*() reports every duplicated key (#139)
+
+    Code
+      tspec_df(a1 = tib_int("a"), a2 = tib_int("a"), b1 = tib_int(c("b", "c")), b2 = tib_chr(
+        c("b", "c")), b3 = tib_dbl(c("b", "c")), d = tib_int("d"))
+    Condition <tibblify-error-spec-duplicate_keys>
+      Error in `tspec_df()`:
+      ! Each field must use a unique `.key`.
+      x Key `a` is used by fields a1 and a2.
+      x Key `b$c` is used by fields b1, b2, and b3.
+      i Use `.duplicate_keys = "allow"` to process the same key in multiple fields.
+
+# `.duplicate_keys = 'warn'` warns but keeps the fields (#139)
+
+    Code
+      out <- tspec_df(id1 = tib_int("id"), id2 = tib_chr("id"), .duplicate_keys = "warn")
+    Condition <tibblify-warning-spec-duplicate_keys>
+      Warning in `tspec_df()`:
+      Each field must use a unique `.key`.
+      x Key `id` is used by fields id1 and id2.
+      i Use `.duplicate_keys = "allow"` to process the same key in multiple fields.
+
+# tspec_recursive() errors if `.children_to` matches a field name (#139)
+
+    Code
+      tspec_recursive(tib_chr("label"), kids = tib_variant("other"), .children = "kids")
+    Condition <tibblify-error-spec-children_to>
+      Error in `tspec_recursive()`:
+      ! `.children_to` must not match the name of another field.
+      x The column name "kids" is already specified in `...`.
+
+# tspec_recursive() errors if `.children` is also a field key (#139)
+
+    Code
+      tspec_recursive(tib_chr("label"), raw = tib_variant("kids"), .children = "kids")
+    Condition <tibblify-error-spec-duplicate_keys>
+      Error in `tspec_recursive()`:
+      ! Each field must use a unique `.key`.
+      x Key `kids` is used by fields raw and kids.
+      i Use `.duplicate_keys = "allow"` to process the same key in multiple fields.
+

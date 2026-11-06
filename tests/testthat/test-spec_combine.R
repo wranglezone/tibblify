@@ -176,3 +176,68 @@ test_that("can't combine different names_to", {
     (expect_error(tspec_combine(spec1_df, spec2_df)))
   })
 })
+
+test_that("tspec_combine() errors if combined fields share a key (#139)", {
+  spec1 <- tspec_df(a = tib_int("x"))
+  spec2 <- tspec_df(b = tib_int("x"))
+  stbl::expect_pkg_error_snapshot(
+    tspec_combine(spec1, spec2),
+    "tibblify",
+    "spec",
+    "duplicate_keys"
+  )
+})
+
+test_that("tspec_combine() checks keys of nested fields (#139)", {
+  # purrr wraps errors from nested fields, so the original is the parent.
+  spec1 <- tspec_df(r = tib_row("r", a = tib_int("x")))
+  spec2 <- tspec_df(r = tib_row("r", b = tib_int("x")))
+  err <- rlang::catch_cnd(tspec_combine(spec1, spec2), "error")
+  stbl::expect_pkg_error_classes(
+    err$parent,
+    "tibblify",
+    "spec",
+    "duplicate_keys"
+  )
+
+  spec3 <- tspec_df(r = tib_df("r", a = tib_int("x")))
+  spec4 <- tspec_df(r = tib_df("r", b = tib_int("x")))
+  err <- rlang::catch_cnd(tspec_combine(spec3, spec4), "error")
+  stbl::expect_pkg_error_classes(
+    err$parent,
+    "tibblify",
+    "spec",
+    "duplicate_keys"
+  )
+  expect_no_condition(
+    tspec_combine(spec3, spec4, .duplicate_keys = "allow")
+  )
+})
+
+test_that("tspec_combine() respects `.duplicate_keys` (#139)", {
+  spec1 <- tspec_row(a = tib_int("x"))
+  spec2 <- tspec_row(b = tib_int("x"))
+  stbl::expect_pkg_warning_classes(
+    out <- tspec_combine(spec1, spec2, .duplicate_keys = "warn"),
+    "tibblify",
+    "spec",
+    "duplicate_keys"
+  )
+  expect_named(out$fields, c("a", "b"))
+  expect_no_condition(
+    tspec_combine(spec1, spec2, .duplicate_keys = "allow")
+  )
+  expect_no_condition(
+    tspec_combine(
+      tspec_object(a = tib_int("x")),
+      tspec_object(b = tib_int("x")),
+      .duplicate_keys = "allow"
+    )
+  )
+})
+
+test_that("tspec_combine() still merges fields that share a name (#139)", {
+  spec1 <- tspec_df(a = tib_int("a"))
+  spec2 <- tspec_df(a = tib_int("a"), b = tib_chr("b"))
+  expect_no_condition(tspec_combine(spec1, spec2))
+})

@@ -423,7 +423,7 @@ parse_openapi_schema <- function(file) {
     # must satisfy all the schemas -> combine them
     out <- purrr::map(schema$allOf, \(x) .parse_schema(x, name, openapi_spec))
     # TODO fix `call`
-    .tib_combine(out, name, current_call())
+    .tib_combine(out, name, "allow", current_call())
   }
 }
 
@@ -462,12 +462,12 @@ parse_openapi_schema <- function(file) {
     tryCatch(
       {
         # TODO fix `call`
-        .tib_combine(out, name, current_call())
+        .tib_combine(out, name, "allow", current_call())
       },
       error = function(cnd) {
         types <- purrr::map_chr(out, "type")
         if ("row" %in% types) {
-          .tib_combine(out[types == "row"], name, current_call())
+          .tib_combine(out[types == "row"], name, "allow", current_call())
         } else {
           tib_variant(name, .required = FALSE)
         }

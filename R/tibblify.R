@@ -108,7 +108,7 @@ tibblify <- function(x, spec = NULL, unspecified = NULL) {
       }
 
       path_str <- .path_to_string(path)
-      .tibblify_abort(
+      .tibblify_abort_old(
         "Problem while tibblifying {.arg {path_str}}",
         parent = cnd,
         call = call

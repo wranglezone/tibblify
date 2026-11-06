@@ -296,11 +296,29 @@ tib_variant(
   elt_transform = deprecated()
 )
 
-tib_recursive(.key, ..., .children, .children_to = .children, .required = TRUE)
+tib_recursive(
+  .key,
+  ...,
+  .children,
+  .children_to = .children,
+  .required = TRUE,
+  .duplicate_keys = c("error", "warn", "allow")
+)
 
-tib_row(.key, ..., .required = TRUE)
+tib_row(
+  .key,
+  ...,
+  .required = TRUE,
+  .duplicate_keys = c("error", "warn", "allow")
+)
 
-tib_df(.key, ..., .required = TRUE, .names_to = NULL)
+tib_df(
+  .key,
+  ...,
+  .required = TRUE,
+  .names_to = NULL,
+  .duplicate_keys = c("error", "warn", "allow")
+)
 }
 \arguments{
 \item{.key, key}{(\code{character}) The path of names to the field in the object.}
@@ -354,6 +372,17 @@ children.}
 
 \item{.children_to}{(\code{character(1)}) The column name in which to store the
 children.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 }
 \value{
 A tibblify field collector. This specification can be used with

@@ -11,6 +11,7 @@ tspec_df(
   ...,
   .input_form = c("rowmajor", "colmajor"),
   .names_to = NULL,
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -18,6 +19,7 @@ tspec_df(
 tspec_object(
   ...,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -25,6 +27,7 @@ tspec_object(
 tspec_row(
   ...,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -34,6 +37,7 @@ tspec_recursive(
   .children,
   .children_to = .children,
   .input_form = c("rowmajor", "colmajor"),
+  .duplicate_keys = c("error", "warn", "allow"),
   .vector_allows_empty_list = deprecated(),
   vector_allows_empty_list = deprecated()
 )
@@ -54,6 +58,17 @@ Can be one of:
 \item{.names_to}{(\code{character(1)} or \code{NULL}) The name of the column in the
 output which will contain the names of top-level elements of the input
 named list. If \code{NULL}, the default, no name column is created.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 
 \item{.vector_allows_empty_list, vector_allows_empty_list}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated as of tibblify 0.5.0. Empty
 lists are now always accepted for vector fields. A required field treats

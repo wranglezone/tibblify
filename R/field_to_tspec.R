@@ -29,7 +29,7 @@ field_to_tspec <- function(spec, name) {
   .check_field_exists(spec, name)
   field <- spec[["fields"]][[name]]
   if (!field[["type"]] %in% c("df", "row", "recursive")) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       c(
         "Field {.field {name}} must be a {.fn tib_df}, {.fn tib_row}, or {.fn tib_recursive} field.",
         x = "Field {.field {name}} is a {.fn tib_{field[[\"type\"]]}} field."
@@ -50,7 +50,8 @@ field_to_tspec_df <- function(spec, name) {
   field <- .get_nested_field(spec, name)
   tspec_df(
     !!!field[["fields"]],
-    .names_to = field[["names_col"]]
+    .names_to = field[["names_col"]],
+    .duplicate_keys = "allow"
   )
 }
 
@@ -59,7 +60,8 @@ field_to_tspec_df <- function(spec, name) {
 field_to_tspec_row <- function(spec, name) {
   field <- .get_nested_field(spec, name)
   tspec_row(
-    !!!field[["fields"]]
+    !!!field[["fields"]],
+    .duplicate_keys = "allow"
   )
 }
 
@@ -70,7 +72,8 @@ field_to_tspec_recursive <- function(spec, name) {
   tspec_recursive(
     !!!field[["fields"]],
     .children = field[["child"]],
-    .children_to = field[["children_to"]]
+    .children_to = field[["children_to"]],
+    .duplicate_keys = "allow"
   )
 }
 
@@ -85,7 +88,7 @@ field_to_tspec_recursive <- function(spec, name) {
   .check_field_exists(spec, name, .call)
   field <- spec[["fields"]][[name]]
   if (!field[["type"]] %in% c("df", "row", "recursive")) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       c(
         "Field {.field {name}} must be a {.fn tib_df}, {.fn tib_row}, or {.fn tib_recursive} field.",
         x = "Field {.field {name}} is a {.fn tib_{field[[\"type\"]]}} field."
@@ -114,7 +117,7 @@ field_to_tspec_recursive <- function(spec, name) {
   .check_field_exists(spec, name, .call)
   field <- spec[["fields"]][[name]]
   if (field[["type"]] != type) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       c(
         "Field {.field {name}} must be a {.fn {fn_name}} field.",
         x = "Field {.field {name}} is a {.fn tib_{field[[\"type\"]]}} field."
@@ -132,14 +135,14 @@ field_to_tspec_recursive <- function(spec, name) {
 #' @keywords internal
 .check_field_exists <- function(spec, name, .call = caller_env()) {
   if (!.is_tspec(spec)) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       "{.arg spec} must be a tibblify spec.",
       call = .call
     )
   }
   rlang::check_string(name, call = .call)
   if (!name %in% names(spec[["fields"]])) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       "Field {.field {name}} doesn't exist in {.arg spec}.",
       call = .call
     )

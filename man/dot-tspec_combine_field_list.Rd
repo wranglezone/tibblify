@@ -4,10 +4,21 @@
 \alias{.tspec_combine_field_list}
 \title{Combine fields from a list of specs}
 \usage{
-.tspec_combine_field_list(spec_list, .call)
+.tspec_combine_field_list(spec_list, .duplicate_keys, .call)
 }
 \arguments{
 \item{spec_list}{(\code{list}) A list of specifications.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 
 \item{.call}{(\code{environment}) The environment to use for error messages.}
 }

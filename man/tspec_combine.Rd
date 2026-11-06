@@ -4,10 +4,21 @@
 \alias{tspec_combine}
 \title{Combine multiple specifications}
 \usage{
-tspec_combine(...)
+tspec_combine(..., .duplicate_keys = c("error", "warn", "allow"))
 }
 \arguments{
 \item{...}{(\code{tspec}) Specifications to combine.}
+
+\item{.duplicate_keys}{(\code{character(1)}) What to do if more than one field
+uses the same \code{.key}. Can be one of:
+\itemize{
+\item \code{"error"}: The default. Throw an error.
+\item \code{"warn"}: Allow the duplicates, but warn.
+\item \code{"allow"}: Allow the duplicates without checking.
+}
+
+Keys are compared as a whole, so \code{c("a", "b")} and \code{c("a", "c")} are
+different keys.}
 }
 \value{
 A tibblify specification.

@@ -1,5 +1,6 @@
 # tibblify (development version)
 
+* `tspec_df()`, `tspec_row()`, `tspec_object()`, `tspec_recursive()`, `tspec_combine()`, `tib_row()`, `tib_df()`, and `tib_recursive()` now error when more than one field uses the same `.key`, and gain a `.duplicate_keys` argument to warn instead or skip the check (#139).
 * `tspec_*()` now always accept empty lists (`list()`) for vector fields, so the `.vector_allows_empty_list` argument is deprecated and no longer needed. Required fields treat `list()` as an empty vector, and optional fields use `.fill` (#363).
 * `tib_*()` functions now use `.fill` when a field is `NULL` or otherwise has length 0 (e.g., `list()` or `character()`), treating it the same as an absent field (#231).
 * `.fill` arguments now accept values that can be losslessly coerced to the expected type, such as `"1"` when an integer or double is expected (#337, #340).

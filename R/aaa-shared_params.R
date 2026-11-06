@@ -16,6 +16,14 @@
 #' @param col (`any`) A column from a data frame, which may be a vector, a list,
 #'   or a nested data frame.
 #' @param col_name (`character(1)`) The name of the column.
+#' @param .duplicate_keys (`character(1)`) What to do if more than one field
+#'   uses the same `.key`. Can be one of:
+#'   * `"error"`: The default. Throw an error.
+#'   * `"warn"`: Allow the duplicates, but warn.
+#'   * `"allow"`: Allow the duplicates without checking.
+#'
+#'   Keys are compared as a whole, so `c("a", "b")` and `c("a", "c")` are
+#'   different keys.
 #' @param elt (`character` or `integer`) An element of a path.
 #' @param .elt_transform (`function` or `NULL`) A function to apply to each
 #'   element before casting to `.ptype_inner`.

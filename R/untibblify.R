@@ -28,7 +28,7 @@ untibblify <- function(x, spec = get_spec(x)) {
     return(.untibblify_list(x, spec))
   }
   friendly_type <- obj_type_friendly(x)
-  .tibblify_abort(
+  .tibblify_abort_old(
     "{.arg x} must be a list. Instead, it is {friendly_type}."
   )
 }
@@ -151,13 +151,13 @@ untibblify <- function(x, spec = get_spec(x)) {
 #' @keywords internal
 .check_key_length_1 <- function(key, call = caller_env()) {
   if (length(key) > 1) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       "{.fn untibblify} does not support specs with nested keys",
       call = call
     )
   }
   if (!length(key)) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       "{.fn untibblify} does not support specs with empty keys",
       call = call
     )
@@ -173,7 +173,7 @@ untibblify <- function(x, spec = get_spec(x)) {
 #' @keywords internal
 .check_key_is_character <- function(key, call = caller_env()) {
   if (!is.character(key)) {
-    .tibblify_abort(
+    .tibblify_abort_old(
       "{.fn untibblify} does not support specs with non-character keys",
       call = call
     )
