@@ -150,6 +150,7 @@ test_that("special ptypes are not incorrectly recognized", {
 })
 
 test_that("tib_scalar warns for deprecated ptype_inner", {
+  skip_on_covr()
   withr::local_options(
     lifecycle_verbosity = "warning"
   )

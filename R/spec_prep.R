@@ -169,7 +169,7 @@ NULL
     row = .spec_prep(x),
     df = .spec_prep(x),
     # Tested in `test-tibblify_spec_prep_recursive.R`
-    recursive = .spec_prep(x),
+    recursive = .spec_prep(x), # nocov
     x
   )
 }

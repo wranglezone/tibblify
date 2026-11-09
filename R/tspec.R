@@ -193,6 +193,7 @@ tspec_recursive <- function(
     .vector_allows_empty_list = lifecycle::is_present(dotted),
     vector_allows_empty_list = lifecycle::is_present(undotted)
   )
+  # nocov start
   for (arg in names(args)[args]) {
     lifecycle::deprecate_warn(
       "0.5.0",
@@ -201,6 +202,7 @@ tspec_recursive <- function(
       user_env = user_env
     )
   }
+  # nocov end
   invisible(NULL)
 }
 

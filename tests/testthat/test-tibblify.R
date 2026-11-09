@@ -672,6 +672,7 @@ test_that("tib_vector accepts empty lists (#111, #231, #363)", {
 })
 
 test_that("`vector_allows_empty_list` is deprecated (#363)", {
+  skip_on_covr()
   lifecycle::expect_deprecated(
     tspec_df(.vector_allows_empty_list = TRUE),
     "0.5.0"
