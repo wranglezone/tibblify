@@ -1,69 +1,3 @@
-# errors on invalid `.key`
-
-    Code
-      (expect_error(tib_scalar(character(), logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.key` must not be empty.
-    Code
-      (expect_error(tib_scalar(NA_character_, logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.key` must not be "NA".
-    Code
-      (expect_error(tib_scalar("", logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.key` must not be an empty string.
-    Code
-      (expect_error(tib_scalar(1L, logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.key` must be a character vector, not the number 1.
-    Code
-      (expect_error(tib_scalar(c("x", NA), logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.key[2] must not be NA.
-    Code
-      (expect_error(tib_scalar(c("x", ""), logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.key[2] must not be an empty string.
-
-# errors on invalid `.required`
-
-    Code
-      (expect_error(tib_scalar("x", logical(), .required = logical())))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.required` must be `TRUE` or `FALSE`, not an empty logical vector.
-    Code
-      (expect_error(tib_scalar("x", logical(), .required = NA)))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.required` must be `TRUE` or `FALSE`, not `NA`.
-    Code
-      (expect_error(tib_scalar("x", logical(), .required = 1L)))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.required` must be `TRUE` or `FALSE`, not the number 1.
-    Code
-      (expect_error(tib_scalar("x", logical(), .required = c(TRUE, FALSE))))
-    Output
-      <error/rlang_error>
-      Error in `tib_scalar()`:
-      ! `.required` must be `TRUE` or `FALSE`, not a logical vector.
-
 # errors if dots are not empty
 
     Code
@@ -133,7 +67,7 @@
       Error in `tib_scalar()`:
       ! Can't convert `.transform`, an integer vector, to a function.
 
-# tib_vector checks arguments
+# tib_vector checks arguments (#380)
 
     Code
       (expect_error(tib_vector("x", integer(), .input_form = "v")))
@@ -170,27 +104,6 @@
 ---
 
     Code
-      (expect_error(tib_vector("x", integer(), .values_to = NA)))
-    Output
-      <error/rlang_error>
-      Error in `tib_vector()`:
-      ! `.values_to` must be a single string, not `NA`.
-    Code
-      (expect_error(tib_vector("x", integer(), .values_to = 1)))
-    Output
-      <error/rlang_error>
-      Error in `tib_vector()`:
-      ! `.values_to` must be a single string, not the number 1.
-    Code
-      (expect_error(tib_vector("x", integer(), .values_to = c("a", "b"))))
-    Output
-      <error/rlang_error>
-      Error in `tib_vector()`:
-      ! `.values_to` must be a single string, not a character vector.
-
----
-
-    Code
       (expect_error(tib_vector("x", integer(), .input_form = "scalar_list",
       .values_to = "val", .names_to = "name")))
     Output
@@ -211,20 +124,6 @@
       <error/rlang_error>
       Error in `tib_vector()`:
       ! `.names_to` must be different from `.values_to`.
-    Code
-      (expect_error(tib_vector("x", integer(), .input_form = "object", .values_to = "val",
-      .names_to = 1)))
-    Output
-      <error/rlang_error>
-      Error in `tib_vector()`:
-      ! `.names_to` must be a single string, not the number 1.
-    Code
-      (expect_error(tib_vector("x", integer(), .input_form = "object", .values_to = "val",
-      .names_to = c("a", "b"))))
-    Output
-      <error/rlang_error>
-      Error in `tib_vector()`:
-      ! `.names_to` must be a single string, not a character vector.
 
 # .fill coercion still errors when not losslessly coercible (#337, #340)
 

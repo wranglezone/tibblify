@@ -210,7 +210,11 @@
 #'   if `names` is `NULL`.
 #' @keywords internal
 .check_print_names_arg <- function(names) {
-  rlang::check_bool(names, allow_null = TRUE)
+  names <- stbl::stabilize_lgl_scalar(
+    names,
+    allow_null = TRUE,
+    allow_na = FALSE
+  )
   names %||% .should_force_names()
 }
 

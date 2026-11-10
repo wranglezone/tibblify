@@ -44,21 +44,6 @@
       x These names are duplicated:
         * "y" at locations 1 and 2.
 
-# tspec_df errors on invalid `.names_to`
-
-    Code
-      (expect_error(tspec_df(.names_to = NA_character_)))
-    Output
-      <error/rlang_error>
-      Error in `tspec_df()`:
-      ! `.names_to` must be a single string or `NULL`, not a character `NA`.
-    Code
-      (expect_error(tspec_df(.names_to = 1)))
-    Output
-      <error/rlang_error>
-      Error in `tspec_df()`:
-      ! `.names_to` must be a single string or `NULL`, not the number 1.
-
 # tspec_df errors if `.names_to` column name is not unique
 
     Code
@@ -88,21 +73,6 @@
       x These names are duplicated:
         * "a" at locations 1 and 3.
         * "b" at locations 2 and 4.
-
-# tspec_recursive errors for bad .children and .children_to
-
-    Code
-      (expect_error(tspec_recursive(.children = 1L)))
-    Output
-      <error/rlang_error>
-      Error in `tspec_recursive()`:
-      ! `.children` must be a single string, not the number 1.
-    Code
-      (expect_error(tspec_recursive(.children = "a", .children_to = 1L)))
-    Output
-      <error/rlang_error>
-      Error in `tspec_recursive()`:
-      ! `.children_to` must be a single string, not the number 1.
 
 # tspec_*() errors on duplicate keys (#139)
 
