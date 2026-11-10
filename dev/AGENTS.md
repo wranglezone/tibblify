@@ -74,12 +74,12 @@ For any feature, fix, or refactor:
 
 ## Skills
 
-| Triggers                                          | Path                                     |
-|---------------------------------------------------|------------------------------------------|
-| create GitHub issues                              | @.github/skills/create-issue/SKILL.md    |
-| document functions                                | @.github/skills/document/SKILL.md        |
-| from github                                       | @.github/skills/github/SKILL.md          |
-| implement issue / work on \#NNN                   | @.github/skills/implement-issue/SKILL.md |
-| writing R functions / API design / error handling | @.github/skills/r-code/SKILL.md          |
-| search / rewrite code                             | @.github/skills/search-code/SKILL.md     |
-| writing or reviewing tests                        | @.github/skills/tdd-workflow/SKILL.md    |
+| Triggers | Path |
+|----|----|
+| create GitHub issues | @.github/skills/create-issue/SKILL.md |
+| document functions | @.github/skills/document/SKILL.md |
+| from github | @.github/skills/github/SKILL.md |
+| implement issue / work on \#NNN | @.github/skills/implement-issue/SKILL.md |
+| writing R functions / API design / error handling | @.github/skills/r-code/SKILL.md |
+| search / rewrite code | @.github/skills/search-code/SKILL.md |
+| writing or reviewing tests | @.github/skills/tdd-workflow/SKILL.md |
