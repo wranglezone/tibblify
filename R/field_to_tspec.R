@@ -140,7 +140,7 @@ field_to_tspec_recursive <- function(spec, name) {
       call = .call
     )
   }
-  rlang::check_string(name, call = .call)
+  name <- stbl::stabilize_chr_scalar(name, allow_na = FALSE, call = .call)
   if (!name %in% names(spec[["fields"]])) {
     .tibblify_abort_old(
       "Field {.field {name}} doesn't exist in {.arg spec}.",

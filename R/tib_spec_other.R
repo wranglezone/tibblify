@@ -53,8 +53,8 @@ tib_recursive <- function(
   .duplicate_keys = c("error", "warn", "allow")
 ) {
   .duplicate_keys <- rlang::arg_match(.duplicate_keys)
-  rlang::check_string(.children)
-  rlang::check_string(.children_to)
+  .children <- stbl::stabilize_chr_scalar(.children, allow_na = FALSE)
+  .children_to <- stbl::stabilize_chr_scalar(.children_to, allow_na = FALSE)
 
   fields <- .prep_spec_fields(
     list2(...),
@@ -124,7 +124,7 @@ tib_df <- function(
 ) {
   .duplicate_keys <- rlang::arg_match(.duplicate_keys)
   if (!is.null(.names_to)) {
-    rlang::check_string(.names_to)
+    .names_to <- stbl::stabilize_chr_scalar(.names_to, allow_na = FALSE)
   }
 
   .tib_collector(

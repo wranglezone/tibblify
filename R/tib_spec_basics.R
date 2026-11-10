@@ -93,8 +93,20 @@ NULL
   .elt_transform = NULL,
   .call = caller_env()
 ) {
-  .check_key(.key, .call)
-  rlang::check_bool(.required, call = .call)
+  .key <- stbl::stabilize_chr(
+    .key,
+    allow_null = FALSE,
+    allow_na = FALSE,
+    min_size = 1L,
+    min_characters = 1L,
+    x_arg = ".key",
+    call = .call
+  )
+  .required <- stbl::stabilize_lgl_scalar(
+    .required,
+    allow_na = FALSE,
+    call = .call
+  )
 
   out <- list(
     type = .type,
@@ -115,39 +127,6 @@ NULL
   class(out) <- unique(c(.class, paste0("tib_", .type), "tib_collector"))
 
   out
-}
-
-#' Check if a key is valid
-#'
-#' @inheritParams .shared-params
-#' @returns (`NULL`) Throws an error if invalid.
-#' @keywords internal
-.check_key <- function(.key, .call = caller_env()) {
-  check_character(.key, call = .call)
-  n <- vctrs::vec_size(.key)
-  if (n == 0) {
-    cli::cli_abort("{.arg .key} must not be empty.", call = .call)
-  }
-  if (n == 1) {
-    if (is.na(.key)) {
-      cli::cli_abort("{.arg .key} must not be {.val NA}.", call = .call)
-    }
-    if (.key == "") {
-      cli::cli_abort("{.arg .key} must not be an empty string.", call = .call)
-    }
-  } else {
-    if (vctrs::vec_any_missing(.key)) {
-      na_idx <- purrr::detect_index(vctrs::vec_detect_missing(.key), ~.x)
-      cli::cli_abort("`.key[{.field {na_idx}}] must not be NA.", call = .call)
-    }
-    if (any(.key == "")) {
-      empty_string_idx <- purrr::detect_index(.key == "", ~.x)
-      cli::cli_abort(
-        "`.key[{.field {empty_string_idx}}] must not be an empty string.",
-        call = .call
-      )
-    }
-  }
 }
 
 #' Choose native ptype class
@@ -267,6 +246,7 @@ tib_scalar <- function(
   if (is.null(.fill)) {
     .fill <- vctrs::vec_init(.ptype_inner)
   } else {
+    # stbl has no generic size check for arbitrary ptypes.
     vctrs::obj_check_vector(.fill, call = .call)
     vctrs::vec_check_size(.fill, size = 1L, call = .call)
     .fill <- .cast_fill(
@@ -415,10 +395,12 @@ tib_vector <- function(
 #' @returns (`character(1)` or `NULL`) Validated `.values_to`.
 #' @keywords internal
 .stabilize_values_to <- function(.values_to, .call) {
-  if (!is.null(.values_to)) {
-    rlang::check_string(.values_to, call = .call)
-  }
-  .values_to
+  stbl::stabilize_chr_scalar(
+    .values_to,
+    allow_null = TRUE,
+    allow_na = FALSE,
+    call = .call
+  )
 }
 
 #' Stabilize names_to argument
@@ -441,7 +423,11 @@ tib_vector <- function(
         call = .call
       )
     }
-    rlang::check_string(.names_to, call = .call)
+    .names_to <- stbl::stabilize_chr_scalar(
+      .names_to,
+      allow_na = FALSE,
+      call = .call
+    )
     if (.names_to == .values_to) {
       cli::cli_abort(
         "{.arg .names_to} must be different from {.arg .values_to}.",

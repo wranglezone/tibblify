@@ -72,6 +72,11 @@ tspec_df <- function(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
+  .names_to <- stbl::stabilize_chr_scalar(
+    .names_to,
+    allow_null = TRUE,
+    allow_na = FALSE
+  )
   .check_names_to(.names_to, .input_form)
 
   out <- .tspec(
@@ -153,8 +158,8 @@ tspec_recursive <- function(
     .vector_allows_empty_list,
     vector_allows_empty_list
   )
-  rlang::check_string(.children)
-  rlang::check_string(.children_to)
+  .children <- stbl::stabilize_chr_scalar(.children, allow_na = FALSE)
+  .children_to <- stbl::stabilize_chr_scalar(.children_to, allow_na = FALSE)
 
   out <- .tspec(
     list2(...),
@@ -220,7 +225,6 @@ tspec_recursive <- function(
         call = .call
       )
     }
-    rlang::check_string(.names_to, allow_null = TRUE, call = .call)
   }
 }
 

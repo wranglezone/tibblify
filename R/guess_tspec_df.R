@@ -10,9 +10,21 @@ guess_tspec_df <- function(
   arg = rlang::caller_arg(x)
 ) {
   rlang::check_dots_empty()
-  rlang::check_bool(empty_list_unspecified, call = call)
-  rlang::check_bool(simplify_list, call = call)
-  rlang::check_bool(inform_unspecified, call = call)
+  empty_list_unspecified <- stbl::stabilize_lgl_scalar(
+    empty_list_unspecified,
+    allow_na = FALSE,
+    call = call
+  )
+  simplify_list <- stbl::stabilize_lgl_scalar(
+    simplify_list,
+    allow_na = FALSE,
+    call = call
+  )
+  inform_unspecified <- stbl::stabilize_lgl_scalar(
+    inform_unspecified,
+    allow_na = FALSE,
+    call = call
+  )
 
   if (is.data.frame(x)) {
     # TODO inform that `simplify_list` is not used for data frames

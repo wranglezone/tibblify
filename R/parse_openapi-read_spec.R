@@ -51,7 +51,12 @@
   arg = caller_arg(file),
   call = caller_env()
 ) {
-  rlang::check_string(file, arg = arg, call = call)
+  file <- stbl::stabilize_chr_scalar(
+    file,
+    allow_na = FALSE,
+    x_arg = arg,
+    call = call
+  )
   rlang::check_installed("yaml", "to read OpenAPI specs.")
   if (grepl("\n", file)) {
     yaml::yaml.load(file)

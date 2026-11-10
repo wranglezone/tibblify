@@ -18,10 +18,13 @@ test_that("empty dots create empty list", {
   expect_equal(tib_row("x")$fields, list())
 })
 
-test_that("tib_df() checks arguments", {
-  expect_snapshot({
-    (expect_error(tib_df("x", .names_to = 1)))
-  })
+test_that("tib_df() checks arguments (#380)", {
+  stbl::expect_pkg_error_classes(
+    tib_df("x", .names_to = new.env()),
+    "stbl",
+    "coerce",
+    "character"
+  )
 })
 
 test_that("tib_df() drops NULL", {

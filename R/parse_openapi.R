@@ -755,7 +755,7 @@ parse_openapi_schema <- function(file) {
     (schema$properties %&&% "object") %||%
     (schema$items %&&% "array") %||%
     "variant"
-  rlang::check_string(type)
+  type <- stbl::stabilize_chr_scalar(type, allow_na = FALSE)
   return(type)
 }
 

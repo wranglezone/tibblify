@@ -55,9 +55,9 @@ unpack_tspec <- function(
   names_clean = NULL
 ) {
   rlang::check_dots_empty()
-  check_character(fields, allow_null = TRUE)
+  fields <- stbl::to_chr(fields, allow_null = TRUE)
   names_repair <- rlang::arg_match(names_repair)
-  check_function(names_clean, allow_null = TRUE)
+  names_clean <- stbl::to_fn(names_clean, allow_null = TRUE)
   spec$fields <- .unpack_fields(
     spec,
     fields,
@@ -114,8 +114,13 @@ unpack_tspec <- function(
   names_clean,
   .call = caller_env()
 ) {
-  rlang::check_bool(recurse, call = .call)
-  rlang::check_string(names_sep, allow_null = TRUE, call = .call)
+  recurse <- stbl::stabilize_lgl_scalar(recurse, allow_na = FALSE, call = .call)
+  names_sep <- stbl::stabilize_chr_scalar(
+    names_sep,
+    allow_null = TRUE,
+    allow_na = FALSE,
+    call = .call
+  )
   fields_to_unpack <- .stabilize_unpack_cols(fields, spec, .call)
   .with_indexed_errors(
     purrr::imap(

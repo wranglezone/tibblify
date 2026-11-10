@@ -28,11 +28,18 @@ test_that("tspec_df can infer name from key", {
   })
 })
 
-test_that("tspec_df errors on invalid `.names_to`", {
-  expect_snapshot({
-    (expect_error(tspec_df(.names_to = NA_character_)))
-    (expect_error(tspec_df(.names_to = 1)))
-  })
+test_that("tspec_df errors on invalid `.names_to` (#380)", {
+  stbl::expect_pkg_error_classes(
+    tspec_df(.names_to = NA_character_),
+    "stbl",
+    "bad_na"
+  )
+  stbl::expect_pkg_error_classes(
+    tspec_df(.names_to = new.env()),
+    "stbl",
+    "coerce",
+    "character"
+  )
 })
 
 test_that("tspec_df errors if `.names_to` column name is not unique", {
@@ -81,15 +88,19 @@ test_that("tspec_row drops NULL", {
   )
 })
 
-test_that("tspec_recursive errors for bad .children and .children_to", {
-  expect_snapshot({
-    (expect_error(
-      tspec_recursive(.children = 1L)
-    ))
-    (expect_error(
-      tspec_recursive(.children = "a", .children_to = 1L)
-    ))
-  })
+test_that("tspec_recursive errors for bad .children and .children_to (#380)", {
+  stbl::expect_pkg_error_classes(
+    tspec_recursive(.children = new.env()),
+    "stbl",
+    "coerce",
+    "character"
+  )
+  stbl::expect_pkg_error_classes(
+    tspec_recursive(.children = "a", .children_to = new.env()),
+    "stbl",
+    "coerce",
+    "character"
+  )
 })
 
 test_that("tspec_recursive creates the expected spec", {

@@ -1,24 +1,61 @@
-test_that("errors on invalid `.key`", {
-  expect_snapshot({
-    (expect_error(tib_scalar(character(), logical())))
-
-    (expect_error(tib_scalar(NA_character_, logical())))
-    (expect_error(tib_scalar("", logical())))
-    (expect_error(tib_scalar(1L, logical())))
-
-    (expect_error(tib_scalar(c("x", NA), logical())))
-    (expect_error(tib_scalar(c("x", ""), logical())))
-  })
+test_that("errors on invalid `.key` (#380)", {
+  stbl::expect_pkg_error_classes(
+    tib_scalar(character(), logical()),
+    "stbl",
+    "size_too_small"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar(NA_character_, logical()),
+    "stbl",
+    "bad_na"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar("", logical()),
+    "stbl",
+    "n_characters",
+    "too_few"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar(new.env(), logical()),
+    "stbl",
+    "coerce",
+    "character"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar(c("x", NA), logical()),
+    "stbl",
+    "bad_na"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar(c("x", ""), logical()),
+    "stbl",
+    "n_characters",
+    "too_few"
+  )
 })
 
-test_that("errors on invalid `.required`", {
-  expect_snapshot({
-    (expect_error(tib_scalar("x", logical(), .required = logical())))
-
-    (expect_error(tib_scalar("x", logical(), .required = NA)))
-    (expect_error(tib_scalar("x", logical(), .required = 1L)))
-    (expect_error(tib_scalar("x", logical(), .required = c(TRUE, FALSE))))
-  })
+test_that("errors on invalid `.required` (#380)", {
+  stbl::expect_pkg_error_classes(
+    tib_scalar("x", logical(), .required = logical()),
+    "stbl",
+    "bad_empty"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar("x", logical(), .required = NA),
+    "stbl",
+    "bad_na"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar("x", logical(), .required = "x"),
+    "stbl",
+    "incompatible_values",
+    "logical"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_scalar("x", logical(), .required = c(TRUE, FALSE)),
+    "stbl",
+    "non_scalar"
+  )
 })
 
 test_that("errors if dots are not empty", {
@@ -59,7 +96,7 @@ test_that("tib_scalar checks arguments", {
   })
 })
 
-test_that("tib_vector checks arguments", {
+test_that("tib_vector checks arguments (#380)", {
   # .input_form
   expect_snapshot({
     (expect_error(tib_vector("x", integer(), .input_form = "v")))
@@ -77,11 +114,22 @@ test_that("tib_vector checks arguments", {
   })
 
   # .values_to
-  expect_snapshot({
-    (expect_error(tib_vector("x", integer(), .values_to = NA)))
-    (expect_error(tib_vector("x", integer(), .values_to = 1)))
-    (expect_error(tib_vector("x", integer(), .values_to = c("a", "b"))))
-  })
+  stbl::expect_pkg_error_classes(
+    tib_vector("x", integer(), .values_to = NA),
+    "stbl",
+    "bad_na"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_vector("x", integer(), .values_to = new.env()),
+    "stbl",
+    "coerce",
+    "character"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_vector("x", integer(), .values_to = c("a", "b")),
+    "stbl",
+    "non_scalar"
+  )
 
   # .names_to
   expect_snapshot({
@@ -108,22 +156,30 @@ test_that("tib_vector checks arguments", {
       .values_to = "val",
       .names_to = "val"
     )))
-
-    (expect_error(tib_vector(
+  })
+  stbl::expect_pkg_error_classes(
+    tib_vector(
       "x",
       integer(),
       .input_form = "object",
       .values_to = "val",
-      .names_to = 1
-    )))
-    (expect_error(tib_vector(
+      .names_to = new.env()
+    ),
+    "stbl",
+    "coerce",
+    "character"
+  )
+  stbl::expect_pkg_error_classes(
+    tib_vector(
       "x",
       integer(),
       .input_form = "object",
       .values_to = "val",
       .names_to = c("a", "b")
-    )))
-  })
+    ),
+    "stbl",
+    "non_scalar"
+  )
 })
 
 test_that("special ptypes are not incorrectly recognized", {
