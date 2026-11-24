@@ -83,7 +83,7 @@ Learn more in
 ## Similar packages
 
 - [jsonlite](https://cran.r-project.org/package=jsonlite):
-  [`jsonlite::fromJSON()`](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)
+  [`jsonlite::fromJSON()`](https://rdrr.io/pkg/jsonlite/man/fromJSON.html)
   is excellent for parsing JSON, but `tibblify` allows for strict
   specifications and can be faster for complex nested lists.
 - [tidyr](https://tidyr.tidyverse.org/):
