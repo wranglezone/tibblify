@@ -317,14 +317,6 @@ void add_value_vector(struct collector* v_collector, r_obj* value, struct Path* 
     return;
   }
 
-  // Required fields treat `list()` as an empty vector of the element type.
-  // Not every type can cast `list()`, so swap it for an empty vector first.
-  if (r_length(value) == 0 &&
-      r_typeof(value) == R_TYPE_list &&
-      v_vec_coll->input_form == VECTOR_FORM_vector) {
-    value = v_vec_coll->ptype_inner;
-  }
-
   r_obj* names = r_names(value);
   if (v_vec_coll->input_form == VECTOR_FORM_scalar_list || v_vec_coll->input_form == VECTOR_FORM_object) {
     // FIXME should check with `vec_is_list()`?

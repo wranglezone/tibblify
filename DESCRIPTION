@@ -25,7 +25,7 @@ Imports:
     lifecycle,
     purrr (>= 1.0.2),
     rlang (>= 1.2.0),
-    stbl (>= 0.6.0),
+    stbl (>= 0.6.0.9003),
     tibble (>= 3.2.1),
     tidyselect (>= 1.2.0),
     vctrs (>= 0.7.2),
